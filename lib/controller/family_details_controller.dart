@@ -1,0 +1,86 @@
+import 'package:devotee/model/education_details_model.dart';
+import 'package:devotee/model/family_details_model.dart';
+import 'package:devotee/model/horoscope_details_model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:devotee/api_service/api_service.dart';
+
+class FamilyDetailsController with ChangeNotifier {
+  final ApiService apiService = ApiService();
+  FamilyDetailsModel? _member;
+  var isLoading = false.obs;
+  String? _error;
+  FamilyDetailsModel? get member => _member;
+  String? get error => _error;
+
+  Future<void> familyDetails(
+      BuildContext context,
+      String religion,
+      String caste,
+      String subcaste,
+      String gothram,
+      String language,
+      String motherTongue,
+      String fatherlivingstatus,
+      String fathername,
+      String fathersoccupation,
+      String fatherBussness,
+      String fatherAnnualIncome,
+      String motherlivingstatus,
+      String mothersname,
+      String mothersoccupation,
+      String motherAnnualIncome,
+      String sister,
+      String noofsisters,
+      String brother,
+      String noofbrothers,
+      String familyType,
+      String familyvalues,
+      String familyStatus) async {
+    isLoading.value = true;
+    _error = null;
+    notifyListeners();
+
+    try {
+      _member = await apiService.familyDetails(
+          religion,
+          caste,
+          subcaste,
+          gothram,
+          language,
+          motherTongue,
+          fatherlivingstatus,
+          fathername,
+          fathersoccupation,
+          fatherBussness,
+          fatherAnnualIncome,
+          motherlivingstatus,
+          mothersname,
+          mothersoccupation,
+          motherAnnualIncome,
+          sister,
+          noofsisters,
+          brother,
+          noofbrothers,
+          familyType,
+          familyvalues,
+          familyStatus);
+      Get.toNamed('/aboutgroom');
+    } catch (e) {
+      _error = e.toString();
+      print(_error);
+
+      // Show error message using ScaffoldMessenger
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.grey.shade200,
+        content: Text(
+          '${_error}',
+          style: TextStyle(color: Colors.black),
+        ),
+      ));
+    } finally {
+      isLoading.value = false;
+      notifyListeners();
+    }
+  }
+}

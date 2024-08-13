@@ -1,0 +1,168 @@
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/screens/auth/login_screen.dart';
+import 'package:devotee/chat/Test/chat_login_screen.dart';
+import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/controller/inbox_received_controller.dart';
+import 'package:devotee/controller/inbox_sent_controller.dart';
+import 'package:devotee/pages/dashboard/profile/edit_profile/edit_profile.dart';
+import 'package:devotee/pages/dashboard/home/home_page.dart';
+import 'package:devotee/pages/dashboard/inbox/inbox.dart';
+import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
+import 'package:devotee/pages/search/search_page/search_page.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/pages/dashboard/home/home_page.dart';
+import 'package:devotee/pages/search/search_page/search_page.dart';
+import 'package:devotee/pages/extra/show_profile/show_profile.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  PageController controller = PageController(initialPage: 4);
+  var selected = 0;
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
+  final InboxSentController inboxSentController =
+      Get.put(InboxSentController());
+  final InboxReceivedController inboxReceivedController =
+      Get.put(InboxReceivedController());
+
+  void login() async {
+    if (_editProfileController.member!.member?.matriID != null) {
+      // log('\nUser: ${user.user}');
+      // log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
+
+      if (await APIs.userExists() && mounted) {
+        _editProfileController.userDetails(context);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      } else {
+        _editProfileController.userDetails(context);
+        await APIs.createUser().then((value) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    // });
+    _editProfileController.userDetails(context);
+    inboxSentController.inboxSent(context, "Pending");
+    inboxReceivedController.inboxSent(context, "Pending");
+    login();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        controller: controller,
+        children: const [
+          Inbox(),
+          ProfileEdit(),
+          MyShorlistProfile(),
+          HomeScreen(),
+          Home(),
+        ],
+      ),
+      bottomNavigationBar: StylishBottomBar(
+        notchStyle: NotchStyle.circle,
+        backgroundColor: AppColors.primaryColor,
+        option: AnimatedBarOptions(
+          iconSize: 30,
+          barAnimation: BarAnimation.fade,
+          iconStyle: IconStyle.Default,
+        ),
+        items: [
+          BottomBarItem(
+            icon: Image.asset("assets/images/email.png"),
+            title: Text(
+              'inbox',
+              style:
+                  FontConstant.styleSemiBold(fontSize: 0, color: Colors.white),
+            ),
+            backgroundColor: Colors.white,
+            //  selectedIcon: Icon(Icons.chat)
+          ),
+          BottomBarItem(
+            icon: Image.asset("assets/images/users.png"),
+            title: Text(
+              'Profile',
+              style:
+                  FontConstant.styleSemiBold(fontSize: 0, color: Colors.white),
+            ),
+            backgroundColor: Colors.white,
+            //  selectedIcon: Icon(Icons.person)
+          ),
+          BottomBarItem(
+            icon: Image.asset("assets/images/love.png"),
+            title: Text(
+              'Liked',
+              style:
+                  FontConstant.styleSemiBold(fontSize: 0, color: Colors.white),
+            ),
+            backgroundColor: Colors.white,
+            // selectedIcon: Icon(Icons.favorite)
+          ),
+          BottomBarItem(
+            icon: Image.asset("assets/images/chat.png"),
+            title: Text(
+              'Search',
+              style:
+                  FontConstant.styleSemiBold(fontSize: 0, color: Colors.white),
+            ),
+            // backgroundColor: Colors.white,
+          ),
+        ],
+        fabLocation: StylishBarFabLocation.center,
+        hasNotch: true,
+        currentIndex: selected,
+        onTap: (index) {
+          setState(() {
+            selected = index;
+
+            controller.jumpToPage(index);
+          });
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        onPressed: () {
+          setState(() {
+            controller.jumpToPage(4);
+          });
+        },
+        backgroundColor: const Color(0xff583689),
+        child: const Icon(
+          Icons.home_outlined,
+          size: 30,
+          color: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+}

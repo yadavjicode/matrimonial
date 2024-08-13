@@ -1,0 +1,242 @@
+import 'package:devotee/controller/accepted_controller.dart';
+import 'package:devotee/controller/declined_controller.dart';
+import 'package:devotee/controller/inbox_received_controller.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+class ReceivedPending extends StatefulWidget {
+  const ReceivedPending({super.key});
+
+  @override
+  State<ReceivedPending> createState() => _ReceivedPendingState();
+}
+
+class _ReceivedPendingState extends State<ReceivedPending> {
+  InboxReceivedController inboxReceivedController =
+      Get.put(InboxReceivedController());
+  AcceptedController acceptedController = Get.put(AcceptedController());
+  DeclinedController declinedController = Get.put(DeclinedController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      inboxReceivedController.inboxSent(context, "Pending");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.constColor,
+      body: Obx(() {
+        return Stack(
+          children: [
+            if (!inboxReceivedController.isLoading.value &&
+                !declinedController.isLoading.value &&
+                !acceptedController.isLoading.value)
+              pendingContent(),
+            if (inboxReceivedController.isLoading.value ||
+                declinedController.isLoading.value ||
+                acceptedController.isLoading.value)
+              Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              ),
+          ],
+        );
+      }),
+    );
+  }
+
+  Widget pendingContent() {
+    final member = inboxReceivedController.member;
+    if (member == null ||
+        member.responseData == null ||
+        member.responseData!.data == null) {
+      return Center(child: Text("No data available"));
+    }
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Column(
+          children: member.responseData!.data!.map((data) {
+            String name = "${data.name ?? ""} ${data.surename ?? ""}";
+            String date =
+                DateFormat('dd-MM-yyyy').format(DateTime.parse(data.updatedAt));
+            String mId = data.sentMatriID ?? "";
+            String image = data.profileImage != null
+                ? "http://devoteematrimony.aks.5g.in/${data.profileImage}"
+                : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
+            return GestureDetector(
+              onTap: () {
+                // Get.toNamed('/profiledtls');
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade200),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 70,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.grey,
+                            ),
+                            child: ClipOval(
+                              child: Image.network(
+                                image,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("ID: ${mId}",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: AppColors.darkgrey)),
+                                    SizedBox(width: 5),
+                                    Expanded(
+                                      child: Container(
+                                        child: Text(
+                                          textAlign: TextAlign.right,
+                                          "Sent On: ${date}",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12,
+                                              color: AppColors.darkgrey),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        name,
+                                        style: FontConstant.styleSemiBold(
+                                            fontSize: 13,
+                                            color: AppColors.primaryColor),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 2),
+                                  child: Text(
+                                    "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 12,
+                                        color: AppColors.darkgrey),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 26,
+                                      width: 26,
+                                      decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          shape: BoxShape.circle),
+                                      alignment: Alignment.center,
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: AppColors.constColor,
+                                      ),
+                                    ),
+                                    SizedBox(width: 3),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () => {
+                                          declinedController.declined(
+                                              context, mId),
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            inboxReceivedController.inboxSent(
+                                                context, "Pending");
+                                          })
+                                        },
+                                        child: Text(
+                                          "Delete Request",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12, color: Colors.red),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 26,
+                                      width: 26,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          shape: BoxShape.circle),
+                                      alignment: Alignment.center,
+                                      child: SvgPicture.asset(
+                                          "assets/images/icons/correct.svg"),
+                                    ),
+                                    SizedBox(width: 3),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () => {
+                                          acceptedController.accepted(
+                                              context, mId),
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            inboxReceivedController.inboxSent(
+                                                context, "Pending");
+                                          })
+                                        },
+                                        child: Text(
+                                          "Accept Request",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12,
+                                              color: Colors.green),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}

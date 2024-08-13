@@ -1,0 +1,584 @@
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
+import 'package:devotee/model/dashboard_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
+class HomeBody extends StatefulWidget {
+  const HomeBody({super.key});
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
+  bool isFavorite = false;
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
+  ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
+  // void toggleFavorite() {
+  //   setState(() {
+  //     isFavorite = !isFavorite;
+  //   });
+  // }
+  @override
+  void initState() {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   dashboardController.dashboard(context);
+    // });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String selectedText = "";
+    int selectedIndex = -1;
+
+    final List<List> discover = [
+      ["assets/images/map_mark.png", "Near By", "201"],
+      ["assets/images/education_b.png", "Education", "306"],
+      ["assets/images/profession.png", "Professional", "50"]
+    ];
+    return Column(
+      children: [
+        newMathches(dashboardController.member!.responseData!.matches!),
+        discoverContent(discover),
+        ridConatent("Recently Joined", "See All",
+            dashboardController.member!.responseData!.recentlyJoined!),
+        ridConatent("Interested In You", "",
+            dashboardController.member!.responseData!.intrestedInYou!),
+        profileStatus(),
+        ridConatent("Daily Recommendation", "",
+            dashboardController.member!.responseData!.dailyRecommendation!),
+        SizedBox(
+          height: 25,
+        )
+      ],
+    );
+  }
+
+  Widget newMathches(List<DailyRecommendation> list) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          padding: EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            children: [
+              Text(
+                "New Matches",
+                style: FontConstant.styleSemiBold(
+                    fontSize: 17, color: AppColors.black),
+              ),
+              Spacer(),
+              Text(
+                "See All",
+                style: FontConstant.styleSemiBold(
+                    fontSize: 14, color: AppColors.primaryColor),
+              )
+            ],
+          ),
+        ),
+        Container(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Row(
+                  children: list.map((data) {
+                    String name = data.name??"";
+                    String occupation = data.occupation??"";
+                    String image = data.Photo1 != null
+                        ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
+                        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
+                    return GestureDetector(
+                      onTap: () {
+                        profileDetailsController.profileDetails(
+                            context, data.matriID!);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: 5, bottom: 10, left: 10, right: 10),
+                        decoration: BoxDecoration(
+                          color: AppColors.constColor,
+                          border: Border.all(color: Colors.grey.shade200),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                              child: Stack(children: [
+                                Image.network(
+                                  image,
+                                  width: 315,
+                                  height: 290,
+                                  filterQuality: FilterQuality.high,
+                                  fit: BoxFit.cover,
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: 40,
+                                  width: 40,
+                                  margin: EdgeInsets.only(top: 268, left: 245),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white),
+                                  child: GestureDetector(
+                                    onTap: () => {
+                                      setState(() {
+                                        isFavorite = !isFavorite;
+                                      }),
+                                    },
+                                    child: Icon(
+                                      isFavorite
+                                          ? (Icons.favorite)
+                                          : Icons.favorite_border_rounded,
+                                      color: isFavorite
+                                          ? Colors.red
+                                          : AppColors.primaryColor,
+                                      size: 30,
+                                    ),
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, bottom: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    name,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FontConstant.styleSemiBold(
+                                        fontSize: 17,
+                                        color: AppColors.primaryColor),
+                                  ),
+                                  Text(
+                                    occupation,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 14,
+                                        color: AppColors.darkgrey),
+                                  ),
+                                  Text(
+                                    "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 14,
+                                        color: AppColors.darkgrey),
+                                  ),
+                                  Text(
+                                    "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 14, color: AppColors.black),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget ridConatent(
+      String leftTittle, String rightTitle, List<DailyRecommendation> list) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.only(left: 15, right: 15),
+          child: Row(
+            children: [
+              Text(
+                leftTittle,
+                style: FontConstant.styleSemiBold(
+                    fontSize: 17, color: AppColors.black),
+              ),
+              Spacer(),
+              Text(
+                rightTitle,
+                style: FontConstant.styleSemiBold(
+                    fontSize: 14, color: AppColors.primaryColor),
+              )
+            ],
+          ),
+        ),
+        Container(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 5,
+                ),
+                Row(
+                  children: list.map((data) {
+                    String name = data.name ?? "";
+                    String occupation = data.occupation ?? "";
+                    String image = data.Photo1 != null
+                        ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
+                        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
+                    return GestureDetector(
+                      onTap: () {
+                        profileDetailsController.profileDetails(
+                            context, data.matriID!);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: 5, bottom: 10, left: 5, right: 5),
+                        decoration: BoxDecoration(
+                          // color: selectedIndex == index
+                          //     ? Colors.grey.shade300
+                          //     : Colors.white,
+                          color: AppColors.constColor,
+                          border: Border.all(color: Colors.grey.shade200),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle),
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        "$image",
+                                        filterQuality: FilterQuality.high,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 250,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              name,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: FontConstant.styleSemiBold(
+                                                  fontSize: 15,
+                                                  color:
+                                                      AppColors.primaryColor),
+                                            ),
+                                            Text(
+                                              occupation,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 12,
+                                                  color: AppColors.darkgrey),
+                                            ),
+                                            Text(
+                                              "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 12,
+                                                  color: AppColors.darkgrey),
+                                            ),
+                                            Text(
+                                              "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 12,
+                                                  color: AppColors.black),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 10, right: 10),
+                              height: 1,
+                              width: 320,
+                              color: Colors.grey.shade200,
+                            ),
+                            Container(
+                              width: 320,
+                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/images/like.svg",
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Shortlist",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 11,
+                                                color: AppColors.black),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/images/chat_d.svg",
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Chat Now",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 11,
+                                                color: AppColors.black),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/images/send_icon.svg",
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Send Interest",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 11,
+                                                color: AppColors.black),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget discoverContent(List<List> discover) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.only(left: 15, right: 15),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Discover matches based on",
+            style: FontConstant.styleSemiBold(
+                fontSize: 17, color: AppColors.black),
+          ),
+        ),
+        Container(
+          // height: 291,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 5,
+                ),
+                Row(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: discover.asMap().entries.map((entry) {
+                    int index = entry.key;
+
+                    String image = entry.value[0];
+                    String name = entry.value[1];
+                    String num = entry.value[2];
+
+                    //  String head = entry.value[1];
+
+                    return GestureDetector(
+                      onTap: () {
+                        // setState(() {
+                        //   //  selectedText = head;
+                        //   selectedIndex = index;
+                        // });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        margin: EdgeInsets.only(
+                            top: 5, bottom: 10, left: 5, right: 5),
+                        //   width: 210,
+                        decoration: BoxDecoration(
+                          // color: selectedIndex == index
+                          //     ? Colors.grey.shade300
+                          //     : Colors.white,
+                          color: AppColors.constColor,
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Colors.black.withOpacity(0.1),
+                          //     blurRadius: 10,
+                          //     offset: const Offset(0, 5),
+                          //   ),
+                          // ],
+                          border: Border.all(color: Colors.grey.shade200),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10)),
+                              child: Image.asset(
+                                "$image",
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    name,
+                                    style: FontConstant.styleSemiBold(
+                                        fontSize: 15, color: AppColors.black),
+                                  ),
+                                  Text(
+                                    "$num Matches",
+                                    style: FontConstant.styleSemiBold(
+                                        fontSize: 12, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget profileStatus() {
+    return Container(
+      margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 10),
+      padding: EdgeInsets.all(5),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: Color(0xffE7DDF6),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Profile Status: 60%",
+                style: FontConstant.styleMedium(
+                    fontSize: 11, color: AppColors.black),
+              ),
+              Text(
+                "Complete your profile for more response",
+                style: FontConstant.styleMedium(
+                    fontSize: 11, color: AppColors.black),
+              )
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.all(5),
+            child: Text(
+              "Add Details",
+              style: FontConstant.styleMedium(
+                  fontSize: 11, color: AppColors.constColor),
+            ),
+            decoration: BoxDecoration(
+                color: Color(0xff583689),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+          )
+        ],
+      ),
+    );
+  }
+}
