@@ -24,14 +24,18 @@ class ComplaintController with ChangeNotifier {
 
     try {
       _member = await apiService.Complaint(compalint);
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      //   backgroundColor: AppColors.primaryColor,
-      //   content: Text(
-      //     '${member?.message}',
-      //     style: TextStyle(color: AppColors.constColor),
-      //   ),
-      // ));
-      Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: AppColors.primaryColor,
+        content: Text(
+          '${member?.message}',
+          style: TextStyle(color: AppColors.constColor),
+          
+        ),
+        duration: Duration(seconds: 1)
+      )).closed.then((_) {
+        // After the SnackBar is dismissed, navigate back
+        Navigator.pop(context);
+      });
     } catch (e) {
       _error = e.toString();
       print(_error);

@@ -1,42 +1,35 @@
-import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/model/accepted_model.dart';
-import 'package:devotee/model/feedback_model.dart';
+import 'package:devotee/model/suggestion_model.dart';
+import 'package:devotee/model/testimonial_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
-class FeedbackController with ChangeNotifier {
+class TestimonialController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  FeedbackModel? _member;
+  TestimonialModel? _member;
   var isLoading = false.obs;
   String? _error;
-  FeedbackModel? get member => _member;
+  TestimonialModel? get member => _member;
   String? get error => _error;
 
-  Future<void> feedback(
+  Future<void> testimonial(
     BuildContext context,
-    String feedback,
+   
   ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.Feedback(feedback);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: AppColors.primaryColor,
-        content: Text(
-          '${member?.message}',
-          style: TextStyle(color: AppColors.constColor),
-          
-        ),
-        duration: Duration(seconds: 1)
-      )).closed.then((_) {
-        // After the SnackBar is dismissed, navigate back
-        Navigator.pop(context);
-      });
-
-
+      _member = await apiService.Testimonial();
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   backgroundColor: AppColors.primaryColor,
+      //   content: Text(
+      //     '${member?.message}',
+      //     style: TextStyle(color: AppColors.constColor),
+      //   ),
+      // ));
+      
     } catch (e) {
       _error = e.toString();
       print(_error);

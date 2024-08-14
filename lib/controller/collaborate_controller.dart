@@ -1,28 +1,30 @@
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/model/accepted_model.dart';
-import 'package:devotee/model/feedback_model.dart';
+import 'package:devotee/model/collaborate_model.dart';
+import 'package:devotee/model/suggestion_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
-class FeedbackController with ChangeNotifier {
+class CollaborateController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  FeedbackModel? _member;
+  CollaborateModel? _member;
   var isLoading = false.obs;
   String? _error;
-  FeedbackModel? get member => _member;
+  CollaborateModel? get member => _member;
   String? get error => _error;
 
-  Future<void> feedback(
+  Future<void> collaborate(
     BuildContext context,
-    String feedback,
+    String name,String phoneno,String email,String city,String state
   ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.Feedback(feedback);
+      _member = await apiService.Collaborate(name, phoneno, email, city, state);
+
+      // Show SnackBar and wait for it to be dismissed
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: AppColors.primaryColor,
         content: Text(
@@ -35,7 +37,6 @@ class FeedbackController with ChangeNotifier {
         // After the SnackBar is dismissed, navigate back
         Navigator.pop(context);
       });
-
 
     } catch (e) {
       _error = e.toString();

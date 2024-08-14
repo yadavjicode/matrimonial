@@ -53,6 +53,8 @@ class UploadProfileController extends GetxController {
       if (pickedFiles != null && pickedFiles.isNotEmpty) {
         // Clear the previous selection if necessary
         selectedImages.clear();
+
+        Get.toNamed("/showImage");
         
         // Add new images
         if (pickedFiles.length <= 5) {

@@ -69,7 +69,10 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
-                                onTap: () => {_showBottomSheet(context)},
+                                onTap: () => {
+                                //  _showBottomSheet(context)
+                                  
+                                  },
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 15),
                                   child:
@@ -93,9 +96,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                                 child: CustomButton(
                                     text: "Upload Photos",
                                     onPressed: () {
-                                      completeProfileController
-                                          .profileCompleteFill(context);
-                                      //   Get.toNamed('/partner');
+                                      _showBottomSheet(context);
                                     },
                                     color: AppColors.primaryColor,
                                     textStyle: FontConstant.styleSemiBold(
@@ -149,33 +150,10 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
           return Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(25),
-            height: 300,
+            height:200,
             child: Column(
               children: [
-                 Obx(() => SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: completeProfileController.selectedImages
-                          .map((image) => Stack(
-                                children: [
-                                  Image.file(image, height: 100, width: 100),
-                                  Positioned(
-                                    right: 0,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        completeProfileController.selectedImages.remove(image);
-                                      },
-                                      child: Icon(Icons.remove_circle, color: Colors.red),
-                                    ),
-                                  ),
-                                ],
-                              ))
-                          .toList(),
-                    ),
-                  )),
-                SizedBox(
-                  height: 15,
-                ),
+                
                 Row(
                   //  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

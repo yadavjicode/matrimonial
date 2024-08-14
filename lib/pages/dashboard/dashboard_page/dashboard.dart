@@ -4,6 +4,7 @@ import 'package:devotee/chat/Test/chat_login_screen.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
@@ -37,6 +38,10 @@ class _DashboardState extends State<Dashboard> {
       Get.put(InboxSentController());
   final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
+      CityController cityController =
+Get.put(CityController());
+ StateController stateController =
+      Get.put(StateController());
 
   void login() async {
     if (_editProfileController.member!.member?.matriID != null) {
@@ -65,6 +70,8 @@ class _DashboardState extends State<Dashboard> {
     _editProfileController.userDetails(context);
     inboxSentController.inboxSent(context, "Pending");
     inboxReceivedController.inboxSent(context, "Pending");
+    stateController.fetchStateList("india");
+    
     login();
     super.initState();
   }

@@ -1,10 +1,12 @@
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/testimonial_controller.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class Testimonial extends StatefulWidget {
   const Testimonial({super.key});
@@ -16,44 +18,16 @@ class Testimonial extends StatefulWidget {
 class _TestimonialState extends State<Testimonial> {
   String selectedText = "";
   int selectedIndex = -1;
-  final List<List> matches = [
-    [
-      "Sumitra Mahajan",
-      "Manager",
-      3,
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
-      "assets/images/girla.png"
-    ],
-    [
-      "Manshi Bishnoi",
-      "Sales Executive",
-      4,
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
-      "assets/images/girlb.png"
-    ],
-    [
-      "Kulsharan Sharma",
-      "Manager",
-      5,
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
-      "assets/images/girlc.png"
-    ],
-    [
-      "Pooja Gupta",
-      "Android Developer",
-      2,
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
-      "assets/images/girla.png"
-    ],
-    [
-      "Kavita Singh",
-      "Flutter Developer",
-      1,
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
-      "assets/images/girlb.png"
-    ],
-  ];
-
+  
+ final TestimonialController testimonialController=Get.put(TestimonialController()); 
+ @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      testimonialController.testimonial(context);
+     
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,137 +55,152 @@ class _TestimonialState extends State<Testimonial> {
                 child: Image.asset("assets/images/testimonial.png",
                     fit: BoxFit.cover),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Container(
-                    //   color: AppColors.constColor,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: Column(
-                          children: matches.asMap().entries.map((entry) {
-                            int index = entry.key;
-                            String name = entry.value[0];
-                            String profile = entry.value[1];
-                            int rating = entry.value[2];
-                            String feedback = entry.value[3];
-                            String image = entry.value[4];
-
-                            return GestureDetector(
-                              onTap: () {
-                                // Get.toNamed('/profiledtls');
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: 70,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                  image,
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  name,
-                                                  style: FontConstant
-                                                      .styleSemiBold(
-                                                          fontSize: 14,
-                                                          color: AppColors
-                                                              .primaryColor),
-                                                ),
-                                                SizedBox(width: 20),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 2),
-                                                  child: Text(
-                                                    profile,
-                                                    style: FontConstant
-                                                        .styleMedium(
-                                                            fontSize: 12,
-                                                            color: AppColors
-                                                                .black),
-                                                  ),
-                                                ),
-                                                RatingBar.builder(
-                                                  itemSize: 20,
-                                                  initialRating: rating
-                                                      .toDouble(), // Initial rating
-                                                  minRating:
-                                                      1, // Minimum rating
-                                                  direction: Axis
-                                                      .horizontal, // Direction of the rating bar
-                                                  allowHalfRating:
-                                                      true, // Allow half rating
-                                                  itemCount:
-                                                      rating, // Number of stars
-                                                  // itemPadding: EdgeInsets.symmetric(
-                                                  //     horizontal:
-                                                  //         4.0), // Padding between stars
-                                                  itemBuilder: (context, _) =>
-                                                      Icon(
-                                                    Icons.star,
-                                                    color: Color(
-                                                        0xffEDB118), // Color of the stars
-                                                  ),
-                                                  onRatingUpdate: (rating) {
-                                                    print(
-                                                        rating); // Callback to handle rating change
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 8,
-                                          right: 8,
-                                          top: 2,
-                                          bottom: 10),
-                                      child: DrawerCommanCode()
-                                          .buildText(feedback),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+              Obx(() {
+             return Expanded(
+               child: Stack(
+               children: [
+                if (testimonialController.isLoading.value == false)
+                testimonialContent(),
+             
+                if (testimonialController.isLoading.value)
+                  Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
                     ),
                   ),
-                ),
-              ),
+                         ],
+                       ),
+             );
+        })
             ],
           )
         ],
+      ),
+    );
+  }
+
+  Widget testimonialContent(){
+    
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            children: testimonialController.member!.data!.map((data) {
+              String name = data.name??"";
+              String profile = data.designation??"";
+              int rating = data.rating??"";
+              String feedback = data.description??"";
+              String image = data.image != null
+           ? "http://devoteematrimony.aks.5g.in/${data.image}"
+           : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+      
+              return GestureDetector(
+                onTap: () {
+                  // Get.toNamed('/profiledtls');
+                },
+                child: Container(
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+              height: 70,
+              width: 70,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: AppColors.grey),
+              child: ClipOval(
+                  child: Image.network(
+                image,
+                fit: BoxFit.cover,
+              )),
+            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    name,
+                                    style: FontConstant
+                                        .styleSemiBold(
+                                            fontSize: 14,
+                                            color: AppColors
+                                                .primaryColor),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(
+                                            top: 2),
+                                    child: Text(
+                                      profile,
+                                      style: FontConstant
+                                          .styleMedium(
+                                              fontSize: 12,
+                                              color: AppColors
+                                                  .black),
+                                    ),
+                                  ),
+                                  RatingBar.builder(
+                                    itemSize: 20,
+                                    initialRating: rating
+                                        .toDouble(), // Initial rating
+                                    minRating:
+                                        0, // Minimum rating
+                                    direction: Axis
+                                        .horizontal, // Direction of the rating bar
+                                    allowHalfRating:
+                                        true, // Allow half rating
+                                    itemCount:
+                                        rating, // Number of stars
+                                    // itemPadding: EdgeInsets.symmetric(
+                                    //     horizontal:
+                                    //         4.0), // Padding between stars
+                                    itemBuilder: (context, _) =>
+                                        Icon(
+                                      Icons.star,
+                                      color: Color(
+                                          0xffEDB118), // Color of the stars
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      print(
+                                          rating); // Callback to handle rating change
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8,
+                            right: 8,
+                            top: 2,
+                            bottom: 10),
+                        child: DrawerCommanCode()
+                            .buildText(feedback),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
       ),
     );
   }

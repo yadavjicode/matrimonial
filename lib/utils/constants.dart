@@ -38,6 +38,9 @@ class ApiConstants {
   static const String feedback_Url = "member/save-feedback";
   static const String complaint_Url = "member/save-complaint";
   static const String dashboard_Url = "member/dashboard";
+  static const String testimonial_Url ="member/testimonial-list";
+  static const String suggestion_Url ="member/save-suggestion";
+ static const String collaborate_Url = "member/save-collaborate";
 }
 
 late Size mq;

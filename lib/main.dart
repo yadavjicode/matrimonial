@@ -1,5 +1,7 @@
 import 'package:devotee/chat/firebase_options.dart';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/lists/location_list.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +30,18 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       initialRoute: AppRoutes.splash,
       getPages: AppRoutes.routes,
+      initialBinding: MyBindings(),
     );
+  }
+}
+
+class MyBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<StateController>(() => StateController());
+
+    // // Bind CityController
+    Get.lazyPut<CityController>(() => CityController());
   }
 }
 

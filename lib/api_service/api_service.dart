@@ -1,6 +1,7 @@
 import 'package:devotee/model/about_groombride_model.dart';
 import 'package:devotee/model/accepted_model.dart';
 import 'package:devotee/model/basic_details_model.dart';
+import 'package:devotee/model/collaborate_model.dart';
 import 'package:devotee/model/complaint_model.dart';
 import 'package:devotee/model/contact_details_model.dart';
 import 'package:devotee/model/dashboard_model.dart';
@@ -22,8 +23,11 @@ import 'package:devotee/model/profile_details_model.dart';
 import 'package:devotee/model/search_model.dart';
 import 'package:devotee/model/sent_invitation_model.dart';
 import 'package:devotee/model/spiritual_model.dart';
+import 'package:devotee/model/suggestion_model.dart';
+import 'package:devotee/model/testimonial_model.dart';
 import 'package:devotee/model/user_model.dart';
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
+import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -1031,9 +1035,9 @@ class ApiService {
   }
 //==== End Api inbox Dashboard==========================================================================================
 
-//==== Start Api Dashboard==========================================================================================
+//==== Start Api Testimonial==========================================================================================
 
-  Future<DashboardModel> UploadProfile(String profileUrl) async {
+  Future<TestimonialModel> Testimonial() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -1042,27 +1046,83 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.testimonial_Url}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-       body: jsonEncode({
-        "step 12":"1",
-        "feedback": profileUrl,
-      }),
+      
     );
-    
 
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       print(responseJson);
-      return DashboardModel.fromJson(responseJson);
+      return TestimonialModel.fromJson(responseJson);
     } else {
       final responseJson = json.decode(response.body);
       throw Exception('Failed: ${responseJson['message']}');
     }
   }
-//==== End Api inbox Dashboard==========================================================================================
+//==== End Api inbox Testimonial==========================================================================================
 
+//==== Start Api Suggestion==========================================================================================
+
+  Future<SuggestionModel> Suggestion(String suggestion) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.suggestion_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({"suggestion": suggestion}),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return SuggestionModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api inbox Suggestion==========================================================================================
+
+//==== Start Api Collaborate==========================================================================================
+
+  Future<CollaborateModel>Collaborate(String name,String phoneno,String email,String city,String state) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.collaborate_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(
+        {"name": name,"mobile":phoneno,"email":email,"state":state,"city":city}),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return CollaborateModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api inbox Collaborate==========================================================================================
 }

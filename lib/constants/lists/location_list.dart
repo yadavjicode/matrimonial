@@ -347,3 +347,147 @@ class CityControllerPermanent extends GetxController {
     }
   }
 }
+ 
+class StateController extends GetxController {
+  // final CountryController countryController = Get.find<CountryController>();
+  var selectedItem = RxnString();
+  var stateLists = <String>[].obs;
+  var isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Listen for changes in the selected country and fetch state list accordingly
+    // ever(countryController.selectedItem, (_) {
+    //   fetchStateList();
+    // });
+    fetchStateList("india");
+  }
+
+  List<String> getStateList() {
+    return stateLists.toList();
+  }
+
+  void selectItem(String? value) {
+    selectedItem.value = value;
+  }
+
+  void fetchStateList(String selectedCountry ) async {
+    isLoading.value = true;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.state_url}';
+
+      // final selectedCountry = countryController.selectedItem.value;
+      if (selectedCountry == null) {
+        print('No country selected');
+        stateLists.clear(); // Clear the state list if no country is selected
+        return;
+      }
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'countryarray': [selectedCountry],
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data['status'] == true) {
+          List<String> fetchedStates =
+              List<String>.from(data['data'].map((item) => item['state']));
+          stateLists.assignAll(fetchedStates);
+          print(fetchedStates);
+        } else {
+          // Handle API response status false
+        }
+      } else {
+        // Handle non-200 status code
+        print('Failed to fetch state list: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle fetch error
+      print('Error fetching state list: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+}
+
+class CityController extends GetxController {
+  final StateController stateController =
+      Get.find<StateController>();
+  var selectedItem = RxnString();
+  var cityLists = <String>[].obs;
+  var isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Listen for changes in the selected country and fetch state list accordingly
+    ever(stateController.selectedItem, (_) {
+      fetchCityList();
+    });
+  }
+
+  List<String> getCityList() {
+    return cityLists.toList();
+  }
+
+  void selectItem(String? value) {
+    selectedItem.value = value;
+  }
+
+  void fetchCityList() async {
+    isLoading.value = true;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.city_Url}';
+
+      final selectedState = stateController.selectedItem.value;
+      if (selectedState == null) {
+        print('No state selected');
+        cityLists.clear(); // Clear the state list if no country is selected
+        return;
+      }
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'state': selectedState,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        if (data['status'] == true) {
+          List<String> fetchedCitys =
+              List<String>.from(data['data'].map((item) => item['city']));
+          cityLists.assignAll(fetchedCitys);
+          print(fetchedCitys);
+        } else {
+          // Handle API response status false
+        }
+      } else {
+        // Handle non-200 status code
+        print('Failed to fetch city list: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle fetch error
+      print('Error fetching city list: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+}
