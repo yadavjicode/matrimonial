@@ -15,6 +15,7 @@ import 'package:devotee/model/inbox_received_model.dart';
 import 'package:devotee/model/inbox_sent_model.dart';
 import 'package:devotee/model/location_details_model.dart';
 import 'package:devotee/model/login_model.dart';
+import 'package:devotee/model/matches_model.dart';
 import 'package:devotee/model/otp_model.dart';
 import 'package:devotee/model/partner_preference_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
@@ -685,7 +686,6 @@ class ApiService {
 //==== Start Api Search ==========================================================================================
 
   Future<SearchsModel> Search(
-    String gender,
     String ageFrom,
     String ageTo,
     String heightFrom,
@@ -700,6 +700,20 @@ class ApiService {
   ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+     final Map<String, dynamic> body = {};
+
+  // Conditionally add parameters if they are not null
+  if (ageFrom != null) body['From_Age'] = ageFrom;
+  if (ageTo != null) body['To_Age'] = ageTo;
+  if (heightFrom != null) body['From_Height'] = heightFrom;
+  if (heightTo != null) body['To_Height'] = heightTo;
+  if (maritalStatus != null) body['Maritalstatus'] = maritalStatus;
+  if (religion != null) body['Religion'] = religion;
+  if (caste != null) body['Caste'] = caste;
+  if (country != null) body['country'] = country;
+  if (state != null) body['state'] = state;
+  if (city != null) body['City'] = city;
+  if (education != null) body['Education'] = education;
 
     if (token == null) {
       throw Exception('Token is not available');
@@ -708,24 +722,11 @@ class ApiService {
     final response = await http.post(
       Uri.parse('${ApiConstants.baseUrl}${ApiConstants.search_Url}'),
       headers: {
-        // 'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode({
-        "Gender": gender,
-        "From_Age": ageFrom,
-        'To_Age': ageTo,
-        "From_Height": heightFrom,
-        "To_Height": heightTo,
-        "Maritalstatus": maritalStatus,
-        "Religion": religion,
-        "Caste": caste,
-        "country": country,
-        "state": state,
-        "City": city,
-        "Education": education,
-      }),
-    );
+        body: jsonEncode(body));
+    
 
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
@@ -1125,4 +1126,39 @@ class ApiService {
     }
   }
 //==== End Api inbox Collaborate==========================================================================================
+
+//==== Start Api inbox Matches==========================================================================================
+
+  Future<MatchesModel> Matches(
+    String status,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matches_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "type": status,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return MatchesModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+  
+//==== End Api inbox Matches==========================================================================================
 }

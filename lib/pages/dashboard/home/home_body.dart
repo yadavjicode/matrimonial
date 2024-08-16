@@ -1,3 +1,6 @@
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
@@ -92,7 +95,7 @@ class _HomeBodyState extends State<HomeBody> {
               children: [
                 Row(
                   children: list.map((data) {
-                    String name = data.name??"";
+                    String name = "${data.name??""} ${data.surename??""}";
                     String occupation = data.occupation??"";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
@@ -238,7 +241,7 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
                 Row(
                   children: list.map((data) {
-                    String name = data.name ?? "";
+                    String name = "${data.name??""} ${data.surename??""}";
                     String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
@@ -246,8 +249,7 @@ class _HomeBodyState extends State<HomeBody> {
 
                     return GestureDetector(
                       onTap: () {
-                        profileDetailsController.profileDetails(
-                            context, data.matriID!);
+                        
                       },
                       child: Container(
                         margin: EdgeInsets.only(
@@ -262,73 +264,79 @@ class _HomeBodyState extends State<HomeBody> {
                         ),
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: 70,
-                                    height: 70,
-                                    decoration:
-                                        BoxDecoration(shape: BoxShape.circle),
-                                    child: ClipOval(
-                                      child: Image.network(
-                                        "$image",
-                                        filterQuality: FilterQuality.high,
-                                        fit: BoxFit.fill,
+                            GestureDetector(
+                              onTap: () => {
+                                profileDetailsController.profileDetails(
+                            context, data.matriID!)
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 70,
+                                      height: 70,
+                                      decoration:
+                                          BoxDecoration(shape: BoxShape.circle),
+                                      child: ClipOval(
+                                        child: Image.network(
+                                          "$image",
+                                          filterQuality: FilterQuality.high,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  width: 250,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              name,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleSemiBold(
-                                                  fontSize: 15,
-                                                  color:
-                                                      AppColors.primaryColor),
-                                            ),
-                                            Text(
-                                              occupation,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.darkgrey),
-                                            ),
-                                            Text(
-                                              "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.darkgrey),
-                                            ),
-                                            Text(
-                                              "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.black),
-                                            )
-                                          ],
+                                  Container(
+                                    width: 250,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                name,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontConstant.styleSemiBold(
+                                                    fontSize: 15,
+                                                    color:
+                                                        AppColors.primaryColor),
+                                              ),
+                                              Text(
+                                                occupation,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: AppColors.darkgrey),
+                                              ),
+                                              Text(
+                                                "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: AppColors.darkgrey),
+                                              ),
+                                              Text(
+                                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: AppColors.black),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             Container(
                               padding: EdgeInsets.only(left: 10, right: 10),
@@ -366,25 +374,39 @@ class _HomeBodyState extends State<HomeBody> {
                                     ),
                                   ),
                                   Expanded(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/images/chat_d.svg",
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Chat Now",
-                                            style: FontConstant.styleMedium(
-                                                fontSize: 11,
-                                                color: AppColors.black),
+                                    child: GestureDetector(
+                                            onTap: () async {
+                      //hide alert dialog
+                      Get.to(HomeScreen());
+                      if (data.matriID!.trim().isNotEmpty&& data.matriID!=null ) {
+                        await APIs.addChatUser(data.matriID!).then((value) {
+                          if (!value) {
+                            Dialogs.showSnackbar(
+                                context, 'User does not Exists!');
+                          }
+                        });
+                      }
+                    },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/images/chat_d.svg",
+                                            height: 20,
+                                            width: 20,
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              "Chat Now",
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 11,
+                                                  color: AppColors.black),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Expanded(

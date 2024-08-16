@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class AllMatches extends StatefulWidget {
-  const AllMatches({super.key});
+class DailyRecommendeds extends StatefulWidget {
+  const DailyRecommendeds({super.key});
 
   @override
-  State<AllMatches> createState() => _AllMatchesState();
+  State<DailyRecommendeds> createState() => _DailyRecommendedsState();
 }
 
-class _AllMatchesState extends State<AllMatches> {
+class _DailyRecommendedsState extends State<DailyRecommendeds> {
   String selectedText = "";
   int selectedIndex = -1;
   final MatchesController matchesController=Get.put(MatchesController());
   @override
   void initState() {
      WidgetsBinding.instance.addPostFrameCallback((_) {
-      matchesController.matches(context, "matches");
+      matchesController.matches(context, "daily_recommendation");
     });
     super.initState();
   }

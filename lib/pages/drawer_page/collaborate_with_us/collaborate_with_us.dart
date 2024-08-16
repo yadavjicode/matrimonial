@@ -23,6 +23,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
   final TextEditingController name = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
+ // StateController countryController = Get.put(StateController());
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
   final CityController cityController = Get.put(CityController());
@@ -47,8 +48,8 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
   void initState() {
     super.initState();
 
-    stateController
-        .fetchStateList(editProfileController.member!.member!.country ?? "");
+    // stateController
+    //     .fetchStateList();
   }
 
   @override
@@ -139,6 +140,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                               SizedBox(
                                 height: 10,
                               ),
+                           
                               Row(
                                 children: [
                                   Expanded(
@@ -156,8 +158,8 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                       } else {
                                         return buildDropdown2(
                                           'State',
-                                          stateController.stateLists,
-                                          // cityControllerPermanent.selectedItem,
+                                          stateController.getStateList(),
+                                      //    stateController.selectedItem,
                                           (value) {
                                             setState(() {
                                               selectedCity = value;

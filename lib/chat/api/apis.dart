@@ -122,6 +122,7 @@ class APIs with ChangeNotifier {
 
   // for checking if user exists or not?
   static Future<bool> userExists() async {
+    
     print(
         "my user ====${_editProfileController.member!.member!.matriID.toString()}");
     return (await firestore
@@ -129,6 +130,7 @@ class APIs with ChangeNotifier {
             .doc(_editProfileController.member!.member!.matriID)
             .get())
         .exists;
+        
   }
 
   // for adding an chat user for our conversation
@@ -172,6 +174,7 @@ class APIs with ChangeNotifier {
         await createUser().then((value) => getSelfInfo());
       }
     });
+    
   }
 
   // for creating a new user

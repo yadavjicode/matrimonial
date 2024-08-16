@@ -30,20 +30,20 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       initialRoute: AppRoutes.splash,
       getPages: AppRoutes.routes,
-      initialBinding: MyBindings(),
+      // initialBinding: MyBindings(),
     );
   }
 }
 
-class MyBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<StateController>(() => StateController());
+// class MyBindings extends Bindings {
+//   @override
+//   void dependencies() {
+//     Get.lazyPut<StateController>(() => StateController());
 
-    // // Bind CityController
-    Get.lazyPut<CityController>(() => CityController());
-  }
-}
+//     // // Bind CityController
+//     Get.lazyPut<CityController>(() => CityController());
+//   }
+// }
 
 Future<void> _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

@@ -11,9 +11,28 @@ class SearchsController with ChangeNotifier {
   SearchsModel? get member => _member;
   String? get error => _error;
 
+String getAge(String ageStr) {
+  Map<String, String> monthMap = {};
+
+  // Populate the map with ages from 18 to 50
+  for (int i = 18; i <= 50; i++) {
+    monthMap["$i Yrs"] = i.toString();
+  }
+
+  // Convert the input to the corresponding age number
+  return monthMap[ageStr] ?? "Invalid age";
+}
+
+String convertToFeetAndInches(double value) {
+  int feet = value.floor(); // Get the whole number part as feet
+  double decimalPart = value - feet; // Get the decimal part
+  int inches = (decimalPart * 12).round(); // Convert the decimal part to inches
+
+  return '${feet}ft ${inches}in';
+}
+
   Future<void> search(
     BuildContext context,
-    String gender,
     String ageFrom,
     String ageTo,
     String heightFrom,
@@ -32,7 +51,7 @@ class SearchsController with ChangeNotifier {
 
     try {
       _member = await apiService.Search(
-          gender,
+          
           ageFrom,
           ageTo,
           heightFrom,

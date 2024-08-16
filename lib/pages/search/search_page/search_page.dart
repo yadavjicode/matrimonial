@@ -25,26 +25,16 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   int _selectedIndex = -1;
-  double _currentValue = 3.0;
+ RangeValues _currentRangeValues = RangeValues(3, 7);
+ String? _heightFrom;
+  String? _heightTo;
+
   bool selectprofileA = false;
   bool selectprofileB = false;
   bool selectprofileC = false;
 
   SearchsController searchController = Get.put(SearchsController());
-
-  String getLookingFor() {
-    if (_selectedIndex == 0) {
-      return "Male";
-    } else if (_selectedIndex == 1) {
-      return "Female";
-    } else {
-      return "";
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    HeightController heightController = Get.put(HeightController());
+  HeightController heightController = Get.put(HeightController());
     NumberController numberController = Get.put(NumberController());
 
     AgeController ageController = Get.put(AgeController());
@@ -58,8 +48,7 @@ class _SearchPageState extends State<SearchPage> {
         Get.put(CityControllerPermanent());
     EducationController educationController = Get.put(EducationController());
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    
 
     String? selectAgeFrom;
     String? selectAgeTo;
@@ -70,6 +59,27 @@ class _SearchPageState extends State<SearchPage> {
     String? selectState;
     String? selectCity;
     String? selectEducation;
+
+  String getLookingFor() {
+    if (_selectedIndex == 0) {
+      return "Male";
+    } else if (_selectedIndex == 1) {
+      return "Female";
+    } else {
+      return "";
+    }
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    religionsController.noSuchMethod;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.primaryLight,
@@ -223,20 +233,25 @@ class _SearchPageState extends State<SearchPage> {
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: Colors.black),
                             ),
-                            Slider(
-                              activeColor: AppColors.purple,
-                              value: _currentValue,
-                              min: 3.0,
-                              max: 7.0,
-                              divisions:
-                                  40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
-                              label: _currentValue.toStringAsFixed(1),
-                              onChanged: (double value) {
-                                setState(() {
-                                  _currentValue = value;
-                                });
-                              },
-                            ),
+                           RangeSlider(
+            activeColor: AppColors.purple,
+            values: _currentRangeValues,
+            min: 3.0,
+            max: 7.0,
+            divisions: 40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
+            labels: RangeLabels(
+              _currentRangeValues.start.toStringAsFixed(1),
+              _currentRangeValues.end.toStringAsFixed(1),
+            ),
+            onChanged: (RangeValues values) {
+              setState(() {
+                _currentRangeValues = values;
+                _heightFrom=_currentRangeValues.start.toStringAsFixed(1);
+                _heightTo=_currentRangeValues.end.toStringAsFixed(1);
+                
+              });
+            },
+          ),
                             Row(
                               children: [
                                 Text(
@@ -450,19 +465,18 @@ class _SearchPageState extends State<SearchPage> {
                         onPressed: () {
                           searchController.search(
                               context,
-                              getLookingFor(),
-                              selectAgeFrom.toString(),
-                              selectAgeTo.toString(),
-                              "3",
-                              "7",
-                              selectMaritalStatus.toString(),
-                              selectReligion.toString(),
-                              selectCaste.toString(),
-                              selectCountry.toString(),
-                              selectState.toString(),
-                              selectCity.toString(),
-                              selectEducation.toString());
-                          print("Lokinf for==============${getLookingFor()}");
+                               searchController.getAge(selectAgeFrom??""),
+                              searchController.getAge(selectAgeTo??""),
+                              searchController.convertToFeetAndInches(double.parse(_heightFrom??"3.0")),
+                              searchController.convertToFeetAndInches(double.parse(_heightTo??"7.0")),
+                              selectMaritalStatus??"",
+                              selectReligion??"",
+                              selectCaste??"",
+                              selectCountry??"",
+                              selectState??"",
+                              selectCity??"",
+                              selectEducation??"");
+                          print("Lokinf for==============${selectCaste??""}");
 
                           // Get.toNamed('/searchresult');
                         },

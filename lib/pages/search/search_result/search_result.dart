@@ -129,7 +129,8 @@ class _SearchResultState extends State<SearchResult> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
-                    children: searchController.member!.data!.map((data) {
+                    children: searchController.member!.responseData!.data!
+                        .map((data) {
                       //  int index = data.;
                       String name = "${data.name ?? ""} ${data.surename ?? ""}";
                       String occupation = data.occupation ?? "";
@@ -140,8 +141,8 @@ class _SearchResultState extends State<SearchResult> {
                       String aadress =
                           " ${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"}${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country ?? ""}";
                       String id = data.matriID ?? "";
-                      String image = data.profileImages != null
-                          ? "http://devoteematrimony.aks.5g.in/${data.profileImages}"
+                      String image = data.photo1 != null
+                          ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
                           : "https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
                       // // String head = entry.value[1];
 

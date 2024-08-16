@@ -1,6 +1,4 @@
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/screens/auth/login_screen.dart';
-import 'package:devotee/chat/Test/chat_login_screen.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -12,12 +10,6 @@ import 'package:devotee/pages/dashboard/profile/edit_profile/edit_profile.dart';
 import 'package:devotee/pages/dashboard/home/home_page.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
-import 'package:devotee/pages/search/search_page/search_page.dart';
-import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/pages/dashboard/home/home_page.dart';
-import 'package:devotee/pages/search/search_page/search_page.dart';
-import 'package:devotee/pages/extra/show_profile/show_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -38,10 +30,9 @@ class _DashboardState extends State<Dashboard> {
       Get.put(InboxSentController());
   final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
-      CityController cityController =
-Get.put(CityController());
- StateController stateController =
-      Get.put(StateController());
+      StateController stateController = Get.put(StateController());
+      
+
 
   void login() async {
     if (_editProfileController.member!.member?.matriID != null) {
@@ -70,7 +61,7 @@ Get.put(CityController());
     _editProfileController.userDetails(context);
     inboxSentController.inboxSent(context, "Pending");
     inboxReceivedController.inboxSent(context, "Pending");
-    stateController.fetchStateList("india");
+     stateController.fetchStateList();
     
     login();
     super.initState();

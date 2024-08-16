@@ -174,7 +174,7 @@ class _LocationState extends State<Location> {
                         ),
                         const SizedBox(
                           height: 20,
-                        ),
+                        ),   
                         Obx(() {
                           if (stateControllerPermanent.isLoading.value) {
                             return Center(

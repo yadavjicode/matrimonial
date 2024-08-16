@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class AllMatches extends StatefulWidget {
-  const AllMatches({super.key});
+class DesiredPartner extends StatefulWidget {
+  const DesiredPartner({super.key});
 
   @override
-  State<AllMatches> createState() => _AllMatchesState();
+  State<DesiredPartner> createState() => _DesiredPartnerState();
 }
 
-class _AllMatchesState extends State<AllMatches> {
+class _DesiredPartnerState extends State<DesiredPartner> {
   String selectedText = "";
   int selectedIndex = -1;
   final MatchesController matchesController=Get.put(MatchesController());
@@ -49,6 +49,7 @@ class _AllMatchesState extends State<AllMatches> {
         member.data== null) {
       return Center(child: Text("No data available"));
     }
+    
     return  SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
