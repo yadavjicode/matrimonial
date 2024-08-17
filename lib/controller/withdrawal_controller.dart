@@ -1,22 +1,21 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
-import 'package:devotee/model/profile_details_model.dart';
-import 'package:devotee/model/search_model.dart';
-import 'package:devotee/model/sent_invitation_model.dart';
+import 'package:devotee/model/accepted_model.dart';
+import 'package:devotee/model/withdrawal_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
-class SentInvitationController with ChangeNotifier {
+class WithdrawalController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  SentInvitationModel? _member;
+  WithDrawalModel? _member;
   var isLoading = false.obs;
   String? _error;
-  SentInvitationModel? get member => _member;
+  WithDrawalModel? get member => _member;
   String? get error => _error;
 
-  Future<void> sentInvitation(
+  Future<void> withdrawal(
     BuildContext context,
     String id,
   ) async {
@@ -25,10 +24,10 @@ class SentInvitationController with ChangeNotifier {
     notifyListeners();
 
     try {
-      _member = await apiService.SentInvitation(id);
-      CustomDialog.show(
+      _member = await apiService.Withdrawal(id);
+       CustomDialog.show(
                   context,
-                  'Sent Invitation',
+                  'Withdrawal',
                   '${member!.message}',
                   dialogType:DialogType.success,
                  
@@ -36,7 +35,9 @@ class SentInvitationController with ChangeNotifier {
     } catch (e) {
       _error = e.toString();
       print(_error);
-       CustomDialog.show(
+
+      // Show error message using ScaffoldMessenger
+     CustomDialog.show(
                   context,
                   'Error',
                   '${_error}',

@@ -3,6 +3,8 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/logout.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/controller/sent_invitation_controller.dart';
+import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/pages/dashboard/home/home_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +25,10 @@ class _HomeState extends State<Home> {
       Get.put(EditProfileController());
   final DashboardController dashboardController =
       Get.put(DashboardController());
+  final ShortlistController shortlistController =
+      Get.put(ShortlistController());
+  final SentInvitationController sentInvitationController =
+      Get.put(SentInvitationController());
 
   @override
   void initState() {
@@ -195,10 +201,20 @@ class _HomeState extends State<Home> {
                         child: RefreshIndicator(
                           color: AppColors.primaryColor,
                           onRefresh: () async {},
-                          child: Container(
-                              child: SingleChildScrollView(
-                            child: HomeBody(),
-                          )),
+                          child: Container(child: Obx(() {
+                            return Stack(children: [
+                              SingleChildScrollView(
+                                child: Stack(children: [HomeBody()]),
+                              ),
+                              if (shortlistController.isLoading.value ||
+                                  sentInvitationController.isLoading.value)
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                )
+                            ]);
+                          })),
                         ),
                       ),
                     if (dashboardController.isLoading.value ||

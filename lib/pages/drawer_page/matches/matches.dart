@@ -40,7 +40,7 @@ class _MatchesState extends State<Matches> {
               alignment: Alignment.topRight,
               child: Image.asset("assets/images/bg3.png")),
           Padding(
-            padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+            padding: const EdgeInsets.only(top: 15, left: 16, right: 16),
             child: DefaultTabController(
               length: 3,
               child: Column(

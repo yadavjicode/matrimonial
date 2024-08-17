@@ -1,4 +1,5 @@
 import 'package:devotee/controller/inbox_sent_controller.dart';
+import 'package:devotee/controller/withdrawal_controller.dart';
 import 'package:devotee/model/profile_a_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ class SentPending extends StatefulWidget {
 }
 
 class _SentPendingState extends State<SentPending> {
-  InboxSentController inboxSentController = Get.put(InboxSentController());
+ final InboxSentController inboxSentController = Get.put(InboxSentController());
+  final WithdrawalController withdrawalController=Get.put(WithdrawalController());
   @override
   void initState() {
     // TODO: implement initState
@@ -67,8 +69,8 @@ class _SentPendingState extends State<SentPending> {
               String date = DateFormat('dd-MM-yyyy')
                   .format(DateTime.parse(data.updatedAt));
               String mId = data.receicedMatriID ?? "";
-              String image = data.profileImage != null
-                  ? "http://devoteematrimony.aks.5g.in/${data.profileImage}"
+              String image = data.photo1 != null
+                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
                   : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
               return Container(
                 //  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
@@ -185,30 +187,47 @@ class _SentPendingState extends State<SentPending> {
                       padding: const EdgeInsets.only(
                           left: 12, right: 12, bottom: 12),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            height: 26,
-                            width: 26,
-                            decoration: BoxDecoration(
-                                color: Colors.red, shape: BoxShape.circle),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.delete,
-                              color: AppColors.constColor,
+                          GestureDetector(
+                              onTap: () => {
+                                          withdrawalController.withdrawal(
+                                              context, mId),
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            inboxSentController.inboxSent(
+                                                context, "Pending");
+                                          })
+                                        },
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 26,
+                                  width: 26,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red, shape: BoxShape.circle),
+                                  alignment: Alignment.center,
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: AppColors.constColor,
+                                  ),
+                                  // child: Image.asset(
+                                  //     "assets/images/delete.png"),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  "Withdrawal",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 12, color: Colors.red),
+                                )
+                              ],
                             ),
-                            // child: Image.asset(
-                            //     "assets/images/delete.png"),
                           ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Withdrawal",
-                            style: FontConstant.styleMedium(
-                                fontSize: 12, color: Colors.red),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/images/whatsapp.png"),
+                          Row(
+                            children: [
+                           Image.asset("assets/images/whatsapp.png"),
                           SizedBox(
                             width: 5,
                           ),
@@ -217,7 +236,10 @@ class _SentPendingState extends State<SentPending> {
                             style: FontConstant.styleMedium(
                                 fontSize: 12, color: Colors.green),
                           ),
-                          Spacer(),
+                            ],
+                          ),
+                          Row(
+                            children: [
                           Image.asset("assets/images/call.png"),
                           SizedBox(
                             width: 5,
@@ -227,6 +249,11 @@ class _SentPendingState extends State<SentPending> {
                             style: FontConstant.styleMedium(
                                 fontSize: 12, color: AppColors.purple),
                           ),
+                            ],
+                          )
+                         
+                          
+                          
                         ],
                       ),
                     )

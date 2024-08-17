@@ -52,10 +52,8 @@ class _AllMatchesState extends State<AllMatches> {
     return  SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: matchesController.member!.data!.map((data) {
-          // int index = entry.key;
+      
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
           String image = data.photo1 != null
                   ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
@@ -236,15 +234,12 @@ class _AllMatchesState extends State<AllMatches> {
                                 height: 20,
                                 width: 20,
                               ),
-                             
+                             SizedBox(width: 5,),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Shortlist",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 11, color: AppColors.black),
-                                  ),
+                                child: Text(
+                                  "Shortlist",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 11, color: AppColors.black),
                                 ),
                               )
                             ],
@@ -258,15 +253,12 @@ class _AllMatchesState extends State<AllMatches> {
                                 height: 20,
                                 width: 20,
                               ),
-                            
+                            SizedBox(width: 5,),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Chat Now",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 11, color: AppColors.black),
-                                  ),
+                                child: Text(
+                                  "Chat Now",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 11, color: AppColors.black),
                                 ),
                               )
                             ],
@@ -282,17 +274,13 @@ class _AllMatchesState extends State<AllMatches> {
                                 height: 20,
                                 width: 20,
                               ),
-                             
+                             SizedBox(width: 5,),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
+                                child: Text(
                                   
-                                  child: Text(
-                                    
-                                    "View Profile",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 11, color: AppColors.black),
-                                  ),
+                                  "View Profile",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 11, color: AppColors.black),
                                 ),
                               )
                             ],

@@ -23,10 +23,13 @@ import 'package:devotee/model/profile_a_model.dart';
 import 'package:devotee/model/profile_details_model.dart';
 import 'package:devotee/model/search_model.dart';
 import 'package:devotee/model/sent_invitation_model.dart';
+import 'package:devotee/model/shortlist_model.dart';
+import 'package:devotee/model/shortlisted_list_model.dart';
 import 'package:devotee/model/spiritual_model.dart';
 import 'package:devotee/model/suggestion_model.dart';
 import 'package:devotee/model/testimonial_model.dart';
 import 'package:devotee/model/user_model.dart';
+import 'package:devotee/model/withdrawal_model.dart';
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
 import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/utils/constants.dart';
@@ -700,33 +703,32 @@ class ApiService {
   ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-     final Map<String, dynamic> body = {};
+    final Map<String, dynamic> body = {};
 
-  // Conditionally add parameters if they are not null
-  if (ageFrom != null) body['From_Age'] = ageFrom;
-  if (ageTo != null) body['To_Age'] = ageTo;
-  if (heightFrom != null) body['From_Height'] = heightFrom;
-  if (heightTo != null) body['To_Height'] = heightTo;
-  if (maritalStatus != null) body['Maritalstatus'] = maritalStatus;
-  if (religion != null) body['Religion'] = religion;
-  if (caste != null) body['Caste'] = caste;
-  if (country != null) body['country'] = country;
-  if (state != null) body['state'] = state;
-  if (city != null) body['City'] = city;
-  if (education != null) body['Education'] = education;
+    // Conditionally add parameters if they are not null
+    if (ageFrom != null) body['From_Age'] = ageFrom;
+    if (ageTo != null) body['To_Age'] = ageTo;
+    if (heightFrom != null) body['From_Height'] = heightFrom;
+    if (heightTo != null) body['To_Height'] = heightTo;
+    if (maritalStatus != null) body['Maritalstatus'] = maritalStatus;
+    if (religion != null) body['Religion'] = religion;
+    if (caste != null) body['Caste'] = caste;
+    if (country != null) body['country'] = country;
+    if (state != null) body['state'] = state;
+    if (city != null) body['City'] = city;
+    if (education != null) body['Education'] = education;
 
     if (token == null) {
       throw Exception('Token is not available');
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.search_Url}'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.search_Url}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
         body: jsonEncode(body));
-    
 
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
@@ -1052,7 +1054,6 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      
     );
 
     if (response.statusCode == 200) {
@@ -1098,7 +1099,8 @@ class ApiService {
 
 //==== Start Api Collaborate==========================================================================================
 
-  Future<CollaborateModel>Collaborate(String name,String phoneno,String email,String city,String state) async {
+  Future<CollaborateModel> Collaborate(String name, String phoneno,
+      String email, String city, String state) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -1112,8 +1114,13 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(
-        {"name": name,"mobile":phoneno,"email":email,"state":state,"city":city}),
+      body: jsonEncode({
+        "name": name,
+        "mobile": phoneno,
+        "email": email,
+        "state": state,
+        "city": city
+      }),
     );
 
     if (response.statusCode == 200) {
@@ -1159,6 +1166,101 @@ class ApiService {
       throw Exception('Failed: ${responseJson['message']}');
     }
   }
-  
+
 //==== End Api inbox Matches==========================================================================================
+
+//==== Start Api Shortlist==========================================================================================
+
+  Future<ShortlistModel> Shortlist(
+    String id,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.shortlist_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "member_id": id,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ShortlistModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Shortlist==========================================================================================
+
+//==== Start Api Shortlisted list==========================================================================================
+
+  Future<ShortlistedListModel> Shortlisted() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.shortlisted_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ShortlistedListModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Shortlisted list==========================================================================================
+
+//==== Start Api Withdrawal==========================================================================================
+
+  Future<WithDrawalModel> Withdrawal( String id,) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.withdrawal_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "P_MatriID": id,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return WithDrawalModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Shortlisted list==========================================================================================
 }

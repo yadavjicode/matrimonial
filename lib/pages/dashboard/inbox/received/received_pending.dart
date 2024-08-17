@@ -72,8 +72,8 @@ class _ReceivedPendingState extends State<ReceivedPending> {
             String date =
                 DateFormat('dd-MM-yyyy').format(DateTime.parse(data.updatedAt));
             String mId = data.sentMatriID ?? "";
-            String image = data.profileImage != null
-                ? "http://devoteematrimony.aks.5g.in/${data.profileImage}"
+            String image = data.photo1 != null
+                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
                 : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
             return GestureDetector(

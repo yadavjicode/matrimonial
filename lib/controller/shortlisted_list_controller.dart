@@ -1,45 +1,44 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
-import 'package:devotee/model/profile_details_model.dart';
-import 'package:devotee/model/search_model.dart';
-import 'package:devotee/model/sent_invitation_model.dart';
+import 'package:devotee/model/shortlist_model.dart';
+import 'package:devotee/model/shortlisted_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
-class SentInvitationController with ChangeNotifier {
+class ShortlistedListController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  SentInvitationModel? _member;
+  ShortlistedListModel? _member;
   var isLoading = false.obs;
   String? _error;
-  SentInvitationModel? get member => _member;
+  ShortlistedListModel? get member => _member;
   String? get error => _error;
 
-  Future<void> sentInvitation(
-    BuildContext context,
-    String id,
+  Future<void> shortlisted(
+    BuildContext context
+    
   ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.SentInvitation(id);
-      CustomDialog.show(
-                  context,
-                  'Sent Invitation',
-                  '${member!.message}',
-                  dialogType:DialogType.success,
+      _member = await apiService.Shortlisted();
+      //  CustomDialog.show(
+      //             context,
+      //             'Shortlist',
+      //             '${member!.message}',
+      //             dialogType:DialogType.success,
                  
-                );
+      //           );
     } catch (e) {
       _error = e.toString();
       print(_error);
        CustomDialog.show(
                   context,
-                  'Error',
-                  '${_error}',
+                  'error',
+                  "${_error}",
                   dialogType:DialogType.error,
                  
                 );

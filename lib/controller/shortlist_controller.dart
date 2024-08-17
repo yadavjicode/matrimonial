@@ -1,22 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
-import 'package:devotee/model/profile_details_model.dart';
-import 'package:devotee/model/search_model.dart';
-import 'package:devotee/model/sent_invitation_model.dart';
+import 'package:devotee/model/shortlist_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
-class SentInvitationController with ChangeNotifier {
+class ShortlistController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  SentInvitationModel? _member;
+  ShortlistModel? _member;
   var isLoading = false.obs;
   String? _error;
-  SentInvitationModel? get member => _member;
+  ShortlistModel? get member => _member;
   String? get error => _error;
 
-  Future<void> sentInvitation(
+  Future<void> shortlist(
     BuildContext context,
     String id,
   ) async {
@@ -25,10 +23,10 @@ class SentInvitationController with ChangeNotifier {
     notifyListeners();
 
     try {
-      _member = await apiService.SentInvitation(id);
-      CustomDialog.show(
+      _member = await apiService.Shortlist(id);
+       CustomDialog.show(
                   context,
-                  'Sent Invitation',
+                  'Shortlist',
                   '${member!.message}',
                   dialogType:DialogType.success,
                  
@@ -36,10 +34,18 @@ class SentInvitationController with ChangeNotifier {
     } catch (e) {
       _error = e.toString();
       print(_error);
+      // Show error message using ScaffoldMessenger
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   backgroundColor: Colors.grey.shade200,
+      //   content: Text(
+      //     '${_error}',
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      // ));
        CustomDialog.show(
                   context,
-                  'Error',
-                  '${_error}',
+                  'error',
+                  "${_error}",
                   dialogType:DialogType.error,
                  
                 );

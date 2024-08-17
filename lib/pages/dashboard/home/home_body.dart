@@ -5,6 +5,8 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
+import 'package:devotee/controller/sent_invitation_controller.dart';
+import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/model/dashboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +25,8 @@ class _HomeBodyState extends State<HomeBody> {
       Get.put(DashboardController());
   ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  final ShortlistController shortlistController=Get.put(ShortlistController());
+  final SentInvitationController sentInvitationController=Get.put(SentInvitationController());
   // void toggleFavorite() {
   //   setState(() {
   //     isFavorite = !isFavorite;
@@ -38,8 +42,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
+    
 
     final List<List> discover = [
       ["assets/images/map_mark.png", "Near By", "201"],
@@ -80,10 +83,15 @@ class _HomeBodyState extends State<HomeBody> {
                     fontSize: 17, color: AppColors.black),
               ),
               Spacer(),
-              Text(
-                "See All",
-                style: FontConstant.styleSemiBold(
-                    fontSize: 14, color: AppColors.primaryColor),
+              GestureDetector(
+                onTap: () => {
+                  Get.toNamed("/matches")
+                },
+                child: Text(
+                  "See All",
+                  style: FontConstant.styleSemiBold(
+                      fontSize: 14, color: AppColors.primaryColor),
+                ),
               )
             ],
           ),
@@ -352,25 +360,34 @@ class _HomeBodyState extends State<HomeBody> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/images/like.svg",
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Shortlist",
-                                            style: FontConstant.styleMedium(
-                                                fontSize: 11,
-                                                color: AppColors.black),
+                                    child: GestureDetector(
+                                     onTap: () {
+                          print(
+                              "${profileDetailsController.member?.data?.matriID}");
+                          shortlistController.shortlist(context,data.matriID!
+                              );
+                        },
+
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/images/like.svg",
+                                            height: 20,
+                                            width: 20,
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              "Shortlist",
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 11,
+                                                  color: AppColors.black),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Expanded(
@@ -410,25 +427,32 @@ class _HomeBodyState extends State<HomeBody> {
                                     ),
                                   ),
                                   Expanded(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/images/send_icon.svg",
-                                          height: 20,
-                                          width: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            "Send Interest",
-                                            style: FontConstant.styleMedium(
-                                                fontSize: 11,
-                                                color: AppColors.black),
+                                    child: GestureDetector(
+                                                onTap: () {
+                          print("${data.matriID}");
+                          sentInvitationController.sentInvitation(context,data.matriID!
+                              );
+                        },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/images/send_icon.svg",
+                                            height: 20,
+                                            width: 20,
                                           ),
-                                        )
-                                      ],
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              "Send Interest",
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 11,
+                                                  color: AppColors.black),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   )
                                 ],

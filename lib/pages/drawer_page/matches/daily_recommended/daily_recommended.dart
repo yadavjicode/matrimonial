@@ -236,15 +236,12 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                 height: 20,
                                 width: 20,
                               ),
-                             
+                             SizedBox(width: 5,),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Shortlist",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 11, color: AppColors.black),
-                                  ),
+                                child: Text(
+                                  "Shortlist",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 11, color: AppColors.black),
                                 ),
                               )
                             ],
@@ -258,15 +255,12 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                 height: 20,
                                 width: 20,
                               ),
-                            
+                            SizedBox(width: 5,),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Chat Now",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 11, color: AppColors.black),
-                                  ),
+                                child: Text(
+                                  "Chat Now",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 11, color: AppColors.black),
                                 ),
                               )
                             ],
@@ -282,17 +276,13 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                 height: 20,
                                 width: 20,
                               ),
-                             
+                             SizedBox(width: 5,),
                               Expanded(
-                                child: Container(
-                                  alignment: Alignment.center,
+                                child: Text(
                                   
-                                  child: Text(
-                                    
-                                    "View Profile",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 11, color: AppColors.black),
-                                  ),
+                                  "View Profile",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 11, color: AppColors.black),
                                 ),
                               )
                             ],

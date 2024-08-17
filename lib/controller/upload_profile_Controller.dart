@@ -88,6 +88,7 @@ class UploadProfileController extends GetxController {
       if (pickedFile != null) {
         if (selectedImages.length < 5) {
           selectedImages.add(File(pickedFile.path));
+           Get.toNamed("/showImage");
         } else {
           print('You can only select up to 5 images.');
           ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
