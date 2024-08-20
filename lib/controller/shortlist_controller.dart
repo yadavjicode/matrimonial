@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/model/shortlist_model.dart';
@@ -16,39 +15,35 @@ class ShortlistController with ChangeNotifier {
 
   Future<void> shortlist(
     BuildContext context,
-    String id,
-  ) async {
+    String id, {
+    VoidCallback? btnOkOnPress, // Optional btnOkOnPress function
+  }) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
       _member = await apiService.Shortlist(id);
-       CustomDialog.show(
-                  context,
-                  'Shortlist',
-                  '${member!.message}',
-                  dialogType:DialogType.success,
-                 
-                );
+      CustomDialog.show(
+        context,
+        'Shortlist',
+        '${member!.message}',
+        dialogType: DialogType.success,
+        btnOkOnPress: btnOkOnPress ??
+            () {
+              // Navigator.of(context).pop(); // Default action if none is provided
+            },
+      );
     } catch (e) {
       _error = e.toString();
       print(_error);
-      // Show error message using ScaffoldMessenger
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      //   backgroundColor: Colors.grey.shade200,
-      //   content: Text(
-      //     '${_error}',
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      // ));
-       CustomDialog.show(
-                  context,
-                  'error',
-                  "${_error}",
-                  dialogType:DialogType.error,
-                 
-                );
+
+      CustomDialog.show(
+        context,
+        'error',
+        "${_error}",
+        dialogType: DialogType.error,
+      );
     } finally {
       isLoading.value = false;
       notifyListeners();

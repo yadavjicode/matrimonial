@@ -31,17 +31,18 @@ class _ReceivedTabState extends State<ReceivedTab> {
                 labelColor: AppColors.primaryColor,
                 labelPadding: EdgeInsets.only(bottom: 10),
                 unselectedLabelColor: Colors.black,
+                
                 tabs: [
                   Text(
-                    "Pending (${inboxReceivedController.member!.pendingInvitationCount})",
+                    "Pending (${(inboxReceivedController.isLoading.value == false)?inboxReceivedController.member!.pendingInvitationCount:inboxReceivedController.member!.pendingInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Accepted (${inboxReceivedController.member!.acceptedInvitationCount})",
+                    "Accepted (${(inboxReceivedController.isLoading.value == false)?inboxReceivedController.member!.acceptedInvitationCount:inboxReceivedController.member!.acceptedInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Declined (${inboxReceivedController.member!.declinedInvitationCount})",
+                    "Declined (${(inboxReceivedController.isLoading.value == false)?inboxReceivedController.member!.declinedInvitationCount:inboxReceivedController.member!.declinedInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
                 ],

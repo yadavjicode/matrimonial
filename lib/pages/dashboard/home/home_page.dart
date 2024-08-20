@@ -279,12 +279,17 @@ class _HomeState extends State<Home> {
                                     width: 70.0,
                                     height: 70.0,
                                     alignment: Alignment.bottomRight,
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors.primaryColor),
-                                        child: SvgPicture.asset(
-                                            "assets/images/edit_icon.svg")),
+                                    child: GestureDetector(
+                                      onTap: () => {
+                                        Get.toNamed("/profileEdit")
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: AppColors.primaryColor),
+                                          child: SvgPicture.asset(
+                                              "assets/images/edit_icon.svg")),
+                                    ),
                                   )
                                 ]),
                                 SizedBox(width: 5),
@@ -366,7 +371,7 @@ class _HomeState extends State<Home> {
                                           borderRadius: BorderRadius.circular(
                                               4.0), // Adjust the radius as needed
                                           child: LinearProgressIndicator(
-                                            value: 0.6,
+                                             value: (editProfileController.member!.profilePercentage) / 100,
                                             backgroundColor:
                                                 Colors.grey.shade100,
                                             color: AppColors.primaryColor,
@@ -379,7 +384,7 @@ class _HomeState extends State<Home> {
                                               left: 15, right: 5),
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Profile Status - 80%",
+                                            "Profile Status - ${editProfileController.member!.profilePercentage??""}%",
                                             style: FontConstant.styleRegular(
                                                 fontSize: 10,
                                                 color: AppColors.constColor),

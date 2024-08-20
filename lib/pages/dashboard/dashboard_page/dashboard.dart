@@ -41,13 +41,13 @@ class _DashboardState extends State<Dashboard> {
 
       if (await APIs.userExists() && mounted) {
         _editProfileController.userDetails(context);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (_) => const HomeScreen()));
       } else {
         _editProfileController.userDetails(context);
         await APIs.createUser().then((value) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          // Navigator.pushReplacement(
+          //     context, MaterialPageRoute(builder: (_) => const HomeScreen()));
         });
       }
     }

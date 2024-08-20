@@ -5,6 +5,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
+import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,8 +24,11 @@ class _SearchResultState extends State<SearchResult> {
       Get.put(ProfileDetailsController());
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
+  final SentInvitationController sentInvitationController =
+      Get.put(SentInvitationController());
   bool age = true;
   bool height = true;
+
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arguments = Get.arguments;
@@ -32,6 +36,14 @@ class _SearchResultState extends State<SearchResult> {
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
     final String heightTo = arguments['heightTo'];
+    final String maritalStatus = arguments['maritalStatus'];
+    final String religion = arguments['religion'];
+    final String caste = arguments['caste'];
+    final String country = arguments['country'];
+    final String state = arguments['state'];
+    final String city = arguments['city'];
+    final String education = arguments['education'];
+
     int selectedIndex = -1;
     return Scaffold(
       backgroundColor: AppColors.primaryLight,
@@ -225,32 +237,80 @@ class _SearchResultState extends State<SearchResult> {
                                             width: 137,
                                             alignment: Alignment.center,
                                             margin: EdgeInsets.only(top: 170),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  alignment: Alignment.center,
-                                                  height: 22,
-                                                  width: 22,
-                                                  decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: Colors.green),
-                                                  child: SvgPicture.asset(
-                                                      "assets/images/icons/correct.svg"),
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                  "Send Interest",
-                                                  style:
-                                                      FontConstant.styleMedium(
-                                                          fontSize: 12,
-                                                          color: AppColors
-                                                              .darkgrey),
-                                                ),
-                                              ],
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                print("${data.matriID}");
+                                                sentInvitationController
+                                                    .sentInvitation(
+                                                  context,
+                                                  data.matriID!,
+                                                  btnOkOnPress: () => {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback(
+                                                            (_) {
+                                                      searchController.search(
+                                                          context,
+                                                          ageFrom,
+                                                          ageTo,
+                                                          heightFrom,
+                                                          heightTo,
+                                                          maritalStatus,
+                                                          religion,
+                                                          caste,
+                                                          country,
+                                                          state,
+                                                          city,
+                                                          education);
+                                                    })
+                                                  },
+                                                );
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  data.interestStatus == 1
+                                                      ? Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height: 22,
+                                                          width: 22,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  color: Colors
+                                                                      .green),
+                                                          child: SvgPicture.asset(
+                                                              "assets/images/icons/correct.svg"),
+                                                        )
+                                                      : Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height: 22,
+                                                          width: 22,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  color: Colors
+                                                                      .white),
+                                                          child: SvgPicture.asset(
+                                                              "assets/images/icons/pinkcorrect.svg"),
+                                                        ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    "Send Interest",
+                                                    style: FontConstant
+                                                        .styleMedium(
+                                                            fontSize: 12,
+                                                            color: AppColors
+                                                                .constColor),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           )
                                         ]),
@@ -373,14 +433,41 @@ class _SearchResultState extends State<SearchResult> {
                                           child: GestureDetector(
                                             onTap: () => {
                                               shortlistController.shortlist(
-                                                  context, id)
+                                                context,
+                                                id,
+                                                btnOkOnPress: () => {
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback(
+                                                          (_) {
+                                                    searchController.search(
+                                                        context,
+                                                        ageFrom,
+                                                        ageTo,
+                                                        heightFrom,
+                                                        heightTo,
+                                                        maritalStatus,
+                                                        religion,
+                                                        caste,
+                                                        country,
+                                                        state,
+                                                        city,
+                                                        education);
+                                                  })
+                                                },
+                                              ),
                                             },
                                             child: Row(
                                               children: [
-                                                SvgPicture.asset(
-                                                  "assets/images/like.svg",
-                                                  height: 20,
-                                                  width: 20,
+                                                Icon(
+                                                  data.shortlistStatus == 1
+                                                      ? (Icons.favorite)
+                                                      : Icons
+                                                          .favorite_border_rounded,
+                                                  color: data.shortlistStatus ==
+                                                          1
+                                                      ? Colors.red
+                                                      : AppColors.primaryColor,
+                                                  size: 20,
                                                 ),
                                                 SizedBox(
                                                   width: 3,
@@ -402,7 +489,7 @@ class _SearchResultState extends State<SearchResult> {
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () async {
-                                              Get.to(HomeScreen());
+                                      
                                               if (id.trim().isNotEmpty &&
                                                   id.trim() != null) {
                                                 await APIs.addChatUser(id)
@@ -411,7 +498,9 @@ class _SearchResultState extends State<SearchResult> {
                                                     Dialogs.showSnackbar(
                                                         context,
                                                         'User does not Exists!');
-                                                  }
+                                                  }else {
+                                    Get.to(HomeScreen());
+                                  }
                                                 });
                                               }
                                             },
@@ -482,7 +571,9 @@ class _SearchResultState extends State<SearchResult> {
               ],
             ),
             if (shortlistController.isLoading.value ||
-                profileDetailsController.isLoading.value)
+                profileDetailsController.isLoading.value ||
+                searchController.isLoading.value ||
+                sentInvitationController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

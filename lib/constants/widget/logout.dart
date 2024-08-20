@@ -4,16 +4,20 @@ import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:restart_app/restart_app.dart';
 
 class LogoutConfirmationDialog extends StatelessWidget {
   Future<void> logout() async {
-    print('ufygkhilj');
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', "");
 
     Get.delete<EditProfileController>();
-    Get.offAndToNamed("login");
-    // Add any logic you need to handle the token here
+
+    // Delay a little to ensure the dialog is fully closed before restarting
+   // await Future.delayed(Duration(milliseconds: 100));
+
+    // Restart the app after logout
+    Restart.restartApp();
   }
 
   @override
@@ -40,8 +44,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
           ),
           onPressed: () {
             // Perform logout operation here
-            Get.back(); // Closes the dialog
-            logout(); // Navigate to login screen
+            logout(); // Restart the app
           },
         ),
       ],

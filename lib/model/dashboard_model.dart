@@ -111,6 +111,8 @@ class DailyRecommendation {
   String? profilecreatedby;
   String? Photo1;
   String? Age;
+   dynamic shortlistStatus;
+  dynamic interestStatus;
 
   DailyRecommendation(
       {this.hideIncome,
@@ -137,7 +139,10 @@ class DailyRecommendation {
       this.education,
       this.profilecreatedby,
       this.Photo1,
-      this.Age});
+      this.Age,
+      this.shortlistStatus,
+      this.interestStatus
+      });
 
   DailyRecommendation.fromJson(Map<String, dynamic> json) {
     hideIncome = json['hide_income'];
@@ -165,6 +170,8 @@ class DailyRecommendation {
     profilecreatedby = json['Profilecreatedby'];
     Photo1 = json['Photo1'];
     Age = json['Age'];
+    shortlistStatus = json['shortlist_status'];
+    interestStatus = json['interest_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -194,6 +201,8 @@ class DailyRecommendation {
     data['Profilecreatedby'] = this.profilecreatedby;
     data['Photo1'] = this.Photo1;
     data['Age'] = this.Age;
+    data['shortlist_status'] = this.shortlistStatus;
+    data['interest_status'] = this.interestStatus;
     return data;
   }
 }

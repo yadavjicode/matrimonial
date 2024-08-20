@@ -2,9 +2,6 @@ import 'package:devotee/model/basic_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
-import 'package:devotee/model/profile_a_model.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BasicDetailsController with ChangeNotifier {
   final ApiService apiService = ApiService();

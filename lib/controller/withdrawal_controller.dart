@@ -18,11 +18,13 @@ class WithdrawalController with ChangeNotifier {
   Future<void> withdrawal(
     BuildContext context,
     String id,
+    {
+    VoidCallback? btnOkOnPress, // Optional btnOkOnPress function
+  }
   ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
-
     try {
       _member = await apiService.Withdrawal(id);
        CustomDialog.show(
@@ -30,6 +32,9 @@ class WithdrawalController with ChangeNotifier {
                   'Withdrawal',
                   '${member!.message}',
                   dialogType:DialogType.success,
+                      btnOkOnPress: btnOkOnPress ?? () {
+          // Navigator.of(context).pop(); // Default action if none is provided
+        },
                  
                 );
     } catch (e) {

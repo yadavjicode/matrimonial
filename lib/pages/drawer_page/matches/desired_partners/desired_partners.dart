@@ -1,6 +1,12 @@
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/matches_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
+import 'package:devotee/controller/sent_invitation_controller.dart';
+import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -15,42 +21,48 @@ class DesiredPartner extends StatefulWidget {
 class _DesiredPartnerState extends State<DesiredPartner> {
   String selectedText = "";
   int selectedIndex = -1;
-  final MatchesController matchesController=Get.put(MatchesController());
+  final MatchesController matchesController = Get.put(MatchesController());
+  final ShortlistController shortlistController =
+      Get.put(ShortlistController());
+  final SentInvitationController sentInvitationController =
+      Get.put(SentInvitationController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
   @override
   void initState() {
-     WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       matchesController.matches(context, "matches");
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-          return Stack(
-            children: [
-              if (matchesController.isLoading.value == false)
-                AllMatchesContent(),
-              if (matchesController.isLoading.value)
-                Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-            ],
-          );
-        });
+      return Stack(
+        children: [
+          if (matchesController.isLoading.value == false) AllMatchesContent(),
+          if (matchesController.isLoading.value ||
+              shortlistController.isLoading.value ||
+              sentInvitationController.isLoading.value ||
+              profileDetailsController.isLoading.value)
+            Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
+            ),
+        ],
+      );
+    });
   }
 
-
-
-  Widget AllMatchesContent( ){
+  Widget AllMatchesContent() {
     final member = matchesController.member;
-    if (member == null ||
-        member.data== null) {
+    if (member == null || member.data == null) {
       return Center(child: Text("No data available"));
     }
-    
-    return  SingleChildScrollView(
+
+    return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
@@ -58,9 +70,10 @@ class _DesiredPartnerState extends State<DesiredPartner> {
         children: matchesController.member!.data!.map((data) {
           // int index = entry.key;
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
+          String id = data.matriID;
           String image = data.photo1 != null
-                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                  : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+              ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+              : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
           //String head = entry.value[1];
 
           return GestureDetector(
@@ -87,50 +100,71 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
-                          Container(
-                            height: 196,
-                            width: 137,
-                            decoration: BoxDecoration(shape: BoxShape.circle),
-                            child: ClipRRect(
-                              
-                              child: Image.network(
-                                "$image",
-                                // width: 210,
-                                // height: 210,
-                                filterQuality: FilterQuality.high,
-                                fit: BoxFit.fill,
-                              ),
+                          ClipRRect(
+                           borderRadius: BorderRadius.all(Radius.circular(7)),
+                            child: Image.network(
+                              "$image",
+                              height: 196,
+                          width: 137,
+                              filterQuality: FilterQuality.high,
+                              fit: BoxFit.fill,
                             ),
                           ),
                           Container(
-                            width: 137,
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(top: 170),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 22,
-                                  width: 22,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.green),
-                                  child: SvgPicture.asset(
-                                      "assets/images/icons/correct.svg"),
+                              width: 137,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(top: 170),
+                              child: GestureDetector(
+                                onTap: () {
+                                  print("${id}");
+                                  sentInvitationController.sentInvitation(
+                                    context,
+                                    data.matriID!,
+                                    btnOkOnPress: () => {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((_) {
+                                        matchesController.matches(
+                                            context, "matches");
+                                      }),
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    data.interestStatus == 1
+                                        ? Container(
+                                            alignment: Alignment.center,
+                                            height: 22,
+                                            width: 22,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.green),
+                                            child: SvgPicture.asset(
+                                                "assets/images/icons/correct.svg"),
+                                          )
+                                        : Container(
+                                            alignment: Alignment.center,
+                                            height: 22,
+                                            width: 22,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white),
+                                            child: SvgPicture.asset(
+                                                "assets/images/icons/pinkcorrect.svg"),
+                                          ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Send Interest",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 12,
+                                          color: AppColors.constColor),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Send Interest",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 12,
-                                      color: AppColors.constColor),
-                                ),
-                              ],
-                            ),
-                          )
+                              ))
                         ]),
                       ),
                       Expanded(
@@ -184,16 +218,15 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 ),
                               ),
                               Text(
-                               "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
-                               overflow: TextOverflow.ellipsis,
-                               maxLines: 2,
+                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.darkgrey),
                               ),
                               Text(
                                 "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
                                 overflow: TextOverflow.ellipsis,
-                               
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.darkgrey),
                               ),
@@ -205,9 +238,9 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                         color: AppColors.darkgrey)),
                               ),
                               Text(
-                                  "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste==null&&data.religion==null||data.state==null&&data.country==null?"":" - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                  overflow: TextOverflow.ellipsis,
-                               maxLines: 2,
+                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               )
@@ -227,66 +260,107 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                     padding: EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 10),
                     child: Row(
-                      
                       children: [
                         Expanded(
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/images/like.svg",
-                                height: 20,
-                                width: 20,
+                          child: GestureDetector(
+                            onTap: () => {
+                              shortlistController.shortlist(
+                                context,
+                                id,
+                                btnOkOnPress: () => {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    matchesController.matches(
+                                        context, "matches");
+                                  }),
+                                },
                               ),
-                             SizedBox(width: 5,),
-                              Expanded(
-                                child: Text(
-                                  "Shortlist",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 11, color: AppColors.black),
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  data.shortlistStatus == 1
+                                      ? (Icons.favorite)
+                                      : Icons.favorite_border_rounded,
+                                  color: data.shortlistStatus == 1
+                                      ? Colors.red
+                                      : AppColors.primaryColor,
+                                  size: 20,
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Shortlist",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 11, color: AppColors.black),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/images/chat_d.svg",
-                                height: 20,
-                                width: 20,
-                              ),
-                            SizedBox(width: 5,),
-                              Expanded(
-                                child: Text(
-                                  "Chat Now",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 11, color: AppColors.black),
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (id.trim().isNotEmpty && id.trim() != null) {
+                                await APIs.addChatUser(id).then((value) {
+                                  if (!value) {
+                                    Dialogs.showSnackbar(
+                                        context, 'User does not Exists!');
+                                  } else {
+                                    Get.to(HomeScreen());
+                                  }
+                                });
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/images/chat_d.svg",
+                                  height: 20,
+                                  width: 20,
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Chat Now",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 11, color: AppColors.black),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(
-                          
-                          child: Row(
-                     
-                            children: [
-                              SvgPicture.asset(
-                                "assets/images/pink_search.svg",
-                                height: 20,
-                                width: 20,
-                              ),
-                             SizedBox(width: 5,),
-                              Expanded(
-                                child: Text(
-                                  
-                                  "View Profile",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 11, color: AppColors.black),
+                          child: GestureDetector(
+                            onTap: () => {
+                              profileDetailsController.profileDetails(
+                                  context, id)
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/images/pink_search.svg",
+                                  height: 20,
+                                  width: 20,
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "View Profile",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 11, color: AppColors.black),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         )
                       ],

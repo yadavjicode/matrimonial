@@ -1,8 +1,9 @@
 class UserModel {
   Member? member;
+   dynamic profilePercentage;
   List<MemberImages>? memberImages;
 
-  UserModel({this.member, this.memberImages});
+  UserModel({this.member, this.memberImages,this.profilePercentage});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     member =
@@ -13,6 +14,7 @@ class UserModel {
         memberImages!.add(new MemberImages.fromJson(v));
       });
     }
+      profilePercentage = json['profile_percentage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -24,6 +26,7 @@ class UserModel {
       data['member_images'] =
           this.memberImages!.map((v) => v.toJson()).toList();
     }
+    data['profile_percentage'] = this.profilePercentage;
     return data;
   }
 }
@@ -145,6 +148,8 @@ class Member {
   dynamic photo2Approve;
   dynamic photo3;
   dynamic photo4;
+ dynamic Photo5;
+ dynamic photo5Approve;
   dynamic photo4Approve;
   dynamic photo3Approve;
   dynamic photoRemindCnt;
@@ -752,6 +757,8 @@ class Member {
     photo3 = json['Photo3'];
     photo4 = json['Photo4'];
     photo4Approve = json['Photo4Approve'];
+    Photo5 = json['Photo5'];
+    photo5Approve = json['Photo5Approve'];
     photo3Approve = json['Photo3Approve'];
     photoRemindCnt = json['photo_remind_cnt'];
     logincount = json['Logincount'];
@@ -1060,6 +1067,8 @@ class Member {
     data['Photo3'] = this.photo3;
     data['Photo4'] = this.photo4;
     data['Photo4Approve'] = this.photo4Approve;
+     data['Photo5'] = this.Photo5;
+    data['Photo5Approve'] = this.photo5Approve;
     data['Photo3Approve'] = this.photo3Approve;
     data['photo_remind_cnt'] = this.photoRemindCnt;
     data['Logincount'] = this.logincount;

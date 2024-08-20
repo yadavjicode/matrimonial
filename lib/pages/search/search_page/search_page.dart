@@ -36,7 +36,6 @@ class _SearchPageState extends State<SearchPage> {
   SearchsController searchController = Get.put(SearchsController());
   HeightController heightController = Get.put(HeightController());
     NumberController numberController = Get.put(NumberController());
-
     AgeController ageController = Get.put(AgeController());
     MaritalController maritalController = Get.put(MaritalController());
     ReligionsController religionsController = Get.put(ReligionsController());

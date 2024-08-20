@@ -22,8 +22,10 @@ class MyShorlistProfile extends StatefulWidget {
 class _MyShorlistProfileState extends State<MyShorlistProfile> {
   final ShortlistedListController shortlistedListController =
       Get.put(ShortlistedListController());
-    final ProfileDetailsController profileDetailsController=Get.put(ProfileDetailsController());
-    final ShortlistController shortlistController=Get.put(ShortlistController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
+  final ShortlistController shortlistController =
+      Get.put(ShortlistController());
 
   @override
   void initState() {
@@ -33,7 +35,6 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
     super.initState();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     String selectedText = "";
@@ -59,9 +60,12 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
         Obx(() {
           return Stack(
             children: [
-              if (!shortlistedListController.isLoading.value && !shortlistController.isLoading.value)
+              if (!shortlistedListController.isLoading.value &&
+                  !shortlistController.isLoading.value)
                 shortlistedContent(),
-              if (shortlistedListController.isLoading.value||shortlistController.isLoading.value||profileDetailsController.isLoading.value)
+              if (shortlistedListController.isLoading.value ||
+                  shortlistController.isLoading.value ||
+                  profileDetailsController.isLoading.value)
                 Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -106,12 +110,9 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                   // Get.toNamed('/profiledtls');
                 },
                 child: Container(
-                 
                   decoration: BoxDecoration(
-                    
                     color: AppColors.constColor,
                     border: Border.all(color: Colors.grey.shade200),
-                    
                   ),
                   child: Column(
                     children: [
@@ -202,8 +203,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                         margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                         decoration: BoxDecoration(
                             color: AppColors.primaryLight,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5))),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -215,8 +215,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                             Text(
                               " Upgrade Now",
                               style: FontConstant.styleSemiBold(
-                                  fontSize: 12,
-                                  color: AppColors.primaryColor),
+                                  fontSize: 12, color: AppColors.primaryColor),
                             ),
                           ],
                         ),
@@ -225,28 +224,35 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                         padding: const EdgeInsets.only(
                             left: 12, right: 12, bottom: 12),
                         child: Row(
-                         
                           children: [
                             Expanded(
                               child: GestureDetector(
-                                    onTap: () {
-                        
-                        shortlistController.shortlist(context,data.matId!
-                            );
-                             WidgetsBinding.instance.addPostFrameCallback((_) {
-      shortlistedListController.shortlisted(context);
-    });
-                      },
+                                onTap: () {
+                                  shortlistController.shortlist(
+                                    context,
+                                    data.matId!,
+                                    btnOkOnPress: () => {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((_) {
+                                        shortlistedListController
+                                            .shortlisted(context);
+                                      })
+                                    },
+                                  );
+                                },
                                 child: Row(
                                   children: [
                                     SvgPicture.asset(
                                         "assets/images/icons/remove.svg"),
-                                  SizedBox(width: 5,),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                     Expanded(
                                       child: Text(
                                         "Remove",
                                         style: FontConstant.styleMedium(
-                                            fontSize: 12, color: AppColors.black),
+                                            fontSize: 12,
+                                            color: AppColors.black),
                                       ),
                                     ),
                                   ],
@@ -261,26 +267,32 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                     height: 20,
                                     width: 20,
                                   ),
-                                 SizedBox(width: 5,),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Expanded(
                                     child: GestureDetector(
-                                                        onTap: () async {
-                                                           Get.to(HomeScreen());
-                    if (data.matId!.trim().isNotEmpty&& data.matId!=null ) {
-                      await APIs.addChatUser(data.matId!).then((value) {
-                        if (!value) {
-                          Dialogs.showSnackbar(
-                              context, 'User does not Exists!');
-                        }
-                      });
-                    }
-                                                        },
-                    //hide alert dialog
-                   
+                                      onTap: () async {
+                                        if (data.matId!.trim().isNotEmpty &&
+                                            data.matId != null) {
+                                          await APIs.addChatUser(data.matId!)
+                                              .then((value) {
+                                            if (!value) {
+                                              Dialogs.showSnackbar(context,
+                                                  'User does not Exists!');
+                                            } else {
+                                              Get.to(HomeScreen());
+                                            }
+                                          });
+                                        }
+                                      },
+                                      //hide alert dialog
+
                                       child: Text(
                                         "Chat Now",
                                         style: FontConstant.styleMedium(
-                                            fontSize: 12, color: AppColors.black),
+                                            fontSize: 12,
+                                            color: AppColors.black),
                                       ),
                                     ),
                                   ),
@@ -290,29 +302,31 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                             Expanded(
                               child: Row(
                                 children: [
-                            SvgPicture.asset(
-                                "assets/images/pink_search.svg",
-                                height: 20,
-                                width: 20,
-                              ),
-                              SizedBox(width: 5,),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () => {
-                              profileDetailsController.profileDetails(
-                          context, data.matId!)
-                            },
-                                  child: Text(
-                                    "View Profile",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 12, color: AppColors.black),
+                                  SvgPicture.asset(
+                                    "assets/images/pink_search.svg",
+                                    height: 20,
+                                    width: 20,
                                   ),
-                                ),
-                              ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () => {
+                                        profileDetailsController.profileDetails(
+                                            context, data.matId!)
+                                      },
+                                      child: Text(
+                                        "View Profile",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: AppColors.black),
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             )
-                            
                           ],
                         ),
                       )

@@ -192,12 +192,14 @@ class _SentPendingState extends State<SentPending> {
                           GestureDetector(
                               onTap: () => {
                                           withdrawalController.withdrawal(
-                                              context, mId),
-                                          WidgetsBinding.instance
+                                              context, mId,btnOkOnPress: () => {
+                                                WidgetsBinding.instance
                                               .addPostFrameCallback((_) {
                                             inboxSentController.inboxSent(
                                                 context, "Pending");
                                           })
+                                              },),
+                                          
                                         },
                             child: Row(
                               children: [

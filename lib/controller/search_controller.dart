@@ -62,8 +62,10 @@ String convertToFeetAndInches(double value) {
           country,
           state,
           city,
-          education);
-      Get.toNamed('/searchresult' ,arguments: {"ageFrom":ageFrom,"ageTo":ageTo,"heightFrom":heightFrom,"heightTo":heightTo});
+          education
+          );
+      Get.toNamed('/searchresult' ,arguments: {"ageFrom":ageFrom,"ageTo":ageTo,"heightFrom":heightFrom,"heightTo":heightTo
+     , "maritalStatus":maritalStatus,"religion":religion,"caste":caste,"country":country,"state":state,"city":city,"education":education});
     } catch (e) {
       _error = e.toString();
       print(_error);

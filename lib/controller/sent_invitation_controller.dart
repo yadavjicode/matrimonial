@@ -19,6 +19,9 @@ class SentInvitationController with ChangeNotifier {
   Future<void> sentInvitation(
     BuildContext context,
     String id,
+     {
+    VoidCallback? btnOkOnPress, // Optional btnOkOnPress function
+  }
   ) async {
     isLoading.value = true;
     _error = null;
@@ -31,7 +34,9 @@ class SentInvitationController with ChangeNotifier {
                   'Sent Invitation',
                   '${member!.message}',
                   dialogType:DialogType.success,
-                 
+                  btnOkOnPress: btnOkOnPress ?? () {
+          // Navigator.of(context).pop(); // Default action if none is provided
+        },
                 );
     } catch (e) {
       _error = e.toString();

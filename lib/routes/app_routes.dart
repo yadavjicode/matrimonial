@@ -21,6 +21,7 @@ import 'package:devotee/pages/drawer_page/suggestion_from_our_side/suggestion_fr
 import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/pages/drawer_page/warning/warning.dart';
 import 'package:devotee/pages/drawer_page/who_are_you/who_are_you.dart';
+import 'package:devotee/pages/edit/edit_your_profile/edit_your_profile.dart';
 import 'package:devotee/pages/ragistration/about_groom_bride/about_groom_bride.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/show_image.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/upload_your_profile.dart';
@@ -102,6 +103,7 @@ class AppRoutes {
 
   static const String matches = '/matches';
    static const String showImage = '/showImage';
+  static const String profileEdit = '/profileEdit';
 
   static final List<GetPage> routes = [
     GetPage(
@@ -398,6 +400,12 @@ class AppRoutes {
     GetPage(
       name: showImage,
       page: () => const ShowImage(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: profileEdit,
+      page: () => const EditYourProfile(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

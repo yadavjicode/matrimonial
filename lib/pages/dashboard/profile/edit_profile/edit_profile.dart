@@ -150,7 +150,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 padding: EdgeInsets.only(top: 20),
                 alignment: Alignment.center,
                 child: Text(
-                  "Your profile is 40% Complete",
+                  "Your profile is ${_editProfileController.member!.profilePercentage??""}% Complete",
                   style: FontConstant.styleRegular(
                     fontSize: 16,
                     color: AppColors.black,
@@ -164,7 +164,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: LinearProgressIndicator(
-                    value: 0.6,
+                     value: (_editProfileController.member!.profilePercentage) / 100,
                     backgroundColor: Colors.grey.shade100,
                     color: Color(0xff583689),
                   ),

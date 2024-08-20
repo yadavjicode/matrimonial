@@ -31,26 +31,41 @@ class _SentTabState extends State<SentTab> {
         child: Column(
           children: [
             Container(
-              child: TabBar(
+              child:Obx(() {
+
+          return 
+          
+          TabBar(
                 indicatorColor: AppColors.primaryColor,
                 labelColor: AppColors.primaryColor,
                 labelPadding: EdgeInsets.only(bottom: 10),
                 unselectedLabelColor: Colors.black,
                 tabs: [
+               //   if (inboxSentController.isLoading.value == false)
                   Text(
-                    "Pending (${inboxSentController.member!.pendingSentInvitationCount})",
+                    "Pending (${(inboxSentController.isLoading.value == false)?inboxSentController.member!.pendingSentInvitationCount:inboxSentController.member!.pendingSentInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
+                  //  if (inboxSentController.isLoading.value == false)
                   Text(
-                    "Accepted (${inboxSentController.member!.acceptedSentInvitationCount})",
+                    "Accepted (${(inboxSentController.isLoading.value == false)?inboxSentController.member!.acceptedSentInvitationCount:inboxSentController.member!.acceptedSentInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
+              //     if (inboxSentController.isLoading.value == false)
                   Text(
-                    "Declined (${inboxSentController.member!.declinedSentInvitationCount})",
+                    "Declined (${(inboxSentController.isLoading.value == false)?inboxSentController.member!.declinedSentInvitationCount:inboxSentController.member!.declinedSentInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
+                //    if (inboxSentController.isLoading.value)
+                // Center(
+                //   child: CircularProgressIndicator(
+                //     color: AppColors.primaryColor,
+                //   ),
+                // ),
                 ],
-              ),
+              );
+              }
+              )
             ),
             Expanded(
               child: TabBarView(

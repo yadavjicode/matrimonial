@@ -4,6 +4,7 @@ import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
@@ -23,10 +24,14 @@ class _HomeBodyState extends State<HomeBody> {
   bool isFavorite = false;
   final DashboardController dashboardController =
       Get.put(DashboardController());
-  ProfileDetailsController profileDetailsController =
+  final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-  final ShortlistController shortlistController=Get.put(ShortlistController());
-  final SentInvitationController sentInvitationController=Get.put(SentInvitationController());
+  final ShortlistController shortlistController =
+      Get.put(ShortlistController());
+  final SentInvitationController sentInvitationController =
+      Get.put(SentInvitationController());
+  final EditProfileController editProfileController =
+      Get.put(EditProfileController());
   // void toggleFavorite() {
   //   setState(() {
   //     isFavorite = !isFavorite;
@@ -42,8 +47,6 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     final List<List> discover = [
       ["assets/images/map_mark.png", "Near By", "201"],
       ["assets/images/education_b.png", "Education", "306"],
@@ -84,9 +87,7 @@ class _HomeBodyState extends State<HomeBody> {
               ),
               Spacer(),
               GestureDetector(
-                onTap: () => {
-                  Get.toNamed("/matches")
-                },
+                onTap: () => {Get.toNamed("/matches")},
                 child: Text(
                   "See All",
                   style: FontConstant.styleSemiBold(
@@ -103,8 +104,8 @@ class _HomeBodyState extends State<HomeBody> {
               children: [
                 Row(
                   children: list.map((data) {
-                    String name = "${data.name??""} ${data.surename??""}";
-                    String occupation = data.occupation??"";
+                    String name = "${data.name ?? ""} ${data.surename ?? ""}";
+                    String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
                         : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
@@ -124,7 +125,6 @@ class _HomeBodyState extends State<HomeBody> {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.only(
@@ -136,13 +136,13 @@ class _HomeBodyState extends State<HomeBody> {
                                   width: 315,
                                   height: 290,
                                   filterQuality: FilterQuality.high,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                 ),
                                 Container(
                                   alignment: Alignment.center,
                                   height: 40,
                                   width: 40,
-                                  margin: EdgeInsets.only(top: 268, left: 245),
+                                  margin: EdgeInsets.only(top: 268, left: 265),
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white),
@@ -153,10 +153,10 @@ class _HomeBodyState extends State<HomeBody> {
                                       }),
                                     },
                                     child: Icon(
-                                      isFavorite
+                                      data.shortlistStatus == 1
                                           ? (Icons.favorite)
                                           : Icons.favorite_border_rounded,
-                                      color: isFavorite
+                                      color: data.shortlistStatus == 1
                                           ? Colors.red
                                           : AppColors.primaryColor,
                                       size: 30,
@@ -249,16 +249,14 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
                 Row(
                   children: list.map((data) {
-                    String name = "${data.name??""} ${data.surename??""}";
+                    String name = "${data.name ?? ""} ${data.surename ?? ""}";
                     String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
                         : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
                     return GestureDetector(
-                      onTap: () {
-                        
-                      },
+                      onTap: () {},
                       child: Container(
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 5, right: 5),
@@ -275,7 +273,7 @@ class _HomeBodyState extends State<HomeBody> {
                             GestureDetector(
                               onTap: () => {
                                 profileDetailsController.profileDetails(
-                            context, data.matriID!)
+                                    context, data.matriID!)
                               },
                               child: Row(
                                 children: [
@@ -311,10 +309,11 @@ class _HomeBodyState extends State<HomeBody> {
                                               Text(
                                                 name,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: FontConstant.styleSemiBold(
-                                                    fontSize: 15,
-                                                    color:
-                                                        AppColors.primaryColor),
+                                                style:
+                                                    FontConstant.styleSemiBold(
+                                                        fontSize: 15,
+                                                        color: AppColors
+                                                            .primaryColor),
                                               ),
                                               Text(
                                                 occupation,
@@ -361,19 +360,37 @@ class _HomeBodyState extends State<HomeBody> {
                                 children: [
                                   Expanded(
                                     child: GestureDetector(
-                                     onTap: () {
-                          print(
-                              "${profileDetailsController.member?.data?.matriID}");
-                          shortlistController.shortlist(context,data.matriID!
-                              );
-                        },
-
+                                      onTap: () {
+                                        print(
+                                            "${profileDetailsController.member?.data?.matriID}");
+                                        shortlistController.shortlist(
+                                          context,
+                                          data.matriID!,
+                                          btnOkOnPress: () => {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) {
+                                              dashboardController
+                                                  .dashboard(context);
+                                            })
+                                          },
+                                        );
+                                      },
                                       child: Row(
                                         children: [
-                                          SvgPicture.asset(
-                                            "assets/images/like.svg",
-                                            height: 20,
-                                            width: 20,
+                                          // SvgPicture.asset(
+                                          //   "assets/images/like.svg",
+
+                                          //   height: 20,
+                                          //   width: 20,
+                                          // ),
+                                          Icon(
+                                            data.shortlistStatus == 1
+                                                ? (Icons.favorite)
+                                                : Icons.favorite_border_rounded,
+                                            color: data.shortlistStatus == 1
+                                                ? Colors.red
+                                                : AppColors.primaryColor,
+                                            size: 20,
                                           ),
                                           SizedBox(
                                             width: 3,
@@ -392,18 +409,22 @@ class _HomeBodyState extends State<HomeBody> {
                                   ),
                                   Expanded(
                                     child: GestureDetector(
-                                            onTap: () async {
-                      //hide alert dialog
-                      Get.to(HomeScreen());
-                      if (data.matriID!.trim().isNotEmpty&& data.matriID!=null ) {
-                        await APIs.addChatUser(data.matriID!).then((value) {
-                          if (!value) {
-                            Dialogs.showSnackbar(
-                                context, 'User does not Exists!');
-                          }
-                        });
-                      }
-                    },
+                                      onTap: () async {
+                                        //hide alert dialog
+
+                                        if (data.matriID!.trim().isNotEmpty &&
+                                            data.matriID != null) {
+                                          await APIs.addChatUser(data.matriID!)
+                                              .then((value) {
+                                            if (!value) {
+                                              Dialogs.showSnackbar(context,
+                                                  'User does not Exists!');
+                                            } else {
+                                              Get.to(HomeScreen());
+                                            }
+                                          });
+                                        }
+                                      },
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
@@ -428,11 +449,11 @@ class _HomeBodyState extends State<HomeBody> {
                                   ),
                                   Expanded(
                                     child: GestureDetector(
-                                                onTap: () {
-                          print("${data.matriID}");
-                          sentInvitationController.sentInvitation(context,data.matriID!
-                              );
-                        },
+                                      onTap: () {
+                                        print("${data.matriID}");
+                                        sentInvitationController.sentInvitation(
+                                            context, data.matriID!);
+                                      },
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
@@ -601,7 +622,7 @@ class _HomeBodyState extends State<HomeBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Profile Status: 60%",
+                "Profile Status: ${editProfileController.member!.profilePercentage ?? ""}%",
                 style: FontConstant.styleMedium(
                     fontSize: 11, color: AppColors.black),
               ),
