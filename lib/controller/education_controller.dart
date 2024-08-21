@@ -20,9 +20,7 @@ class EducationDetailsController with ChangeNotifier {
     try {
       _member =
           await apiService.educationDetails(education, qualification, describe);
-
-      final data = {'goto': 'regis'};
-      Get.toNamed('/prof', arguments: data);
+      Get.toNamed('/prof');
     } catch (e) {
       _error = e.toString();
       print(_error);

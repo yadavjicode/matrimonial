@@ -1,17 +1,13 @@
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:devotee/controller/withdrawal_controller.dart';
-import 'package:devotee/model/profile_a_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class SentPending extends StatefulWidget {
   const SentPending({super.key});
-
   @override
   State<SentPending> createState() => _SentPendingState();
 }

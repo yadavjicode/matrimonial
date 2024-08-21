@@ -292,7 +292,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.offAndToNamed('/dashboard');
+          Get.offAndToNamed('/spiritual');
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

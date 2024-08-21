@@ -192,61 +192,145 @@ class _ProfileEditState extends State<ProfileEdit> {
                   children: [
                     _buildCont(
                       "Basic Details",
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText("Posted by",
-                              _editProfileController.postedby.toString() ?? ""),
+                              _editProfileController.member!.member!.profileFor?? ""),
                           _buildText("Title",
-                              _editProfileController.tittle.toString() ?? ""),
+                              _editProfileController.member!.member!.nameTitle?? ""),
                           _buildText("Name",
-                              _editProfileController.name.toString() ?? ""),
+                              _editProfileController.member!.member!.name?? ""),
                           _buildText("Surname",
-                              _editProfileController.surname.toString() ?? ""),
-                          _buildText("Date of Birth",
-                              _editProfileController.dob.toString() ?? ""),
+                              _editProfileController.member!.member!.surename?? ""),
+                          _buildText("Spiritual Name",
+                              _editProfileController.member!.member!.spiritualName?? ""),
+                          _buildText("Marital Status",
+                              _editProfileController.member!.member!.maritalstatus?? ""),
+                          _buildText("Height",
+                              _editProfileController.member!.member!.height?? ""),
+                          _buildText("Weight",
+                              "${_editProfileController.member!.member!.weight} KG"?? ""),
+                              _buildText("Date of Birth",
+                              _editProfileController.member!.member!.dOB?? ""),
+                          _buildText("Hobbies",
+                              _editProfileController.member!.member!.hobbies?? ""),
+                          
+                        ],
+                      ),
+                    ),
+                    _buildCont(
+                      "Contact Details",
+                      "/editContactDetails",
+                      Column(
+                        children: [
+                          _buildText("Phone Number",
+                              _editProfileController.member!.member!.mobileverify?? ""),
+                          _buildText("Email Address",
+                              _editProfileController.member!.member!.confirmEmail?? ""),
+                          _buildText("Instagram ID",
+                              _editProfileController.member!.member!.instagramId?? ""),
+                          
+                          
                         ],
                       ),
                     ),
                     _buildCont(
                       "Location Details",
+                       "/editLocationDetails",
                       Column(
                         children: [
                           _buildText(
                               "Nationality",
-                              _editProfileController.nationality.toString() ??
-                                  ""),
+                              _editProfileController.member!.member!.country?? ""
+                                  ),
                           _buildText(
                               "Residence Type",
-                              _editProfileController.residenceType.toString() ??
-                                  ""),
+                              _editProfileController.member!.member!.state?? ""
+                                  ),
                           _buildText(
                               "Permanent House Type",
-                              _editProfileController.permanentHouseType
-                                      .toString() ??
-                                  ""),
+                              _editProfileController.member!.member!.permanentHouseType?? ""
+                                  ),
+                          _buildText(
+                              "Permanent State",
+                              _editProfileController.member!.member!.permanentState?? ""
+                                  ),
+                          _buildText(
+                              "Permanent City",
+                              _editProfileController.member!.member!.permanentCity?? ""
+                                  ),
+                          _buildText(
+                              "Permanent Pin Code",
+                              _editProfileController.member!.member!.permanentPincode?? ""
+                                  ),
+                          _buildText(
+                              "Temporary State",
+                              _editProfileController.member!.member!.tempState?? ""
+                                  ),
+                          _buildText(
+                              "Temporary City",
+                              _editProfileController.member!.member!.tempCity?? ""
+                                  ),
+                          _buildText(
+                              "Temporary Pin Code",
+                              _editProfileController.member!.member!.tempPincode?? ""
+                                  ),
+                          _buildText(
+                              "References 1 Relation",
+                              _editProfileController.member!.member!.reference1Reletion?? ""
+                                  ),
+                          _buildText(
+                              "References 1 Name",
+                              _editProfileController.member!.member!.reference1Name?? ""
+                                  ),
+                          _buildText(
+                              "References 1 Email",
+                              _editProfileController.member!.member!.reference1Email?? ""
+                                  ),
+                          _buildText(
+                              "References 1 Mobile",
+                              _editProfileController.member!.member!.reference1Mobile?? ""
+                                  ),
+                          _buildText(
+                              "References 2 Relation",
+                              _editProfileController.member!.member!.reference2Reletion?? ""
+                                  ),
+                          _buildText(
+                              "References 2 Name",
+                              _editProfileController.member!.member!.reference2Name?? ""
+                                  ),
+                          _buildText(
+                              "References 2 Email",
+                              _editProfileController.member!.member!.reference2Email?? ""
+                                  ),
+                          _buildText(
+                              "References 2 Mobile",
+                              _editProfileController.member!.member!.reference2Mobile?? ""
+                                  ),
                         ],
                       ),
                     ),
                     _buildCont(
                       "Educational Details",
+                       "/editEducationDetails",
                       Column(
                         children: [
                           _buildText(
                               "Highest Qualification",
-                              _editProfileController.highestQualification
-                                      .toString() ??
-                                  ""),
+                              _editProfileController.member!.member!.education?? ""
+                                  ),
                           _buildText(
                               "Professional Qualification",
-                              _editProfileController.professionalQualification
-                                      .toString() ??
-                                  ""),
-                          _buildText("Other Details", ""),
+                                _editProfileController.member!.member!.professionalQualification?? ""
+                                  ),
+                          _buildText("Other Details",   _editProfileController.member!.member!.otherQualification?? ""),
                         ],
                       ),
                     ),
                     _buildCont(
                       "Profession Details",
+                       "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -280,6 +364,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Devotional Details",
+                       "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -305,6 +390,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Spiritual Counsellor Details",
+                       "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -335,6 +421,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Family & More Details",
+                       "/editBasicDetails",
                       Column(
                         children: [
                           _buildText("Religion",
@@ -354,6 +441,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Horoscope Details",
+                       "/editBasicDetails",
                       Column(
                         children: [
                           _buildText("Date of Birth",
@@ -415,7 +503,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     );
   }
 
-  Widget _buildCont(String tittle, Column column) {
+  Widget _buildCont(String tittle,String move, Column column) {
     return Column(
       children: [
         Padding(
@@ -432,8 +520,9 @@ class _ProfileEditState extends State<ProfileEdit> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  final data = {'goto': 'edit'};
-                  Get.toNamed('/prof', arguments: data);
+                //  final data = {'goto': 'edit'};
+                  // Get.toNamed('/prof', arguments: data);
+                  Get.toNamed(move);
                 },
                 child: SvgPicture.asset("assets/images/icons/penicon.svg"),
               ),

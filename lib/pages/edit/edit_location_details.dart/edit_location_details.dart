@@ -3,8 +3,6 @@ import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/permanent_type.dart';
 import 'package:devotee/constants/lists/relation_list.dart';
 import 'package:devotee/constants/lists/residence_type_list.dart';
-import 'package:devotee/constants/profile_constant.dart';
-import 'package:devotee/controller/list_controller.dart';
 import 'package:devotee/controller/location_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,14 +11,14 @@ import '/constants/button_constant.dart';
 import '/constants/color_constant.dart';
 import '/constants/font_constant.dart';
 
-class LocationDetails extends StatefulWidget {
-  const LocationDetails({super.key});
+class EditLocationDetails extends StatefulWidget {
+  const EditLocationDetails({super.key});
 
   @override
-  State<LocationDetails> createState() => _LocationDetailsState();
+  State<EditLocationDetails> createState() => _EditLocationDetailsState();
 }
 
-class _LocationDetailsState extends State<LocationDetails> {
+class _EditLocationDetailsState extends State<EditLocationDetails> {
   final LocationDetailsController _locationDetailsController =
       Get.put(LocationDetailsController());
   CountryController countryController = Get.put(CountryController());
@@ -103,7 +101,15 @@ class _LocationDetailsState extends State<LocationDetails> {
                         const SizedBox(
                           height: 30,
                         ),
-                         buildDropdown(
+                        Obx(() {
+                          if (countryController.isLoading.value) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColor,
+                              ),
+                            );
+                          } else {
+                            return buildDropdown(
                               'Nationality',
                               countryController.getCountryList(),
                               (value) {
@@ -114,9 +120,9 @@ class _LocationDetailsState extends State<LocationDetails> {
                                     value); // Call the controller method
                               },
                               hintText: 'Select Nationality',
-                            )
-                          ,
-                        
+                            );
+                          }
+                        }),
                         const SizedBox(
                           height: 15,
                         ),

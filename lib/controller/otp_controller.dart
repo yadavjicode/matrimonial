@@ -49,7 +49,7 @@ class OtpController with ChangeNotifier {
           ),
         ),
       );
-
+     
       // Navigate to profile page
       Get.toNamed('/profile1');
     } catch (e) {

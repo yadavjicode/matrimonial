@@ -168,7 +168,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                   fontSize: 20, color: AppColors.constColor)),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/dashboard')},
+                          onTap: () => {Get.offAndToNamed('/profile')},
                           child: Container(
                             margin: EdgeInsets.only(bottom: 25, top: 10),
                             padding: EdgeInsets.all(5),

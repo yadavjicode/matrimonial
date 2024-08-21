@@ -11,15 +11,15 @@ import 'package:devotee/controller/professional_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProfessionalDetailsPage extends StatefulWidget {
-  const ProfessionalDetailsPage({super.key});
+class EditProfessionalDetails extends StatefulWidget {
+  const EditProfessionalDetails({super.key});
 
   @override
-  State<ProfessionalDetailsPage> createState() =>
-      _ProfessionalDetailsPageState();
+  State<EditProfessionalDetails> createState() =>
+      _EditProfessionalDetailsState();
 }
 
-class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
+class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
   TextEditingController pincodeController = TextEditingController();
   ProfessionController professionController = Get.put(ProfessionController());
   IncomeController incomeController = Get.put(IncomeController());
@@ -46,11 +46,11 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
     }
   }
 
- 
+  final arguments = Get.arguments as Map<String, dynamic>;
 
   @override
   Widget build(BuildContext context) {
-  
+    final goto = arguments['goto'];
     // Extract data
 
     return Scaffold(
@@ -65,12 +65,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.offAndToNamed('/education');
-            },
-          ),
+          leading: goto != "edit"
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Get.offAndToNamed('/dashboard');
+                  },
+                )
+              : null,
         ),
         body: Obx(() {
           return Stack(children: [
@@ -89,7 +91,15 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                         padding: const EdgeInsets.only(bottom: 30),
                         child: Image.asset("assets/images/occupation.png"),
                       ),
-                       buildDropdown(
+                      Obx(() {
+                        if (professionController.isLoading.value) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                            ),
+                          );
+                        } else {
+                          return buildDropdown(
                             'Title of the Profession',
                             professionController.getProfessionList(),
                             (value) {
@@ -100,9 +110,9 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                   value); // Call the controller method
                             },
                             hintText: 'Select Profession',
-                          ),
-                      
-                      
+                          );
+                        }
+                      }),
                       Container(
                           margin: EdgeInsets.only(top: 10, bottom: 5),
                           alignment: Alignment.centerLeft,
@@ -251,7 +261,10 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                         child: CustomButton(
                             text: "CONTINUE",
                             onPressed: () => {
-                                  
+                                  if (goto == "edit")
+                                    {Get.toNamed('/dashboard')}
+                                  else
+                                    {
                                       professionalDeatilsController
                                           .professionalDetails(
                                               context,
@@ -264,7 +277,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                                   .toString()
                                                   .trim(),
                                               selectedAnnualSalary ?? ""),
-                                    
+                                    }
 
                                   //   Get.toNamed('/devotion')
                                 },
@@ -272,8 +285,8 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             textStyle: FontConstant.styleRegular(
                                 fontSize: 20, color: AppColors.constColor)),
                       ),
-                      GestureDetector( 
-                        onTap: () => {Get.offAndToNamed('/devotion')},
+                      GestureDetector(
+                        onTap: () => {Get.offAndToNamed('/dashboard')},
                         child: Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.all(5),

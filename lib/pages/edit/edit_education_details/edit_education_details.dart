@@ -9,14 +9,14 @@ import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
 
-class EducationDetails extends StatefulWidget {
-  const EducationDetails({super.key});
+class EditEducationdetails extends StatefulWidget {
+  const EditEducationdetails({super.key});
 
   @override
-  State<EducationDetails> createState() => _EducationDetailsState();
+  State<EditEducationdetails> createState() => _EditEducationdetailsState();
 }
 
-class _EducationDetailsState extends State<EducationDetails> {
+class _EditEducationdetailsState extends State<EditEducationdetails> {
   String? selectedHighestQualifaction;
   String? selectedProfessionalQualifaction;
   bool isHighestQualifaction = false;
@@ -161,7 +161,7 @@ class _EducationDetailsState extends State<EducationDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.offAndToNamed('/prof');
+          Get.offAndToNamed('/dashboard');
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

@@ -21,6 +21,11 @@ import 'package:devotee/pages/drawer_page/suggestion_from_our_side/suggestion_fr
 import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/pages/drawer_page/warning/warning.dart';
 import 'package:devotee/pages/drawer_page/who_are_you/who_are_you.dart';
+import 'package:devotee/pages/edit/edit_basic_details/edit_basic_details.dart';
+import 'package:devotee/pages/edit/edit_contact_details/edit_contact_details.dart';
+import 'package:devotee/pages/edit/edit_education_details/edit_education_details.dart';
+import 'package:devotee/pages/edit/edit_location_details.dart/edit_location_details.dart';
+import 'package:devotee/pages/edit/edit_profession_details/edit_profession_details.dart';
 import 'package:devotee/pages/edit/edit_your_profile/edit_your_profile.dart';
 import 'package:devotee/pages/ragistration/about_groom_bride/about_groom_bride.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/show_image.dart';
@@ -102,8 +107,15 @@ class AppRoutes {
   static const String package = '/package';
 
   static const String matches = '/matches';
-   static const String showImage = '/showImage';
-  static const String profileEdit = '/profileEdit';
+  static const String showImage = '/showImage';
+  
+// Edit pages
+   static const String profileEdit = '/profileEdit';
+   static const String editBasicDetails = '/editBasicDetails';
+   static const String editContactDetails = '/editContactDetails';
+   static const String editLocationDetails = '/editLocationDetails';
+   static const String editEducationDetails = '/editEducationDetails';
+   static const String editProfessionDetails = '/editProfessionDetails';
 
   static final List<GetPage> routes = [
     GetPage(
@@ -116,12 +128,7 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-    // GetPage(
-    //   name: otp,
-    //   page: () => OTPScreen(),
-    //   transition: Transition.fadeIn,
-    //   transitionDuration: const Duration(milliseconds: 400),
-    // ),
+  
     GetPage(
       name: profile,
       page: () => const UploadYourProfile(),
@@ -160,19 +167,19 @@ class AppRoutes {
     ),
     GetPage(
       name: profile2,
-      page: () => const Profile2Page(),
+      page: () => const BasicDetail(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: education,
-      page: () => const EducationPage(),
+      page: () => const EducationDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
       name: family,
-      page: () => const FamilyPage(),
+      page: () => const FamilyDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
@@ -214,7 +221,7 @@ class AppRoutes {
     ),
     GetPage(
       name: contact,
-      page: () => const ContactPage(),
+      page: () => const ContactDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
@@ -232,7 +239,7 @@ class AppRoutes {
     ),
     GetPage(
       name: location,
-      page: () => const Location(),
+      page: () => const LocationDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
@@ -406,6 +413,36 @@ class AppRoutes {
     GetPage(
       name: profileEdit,
       page: () => const EditYourProfile(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: editBasicDetails,
+      page: () => const EditBasicDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: editContactDetails,
+      page: () => const EditContactDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: editLocationDetails,
+      page: () => const EditLocationDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: editEducationDetails,
+      page: () => const EditEducationdetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: editProfessionDetails,
+      page: () => const EditProfessionalDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

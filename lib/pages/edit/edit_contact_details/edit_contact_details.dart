@@ -7,14 +7,14 @@ import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
 
-class ContactDetails extends StatefulWidget {
-  const ContactDetails({Key? key}) : super(key: key); // Fix: Added key parameter
+class EditContactDetails extends StatefulWidget {
+  const EditContactDetails({Key? key}) : super(key: key); // Fix: Added key parameter
 
   @override
-  State<ContactDetails> createState() => _ContactDetailsState();
+  State<EditContactDetails> createState() => _EditContactDetailsState();
 }
-
-class _ContactDetailsState extends State<ContactDetails> {
+  
+class _EditContactDetailsState extends State<EditContactDetails> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController phonecontroller = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -22,12 +22,6 @@ class _ContactDetailsState extends State<ContactDetails> {
 
   final ContactDetailsController _contactDetailController =
       Get.put(ContactDetailsController());
-
-  @override
-  void initState() {
-  super.initState();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +148,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.toNamed('/location');
+          Get.offAndToNamed('/dashboard');
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

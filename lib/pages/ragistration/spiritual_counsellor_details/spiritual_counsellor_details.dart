@@ -236,7 +236,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   fontSize: 20, color: AppColors.constColor)),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/dashboard')},
+                          onTap: () => {Get.offAndToNamed('/family')},
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             padding: EdgeInsets.all(5),

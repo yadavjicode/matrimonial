@@ -15,14 +15,14 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/font_constant.dart';
 
-class FamilyPage extends StatefulWidget {
-  const FamilyPage({super.key});
+class FamilyDetails extends StatefulWidget {
+  const FamilyDetails({super.key});
 
   @override
-  State<FamilyPage> createState() => _FamilyPageState();
+  State<FamilyDetails> createState() => _FamilyDetailsState();
 }
 
-class _FamilyPageState extends State<FamilyPage> {
+class _FamilyDetailsState extends State<FamilyDetails> {
   FamilyDetailsController _familyDetailsController =
       Get.put(FamilyDetailsController());
   ReligionsController religionController = Get.put(ReligionsController());
@@ -239,15 +239,7 @@ class _FamilyPageState extends State<FamilyPage> {
                                 alignment: Alignment.center,
                                 child: Image.asset(
                                     'assets/images/familyicon.png')),
-                            Obx(() {
-                              if (religionController.isLoading.value) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.primaryColor,
-                                  ),
-                                );
-                              } else {
-                                return buildDropdown(
+                             buildDropdown(
                                   'Religion',
                                   religionController.getReligionNames(),
                                   (value) {
@@ -262,9 +254,9 @@ class _FamilyPageState extends State<FamilyPage> {
                                     religionController.selectItem(value);
                                   },
                                   hintText: 'Select Religion',
-                                );
-                              }
-                            }),
+                                ),
+                              
+                            
                             const SizedBox(height: 15),
                             Obx(() {
                               if (castController.isLoading.value) {
@@ -1126,7 +1118,7 @@ class _FamilyPageState extends State<FamilyPage> {
                               child: CustomButton(
                                 text: 'Skip',
                                 onPressed: () {
-                                  Get.offAndToNamed('/dashboard');
+                                  Get.offAndToNamed('/aboutgroom');
                                 },
                                 color: Colors.transparent,
                                 textStyle: FontConstant.styleRegular(

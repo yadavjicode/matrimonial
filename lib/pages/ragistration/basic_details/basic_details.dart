@@ -7,7 +7,6 @@ import 'package:devotee/constants/lists/marital_list.dart';
 import 'package:devotee/constants/lists/title_list.dart';
 import 'package:devotee/constants/lists/weight_list.dart';
 import 'package:devotee/controller/basic_details_controller.dart';
-import 'package:devotee/controller/list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/constants/CustomTextFeild.dart';
@@ -15,19 +14,22 @@ import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 
-class Profile2Page extends StatefulWidget {
-  const Profile2Page({Key? key}) : super(key: key);
+class BasicDetail extends StatefulWidget {
+  const BasicDetail({Key? key}) : super(key: key);
 
   @override
-  State<Profile2Page> createState() => _Profile2PageState();
+  State<BasicDetail> createState() => _BasicDetailState();
 }
 
-class _Profile2PageState extends State<Profile2Page> {
+class _BasicDetailState extends State<BasicDetail> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController initiatedNameController = TextEditingController();
   final TextEditingController aboutController = TextEditingController();
+
+
+
   final BasicDetailsController _basicDetailController =
       Get.put(BasicDetailsController());
   DietController dietController = Get.put(DietController());
@@ -63,7 +65,16 @@ class _Profile2PageState extends State<Profile2Page> {
       return false;
     }
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    nameController.clear();
+    surnameController.clear();
+    initiatedNameController.clear();
+    aboutController.clear();
+  }
+  
   Map<String, bool> hobbies = {
     "Art / Handicraft": false,
     "Yoga": false,
@@ -202,27 +213,9 @@ class _Profile2PageState extends State<Profile2Page> {
                                   controller: initiatedNameController,
                                 ),
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(top: 15),
-                              //   child: buildDropdown(
-                              //     'Marital Status',
-                              //     MaritalController.MaritalList(),
-                              //     (value) => setState(
-                              //         () => selectedMaritalStatus = value),
-                              //     hintText: 'Select Marital Status',
-                              //   ),
-                              // ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child: Obx(() {
-                                  if (maritalController.isLoading.value) {
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    );
-                                  } else {
-                                    return buildDropdown(
+                                child:  buildDropdown(
                                       'Marital Status',
                                       maritalController.getMaritalList(),
                                       (value) {
@@ -234,9 +227,9 @@ class _Profile2PageState extends State<Profile2Page> {
                                             value); // Call the controller method
                                       },
                                       hintText: 'Select Marital Status',
-                                    );
-                                  }
-                                }),
+                                    )
+                                
+                                
                               ),
                               const SizedBox(height: 15),
                               Row(
@@ -314,15 +307,7 @@ class _Profile2PageState extends State<Profile2Page> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(() {
-                                if (dietController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  );
-                                } else {
-                                  return buildDropdown(
+                               buildDropdown(
                                     'Diet',
                                     dietController.getDietList(),
                                     (value) {
@@ -334,9 +319,9 @@ class _Profile2PageState extends State<Profile2Page> {
                                           value); // Call the controller method
                                     },
                                     hintText: 'Select Diet',
-                                  );
-                                }
-                              }),
+                                  )
+                                
+                              ,
                               const SizedBox(height: 15),
                               CustomTextField(
                                 labelText: "About",
@@ -370,8 +355,7 @@ class _Profile2PageState extends State<Profile2Page> {
                                       getSelectedHobbies() ?? "",
                                       selectedDiet ?? "",
                                       aboutController.text.toString().trim());
-                                  print(
-                                      "hfiehfioefioef f======${getSelectedHobbies()}");
+                                  
                                   //   Get.toNamed('/contact');
                                 }
                               },
@@ -382,8 +366,8 @@ class _Profile2PageState extends State<Profile2Page> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 15),
-                          _buildSkipButton()
+                       //   const SizedBox(height: 15),
+                          // _buildSkipButton()
                         ],
                       ),
                     ),
@@ -462,16 +446,17 @@ class _Profile2PageState extends State<Profile2Page> {
   }
 }
 
-Widget _buildSkipButton() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-    child: CustomButton(
-      text: 'Skip',
-      onPressed: () {
-        Get.offAndToNamed('/dashboard');
-      },
-      color: Colors.transparent,
-      textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
-    ),
-  );
-}
+
+// Widget _buildSkipButton() {
+//   return Padding(
+//     padding: const EdgeInsets.symmetric(horizontal: 5.0),
+//     child: CustomButton(
+//       text: 'Skip',
+//       onPressed: () {
+//         Get.offAndToNamed('/dashboard');
+//       },
+//       color: Colors.transparent,
+//       textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+//     ),
+//   );
+// }

@@ -245,7 +245,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/dashboard')},
+                          onTap: () => {Get.offAndToNamed('/horoscope')},
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             padding: EdgeInsets.all(5),
