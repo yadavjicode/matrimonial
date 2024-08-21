@@ -213,6 +213,19 @@ class _Profile1PageState extends State<Profile1Page> {
                                 fontSize: 18, color: Colors.white),
                           ),
                         ),
+
+                         GestureDetector(
+                          onTap: () => {Get.offAndToNamed('/dashboard')},
+                          child: Container(
+                            margin: EdgeInsets.only( top: 10),
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              "SKIP",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 20, color: AppColors.black),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),

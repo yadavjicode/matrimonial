@@ -137,6 +137,8 @@ class Data {
   dynamic photo3;
   dynamic photo4;
   dynamic photo4Approve;
+  dynamic photo5;
+  dynamic photo5Approve;
   dynamic photo3Approve;
   dynamic photoRemindCnt;
   dynamic logincount;
@@ -440,6 +442,8 @@ class Data {
       this.photo3,
       this.photo4,
       this.photo4Approve,
+      this.photo5,
+      this.photo5Approve,
       this.photo3Approve,
       this.photoRemindCnt,
       this.logincount,
@@ -743,6 +747,8 @@ class Data {
     photo3 = json['Photo3'];
     photo4 = json['Photo4'];
     photo4Approve = json['Photo4Approve'];
+    photo5 = json['Photo5'];
+    photo5Approve = json['Photo5Approve'];
     photo3Approve = json['Photo3Approve'];
     photoRemindCnt = json['photo_remind_cnt'];
     logincount = json['Logincount'];
@@ -1056,6 +1062,8 @@ class Data {
     data['Photo3'] = this.photo3;
     data['Photo4'] = this.photo4;
     data['Photo4Approve'] = this.photo4Approve;
+    data['Photo5'] = this.photo5;
+    data['Photo5Approve'] = this.photo5Approve;
     data['Photo3Approve'] = this.photo3Approve;
     data['photo_remind_cnt'] = this.photoRemindCnt;
     data['Logincount'] = this.logincount;

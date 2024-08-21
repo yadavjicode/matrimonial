@@ -1,5 +1,9 @@
+// ignore_for_file: avoid_unnecessary_containers
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:flutter/material.dart';
@@ -127,82 +131,291 @@ class ProfileHeaderState extends State<ProfileHeader> {
 
   ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  int _currentIndex = 0;
+
+  List<String> getImageList() {
+    List<String> imgList = [];
+
+    // Check each photo field and add to the list if it's not null
+    if (profileDetailsController.member?.data?.photo1 != null) {
+      imgList.add(profileDetailsController.member!.data!.photo1!);
+    }
+    if (profileDetailsController.member?.data?.photo2 != null) {
+      imgList.add(profileDetailsController.member!.data!.photo2!);
+    }
+    if (profileDetailsController.member?.data?.photo3 != null) {
+      imgList.add(profileDetailsController.member!.data!.photo3!);
+    }
+    if (profileDetailsController.member?.data?.photo4 != null) {
+      imgList.add(profileDetailsController.member!.data!.photo4!);
+    }
+    if (profileDetailsController.member?.data?.photo5 != null) {
+      imgList.add(profileDetailsController.member!.data!.photo5!);
+    }
+    return imgList;
+  }
+  final EditProfileController user = Get.put(EditProfileController());
+  bool compare(dynamic a, dynamic b) {
+    if (a == null || b == null) {
+      return false;
+    }
+    if (a == b) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int compareInt(dynamic a, dynamic b) {
+    if (a == null || b == null) {
+      return 0;
+    }
+    if (a == b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  int count() {
+    int age = profileDetailsController.member!.data!.pEFromAge != null &&
+            profileDetailsController.member!.data!.pEToAge != null &&
+            user.member!.member!.pEFromAge != null &&
+            user.member!.member!.pEToAge != null
+        ? compareInt(
+            compare(profileDetailsController.member!.data!.pEFromAge,
+                user.member!.member!.pEFromAge),
+            compare(profileDetailsController.member!.data!.pEToAge,
+                user.member!.member!.pEToAge))
+        : 0;
+    int height = profileDetailsController.member!.data!.pEHeight != null &&
+            profileDetailsController.member!.data!.pEHeight2 != null &&
+            user.member!.member!.pEHeight != null &&
+            user.member!.member!.pEHeight2 != null
+        ? compareInt(
+            compare(profileDetailsController.member!.data!.pEHeight,
+                user.member!.member!.pEHeight),
+            compare(profileDetailsController.member!.data!.pEHeight2,
+                user.member!.member!.pEHeight2))
+        : 0;
+    int marital =
+        profileDetailsController.member!.data!.pEMaritalStatus != null &&
+                user.member!.member!.pEMaritalStatus != null
+            ? compareInt(profileDetailsController.member!.data!.pEMaritalStatus,
+                user.member!.member!.pEMaritalStatus)
+            : 0;
+    int religion = profileDetailsController.member!.data!.pEReligion != null &&
+            user.member!.member!.pEReligion != null
+        ? compareInt(profileDetailsController.member!.data!.pEReligion,
+            user.member!.member!.pEReligion)
+        : 0;
+    int country =
+        profileDetailsController.member!.data!.pECountrylivingin != null &&
+                user.member!.member!.pECountrylivingin != null
+            ? compareInt(
+                profileDetailsController.member!.data!.pECountrylivingin,
+                user.member!.member!.pECountrylivingin)
+            : 0;
+    int state = profileDetailsController.member!.data!.pEState != null &&
+            user.member!.member!.pEState != null
+        ? compareInt(profileDetailsController.member!.data!.pEState,
+            user.member!.member!.pEState)
+        : 0;
+    int income =
+        profileDetailsController.member!.data!.pEAnnualincome != null &&
+                user.member!.member!.pEAnnualincome != null
+            ? compareInt(profileDetailsController.member!.data!.pEAnnualincome,
+                user.member!.member!.pEAnnualincome)
+            : 0;
+    return (age + height + marital + religion + country + state + income);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final List<String> imgList = getImageList();
     return Stack(
       children: [
-        Container(
-          height: 390,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(
-                  'http://devoteematrimony.aks.5g.in/${profileDetailsController.member?.data?.profileImages?[0].image}'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            height: 80,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.transparent,
-                  Colors.black.withOpacity(0.9),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 5,
-          left: 18,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""} (ID:${profileDetailsController.member?.data?.matriID ?? ""})',
-                style: FontConstant.styleSemiBold(
-                  fontSize: 18,
-                  color: Colors.white,
+        Column(
+          children: [
+            Stack(
+              children: [
+                CarouselSlider(
+                  options: CarouselOptions(
+                    autoPlay: false,
+                    enlargeCenterPage: true,
+                    padEnds: false,
+                    aspectRatio: 20 / 20,
+                    viewportFraction: 1.0,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                  ),
+                  items: imgList
+                      .map((item) => Container(
+                            width: double.infinity,
+                            child: ClipRRect(
+                              child: Image.network(
+                                "http://devoteematrimony.aks.5g.in/${item}",
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                                filterQuality: FilterQuality.high,
+                              ),
+                            ),
+                          ))
+                      .toList(),
                 ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    profileDetailsController.member?.data?.occupation ?? "",
-                    style: FontConstant.styleSemiBold(
-                      fontSize: 12,
-                      color: Colors.white,
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    height: 80,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.9),
+                        ],
+                      ),
                     ),
                   ),
-                  // Spacer(),
-                  // GestureDetector(
-                  //   onTap: toggleFavorite,
-                  //   child: Icon(
-                  //     isFavorite ? Icons.favorite : Icons.favorite_border,
-                  //     color: isFavorite ? Colors.red : Colors.white,
-                  //     size: 30,
-                  //   ),
-                  // ),
-                ],
-              ),
-              Text(
-                '${profileDetailsController.member?.data?.age == null ? "" : "${profileDetailsController.member?.data?.age} Years | "}${profileDetailsController.member?.data?.height ?? ""}',
-                style: FontConstant.styleSemiBold(
-                  fontSize: 12,
-                  color: Colors.white,
                 ),
-              ),
-              const SizedBox(height: 8),
-            ],
-          ),
+                Positioned(
+                  bottom: 5,
+                  left: 18,
+                  right: 90,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""} (ID:${profileDetailsController.member?.data?.matriID ?? ""})',
+                        style: FontConstant.styleSemiBold(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            profileDetailsController.member?.data?.occupation ??
+                                "",
+                            style: FontConstant.styleSemiBold(
+                              fontSize: 12,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${profileDetailsController.member?.data?.age == null ? "" : "${profileDetailsController.member?.data?.age} Years | "}${profileDetailsController.member?.data?.height ?? ""}',
+                        style: FontConstant.styleSemiBold(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  bottom:
+                      5.0, // Position the indicator 10 pixels from the bottom
+                  left: 0.0,
+                  right: 0.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: imgList.map((url) {
+                      int index = imgList.indexOf(url);
+                      return Container(
+                        width: 8.0,
+                        height: 8.0,
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: _currentIndex == index
+                              ? AppColors.primaryColor
+                              : AppColors.constColor,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+                Positioned(
+                    right: 5,
+                    bottom: 18,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: AppColors.constColor),
+                              color: AppColors.purple),
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${((count()*100)/7).toInt()} %",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 10, color: AppColors.constColor),
+                              ),
+                              Text(
+                                "Matches",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 8, color: AppColors.constColor),
+                              ),
+                              Text("Score",
+                                  style: FontConstant.styleRegular(
+                                      fontSize: 8,
+                                      color: AppColors.constColor)),
+                            ],
+                          )),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: AppColors.constColor)),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              "assets/images/icons/whatsaap.svg",
+                              width: 25,
+                              height: 25,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: AppColors.constColor)),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              "assets/images/icons/like.svg",
+                              fit: BoxFit.contain,
+                              width: 25,
+                              height: 25,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
+              ],
+            ),
+          ],
         ),
       ],
     );
@@ -214,13 +427,13 @@ class BasicDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          color: AppColors.constColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Profile created by myself',
@@ -241,18 +454,25 @@ class BasicDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 15),
-          Text(
-            'Basic Details:',
-            style: FontConstant.styleSemiBold(
-              fontSize: 18,
-              color: AppColors.primaryColor,
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Basic Details:',
+                style: FontConstant.styleSemiBold(
+                  fontSize: 18,
+                  color: AppColors.primaryColor,
+                ),
+              ),
+              const SizedBox(height: 8),
+              BasicDetailsGrid(),
+            ],
           ),
-          const SizedBox(height: 8),
-          BasicDetailsGrid(),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
@@ -269,44 +489,44 @@ class BasicDetailsGrid extends StatelessWidget {
       runSpacing: 16,
       children: [
         DetailRow(
-          icon: Icons.male,
+          path: "assets/images/icons/region.svg",
           title: 'Gender',
           value: profileDetailsController.member?.data?.gender ?? "",
         ),
         DetailRow(
-          icon: Icons.cake,
+          path: "assets/images/icons/dob.svg",
           title: 'Birth Date',
           value: profileDetailsController.member?.data?.dOB ?? "",
         ),
         DetailRow(
-          icon: Icons.favorite_border,
+          path: "assets/images/icons/region.svg",
           title: 'Religion',
           value: profileDetailsController.member?.data?.religion ?? "",
         ),
         DetailRow(
-          icon: Icons.favorite,
+          path: "assets/images/icons/marital.svg",
           title: 'Marital Status',
           value: profileDetailsController.member?.data?.maritalstatus ?? "",
         ),
         DetailRow(
-          icon: Icons.school,
+          path: "assets/images/icons/study.svg",
           title: 'Study',
           value: profileDetailsController.member?.data?.education ?? "",
         ),
         DetailRow(
-          icon: Icons.language,
+          path: "assets/images/icons/langu.svg",
           title: 'Language',
           value: profileDetailsController.member?.data?.language ?? "",
         ),
         DetailRow(
-          icon: Icons.location_on,
+          path: "assets/images/icons/location.svg",
           title: 'Lived In',
           value:
               "${profileDetailsController.member?.data?.city ?? ""}, ${profileDetailsController.member?.data?.state ?? ""} " ??
                   "",
         ),
         DetailRow(
-          icon: Icons.work,
+          path: "assets/images/icons/occupation.svg",
           title: 'Occupation',
           value: profileDetailsController.member?.data?.occupation ?? "",
         ),
@@ -316,12 +536,12 @@ class BasicDetailsGrid extends StatelessWidget {
 }
 
 class DetailRow extends StatelessWidget {
-  final IconData icon;
+  final String path;
   final String title;
   final String value;
 
   DetailRow({
-    required this.icon,
+    required this.path,
     required this.title,
     required this.value,
     super.key,
@@ -333,7 +553,7 @@ class DetailRow extends StatelessWidget {
       width: (MediaQuery.of(context).size.width / 2) - 24,
       child: Row(
         children: [
-          Icon(icon, color: Colors.pink),
+          SvgPicture.asset(path, color: Colors.pink),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -342,15 +562,15 @@ class DetailRow extends StatelessWidget {
                 Text(
                   title,
                   style: FontConstant.styleRegular(
-                    fontSize: 13,
-                    color: Colors.grey,
+                    fontSize: 15,
+                    color: AppColors.black,
                   ),
                 ),
                 Text(
                   value,
                   style: FontConstant.styleRegular(
                     fontSize: 12,
-                    color: Colors.black,
+                    color: AppColors.darkgrey,
                   ),
                 ),
               ],
@@ -428,16 +648,23 @@ class Compatiblity extends StatefulWidget {
 }
 
 class _CompatiblityState extends State<Compatiblity> {
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
+  final EditProfileController user = Get.put(EditProfileController());
+
   Widget buildAvatarColumn(String imagePath, String label) {
     return Column(
       children: [
         ClipOval(
-          child: Image.asset(
+          child: Image.network(
             imagePath,
-            width: 50,
-            height: 50,
+            width: 75,
+            height: 75,
             fit: BoxFit.cover,
           ),
+        ),
+        SizedBox(
+          height: 10,
         ),
         Text(
           label,
@@ -448,8 +675,89 @@ class _CompatiblityState extends State<Compatiblity> {
     );
   }
 
+  bool compare(dynamic a, dynamic b) {
+    if (a == null || b == null) {
+      return false;
+    }
+    if (a == b) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int compareInt(dynamic a, dynamic b) {
+    if (a == null || b == null) {
+      return 0;
+    }
+    if (a == b) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  int count() {
+    int age = profileDetailsController.member!.data!.pEFromAge != null &&
+            profileDetailsController.member!.data!.pEToAge != null &&
+            user.member!.member!.pEFromAge != null &&
+            user.member!.member!.pEToAge != null
+        ? compareInt(
+            compare(profileDetailsController.member!.data!.pEFromAge,
+                user.member!.member!.pEFromAge),
+            compare(profileDetailsController.member!.data!.pEToAge,
+                user.member!.member!.pEToAge))
+        : 0;
+    int height = profileDetailsController.member!.data!.pEHeight != null &&
+            profileDetailsController.member!.data!.pEHeight2 != null &&
+            user.member!.member!.pEHeight != null &&
+            user.member!.member!.pEHeight2 != null
+        ? compareInt(
+            compare(profileDetailsController.member!.data!.pEHeight,
+                user.member!.member!.pEHeight),
+            compare(profileDetailsController.member!.data!.pEHeight2,
+                user.member!.member!.pEHeight2))
+        : 0;
+    int marital =
+        profileDetailsController.member!.data!.pEMaritalStatus != null &&
+                user.member!.member!.pEMaritalStatus != null
+            ? compareInt(profileDetailsController.member!.data!.pEMaritalStatus,
+                user.member!.member!.pEMaritalStatus)
+            : 0;
+    int religion = profileDetailsController.member!.data!.pEReligion != null &&
+            user.member!.member!.pEReligion != null
+        ? compareInt(profileDetailsController.member!.data!.pEReligion,
+            user.member!.member!.pEReligion)
+        : 0;
+    int country =
+        profileDetailsController.member!.data!.pECountrylivingin != null &&
+                user.member!.member!.pECountrylivingin != null
+            ? compareInt(
+                profileDetailsController.member!.data!.pECountrylivingin,
+                user.member!.member!.pECountrylivingin)
+            : 0;
+    int state = profileDetailsController.member!.data!.pEState != null &&
+            user.member!.member!.pEState != null
+        ? compareInt(profileDetailsController.member!.data!.pEState,
+            user.member!.member!.pEState)
+        : 0;
+    int income =
+        profileDetailsController.member!.data!.pEAnnualincome != null &&
+                user.member!.member!.pEAnnualincome != null
+            ? compareInt(profileDetailsController.member!.data!.pEAnnualincome,
+                user.member!.member!.pEAnnualincome)
+            : 0;
+    return (age + height + marital + religion + country + state + income);
+  }
+
   @override
   Widget build(BuildContext context) {
+    String otherImage = profileDetailsController.member?.data?.photo1 != null
+        ? "http://devoteematrimony.aks.5g.in/${profileDetailsController.member?.data?.photo1}"
+        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+    String myImage = user.member!.member!.Photo1 != null
+        ? "http://devoteematrimony.aks.5g.in/${user.member!.member!.Photo1}"
+        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -459,7 +767,7 @@ class _CompatiblityState extends State<Compatiblity> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Compatibility Rate:',
+            'What ${profileDetailsController.member!.data!.gender == "Male" ? "He" : "She"} is Looking For :',
             style: FontConstant.styleMedium(
               fontSize: 16,
               color: AppColors.primaryColor,
@@ -468,7 +776,8 @@ class _CompatiblityState extends State<Compatiblity> {
           const SizedBox(height: 10),
           Row(
             children: [
-              buildAvatarColumn('assets/images/girl1.png', 'Her \nPreferences'),
+              buildAvatarColumn(otherImage,
+                  '${profileDetailsController.member!.data!.gender == "Male" ? "His" : "Her"} \nPreferences'),
               const Padding(
                   padding: EdgeInsets.only(bottom: 45.0),
                   child: Icon(
@@ -478,7 +787,7 @@ class _CompatiblityState extends State<Compatiblity> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 45.0),
                 child: Text(
-                  'You match 5/8 of \nher preferences',
+                  'You match ${count()}/7 of \nher preferences',
                   textAlign: TextAlign.center,
                   style: FontConstant.styleMedium(
                       fontSize: 14, color: const Color(0xff583789)),
@@ -492,22 +801,107 @@ class _CompatiblityState extends State<Compatiblity> {
                 ),
               ),
               const Spacer(),
-              buildAvatarColumn('assets/images/hero.jpg', 'Your \nMatch'),
+              buildAvatarColumn(myImage, 'Your \nMatch'),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(vertical: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const InfoRow('Age', '20 to 30', false),
-                const InfoRow('Height', "5' 4\" to 6' 3\"", true),
-                const InfoRow('Marital Status', 'Never Married', false),
-                const InfoRow('Religion / Community', 'Hindu', true),
-                const InfoRow('Country Living in', 'India', true),
-                const InfoRow('State Living in', 'New Delhi', true),
-                const InfoRow('Annual Income', 'INR 2 lakhs to 15 lakhs', true),
-                const SizedBox(height: 16),
+                InfoRow(
+                    'Age',
+                    '${profileDetailsController.member!.data!.pEFromAge ?? "_ _"} to ${profileDetailsController.member!.data!.pEToAge ?? "_ _"}',
+                    false,
+                    profileDetailsController.member!.data!.pEFromAge != null &&
+                            profileDetailsController.member!.data!.pEToAge !=
+                                null &&
+                            user.member!.member!.pEFromAge != null &&
+                            user.member!.member!.pEToAge != null
+                        ? compare(
+                            compare(
+                                profileDetailsController
+                                    .member!.data!.pEFromAge,
+                                user.member!.member!.pEFromAge),
+                            compare(
+                                profileDetailsController.member!.data!.pEToAge,
+                                user.member!.member!.pEToAge))
+                        : false),
+                InfoRow(
+                    'Height',
+                    '${profileDetailsController.member!.data!.pEHeight ?? "_ _"} to ${profileDetailsController.member!.data!.pEHeight2 ?? "_ _"}',
+                    true,
+                    profileDetailsController.member!.data!.pEHeight != null &&
+                            profileDetailsController.member!.data!.pEHeight2 !=
+                                null &&
+                            user.member!.member!.pEHeight != null &&
+                            user.member!.member!.pEHeight2 != null
+                        ? compare(
+                            compare(
+                                profileDetailsController.member!.data!.pEHeight,
+                                user.member!.member!.pEHeight),
+                            compare(
+                                profileDetailsController
+                                    .member!.data!.pEHeight2,
+                                user.member!.member!.pEHeight2))
+                        : false),
+                InfoRow(
+                    'Marital Status',
+                    '${profileDetailsController.member!.data!.pEMaritalStatus ?? "_ _"}',
+                    false,
+                    profileDetailsController.member!.data!.pEMaritalStatus !=
+                                null &&
+                            user.member!.member!.pEMaritalStatus != null
+                        ? compare(
+                            profileDetailsController
+                                .member!.data!.pEMaritalStatus,
+                            user.member!.member!.pEMaritalStatus)
+                        : false),
+                InfoRow(
+                    'Religion / Community',
+                    '${profileDetailsController.member!.data!.pEReligion ?? "_ _"}',
+                    true,
+                    profileDetailsController.member!.data!.pEReligion != null &&
+                            user.member!.member!.pEReligion != null
+                        ? compare(
+                            profileDetailsController.member!.data!.pEReligion,
+                            user.member!.member!.pEReligion)
+                        : false),
+                InfoRow(
+                    'Country Living in',
+                    '${profileDetailsController.member!.data!.pECountrylivingin ?? "_ _"}',
+                    false,
+                    profileDetailsController.member!.data!.pECountrylivingin !=
+                                null &&
+                            user.member!.member!.pECountrylivingin != null
+                        ? compare(
+                            profileDetailsController
+                                .member!.data!.pECountrylivingin,
+                            user.member!.member!.pECountrylivingin)
+                        : false),
+                InfoRow(
+                    'State Living in',
+                    '${profileDetailsController.member!.data!.pEState ?? "_ _"}',
+                    true,
+                    profileDetailsController.member!.data!.pEState != null &&
+                            user.member!.member!.pEState != null
+                        ? compare(
+                            profileDetailsController.member!.data!.pEState,
+                            user.member!.member!.pEState)
+                        : false),
+                InfoRow(
+                    'Annual Income',
+                    '${profileDetailsController.member!.data!.pEAnnualincome ?? "_ _"}',
+                    false,
+                    profileDetailsController.member!.data!.pEAnnualincome !=
+                                null &&
+                            user.member!.member!.pEAnnualincome != null
+                        ? compare(
+                            profileDetailsController
+                                .member!.data!.pEAnnualincome,
+                            user.member!.member!.pEAnnualincome)
+                        : false),
+                SizedBox(height: 16),
               ],
             ),
           )
@@ -520,38 +914,46 @@ class _CompatiblityState extends State<Compatiblity> {
 class InfoRow extends StatelessWidget {
   final String title;
   final String value;
+  final bool backColor;
   final bool isValid;
 
-  const InfoRow(this.title, this.value, this.isValid, {super.key});
+  const InfoRow(this.title, this.value,this.backColor, this.isValid, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: FontConstant.styleMedium(
-                      fontSize: 15, color: Colors.black),
-                ),
-                Text(
-                  value,
-                  style: FontConstant.styleMedium(
-                      fontSize: 12, color: Colors.grey.shade600),
-                ),
-              ],
+    return Container(
+       
+       decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color:backColor==true? AppColors.constColor:Colors.grey.shade100,
+       ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 10),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: FontConstant.styleMedium(
+                        fontSize: 15, color: Colors.black),
+                  ),
+                  Text(
+                    value,
+                    style: FontConstant.styleMedium(
+                        fontSize: 12, color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Icon(
-            isValid ? Icons.check_circle : Icons.cancel,
-            color: isValid ? Colors.green : Colors.red,
-          ),
-        ],
+            Icon(
+              isValid ? Icons.check_circle : Icons.cancel,
+              color: isValid ? Colors.green : Colors.red,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -27,13 +27,19 @@ class ResponseData {
   List<DailyRecommendation>? intrestedInYou;
   int? receivedInvitation;
   List<DailyRecommendation>? recentlyJoined;
+   int? matchesNearByCount;
+  int? matchesEducationCount;
+  int? matchesProfessionalCount;
 
   ResponseData(
       {this.dailyRecommendation,
       this.matches,
       this.intrestedInYou,
       this.receivedInvitation,
-      this.recentlyJoined});
+      this.recentlyJoined,
+      this.matchesNearByCount,
+      this.matchesEducationCount,
+      this.matchesProfessionalCount});
 
   ResponseData.fromJson(Map<String, dynamic> json) {
     if (json['daily_recommendation'] != null) {
@@ -61,6 +67,9 @@ class ResponseData {
         recentlyJoined!.add(new DailyRecommendation.fromJson(v));
       });
     }
+    matchesNearByCount = json['matches_near_by_count'];
+    matchesEducationCount = json['matches_education_count'];
+    matchesProfessionalCount = json['matches_professional_count'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,6 +90,9 @@ class ResponseData {
       data['recently_joined'] =
           this.recentlyJoined!.map((v) => v.toJson()).toList();
     }
+    data['matches_near_by_count'] = this.matchesNearByCount;
+    data['matches_education_count'] = this.matchesEducationCount;
+    data['matches_professional_count'] = this.matchesProfessionalCount;
     return data;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';
@@ -81,6 +82,7 @@ class AppRoutes {
   static const String editProfile = '/editProfile';
   static const String inbox = '/inbox';
   static const String shortlistProfile = '/shortlistProfile';
+   static const String chatHome = '/chatHome';
 
   static const String whoAreYou = '/whoAreYou';
   static const String ourMission = '/ourMission';
@@ -443,6 +445,12 @@ class AppRoutes {
      GetPage(
       name: editProfessionDetails,
       page: () => const EditProfessionalDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: chatHome,
+      page: () => const HomeScreen(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

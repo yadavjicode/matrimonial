@@ -37,7 +37,7 @@ class SplashController with ChangeNotifier {
      Flows.navigateToNextStep(context, [
         step1, step2, step3, step4, step5, step6, 
         step7, step8, step9, step10, step11, step12
-      ],1);
+      ],0);
      
     
 

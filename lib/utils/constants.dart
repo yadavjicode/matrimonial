@@ -45,6 +45,7 @@ class ApiConstants {
   static const String shortlist_Url = "member/shortlist";
   static const String shortlisted_Url = "member/short-listed-profile-list";
   static const String withdrawal_Url = "member/withdrawal-request";
+  static const String coupons_Url ="member/coupon-list";
 }
 
 late Size mq;

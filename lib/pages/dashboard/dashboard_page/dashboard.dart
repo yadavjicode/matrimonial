@@ -35,7 +35,7 @@ class _DashboardState extends State<Dashboard> {
 
 
   void login() async {
-    if (_editProfileController.member!.member?.matriID != null) {
+    if (_editProfileController.member!.member!.matriID != null) {
       // log('\nUser: ${user.user}');
       // log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
 

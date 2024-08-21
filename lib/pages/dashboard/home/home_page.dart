@@ -280,9 +280,8 @@ class _HomeState extends State<Home> {
                                     height: 70.0,
                                     alignment: Alignment.bottomRight,
                                     child: GestureDetector(
-                                      onTap: () => {
-                                        Get.toNamed("/profileEdit")
-                                      },
+                                      onTap: () =>
+                                          {Get.toNamed("/profileEdit")},
                                       child: Container(
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
@@ -371,7 +370,10 @@ class _HomeState extends State<Home> {
                                           borderRadius: BorderRadius.circular(
                                               4.0), // Adjust the radius as needed
                                           child: LinearProgressIndicator(
-                                             value: (editProfileController.member!.profilePercentage) / 100,
+                                            value: (editProfileController
+                                                    .member!
+                                                    .profilePercentage) /
+                                                100,
                                             backgroundColor:
                                                 Colors.grey.shade100,
                                             color: AppColors.primaryColor,
@@ -384,10 +386,11 @@ class _HomeState extends State<Home> {
                                               left: 15, right: 5),
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            "Profile Status - ${editProfileController.member!.profilePercentage??""}%",
+                                            "Profile Status - ${editProfileController.member!.profilePercentage ?? ""}%",
                                             style: FontConstant.styleRegular(
                                                 fontSize: 10,
-                                                color: AppColors.constColor),
+                                                color:
+                                                    AppColors.drawerbackground),
                                           ))
                                     ]),
                                   ),
@@ -445,8 +448,11 @@ class _HomeState extends State<Home> {
                         onTap: () => {Get.toNamed("/inbox")},
                         child: buildoption(
                             "assets/images/icons/inbox.svg", "Inbox", 18, 18)),
-                    buildoption(
-                        "assets/images/icons/chats.svg", "Chat", 18, 18),
+                    GestureDetector(
+                      onTap: () => {Get.toNamed("/chatHome")},
+                      child: buildoption(
+                          "assets/images/icons/chats.svg", "Chat", 18, 18),
+                    ),
                     GestureDetector(
                       onTap: () => {Get.toNamed("/shortlistProfile")},
                       child: buildoption("assets/images/icons/shortlist.svg",

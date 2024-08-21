@@ -32,11 +32,7 @@ class _HomeBodyState extends State<HomeBody> {
       Get.put(SentInvitationController());
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
-  // void toggleFavorite() {
-  //   setState(() {
-  //     isFavorite = !isFavorite;
-  //   });
-  // }
+
   @override
   void initState() {
     // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -48,9 +44,21 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     final List<List> discover = [
-      ["assets/images/map_mark.png", "Near By", "201"],
-      ["assets/images/education_b.png", "Education", "306"],
-      ["assets/images/profession.png", "Professional", "50"]
+      [
+        "assets/images/map_mark.png",
+        "Near By",
+        "${dashboardController.member!.responseData!.matchesNearByCount ?? ""}"
+      ],
+      [
+        "assets/images/education_b.png",
+        "Education",
+        "${dashboardController.member!.responseData!.matchesEducationCount ?? ""}"
+      ],
+      [
+        "assets/images/profession.png",
+        "Professional",
+        "${dashboardController.member!.responseData!.matchesProfessionalCount ?? ""}"
+      ]
     ];
     return Column(
       children: [
@@ -71,8 +79,6 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Widget newMathches(List<DailyRecommendation> list) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Container(
@@ -518,8 +524,6 @@ class _HomeBodyState extends State<HomeBody> {
                   width: 5,
                 ),
                 Row(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
                   children: discover.asMap().entries.map((entry) {
                     int index = entry.key;
 
@@ -527,37 +531,19 @@ class _HomeBodyState extends State<HomeBody> {
                     String name = entry.value[1];
                     String num = entry.value[2];
 
-                    //  String head = entry.value[1];
-
                     return GestureDetector(
-                      onTap: () {
-                        // setState(() {
-                        //   //  selectedText = head;
-                        //   selectedIndex = index;
-                        // });
-                      },
+                      onTap: () {},
                       child: Container(
-                        padding: EdgeInsets.only(left: 20, right: 20),
+                        padding: EdgeInsets.only(left: 5, right: 5),
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 5, right: 5),
-                        //   width: 210,
+                        width: 130,
                         decoration: BoxDecoration(
-                          // color: selectedIndex == index
-                          //     ? Colors.grey.shade300
-                          //     : Colors.white,
                           color: AppColors.constColor,
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: Colors.black.withOpacity(0.1),
-                          //     blurRadius: 10,
-                          //     offset: const Offset(0, 5),
-                          //   ),
-                          // ],
                           border: Border.all(color: Colors.grey.shade200),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.only(
@@ -578,13 +564,16 @@ class _HomeBodyState extends State<HomeBody> {
                                 children: [
                                   Text(
                                     name,
+                                    overflow: TextOverflow.ellipsis,
                                     style: FontConstant.styleSemiBold(
                                         fontSize: 15, color: AppColors.black),
                                   ),
                                   Text(
                                     "$num Matches",
+                                    overflow: TextOverflow.ellipsis,
                                     style: FontConstant.styleSemiBold(
-                                        fontSize: 12, color: Colors.grey),
+                                        fontSize: 12,
+                                        color: AppColors.darkgrey),
                                   ),
                                 ],
                               ),

@@ -4,6 +4,7 @@ import 'package:devotee/model/basic_details_model.dart';
 import 'package:devotee/model/collaborate_model.dart';
 import 'package:devotee/model/complaint_model.dart';
 import 'package:devotee/model/contact_details_model.dart';
+import 'package:devotee/model/coupons_model.dart';
 import 'package:devotee/model/dashboard_model.dart';
 import 'package:devotee/model/declined_model.dart';
 import 'package:devotee/model/devotion_details_model.dart';
@@ -1263,4 +1264,35 @@ class ApiService {
     }
   }
 //==== End Api Shortlisted list==========================================================================================
+
+//==== Start Api Coupons==========================================================================================
+
+  Future<CouponModel> Coupons() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.coupons_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return CouponModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Coupons==========================================================================================
+
 }

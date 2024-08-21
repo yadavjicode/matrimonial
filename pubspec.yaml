@@ -43,6 +43,7 @@ dependencies:
   multi_image_picker2: ^5.0.02
   awesome_dialog: ^3.2.1
   restart_app: ^1.2.1
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
