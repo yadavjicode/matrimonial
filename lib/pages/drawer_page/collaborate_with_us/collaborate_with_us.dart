@@ -26,11 +26,12 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
  // StateController countryController = Get.put(StateController());
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
+  final  StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final CollaborateController collaborateController =
       Get.put(CollaborateController());
 
-  StateController stateController = Get.put(StateController());
+  
   String? selectedState;
   String? selectedCity;
   bool isState = false;
@@ -162,7 +163,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                       //    stateController.selectedItem,
                                           (value) {
                                             setState(() {
-                                              selectedCity = value;
+                                              selectedState = value;
                                               // Update the state
                                               isState = true;
                                               isCity =

@@ -96,7 +96,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAndToNamed('/prof', arguments: {"goto": ""});
+              Get.offAndToNamed('/prof');
             },
           ),
         ),

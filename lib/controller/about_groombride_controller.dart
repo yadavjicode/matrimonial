@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/about_groombride_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class AboutGroomBrideController with ChangeNotifier {
   String? _error;
   AboutGroomBrideModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController = Get.put(FlowController());
 
   Future<void> aboutGroomBride(
       BuildContext context, String characteristics, String hobbies) async {
@@ -19,7 +21,8 @@ class AboutGroomBrideController with ChangeNotifier {
 
     try {
       _member = await apiService.aboutGroomBride(characteristics, hobbies);
-      Get.toNamed('/horoscope');
+      flowController.Flow(context, 10);
+      // Get.toNamed('/horoscope');
     } catch (e) {
       _error = e.toString();
       print(_error);

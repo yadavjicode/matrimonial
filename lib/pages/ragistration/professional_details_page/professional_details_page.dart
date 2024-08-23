@@ -26,10 +26,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   EmpolymentController employmentController = Get.put(EmpolymentController());
   ProfessionalDetailsController professionalDeatilsController =
       Get.put(ProfessionalDetailsController());
-  StateControllerPermanent stateControllerPermanent =
-      Get.put(StateControllerPermanent());
-  CityControllerPermanent cityControllerPermanent =
-      Get.put(CityControllerPermanent());
+  // StateControllerPermanent stateControllerPermanent =
+  //     Get.put(StateControllerPermanent());
+  // CityControllerPermanent cityControllerPermanent =
+  //     Get.put(CityControllerPermanent());
+
+  final StateController stateController = Get.put(StateController());
+  final CityController cityController = Get.put(CityController());
+
   String? selectedProfession;
   String? selectedAnnualSalary;
   String? selectedEmpolyment;
@@ -46,11 +50,8 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
     }
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
-  
     // Extract data
 
     return Scaffold(
@@ -89,20 +90,18 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                         padding: const EdgeInsets.only(bottom: 30),
                         child: Image.asset("assets/images/occupation.png"),
                       ),
-                       buildDropdown(
-                            'Title of the Profession',
-                            professionController.getProfessionList(),
-                            (value) {
-                              setState(() {
-                                selectedProfession = value; // Update the state
-                              });
-                              professionController.selectItem(
-                                  value); // Call the controller method
-                            },
-                            hintText: 'Select Profession',
-                          ),
-                      
-                      
+                      buildDropdown(
+                        'Title of the Profession',
+                        professionController.getProfessionList(),
+                        (value) {
+                          setState(() {
+                            selectedProfession = value; // Update the state
+                          });
+                          professionController
+                              .selectItem(value); // Call the controller method
+                        },
+                        hintText: 'Select Profession',
+                      ),
                       Container(
                           margin: EdgeInsets.only(top: 10, bottom: 5),
                           alignment: Alignment.centerLeft,
@@ -171,7 +170,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
                               child: Obx(() {
-                                if (stateControllerPermanent.isLoading.value) {
+                                if (stateController.isLoading.value) {
                                   return Center(
                                     child: CircularProgressIndicator(
                                       color: AppColors.primaryColor,
@@ -180,14 +179,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 } else {
                                   return buildDropdown(
                                     'Working State',
-                                    stateControllerPermanent.stateLists,
+                                   stateController.getStateList(),
                                     //  stateControllerPermanent.selectedItem,
                                     (value) {
                                       setState(() {
                                         selectedState =
                                             value; // Update the state
                                       });
-                                      stateControllerPermanent.selectItem(
+                                      stateController.selectItem(
                                           value); // Call the controller method
                                     },
                                     hintText: 'Select State',
@@ -198,7 +197,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
                               child: Obx(() {
-                                if (cityControllerPermanent.isLoading.value) {
+                                if (cityController.isLoading.value) {
                                   return Center(
                                     child: CircularProgressIndicator(
                                       color: AppColors.primaryColor,
@@ -207,14 +206,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 } else {
                                   return buildDropdown(
                                     'Working City',
-                                    cityControllerPermanent.cityLists,
+                                       cityController.cityLists,
                                     // cityControllerPermanent.selectedItem,
                                     (value) {
                                       setState(() {
                                         selectedCity =
                                             value; // Update the state
                                       });
-                                      cityControllerPermanent.selectItem(
+                                      cityController.selectItem(
                                           value); // Call the controller method
                                     },
                                     hintText: 'Select City',
@@ -251,20 +250,18 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                         child: CustomButton(
                             text: "CONTINUE",
                             onPressed: () => {
-                                  
-                                      professionalDeatilsController
-                                          .professionalDetails(
-                                              context,
-                                              selectedProfession ?? "",
-                                              working(),
-                                              selectedEmpolyment ?? "",
-                                              selectedState ?? "",
-                                              selectedCity ?? "",
-                                              pincodeController.text
-                                                  .toString()
-                                                  .trim(),
-                                              selectedAnnualSalary ?? ""),
-                                    
+                                  professionalDeatilsController
+                                      .professionalDetails(
+                                          context,
+                                          selectedProfession ?? "",
+                                          working(),
+                                          selectedEmpolyment ?? "",
+                                          selectedState ?? "",
+                                          selectedCity ?? "",
+                                          pincodeController.text
+                                              .toString()
+                                              .trim(),
+                                          selectedAnnualSalary ?? ""),
 
                                   //   Get.toNamed('/devotion')
                                 },
@@ -272,7 +269,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             textStyle: FontConstant.styleRegular(
                                 fontSize: 20, color: AppColors.constColor)),
                       ),
-                      GestureDetector( 
+                      GestureDetector(
                         onTap: () => {Get.offAndToNamed('/devotion')},
                         child: Container(
                           margin: EdgeInsets.only(top: 10),

@@ -154,7 +154,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.toNamed('/location');
+          Get.offAndToNamed('/location');
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

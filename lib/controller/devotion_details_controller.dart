@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/devotion_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class DevotionalDetailsController with ChangeNotifier {
   String? _error;
   DevotionalDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> devotionalDetails(
       BuildContext context,
@@ -25,7 +27,9 @@ class DevotionalDetailsController with ChangeNotifier {
     try {
       _member = await apiService.devotionalDetails(
           somethingAbout, iskontype, templeName, templeCity, devotionalHobbies);
-      Get.toNamed('/spiritual');
+
+    flowController.Flow(context, 7);
+      // Get.toNamed('/spiritual');
     } catch (e) {
       _error = e.toString();
       print(_error);

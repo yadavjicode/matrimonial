@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/upload_profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 class UploadProfileController extends GetxController {
   var isLoading = false.obs;
   var selectedImages = <File>[].obs;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> profileCompleteFill(BuildContext context) async {
     final profileModel = UploadProfileModel();
@@ -17,7 +19,8 @@ class UploadProfileController extends GetxController {
           profileModel, selectedImages);
       if (response["status"] == true) {
         print('Profile update successful: ${response['data']}');
-        Get.toNamed('/partner');
+        flowController.Flow(context, 12);
+        // Get.toNamed('/partner');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.grey.shade200,
           content: Text(

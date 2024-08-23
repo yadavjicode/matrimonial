@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/horoscope_details_model.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class HoroscopeDetailsController with ChangeNotifier {
   String? _error;
   HoroscopeDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController = Get.put(FlowController());
 
   Future<void> horoscopeDetails(BuildContext context, String timeHoroscope,
       String stateHoroscope, String cityHoroscope) async {
@@ -21,7 +23,8 @@ class HoroscopeDetailsController with ChangeNotifier {
     try {
       _member = await apiService.horoscopeDetails(
           timeHoroscope, stateHoroscope, cityHoroscope);
-      Get.toNamed('/profile');
+      flowController.Flow(context, 11);
+      // Get.toNamed('/profile');
     } catch (e) {
       _error = e.toString();
       print(_error);

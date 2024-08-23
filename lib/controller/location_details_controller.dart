@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/basic_details_model.dart';
 import 'package:devotee/model/contact_details_model.dart';
 import 'package:devotee/model/location_details_model.dart';
@@ -12,6 +13,7 @@ class LocationDetailsController with ChangeNotifier {
   String? _error;
   LocationDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> locationDetails(
       BuildContext context,
@@ -37,7 +39,7 @@ class LocationDetailsController with ChangeNotifier {
     notifyListeners();
 
     try {
-      _member = await apiService.LocationDetails(
+          _member = await apiService.LocationDetails(
           country,
           residence,
           permanentHouse,
@@ -55,7 +57,10 @@ class LocationDetailsController with ChangeNotifier {
           referBName,
           referBEmail,
           referBMobileno);
-      Get.toNamed('/education');
+
+          flowController.Flow(context, 4);
+      // Get.toNamed('/education');
+  
     } catch (e) {
       _error = e.toString();
       print(_error);

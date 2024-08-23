@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class ProfessionalDetailsController with ChangeNotifier {
   String? _error;
   ProfessionalDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> professionalDetails(
       BuildContext context,
@@ -28,7 +30,9 @@ class ProfessionalDetailsController with ChangeNotifier {
     try {
       _member = await apiService.professionalDetails(profesion, working,
           empolyment, workingState, workingCity, pincode, annualSalary);
-      Get.toNamed('/devotion');
+      flowController.Flow(context, 6);
+
+      // Get.toNamed('/devotion');
     } catch (e) {
       _error = e.toString();
       print(_error);

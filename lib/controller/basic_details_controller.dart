@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/basic_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ class BasicDetailsController with ChangeNotifier {
   String? _error;
   BasicDetailsModel? get member => _member;
   String? get error => _error;
-
+ final FlowController flowController = Get.find<FlowController>();
   String getMonth(String mon) {
     Map<String, String> monthMap = {
       "Jan": "01",
@@ -51,7 +52,13 @@ class BasicDetailsController with ChangeNotifier {
     try {
       _member = await apiService.basicDetails(tittle, name, surname, spiritual,
           maritalStatus, height, weight, dob, hobbies, diet, about);
-      Get.toNamed('/contact');
+          print("vnrvnbrvn gooooooo");
+
+      
+      await flowController.Flow(context, 2); 
+     
+
+      // Get.toNamed('/contact');
     } catch (e) {
       _error = e.toString();
       print(_error);

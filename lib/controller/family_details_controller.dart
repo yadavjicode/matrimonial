@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/family_details_model.dart';
 import 'package:devotee/model/horoscope_details_model.dart';
@@ -12,6 +13,7 @@ class FamilyDetailsController with ChangeNotifier {
   String? _error;
   FamilyDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> familyDetails(
       BuildContext context,
@@ -65,7 +67,8 @@ class FamilyDetailsController with ChangeNotifier {
           familyType,
           familyvalues,
           familyStatus);
-      Get.toNamed('/aboutgroom');
+      flowController.Flow(context, 8);
+      // Get.toNamed('/aboutgroom');
     } catch (e) {
       _error = e.toString();
       print(_error);

@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/basic_details_model.dart';
 import 'package:devotee/model/contact_details_model.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class ContactDetailsController with ChangeNotifier {
   String? _error;
   ContactDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> contactDetails(BuildContext context, String mobileno,
       String email, String instaid) async {
@@ -20,7 +22,8 @@ class ContactDetailsController with ChangeNotifier {
 
     try {
       _member = await apiService.contactDetails(mobileno, email, instaid);
-      Get.toNamed('/location');
+      flowController.Flow(context, 3);
+      // Get.toNamed('/location');
     } catch (e) {
       _error = e.toString();
       print(_error);

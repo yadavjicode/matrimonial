@@ -6,6 +6,7 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
+import 'package:devotee/pages/dashboard/profile/profile_details/about.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -626,18 +627,20 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
           height: 300,
           child: TabBarView(
             controller: tabController,
-            children: const [
-              Center(child: Text('About Janvi Content')),
-              Center(child: Text('Lifestyle & Appearances Content')),
-              Center(child: Text('Background Content')),
-              Center(child: Text('Contact Details Content')),
-              Center(child: Text('Professional Details Content')),
+            children:  [
+              AboutDetails(),
+               LifeStyle(),
+              BackgroundDetails(),
+              Contact(),
+              Professional()
             ],
           ),
         ),
       ],
     );
   }
+
+  
 }
 
 class Compatiblity extends StatefulWidget {

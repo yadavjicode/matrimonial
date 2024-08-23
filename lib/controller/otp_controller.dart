@@ -1,4 +1,5 @@
 import 'package:devotee/api_service/api_service.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/otp_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,8 @@ class OtpController with ChangeNotifier {
   String? _error;
   OtpModel? get member => _member;
   String? get error => _error;
+
+ FlowController flowController=Get.put(FlowController());
 
   Future<void> otp(String mobileNo, String otp, BuildContext context) async {
     isLoading.value = true;
@@ -38,20 +41,20 @@ class OtpController with ChangeNotifier {
       } else {
         throw Exception('Token is null');
       }
-
-      // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.grey.shade200,
-          content: Text(
-            _member?.datas?.data?.message ?? 'Success',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      );
+        flowController.Flow(context, 0);
+      // // Show success message
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     backgroundColor: Colors.grey.shade200,
+      //     content: Text(
+      //       _member?.datas?.data?.message ?? 'Success',
+      //       style: TextStyle(color: Colors.black),
+      //     ),
+      //   ),
+      // );
      
-      // Navigate to profile page
-      Get.toNamed('/profile1');
+      // // Navigate to profile page
+      // Get.toNamed('/profile1');
     } catch (e) {
       _error = e.toString();
       print('Error: $_error');

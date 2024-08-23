@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
 import 'package:devotee/model/spiritual_model.dart';
@@ -12,6 +13,7 @@ class SpiritualDetailsController with ChangeNotifier {
   String? _error;
   SpiritualDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController = Get.put(FlowController());
 
   Future<void> spiritualDetails(
       BuildContext context,
@@ -33,7 +35,9 @@ class SpiritualDetailsController with ChangeNotifier {
           stateCounselor,
           cityCounselor,
           somethingCounselor);
-      Get.toNamed('/family');
+
+      flowController.Flow(context, 8);
+      // Get.toNamed('/family');
     } catch (e) {
       _error = e.toString();
       print(_error);

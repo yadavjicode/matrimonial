@@ -32,11 +32,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   CastController castController = Get.put(CastController());
   LanguageController languageController = Get.put(LanguageController());
   SubCastController subCastController = Get.put(SubCastController());
-  StateControllerPermanent stateControllerPermanent =
-      Get.put(StateControllerPermanent());
-  StateControllerPermanent stateController =
-      Get.put(StateControllerPermanent());
-  CityControllerPermanent cityController = Get.put(CityControllerPermanent());
+  
+
   final TextEditingController gotraController = TextEditingController();
   final TextEditingController fathernameController = TextEditingController();
   final TextEditingController fatherbusinessController =

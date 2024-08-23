@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/partner_preference_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
@@ -12,6 +13,7 @@ class PartnerPreferenceController with ChangeNotifier {
   String? _error;
   PartnerModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> partnerPreference(
       BuildContext context,
@@ -63,7 +65,8 @@ class PartnerPreferenceController with ChangeNotifier {
           diet,
           drink,
           smoke);
-      Get.toNamed("/dashboard");
+          flowController.Flow(context, 13);
+      // Get.toNamed("/dashboard");
     } catch (e) {
       _error = e.toString();
       print(_error);

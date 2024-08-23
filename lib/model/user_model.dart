@@ -331,6 +331,7 @@ class Member {
   dynamic step10;
   dynamic step11;
   dynamic step12;
+  dynamic step13;
   dynamic spiritualName;
   dynamic instagramId;
   dynamic employmentSummary;
@@ -634,6 +635,7 @@ class Member {
       this.step10,
       this.step11,
       this.step12,
+      this.step13,
       this.spiritualName,
       this.instagramId,
       this.employmentSummary,
@@ -942,6 +944,7 @@ class Member {
     step10 = json['step_10'];
     step11 = json['step_11'];
     step12 = json['step_12'];
+    step13 = json['step_13'];
     spiritualName = json['spiritual_name'];
     instagramId = json['instagram_id'];
     employmentSummary = json['employment_summary'];
@@ -1253,6 +1256,7 @@ class Member {
     data['step_10'] = this.step10;
     data['step_11'] = this.step11;
     data['step_12'] = this.step12;
+    data['step_13'] = this.step13;
     data['spiritual_name'] = this.spiritualName;
     data['instagram_id'] = this.instagramId;
     data['employment_summary'] = this.employmentSummary;

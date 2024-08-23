@@ -1,19 +1,20 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/model/coupons_model.dart';
+import 'package:devotee/model/package_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
-class CouponsController with ChangeNotifier {
+class PackageController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  CouponModel? _member;
+  PackageModel? _member;
   var isLoading = false.obs;
   String? _error;
-  CouponModel? get member => _member;
+  PackageModel? get member => _member;
   String? get error => _error;
 
-  Future<void> coupons(
+  Future<void> package(
     BuildContext context
     
   ) async {
@@ -22,7 +23,7 @@ class CouponsController with ChangeNotifier {
     notifyListeners();
 
     try {
-      _member = await apiService.Coupons();
+      _member = await apiService.Package();
       //  CustomDialog.show(
       //             context,
       //             'Shortlist',

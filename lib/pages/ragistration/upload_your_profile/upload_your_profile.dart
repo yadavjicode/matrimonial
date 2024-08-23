@@ -105,7 +105,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                               ),
                               GestureDetector(
                                 onTap: () =>
-                                    {Get.toNamed('/profilecompleteness')},
+                                    {Get.offAndToNamed('/partner')},
                                 child: Container(
                                   padding: EdgeInsets.all(10),
                                   alignment: Alignment.center,

@@ -17,12 +17,10 @@ class HoroscopeDetails extends StatefulWidget {
 }
 
 class _HoroscopeDetailsState extends State<HoroscopeDetails> {
-  StateControllerPermanent stateControllerPermanent =
-      Get.put(StateControllerPermanent());
-  CityControllerPermanent cityControllerPermanent =
-      Get.put(CityControllerPermanent());
+ final StateController stateController = Get.put(StateController());
+  final CityController cityController = Get.put(CityController());
 
-  HoroscopeDetailsController horoscopeDetailsController =
+ final HoroscopeDetailsController horoscopeDetailsController =
       Get.put(HoroscopeDetailsController());
 
   TextEditingController time = TextEditingController();
@@ -104,7 +102,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: Obx(() {
-                            if (stateControllerPermanent.isLoading.value) {
+                            if (stateController.isLoading.value) {
                               return Center(
                                 child: CircularProgressIndicator(
                                   color: AppColors.primaryColor,
@@ -113,12 +111,12 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                             } else {
                               return buildDropdown(
                                 'State of Birth',
-                                stateControllerPermanent.stateLists,
+                                stateController.getStateList(),
                                 (value) {
                                   setState(() {
                                     selectedState = value; // Update the state
                                   });
-                                  stateControllerPermanent.selectItem(
+                                  stateController.selectItem(
                                       value); // Call the controller method
                                 },
                                 hintText: 'Select State',
@@ -129,7 +127,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
                           child: Obx(() {
-                            if (cityControllerPermanent.isLoading.value) {
+                            if (cityController.isLoading.value) {
                               return Center(
                                 child: CircularProgressIndicator(
                                   color: AppColors.primaryColor,
@@ -138,12 +136,12 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                             } else {
                               return buildDropdown(
                                 'City of Birth',
-                                cityControllerPermanent.cityLists,
+                                cityController.cityLists,
                                 (value) {
                                   setState(() {
                                     selectedCity = value; // Update the state
                                   });
-                                  cityControllerPermanent.selectItem(
+                                  cityController.selectItem(
                                       value); // Call the controller method
                                 },
                                 hintText: 'Select City',

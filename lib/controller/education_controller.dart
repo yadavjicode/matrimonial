@@ -1,3 +1,4 @@
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/education_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class EducationDetailsController with ChangeNotifier {
   String? _error;
   EducationDetailsModel? get member => _member;
   String? get error => _error;
+  final FlowController flowController=Get.put(FlowController());
 
   Future<void> educationDetails(BuildContext context, String education,
       String qualification, String describe) async {
@@ -20,7 +22,8 @@ class EducationDetailsController with ChangeNotifier {
     try {
       _member =
           await apiService.educationDetails(education, qualification, describe);
-      Get.toNamed('/prof');
+          flowController.Flow(context, 5);
+      // Get.toNamed('/prof');
     } catch (e) {
       _error = e.toString();
       print(_error);

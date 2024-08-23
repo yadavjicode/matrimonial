@@ -20,16 +20,14 @@ class SpiritualDetails extends StatefulWidget {
 }
 
 class _SpiritualDetailsState extends State<SpiritualDetails> {
-  StateControllerPermanent stateControllerPermanent =
-      Get.put(StateControllerPermanent());
-  CityControllerPermanent cityControllerPermanent =
-      Get.put(CityControllerPermanent());
   SpiritualDetailsController spiritualController =
       Get.put(SpiritualDetailsController());
-  TextEditingController nameCounselor = TextEditingController();
-  TextEditingController connectCounselor = TextEditingController();
-  TextEditingController templeCounselor = TextEditingController();
-  TextEditingController SomethingCounselor = TextEditingController();
+  final TextEditingController nameCounselor = TextEditingController();
+  final TextEditingController connectCounselor = TextEditingController();
+  final TextEditingController templeCounselor = TextEditingController();
+  final TextEditingController SomethingCounselor = TextEditingController();
+  final StateController stateController = Get.put(StateController());
+  final CityController cityController = Get.put(CityController());
   String? selectedState;
   String? selectedCity;
   int? counsellor;
@@ -153,7 +151,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 height: 15,
                               ),
                               Obx(() {
-                                if (stateControllerPermanent.isLoading.value) {
+                                if (stateController.isLoading.value) {
                                   return Center(
                                     child: CircularProgressIndicator(
                                       color: AppColors.primaryColor,
@@ -162,14 +160,14 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 } else {
                                   return buildDropdown(
                                     'Counselor residing in State',
-                                    stateControllerPermanent.stateLists,
+                                    stateController.getStateList(),
                                     //  stateControllerPermanent.selectedItem,
                                     (value) {
                                       setState(() {
                                         selectedState =
                                             value; // Update the state
                                       });
-                                      stateControllerPermanent.selectItem(
+                                      stateController.selectItem(
                                           value); // Call the controller method
                                     },
                                     hintText: 'Select State',
@@ -180,7 +178,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 height: 15,
                               ),
                               Obx(() {
-                                if (cityControllerPermanent.isLoading.value) {
+                                if (cityController.isLoading.value) {
                                   return Center(
                                     child: CircularProgressIndicator(
                                       color: AppColors.primaryColor,
@@ -189,14 +187,14 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 } else {
                                   return buildDropdown(
                                     'Counselor residing in City',
-                                    cityControllerPermanent.cityLists,
+                                    cityController.cityLists,
                                     // cityControllerPermanent.selectedItem,
                                     (value) {
                                       setState(() {
                                         selectedCity =
                                             value; // Update the state
                                       });
-                                      cityControllerPermanent.selectItem(
+                                      cityController.selectItem(
                                           value); // Call the controller method
                                     },
                                     hintText: 'Select City',

@@ -18,6 +18,7 @@ import 'package:devotee/model/location_details_model.dart';
 import 'package:devotee/model/login_model.dart';
 import 'package:devotee/model/matches_model.dart';
 import 'package:devotee/model/otp_model.dart';
+import 'package:devotee/model/package_model.dart';
 import 'package:devotee/model/partner_preference_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
 import 'package:devotee/model/profile_a_model.dart';
@@ -259,6 +260,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       print(responseJson);
+      
       return LocationDetailsModel.fromJson(responseJson);
     } else {
       final responseJson = json.decode(response.body);
@@ -652,6 +654,7 @@ class ApiService {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
+        "step_13":"1",
         "PE_FromAge": ageFrom,
         "PE_ToAge": ageto,
         'PE_FromWeight': weightFrom,
@@ -1294,5 +1297,35 @@ class ApiService {
     }
   }
 //==== End Api Coupons==========================================================================================
+
+//==== Start Api Package==========================================================================================
+
+  Future<PackageModel> Package() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.package_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return PackageModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Package==========================================================================================
 
 }
