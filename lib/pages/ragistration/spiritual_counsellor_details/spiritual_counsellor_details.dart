@@ -158,7 +158,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                     ),
                                   );
                                 } else {
-                                  return buildDropdown(
+                                  return buildDropdownWithSearch(
                                     'Counselor residing in State',
                                     stateController.getStateList(),
                                     //  stateControllerPermanent.selectedItem,
@@ -185,7 +185,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                     ),
                                   );
                                 } else {
-                                  return buildDropdown(
+                                  return buildDropdownWithSearch(
                                     'Counselor residing in City',
                                     cityController.cityLists,
                                     // cityControllerPermanent.selectedItem,

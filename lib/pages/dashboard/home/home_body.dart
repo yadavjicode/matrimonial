@@ -47,17 +47,20 @@ class _HomeBodyState extends State<HomeBody> {
       [
         "assets/images/map_mark.png",
         "Near By",
-        "${dashboardController.member!.responseData!.matchesNearByCount ?? ""}"
+        "${dashboardController.member!.responseData!.matchesNearByCount ?? ""}",
+        "near_by_list"
       ],
       [
         "assets/images/education_b.png",
         "Education",
-        "${dashboardController.member!.responseData!.matchesEducationCount ?? ""}"
+        "${dashboardController.member!.responseData!.matchesEducationCount ?? ""}",
+        "education_list"
       ],
       [
         "assets/images/profession.png",
         "Professional",
-        "${dashboardController.member!.responseData!.matchesProfessionalCount ?? ""}"
+        "${dashboardController.member!.responseData!.matchesProfessionalCount ?? ""}",
+        "profession_list"
       ]
     ];
     return Column(
@@ -525,60 +528,65 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
                 Row(
                   children: discover.asMap().entries.map((entry) {
-                    int index = entry.key;
-
+                    
                     String image = entry.value[0];
                     String name = entry.value[1];
                     String num = entry.value[2];
+                    String keys=entry.value[3];
 
                     return GestureDetector(
                       onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.only(left: 5, right: 5),
-                        margin: EdgeInsets.only(
-                            top: 5, bottom: 10, left: 5, right: 5),
-                        width: 130,
-                        decoration: BoxDecoration(
-                          color: AppColors.constColor,
-                          border: Border.all(color: Colors.grey.shade200),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10)),
-                              child: Image.asset(
-                                "$image",
-                                width: 70,
-                                height: 70,
-                                fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: () => {
+                          Get.toNamed("/basedMatches",arguments: {"keys":keys})
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(left: 5, right: 5),
+                          margin: EdgeInsets.only(
+                              top: 5, bottom: 10, left: 5, right: 5),
+                          width: 130,
+                          decoration: BoxDecoration(
+                            color: AppColors.constColor,
+                            border: Border.all(color: Colors.grey.shade200),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                child: Image.asset(
+                                  "$image",
+                                  width: 70,
+                                  height: 70,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleSemiBold(
-                                        fontSize: 15, color: AppColors.black),
-                                  ),
-                                  Text(
-                                    "$num Matches",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleSemiBold(
-                                        fontSize: 12,
-                                        color: AppColors.darkgrey),
-                                  ),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FontConstant.styleSemiBold(
+                                          fontSize: 15, color: AppColors.black),
+                                    ),
+                                    Text(
+                                      "$num Matches",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FontConstant.styleSemiBold(
+                                          fontSize: 12,
+                                          color: AppColors.darkgrey),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -622,16 +630,21 @@ class _HomeBodyState extends State<HomeBody> {
               )
             ],
           ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: Text(
-              "Add Details",
-              style: FontConstant.styleMedium(
-                  fontSize: 11, color: AppColors.constColor),
+          GestureDetector(
+            onTap: () => {
+            Get.toNamed("/profileedit")
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Text(
+                "Add Details",
+                style: FontConstant.styleMedium(
+                    fontSize: 11, color: AppColors.constColor),
+              ),
+              decoration: BoxDecoration(
+                  color: Color(0xff583689),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
             ),
-            decoration: BoxDecoration(
-                color: Color(0xff583689),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
           )
         ],
       ),

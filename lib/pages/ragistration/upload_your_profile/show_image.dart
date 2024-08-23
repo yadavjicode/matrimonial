@@ -54,12 +54,7 @@ class _ShowImageState extends State<ShowImage> {
                 
                 child: profileImage != null // Check if profileImage is not null
                     ? Image.file(profileImage!)
-                    : Center(
-                        child: Text(
-                          "No Profile image selected",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
+                    : Image.file(completeProfileController.selectedImages[0])
               ),
              
               Container(

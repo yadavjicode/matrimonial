@@ -5,6 +5,7 @@ import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_u
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
 import 'package:devotee/pages/drawer_page/disclaimer/disclaimer.dart';
 import 'package:devotee/pages/drawer_page/feedback/feedback.dart';
+import 'package:devotee/pages/drawer_page/matches/based_matches/based_matches.dart';
 import 'package:devotee/pages/drawer_page/matches/matches.dart';
 import 'package:devotee/pages/drawer_page/membership_packages/membership_packages.dart';
 import 'package:devotee/pages/drawer_page/offering_your_gratitude/offering_gratitude.dart';
@@ -109,6 +110,7 @@ class AppRoutes {
   static const String package = '/package';
 
   static const String matches = '/matches';
+  static const String basedMatches = '/basedMatches';
   static const String showImage = '/showImage';
   
 // Edit pages
@@ -118,6 +120,7 @@ class AppRoutes {
    static const String editLocationDetails = '/editLocationDetails';
    static const String editEducationDetails = '/editEducationDetails';
    static const String editProfessionDetails = '/editProfessionDetails';
+
 
   static final List<GetPage> routes = [
     GetPage(
@@ -451,6 +454,12 @@ class AppRoutes {
     GetPage(
       name: chatHome,
       page: () => const HomeScreen(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: basedMatches,
+      page: () => const BasedMatches(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

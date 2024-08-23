@@ -7,6 +7,7 @@ import 'package:devotee/constants/lists/marital_list.dart';
 import 'package:devotee/constants/lists/title_list.dart';
 import 'package:devotee/constants/lists/weight_list.dart';
 import 'package:devotee/controller/basic_details_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/constants/CustomTextFeild.dart';
@@ -27,6 +28,7 @@ class _BasicDetailState extends State<BasicDetail> {
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController initiatedNameController = TextEditingController();
   final TextEditingController aboutController = TextEditingController();
+  final FlowController flowController=Get.put(FlowController());
 
 
 
@@ -375,7 +377,7 @@ class _BasicDetailState extends State<BasicDetail> {
                 ],
               ),
             ),
-            if (_basicDetailController.isLoading.value)
+            if (_basicDetailController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

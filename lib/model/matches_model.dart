@@ -1,25 +1,101 @@
 class MatchesModel {
-  dynamic status;
-  List<Data>? data;
+  String? status;
+  SearchData? searchData;
 
-  MatchesModel({this.status, this.data});
+  MatchesModel({this.status, this.searchData});
 
   MatchesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+    searchData = json['search_data'] != null
+        ? new SearchData.fromJson(json['search_data'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.searchData != null) {
+      data['search_data'] = this.searchData!.toJson();
+    }
+    return data;
+  }
+}
+
+class SearchData {
+  dynamic currentPage;
+  List<Data>? data;
+  dynamic firstPageUrl;
+  dynamic from;
+  dynamic lastPage;
+  dynamic lastPageUrl;
+  List<Links>? links;
+  dynamic nextPageUrl;
+  dynamic path;
+  dynamic perPage;
+  dynamic prevPageUrl;
+  dynamic to;
+  dynamic total;
+
+  SearchData(
+      {this.currentPage,
+      this.data,
+      this.firstPageUrl,
+      this.from,
+      this.lastPage,
+      this.lastPageUrl,
+      this.links,
+      this.nextPageUrl,
+      this.path,
+      this.perPage,
+      this.prevPageUrl,
+      this.to,
+      this.total});
+
+  SearchData.fromJson(Map<String, dynamic> json) {
+    currentPage = json['current_page'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
         data!.add(new Data.fromJson(v));
       });
     }
+    firstPageUrl = json['first_page_url'];
+    from = json['from'];
+    lastPage = json['last_page'];
+    lastPageUrl = json['last_page_url'];
+    if (json['links'] != null) {
+      links = <Links>[];
+      json['links'].forEach((v) {
+        links!.add(new Links.fromJson(v));
+      });
+    }
+    nextPageUrl = json['next_page_url'];
+    path = json['path'];
+    perPage = json['per_page'];
+    prevPageUrl = json['prev_page_url'];
+    to = json['to'];
+    total = json['total'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    data['current_page'] = this.currentPage;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
+    data['first_page_url'] = this.firstPageUrl;
+    data['from'] = this.from;
+    data['last_page'] = this.lastPage;
+    data['last_page_url'] = this.lastPageUrl;
+    if (this.links != null) {
+      data['links'] = this.links!.map((v) => v.toJson()).toList();
+    }
+    data['next_page_url'] = this.nextPageUrl;
+    data['path'] = this.path;
+    data['per_page'] = this.perPage;
+    data['prev_page_url'] = this.prevPageUrl;
+    data['to'] = this.to;
+    data['total'] = this.total;
     return data;
   }
 }
@@ -141,6 +217,28 @@ class Data {
     data['Photo1'] = this.photo1;
     data['shortlist_status'] = this.shortlistStatus;
     data['interest_status'] = this.interestStatus;
+    return data;
+  }
+}
+
+class Links {
+  String? url;
+  String? label;
+  bool? active;
+
+  Links({this.url, this.label, this.active});
+
+  Links.fromJson(Map<String, dynamic> json) {
+    url = json['url'];
+    label = json['label'];
+    active = json['active'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['url'] = this.url;
+    data['label'] = this.label;
+    data['active'] = this.active;
     return data;
   }
 }

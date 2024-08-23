@@ -31,12 +31,11 @@ class LoginController with ChangeNotifier {
         ),
       ));
 
-      Get.to(() => OTPScreen(mobileNumber: mobileno.text.toString().trim()));
+      Get.off(() => OTPScreen(mobileNumber: mobileno.text.toString().trim()));
       print("success");
     } catch (e) {
       _error = e.toString();
       print(_error);
-
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.grey.shade200,
         content: Text(

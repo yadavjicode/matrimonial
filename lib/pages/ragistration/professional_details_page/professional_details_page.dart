@@ -90,7 +90,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                         padding: const EdgeInsets.only(bottom: 30),
                         child: Image.asset("assets/images/occupation.png"),
                       ),
-                      buildDropdown(
+                      buildDropdownWithSearch(
                         'Title of the Profession',
                         professionController.getProfessionList(),
                         (value) {
@@ -101,6 +101,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                               .selectItem(value); // Call the controller method
                         },
                         hintText: 'Select Profession',
+                        selectedItem: selectedProfession
                       ),
                       Container(
                           margin: EdgeInsets.only(top: 10, bottom: 5),
@@ -152,7 +153,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 10),
-                              child: buildDropdown(
+                              child: buildDropdownWithSearch(
                                 "Empolyment",
                                 employmentController.getEmpolymentList(),
                                 //  cityControllerTemporary.selectedItem,
@@ -177,7 +178,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                     ),
                                   );
                                 } else {
-                                  return buildDropdown(
+                                  return buildDropdownWithSearch(
                                     'Working State',
                                    stateController.getStateList(),
                                     //  stateControllerPermanent.selectedItem,
@@ -204,7 +205,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                     ),
                                   );
                                 } else {
-                                  return buildDropdown(
+                                  return buildDropdownWithSearch(
                                     'Working City',
                                        cityController.cityLists,
                                     // cityControllerPermanent.selectedItem,
@@ -232,7 +233,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
-                              child: buildDropdown('Annual Income Range',
+                              child: buildDropdownWithSearch('Annual Income Range',
                                   incomeController.getIncomeList(), (value) {
                                 setState(() {
                                   selectedAnnualSalary =

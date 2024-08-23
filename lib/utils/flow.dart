@@ -9,33 +9,33 @@ import 'package:devotee/pages/ragistration/horoscope_details/horoscope_details.d
 import 'package:devotee/pages/ragistration/location_details/location_details.dart';
 import 'package:devotee/pages/ragistration/partner_preferences/partner_preferences.dart';
 import 'package:devotee/pages/ragistration/professional_details_page/professional_details_page.dart';
-import 'package:devotee/pages/ragistration/profile1_page/profile1_page.dart'; // Import Profile2Page
+import 'package:devotee/pages/ragistration/profile1_page/profile1_page.dart'; //Import Profile2Page
 import 'package:devotee/pages/ragistration/spiritual_counsellor_details/spiritual_counsellor_details.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/upload_your_profile.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Flows {
+
+class Flows with ChangeNotifier {
   static void navigateToNextStep(
-    BuildContext context, List<int> steps, int start) {
+      BuildContext context, List<int> steps, int start) {
+    print("Starting navigation from step: $start");
+    for (int i = start; i < steps.length; i++) {
+      print("Checking step $i with value ${steps[i]}");
+      if (steps[i] == 0) {
+        print("Navigating to step ${i + 1}");
+        Get.off(getStepPage(i + 1));
 
-  print("Starting navigation from step: $start");
-  for (int i = start; i < steps.length; i++) {
-    print("Checking step $i with value ${steps[i]}");
-    if (steps[i] == 0) {
-      print("Navigating to step ${i + 1}");
-      Get.off(() => getStepPage(i + 1));
-      return;
+        // Get.off(() => getStepPage(i + 1));
+        return;
+      }
     }
+
+    print("Navigating to Dashboard");
+    Get.off(() => Dashboard());
   }
-  print("Navigating to Dashboard");
-  Get.off(() => Dashboard());
-}
 
-
-  static Widget getStepPage( int stepNumber) {
-    print("steps====${stepNumber}");
+  static Widget getStepPage(int stepNumber) {
     switch (stepNumber) {
       case 1:
         return Profile1Page();

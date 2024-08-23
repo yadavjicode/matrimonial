@@ -103,7 +103,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                         const SizedBox(
                           height: 30,
                         ),
-                         buildDropdown(
+                         buildDropdownWithSearch(
                               'Nationality',
                               countryController.getCountryList(),
                               (value) {
@@ -175,7 +175,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                               ),
                             );
                           } else {
-                            return buildDropdown(
+                            return buildDropdownWithSearch(
                               'State',
                               stateControllerPermanent.stateLists,
                               //  stateControllerPermanent.selectedItem,
@@ -202,7 +202,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                               ),
                             );
                           } else {
-                            return buildDropdown(
+                            return buildDropdownWithSearch(
                               'City',
                               cityControllerPermanent.cityLists,
                               // cityControllerPermanent.selectedItem,
@@ -253,7 +253,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                               ),
                             );
                           } else {
-                            return buildDropdown(
+                            return buildDropdownWithSearch(
                               'State',
                               stateControllerTemporary.stateLists,
                               // stateControllerTemporary.selectedItem,
@@ -280,7 +280,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                               ),
                             );
                           } else {
-                            return buildDropdown(
+                            return buildDropdownWithSearch(
                               'City',
                               cityControllerTemporary.cityLists,
                               //  cityControllerTemporary.selectedItem,

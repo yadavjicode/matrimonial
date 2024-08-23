@@ -4,71 +4,107 @@ import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/matches_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../../../controller/profile_details_controller.dart';
-
-class AllMatches extends StatefulWidget {
-  const AllMatches({super.key});
+class BasedMatches extends StatefulWidget {
+  const BasedMatches({super.key});
 
   @override
-  State<AllMatches> createState() => _AllMatchesState();
+  State<BasedMatches> createState() => _BasedMatchesState();
 }
 
-class _AllMatchesState extends State<AllMatches> {
-  String selectedText = "";
-  int selectedIndex = -1;
+class _BasedMatchesState extends State<BasedMatches> {
   final MatchesController matchesController = Get.put(MatchesController());
-
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
   final SentInvitationController sentInvitationController =
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+final Map<String, dynamic> arguments = Get.arguments;
+    
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      matchesController.matches(context, "matches");
+      final String keys = arguments['keys'];
+      matchesController.matches(context, keys);
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
+    final String keys = arguments['keys'];
+    return Scaffold(
+       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          "Matches",
+          style: FontConstant.styleSemiBold(
+              fontSize: 18, color: AppColors.constColor),
+        ),
+      ),
+      body:Obx(() {
       return Stack(
         children: [
-          if (matchesController.isLoading.value == false) AllMatchesContent(),
-          if (matchesController.isLoading.value ||
-              shortlistController.isLoading.value ||
-              sentInvitationController.isLoading.value ||
-              profileDetailsController.isLoading.value)
+         Stack(
+          children: [
+            Container(
+                width: double.infinity,
+                alignment: Alignment.topRight,
+                child: Image.asset("assets/images/bg3.png")),
+          // if (matchesController.isLoading.value == false)
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: AllMatchesContent(keys),
+          ),
+              
+          ],
+        ),
+     
+                if (matchesController.isLoading.value ||
+               shortlistController.isLoading.value ||
+               sentInvitationController.isLoading.value ||
+               profileDetailsController.isLoading.value)
             Center(
               child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ),
             ),
-        ],
+
+        ]
       );
-    });
+      }
+      )
+    );
   }
 
-  Widget AllMatchesContent() {
+
+
+
+  Widget AllMatchesContent(String keys) {
     final member = matchesController.member;
     if (member == null || member.searchData!.data == null) {
       return Center(child: Text("No data available"));
     }
+
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.center,
         children: matchesController.member!.searchData!.data!.map((data) {
+          // int index = entry.key;
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID ?? "";
+          String id = data.matriID;
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
               : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
@@ -76,7 +112,7 @@ class _AllMatchesState extends State<AllMatches> {
 
           return GestureDetector(
             onTap: () {
-              // Get.toNamed('/profiledtls');
+            
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
@@ -99,7 +135,7 @@ class _AllMatchesState extends State<AllMatches> {
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(7)),
+                           borderRadius: BorderRadius.all(Radius.circular(7)),
                             child: Image.network(
                               "$image",
                               height: 196,
@@ -114,7 +150,7 @@ class _AllMatchesState extends State<AllMatches> {
                               margin: EdgeInsets.only(top: 170),
                               child: GestureDetector(
                                 onTap: () {
-                                  print("${data.matriID}");
+                                  print("${id}");
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
@@ -122,7 +158,7 @@ class _AllMatchesState extends State<AllMatches> {
                                       WidgetsBinding.instance
                                           .addPostFrameCallback((_) {
                                         matchesController.matches(
-                                            context, "matches");
+                                            context, keys);
                                       }),
                                     },
                                   );
@@ -179,7 +215,7 @@ class _AllMatchesState extends State<AllMatches> {
                                     color: AppColors.primaryColor),
                               ),
                               Text(
-                                "ID: ${id}",
+                                "ID: ${data.matriID}",
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               ),
@@ -306,7 +342,6 @@ class _AllMatchesState extends State<AllMatches> {
                                 await APIs.addChatUser(id).then((value) {
                                   if (!value) {
                                     Dialogs.showSnackbar(
-                                        
                                         context, 'User does not Exists!');
                                   } else {
                                     Get.to(HomeScreen());

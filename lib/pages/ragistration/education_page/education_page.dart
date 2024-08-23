@@ -97,7 +97,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                                 : Colors.black.withOpacity(0.5),
                             hintText: 'Select Highest Qualification'),
                         const SizedBox(height: 15),
-                        buildDropdown(
+                        buildDropdownWithSearch(
                             'Professional Qualification',
                             professionQualController.getProfessionQualList(),
                             // qualificationController.selectedItem.call,

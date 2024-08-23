@@ -190,7 +190,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       Expanded(
                                         child: Column(
                                           children: [
-                                            buildDropdown(
+                                            buildDropdownWithSearch(
                                               'Age Range From',
                                               AgeController.AgeTypes(),
                                               (value) {
@@ -207,7 +207,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            buildDropdown(
+                                            buildDropdownWithSearch(
                                               'Body Weight From',
                                               WeightConsController.getWeight(),
                                               (value) {
@@ -224,7 +224,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            buildDropdown(
+                                            buildDropdownWithSearch(
                                               'Height Range From',
                                               heightController.HeightLists,
                                               (value) {
@@ -247,7 +247,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       Expanded(
                                         child: Column(
                                           children: [
-                                            buildDropdown(
+                                            buildDropdownWithSearch(
                                               'Age Range To',
                                               AgeController.AgeTypes(),
                                               (value) {
@@ -263,7 +263,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            buildDropdown(
+                                            buildDropdownWithSearch(
                                               'Body Weight To',
                                               WeightConsController.getWeight(),
                                               (value) {
@@ -280,7 +280,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            buildDropdown(
+                                            buildDropdownWithSearch(
                                               'Height Range To',
                                               heightController.HeightLists,
                                               (value) {
@@ -549,7 +549,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         ),
                                       );
                                     } else {
-                                      return buildDropdown(
+                                      return buildDropdownWithSearch(
                                         'Nationality',
                                         countryController.getCountryList(),
                                         (value) {
@@ -576,7 +576,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         ),
                                       );
                                     } else {
-                                      return buildDropdown(
+                                      return buildDropdownWithSearch(
                                         'State',
                                         stateControllerPermanent.stateLists,
                                         //  stateControllerPermanent.selectedItem,
@@ -642,7 +642,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   horizontal: 22, vertical: 15),
                               child: Column(
                                 children: [
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Highest Qualification *',
                                     highestQualController.HighestLists,
                                     (value) {
@@ -659,7 +659,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Professional Qualification',
                                     professionQualController
                                         .professionQualLists,
@@ -678,7 +678,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Occupation',
                                     professionsController.professionLists,
                                     (value) {
@@ -695,7 +695,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Annual Income Range',
                                     incomeController.IncomeLists,
                                     (value) {
@@ -767,7 +767,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         ),
                                       );
                                     } else {
-                                      return buildDropdown(
+                                      return buildDropdownWithSearch(
                                         'Religion',
                                         religionsController.getReligionNames(),
                                         (value) {
@@ -796,7 +796,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         ),
                                       );
                                     } else {
-                                      return buildDropdown(
+                                      return buildDropdownWithSearch(
                                         'Caste',
                                         castController.getCastNames(),
                                         (value) {

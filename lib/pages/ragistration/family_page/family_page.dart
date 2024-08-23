@@ -236,7 +236,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 alignment: Alignment.center,
                                 child: Image.asset(
                                     'assets/images/familyicon.png')),
-                             buildDropdown(
+                             buildDropdownWithSearch(
                                   'Religion',
                                   religionController.getReligionNames(),
                                   (value) {
@@ -263,7 +263,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   ),
                                 );
                               } else {
-                                return buildDropdown(
+                                return buildDropdownWithSearch(
                                   'Caste',
                                   castController.getCastNames(),
                                   (value) {
@@ -288,7 +288,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   ),
                                 );
                               } else {
-                                return buildDropdown(
+                                return buildDropdownWithSearch(
                                   'Subcaste',
                                   subCastController.getSubCastList(),
                                   (value) {
@@ -451,7 +451,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                             SizedBox(
                               height: 15,
                             ),
-                            buildDropdown(
+                            buildDropdownWithSearch(
                               'Mother tongue',
                               motherTongueController.getMotherTongueList(),
                               //  languageController.selectedItem.call,
@@ -541,7 +541,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                         ),
                                       );
                                     } else {
-                                      return buildDropdown(
+                                      return buildDropdownWithSearch(
                                         'Occupation',
                                         professionController
                                             .getProfessionList(),
@@ -567,7 +567,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Annual income range',
                                     incomeController.getIncomeList(),
                                     (value) {
@@ -660,7 +660,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                         ),
                                       );
                                     } else {
-                                      return buildDropdown(
+                                      return buildDropdownWithSearch(
                                         'Occupation',
                                         professionController
                                             .getProfessionList(),
@@ -679,7 +679,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Annual income range',
                                     incomeController.getIncomeList(),
                                     (value) {
@@ -756,7 +756,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Number of Sisters',
                                     NumberController.NumberList(),
                                     (value) {
@@ -834,7 +834,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  buildDropdown(
+                                  buildDropdownWithSearch(
                                     'Number of Brothers',
                                     NumberController.NumberList(),
                                     (value) {

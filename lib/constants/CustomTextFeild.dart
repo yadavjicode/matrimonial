@@ -46,6 +46,7 @@ class CustomTextField extends StatelessWidget {
           const SizedBox(height: 8),
         ],
         TextFormField(
+          
           controller: controller,
           obscureText: obscureText ?? false,
           onTap: onTap,
@@ -76,7 +77,7 @@ class CustomTextField extends StatelessWidget {
               borderSide: const BorderSide(color: Colors.red),
             ),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
           ),

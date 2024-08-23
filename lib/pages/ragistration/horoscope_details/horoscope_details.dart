@@ -109,7 +109,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                 ),
                               );
                             } else {
-                              return buildDropdown(
+                              return buildDropdownWithSearch(
                                 'State of Birth',
                                 stateController.getStateList(),
                                 (value) {
@@ -134,7 +134,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                 ),
                               );
                             } else {
-                              return buildDropdown(
+                              return buildDropdownWithSearch(
                                 'City of Birth',
                                 cityController.cityLists,
                                 (value) {

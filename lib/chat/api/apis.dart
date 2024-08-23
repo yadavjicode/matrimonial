@@ -23,9 +23,8 @@ class APIs with ChangeNotifier {
       "${_editProfileController.member!.member!.name.toString()} ${_editProfileController.member!.member!.surename.toString()}";
   static String email =
       _editProfileController.member!.member!.confirmEmail.toString();
-  static String profileimage =
-      _editProfileController.member!.member!.confirmEmail.toString();
-  static String image =
+
+  static String image =_editProfileController.member!.member!.photo1!=null?"http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.photo1}":
       "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
           .toString();
 

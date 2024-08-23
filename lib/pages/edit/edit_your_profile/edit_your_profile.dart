@@ -147,14 +147,7 @@ class _EditYourProfileState extends State<EditYourProfile> {
                   )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  "You can only select up to 5 images",
-                  style: FontConstant.styleRegular(
-                      fontSize: 16, color: AppColors.black),
-                ),
-              )
+              
             ],
           ),
         );

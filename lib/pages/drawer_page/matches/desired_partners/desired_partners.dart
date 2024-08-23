@@ -28,6 +28,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -58,7 +59,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
 
   Widget AllMatchesContent() {
     final member = matchesController.member;
-    if (member == null || member.data == null) {
+    if (member == null || member.searchData!.data == null) {
       return Center(child: Text("No data available"));
     }
 
@@ -67,7 +68,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
         // crossAxisAlignment: CrossAxisAlignment.center,
-        children: matchesController.member!.data!.map((data) {
+        children: matchesController.member!.searchData!.data!.map((data) {
           // int index = entry.key;
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
           String id = data.matriID;
@@ -78,7 +79,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
 
           return GestureDetector(
             onTap: () {
-              Get.toNamed('/profiledtls');
+              // Get.toNamed('/profiledtls');
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),

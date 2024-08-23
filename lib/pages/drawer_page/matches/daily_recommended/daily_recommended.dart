@@ -58,7 +58,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
 
   Widget AllMatchesContent() {
     final member = matchesController.member;
-    if (member == null || member.data == null) {
+    if (member == null || member.searchData!.data == null) {
       return Center(child: Text("No data available"));
     }
     return SingleChildScrollView(
@@ -66,7 +66,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
         // crossAxisAlignment: CrossAxisAlignment.center,
-        children: matchesController.member!.data!.map((data) {
+        children: matchesController.member!.searchData!.data!.map((data) {
           // int index = entry.key;
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
           String id = data.matriID;
