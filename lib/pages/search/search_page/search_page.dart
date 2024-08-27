@@ -25,8 +25,8 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   int _selectedIndex = -1;
- RangeValues _currentRangeValues = RangeValues(3, 7);
- String? _heightFrom;
+  RangeValues _currentRangeValues = RangeValues(3, 7);
+  String? _heightFrom;
   String? _heightTo;
 
   bool selectprofileA = false;
@@ -35,29 +35,27 @@ class _SearchPageState extends State<SearchPage> {
 
   SearchsController searchController = Get.put(SearchsController());
   HeightController heightController = Get.put(HeightController());
-    NumberController numberController = Get.put(NumberController());
-    AgeController ageController = Get.put(AgeController());
-    MaritalController maritalController = Get.put(MaritalController());
-    ReligionsController religionsController = Get.put(ReligionsController());
-    CastController castController = Get.put(CastController());
-    CountryController countryController = Get.put(CountryController());
-    StateControllerPermanent stateControllerPermanent =
-        Get.put(StateControllerPermanent());
-    CityControllerPermanent cityControllerPermanent =
-        Get.put(CityControllerPermanent());
-    EducationController educationController = Get.put(EducationController());
+  NumberController numberController = Get.put(NumberController());
+  AgeController ageController = Get.put(AgeController());
+  MaritalController maritalController = Get.put(MaritalController());
+  ReligionsController religionsController = Get.put(ReligionsController());
+  CastController castController = Get.put(CastController());
+  CountryController countryController = Get.put(CountryController());
+  StateControllerPermanent stateControllerPermanent =
+      Get.put(StateControllerPermanent());
+  CityControllerPermanent cityControllerPermanent =
+      Get.put(CityControllerPermanent());
+  EducationController educationController = Get.put(EducationController());
 
-    
-
-    String? selectAgeFrom;
-    String? selectAgeTo;
-    String? selectMaritalStatus;
-    String? selectReligion;
-    String? selectCaste;
-    String? selectCountry;
-    String? selectState;
-    String? selectCity;
-    String? selectEducation;
+  String? selectAgeFrom;
+  String? selectAgeTo;
+  String? selectMaritalStatus;
+  String? selectReligion;
+  String? selectCaste;
+  String? selectCountry;
+  String? selectState;
+  String? selectCity;
+  String? selectEducation;
 
   String getLookingFor() {
     if (_selectedIndex == 0) {
@@ -68,6 +66,7 @@ class _SearchPageState extends State<SearchPage> {
       return "";
     }
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -191,7 +190,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Row(children: [
                         Expanded(
-                          child: buildDropdown(
+                          child: buildDropdownWithSearch(
                             '',
                             AgeController.AgeTypes(),
                             (value) {
@@ -208,7 +207,7 @@ class _SearchPageState extends State<SearchPage> {
                           width: 10,
                         ),
                         Expanded(
-                          child: buildDropdown(
+                          child: buildDropdownWithSearch(
                             '',
                             AgeController.AgeTypes(),
                             (value) {
@@ -232,25 +231,27 @@ class _SearchPageState extends State<SearchPage> {
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: Colors.black),
                             ),
-                           RangeSlider(
-            activeColor: AppColors.purple,
-            values: _currentRangeValues,
-            min: 3.0,
-            max: 7.0,
-            divisions: 40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
-            labels: RangeLabels(
-              _currentRangeValues.start.toStringAsFixed(1),
-              _currentRangeValues.end.toStringAsFixed(1),
-            ),
-            onChanged: (RangeValues values) {
-              setState(() {
-                _currentRangeValues = values;
-                _heightFrom=_currentRangeValues.start.toStringAsFixed(1);
-                _heightTo=_currentRangeValues.end.toStringAsFixed(1);
-                
-              });
-            },
-          ),
+                            RangeSlider(
+                              activeColor: AppColors.purple,
+                              values: _currentRangeValues,
+                              min: 3.0,
+                              max: 7.0,
+                              divisions:
+                                  40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
+                              labels: RangeLabels(
+                                _currentRangeValues.start.toStringAsFixed(1),
+                                _currentRangeValues.end.toStringAsFixed(1),
+                              ),
+                              onChanged: (RangeValues values) {
+                                setState(() {
+                                  _currentRangeValues = values;
+                                  _heightFrom = _currentRangeValues.start
+                                      .toStringAsFixed(1);
+                                  _heightTo = _currentRangeValues.end
+                                      .toStringAsFixed(1);
+                                });
+                              },
+                            ),
                             Row(
                               children: [
                                 Text(
@@ -286,7 +287,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdown(
+                        child: buildDropdownWithSearch(
                           'Religion',
                           religionsController.getReligionNames(),
                           (value) {
@@ -309,7 +310,7 @@ class _SearchPageState extends State<SearchPage> {
                               ),
                             );
                           } else {
-                            return buildDropdown(
+                            return buildDropdownWithSearch(
                               'Caste',
                               castController.getCastNames(),
                               (value) {
@@ -321,14 +322,14 @@ class _SearchPageState extends State<SearchPage> {
                                 });
                                 castController.selectItem(value);
                               },
-                              hintText: 'Select Cast',
+                              hintText: 'Select Caste',
                             );
                           }
                         }),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdown(
+                        child: buildDropdownWithSearch(
                           'Country',
                           countryController.getCountryList(),
                           (value) {
@@ -351,7 +352,7 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                               );
                             } else {
-                              return buildDropdown(
+                              return buildDropdownWithSearch(
                                 'State',
                                 stateControllerPermanent.stateLists,
                                 (value) {
@@ -375,7 +376,7 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                               );
                             } else {
-                              return buildDropdown(
+                              return buildDropdownWithSearch(
                                 'District/City',
                                 cityControllerPermanent.cityLists,
                                 (value) {
@@ -391,7 +392,7 @@ class _SearchPageState extends State<SearchPage> {
                           })),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdown(
+                        child: buildDropdownWithSearch(
                           'Education',
                           educationController.EducationLists,
                           (value) {
@@ -462,20 +463,23 @@ class _SearchPageState extends State<SearchPage> {
                       CustomButton(
                         text: 'Search',
                         onPressed: () {
-                          searchController.search(
-                              context,
-                               searchController.getAge(selectAgeFrom??""),
-                              searchController.getAge(selectAgeTo??""),
-                              searchController.convertToFeetAndInches(double.parse(_heightFrom??"3.0")),
-                              searchController.convertToFeetAndInches(double.parse(_heightTo??"7.0")),
-                              selectMaritalStatus??"",
-                              selectReligion??"",
-                              selectCaste??"",
-                              selectCountry??"",
-                              selectState??"",
-                              selectCity??"",
-                              selectEducation??"");
-                          print("Lokinf for==============${selectCaste??""}");
+                          Get.toNamed('/searchresult', arguments: {
+                            "ageFrom":
+                                searchController.getAge(selectAgeFrom ?? ""),
+                            "ageTo": searchController.getAge(selectAgeTo ?? ""),
+                            "heightFrom":
+                                searchController.convertToFeetAndInches(
+                                    double.parse(_heightFrom ?? "3.0")),
+                            "heightTo": searchController.convertToFeetAndInches(
+                                double.parse(_heightTo ?? "7.0")),
+                            "maritalStatus": selectMaritalStatus ?? "",
+                            "religion": selectReligion ?? "",
+                            "caste": selectCaste ?? "",
+                            "country": selectCountry ?? "",
+                            "state": selectState ?? "",
+                            "city": selectCity ?? "",
+                            "education": selectEducation ?? ""
+                          });
 
                           // Get.toNamed('/searchresult');
                         },

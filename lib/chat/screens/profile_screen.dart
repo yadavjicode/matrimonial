@@ -4,7 +4,6 @@ import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/profile_image.dart';
@@ -40,38 +39,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: const Text('User Profile')),
 
           //floating button to log out
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FloatingActionButton.extended(
-                backgroundColor: Colors.redAccent,
-                onPressed: () async {
-                  //for showing progress dialog
-                  Dialogs.showLoading(context);
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(bottom: 10),
+          //   child: FloatingActionButton.extended(
+          //       backgroundColor: Colors.redAccent,
+          //       onPressed: () async {
+          //         //for showing progress dialog
+          //         Dialogs.showLoading(context);
 
-                  await APIs.updateActiveStatus(false);
+          //         await APIs.updateActiveStatus(false);
 
-                  //  // sign out from app
-                  // await APIs.auth.signOut().then((value) async {
-                  //   await GoogleSignIn().signOut().then((value) {
-                  //     //for hiding progress dialog
-                  //     Navigator.pop(context);
+          //         //  // sign out from app
+          //         // await APIs.auth.signOut().then((value) async {
+          //         //   await GoogleSignIn().signOut().then((value) {
+          //         //     //for hiding progress dialog
+          //         //     Navigator.pop(context);
 
-                  //     //for moving to home screen
-                  //     Navigator.pop(context);
+          //         //     //for moving to home screen
+          //         //     Navigator.pop(context);
 
-                  //     // APIs.auth = FirebaseAuth.instance;
+          //         //     // APIs.auth = FirebaseAuth.instance;
 
-                  //     //replacing home screen with login screen
-                  //     Navigator.pushReplacement(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (_) => const LoginScreen()));
-                  //   });
-                  // });
-                },
-                icon: const Icon(Icons.logout),
-                label: const Text('Logout')),
-          ),
+          //         //     //replacing home screen with login screen
+          //         //     Navigator.pushReplacement(
+          //         //         context,
+          //         //         MaterialPageRoute(
+          //         //             builder: (_) => const LoginScreen()));
+          //         //   });
+          //         // });
+          //       },
+          //       icon: const Icon(Icons.logout),
+          //       label: const Text('Logout')
+          //       ),
+          // ),
 
           //body
           body: Form(

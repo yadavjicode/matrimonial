@@ -1,15 +1,15 @@
-import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
-import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/font_constant.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/screens/home_screen.dart';
 
 class BasedMatches extends StatefulWidget {
   const BasedMatches({super.key});
@@ -26,22 +26,33 @@ class _BasedMatchesState extends State<BasedMatches> {
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-final Map<String, dynamic> arguments = Get.arguments;
-    
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final String keys = arguments['keys'];
-      matchesController.matches(context, keys);
-    });
-    super.initState();
-  }
+  final Map<String, dynamic> arguments = Get.arguments;
+  final ScrollController _scrollController = ScrollController();
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final String keys = arguments['keys'];
+      matchesController.reset(context, keys);
+      matchesController.fetchMatches(context, keys);
+    });
+
+    _scrollController.addListener(() {
+      final String keys = arguments['keys'];
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent &&
+          !matchesController.isLoading.value &&
+          matchesController.hasMore.value) {
+        matchesController.loadNextPage(context, keys); // Load next page
+      }
+    });
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    final String keys = arguments['keys'];
     return Scaffold(
-       backgroundColor: AppColors.background,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
@@ -52,75 +63,54 @@ final Map<String, dynamic> arguments = Get.arguments;
               fontSize: 18, color: AppColors.constColor),
         ),
       ),
-      body:Obx(() {
-      return Stack(
-        children: [
-         Stack(
+      body: Obx(() {
+        return Stack(
           children: [
             Container(
-                width: double.infinity,
-                alignment: Alignment.topRight,
-                child: Image.asset("assets/images/bg3.png")),
-          // if (matchesController.isLoading.value == false)
-           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: AllMatchesContent(keys),
-          ),
-              
-          ],
-        ),
-     
-                if (matchesController.isLoading.value ||
-               shortlistController.isLoading.value ||
-               sentInvitationController.isLoading.value ||
-               profileDetailsController.isLoading.value)
-            Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
+              width: double.infinity,
+              alignment: Alignment.topRight,
+              child: Image.asset("assets/images/bg3.png"),
             ),
-
-        ]
-      );
-      }
-      )
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+              child: AllMatchesContent("keys"),
+            ),
+            if (shortlistController.isLoading.value ||
+                sentInvitationController.isLoading.value ||
+                profileDetailsController.isLoading.value)
+              Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              ),
+          ],
+        );
+      }),
     );
   }
 
-
-
-
   Widget AllMatchesContent(String keys) {
-    final member = matchesController.member;
-    if (member == null || member.searchData!.data == null) {
-      return Center(child: Text("No data available"));
-    }
+    // final member = matchesController.matches;
+    // if (member == null || member.searchData!.data == null) {
+    //   return Center(child: Text("No data available"));
+    // }
 
     return SingleChildScrollView(
+      controller: _scrollController,
       scrollDirection: Axis.vertical,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: matchesController.member!.searchData!.data!.map((data) {
-          // int index = entry.key;
+      child: Column(children: [
+        ...matchesController.matches.map((data) {
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
           String id = data.matriID;
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
               : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
-          //String head = entry.value[1];
 
           return GestureDetector(
-            onTap: () {
-            
-            },
+            onTap: () {},
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
-              //  width: 320,
               decoration: BoxDecoration(
-                // color: selectedIndex == index
-                //     ? Colors.grey.shade300
-                //     : Colors.white,
                 color: AppColors.constColor,
                 border: Border.all(color: Colors.grey.shade200),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -135,11 +125,11 @@ final Map<String, dynamic> arguments = Get.arguments;
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
                           ClipRRect(
-                           borderRadius: BorderRadius.all(Radius.circular(7)),
+                            borderRadius: BorderRadius.all(Radius.circular(7)),
                             child: Image.network(
                               "$image",
                               height: 196,
-                          width: 137,
+                              width: 137,
                               filterQuality: FilterQuality.high,
                               fit: BoxFit.fill,
                             ),
@@ -149,18 +139,22 @@ final Map<String, dynamic> arguments = Get.arguments;
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(top: 170),
                               child: GestureDetector(
-                                onTap: () {
-                                  print("${id}");
+                                onTap: () async{
+                                  setState(() {
+                                data.interestStatus =
+                                    data.interestStatus == 0?1:1;
+                              });
+                              
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
-                                    btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        matchesController.matches(
-                                            context, keys);
-                                      }),
-                                    },
+                                    // btnOkOnPress: () => {
+                                    //   WidgetsBinding.instance
+                                    //       .addPostFrameCallback((_) {
+                                    //     matchesController.matches(
+                                    //         context, keys);
+                                    //   }),
+                                    // },
                                   );
                                 },
                                 child: Row(
@@ -297,18 +291,26 @@ final Map<String, dynamic> arguments = Get.arguments;
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => {
+                            onTap: () async {
+                              setState(() {
+                                data.shortlistStatus =
+                                    data.shortlistStatus == 1 ? 0 : 1;
+                              });
                               shortlistController.shortlist(
                                 context,
                                 id,
-                                btnOkOnPress: () => {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    matchesController.matches(
-                                        context, "matches");
-                                  }),
-                                },
-                              ),
+                                btnOkOnPress: () => {},
+                              );
+                              // // Handle result if needed
+                              // if (shortlistController.member!.message=="Shortlisted") {
+                              //   // Optionally show an error message or revert the UI update
+                              //   setState(() {
+                              //     data.shortlistStatus = data.shortlistStatus == 1 ? 0 : 1; // Revert if needed
+                              //   });
+                              // } else {
+                              //   // Optionally refresh data if needed
+                              // //  matchesController.fetchMatches(context, widget.keys);
+                              // }
                             },
                             child: Row(
                               children: [
@@ -405,7 +407,17 @@ final Map<String, dynamic> arguments = Get.arguments;
             ),
           );
         }).toList(),
-      ),
+        if (matchesController
+            .isLoading.value) // Progress indicator at the bottom
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
+      ]),
     );
   }
 }

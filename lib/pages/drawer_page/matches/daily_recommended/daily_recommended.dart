@@ -28,22 +28,34 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      matchesController.matches(context, "daily_recommendation");
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      matchesController.reset(context, "daily_recommendation");
+      matchesController.fetchMatches(context, "daily_recommendation");
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent &&
+          !matchesController.isLoading.value &&
+          matchesController.hasMore.value) {
+        matchesController.loadNextPage(context, "daily_recommendation");
+      }
+    });
   }
 
+  
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       return Stack(
         children: [
-          if (matchesController.isLoading.value == false) AllMatchesContent(),
-          if (matchesController.isLoading.value ||
-              shortlistController.isLoading.value ||
+          AllMatchesContent(),
+          if (shortlistController.isLoading.value ||
               sentInvitationController.isLoading.value ||
               profileDetailsController.isLoading.value)
             Center(
@@ -55,21 +67,18 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
       );
     });
   }
-
-  Widget AllMatchesContent() {
-    final member = matchesController.member;
-    if (member == null || member.searchData!.data == null) {
-      return Center(child: Text("No data available"));
-    }
+    Widget AllMatchesContent() {
+    // final member = matchesController.member;
+    // if (member == null || member.searchData!.data == null) {
+    //   return Center(child: Text("No data available"));
+    // }
     return SingleChildScrollView(
+      controller: _scrollController,
       scrollDirection: Axis.vertical,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: matchesController.member!.searchData!.data!.map((data) {
-          // int index = entry.key;
+      child: Column(children: [
+        ...matchesController.matches.map((data) {
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID;
+          String id = data.matriID ?? "";
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
               : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
@@ -81,11 +90,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
-              //  width: 320,
               decoration: BoxDecoration(
-                // color: selectedIndex == index
-                //     ? Colors.grey.shade300
-                //     : Colors.white,
                 color: AppColors.constColor,
                 border: Border.all(color: Colors.grey.shade200),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -100,11 +105,11 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
                           ClipRRect(
-                             borderRadius: BorderRadius.all(Radius.circular(7)),
+                            borderRadius: BorderRadius.all(Radius.circular(7)),
                             child: Image.network(
                               "$image",
                               height: 196,
-                          width: 137,
+                              width: 137,
                               filterQuality: FilterQuality.high,
                               fit: BoxFit.fill,
                             ),
@@ -114,17 +119,16 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(top: 170),
                               child: GestureDetector(
-                                onTap: () {
-                                  print("${data.matriID}");
+                                onTap: () async {
+                                  setState(() {
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
                                     btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        matchesController.matches(
-                                            context, "daily_recommendation");
-                                      }),
+                                      
                                     },
                                   );
                                 },
@@ -180,7 +184,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                     color: AppColors.primaryColor),
                               ),
                               Text(
-                                "ID: ${data.matriID}",
+                                "ID: ${id}",
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               ),
@@ -262,18 +266,18 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => {
+                            onTap: () async {
+                              setState(() {
+                                data.shortlistStatus =
+                                    data.shortlistStatus == 1 ? 0 : 1;
+                              });
                               shortlistController.shortlist(
                                 context,
                                 id,
                                 btnOkOnPress: () => {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    matchesController.matches(
-                                        context, "daily_recommendation");
-                                  }),
+                                  
                                 },
-                              ),
+                              );
                             },
                             child: Row(
                               children: [
@@ -370,7 +374,17 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
             ),
           );
         }).toList(),
-      ),
+        if (matchesController
+            .isLoading.value) // Progress indicator at the bottom
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
+      ]),
     );
   }
 }

@@ -29,12 +29,24 @@ class _DesiredPartnerState extends State<DesiredPartner> {
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
   
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      matchesController.matches(context, "matches");
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      matchesController.reset(context, "matches");
+      matchesController.fetchMatches(context, "matches");
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent &&
+          !matchesController.isLoading.value &&
+          matchesController.hasMore.value) {
+        matchesController.loadNextPage(context, "matches");
+      }
+    });
   }
 
   @override
@@ -42,9 +54,8 @@ class _DesiredPartnerState extends State<DesiredPartner> {
     return Obx(() {
       return Stack(
         children: [
-          if (matchesController.isLoading.value == false) AllMatchesContent(),
-          if (matchesController.isLoading.value ||
-              shortlistController.isLoading.value ||
+          AllMatchesContent(),
+          if (shortlistController.isLoading.value ||
               sentInvitationController.isLoading.value ||
               profileDetailsController.isLoading.value)
             Center(
@@ -58,20 +69,17 @@ class _DesiredPartnerState extends State<DesiredPartner> {
   }
 
   Widget AllMatchesContent() {
-    final member = matchesController.member;
-    if (member == null || member.searchData!.data == null) {
-      return Center(child: Text("No data available"));
-    }
-
+    // final member = matchesController.member;
+    // if (member == null || member.searchData!.data == null) {
+    //   return Center(child: Text("No data available"));
+    // }
     return SingleChildScrollView(
+      controller: _scrollController,
       scrollDirection: Axis.vertical,
-      child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: matchesController.member!.searchData!.data!.map((data) {
-          // int index = entry.key;
+      child: Column(children: [
+        ...matchesController.matches.map((data) {
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID;
+          String id = data.matriID ?? "";
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
               : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
@@ -83,11 +91,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
-              //  width: 320,
               decoration: BoxDecoration(
-                // color: selectedIndex == index
-                //     ? Colors.grey.shade300
-                //     : Colors.white,
                 color: AppColors.constColor,
                 border: Border.all(color: Colors.grey.shade200),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -102,11 +106,11 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
                           ClipRRect(
-                           borderRadius: BorderRadius.all(Radius.circular(7)),
+                            borderRadius: BorderRadius.all(Radius.circular(7)),
                             child: Image.network(
                               "$image",
                               height: 196,
-                          width: 137,
+                              width: 137,
                               filterQuality: FilterQuality.high,
                               fit: BoxFit.fill,
                             ),
@@ -116,17 +120,16 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(top: 170),
                               child: GestureDetector(
-                                onTap: () {
-                                  print("${id}");
+                                onTap: () async {
+                                  setState(() {
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
                                     btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        matchesController.matches(
-                                            context, "matches");
-                                      }),
+                                      
                                     },
                                   );
                                 },
@@ -182,7 +185,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                     color: AppColors.primaryColor),
                               ),
                               Text(
-                                "ID: ${data.matriID}",
+                                "ID: ${id}",
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               ),
@@ -264,18 +267,18 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => {
+                            onTap: () async {
+                              setState(() {
+                                data.shortlistStatus =
+                                    data.shortlistStatus == 1 ? 0 : 1;
+                              });
                               shortlistController.shortlist(
                                 context,
                                 id,
                                 btnOkOnPress: () => {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    matchesController.matches(
-                                        context, "matches");
-                                  }),
+                                  
                                 },
-                              ),
+                              );
                             },
                             child: Row(
                               children: [
@@ -372,7 +375,17 @@ class _DesiredPartnerState extends State<DesiredPartner> {
             ),
           );
         }).toList(),
-      ),
+        if (matchesController
+            .isLoading.value) // Progress indicator at the bottom
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
+      ]),
     );
   }
 }

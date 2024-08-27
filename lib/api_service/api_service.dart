@@ -693,6 +693,7 @@ class ApiService {
 //==== Start Api Search ==========================================================================================
 
   Future<SearchsModel> Search(
+    int page,
     String ageFrom,
     String ageTo,
     String heightFrom,
@@ -727,7 +728,7 @@ class ApiService {
     }
 
     final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.search_Url}'),
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.search_Url}?page=$page'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -1140,37 +1141,35 @@ class ApiService {
 
 //==== Start Api inbox Matches==========================================================================================
 
-  Future<MatchesModel> Matches(
-    String status,
-  ) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+  Future<MatchesModel> fetchMatches(int page, String type) async {
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getString('token');
 
-    if (token == null) {
-      throw Exception('Token is not available');
-    }
-
-    final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matches_Url}'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: jsonEncode({
-        "type": status,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final responseJson = json.decode(response.body);
-      print(responseJson);
-      return MatchesModel.fromJson(responseJson);
-    } else {
-      final responseJson = json.decode(response.body);
-      throw Exception('Failed: ${responseJson['message']}');
-    }
+  if (token == null) {
+    throw Exception('Token is not available');
   }
 
+  final response = await http.post(
+    Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matches_Url}?page=$page'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+    body: jsonEncode({
+      "type": type,
+     
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    final responseJson = json.decode(response.body);
+    print(responseJson);
+    return MatchesModel.fromJson(responseJson);
+  } else {
+    final responseJson = json.decode(response.body);
+    throw Exception('Failed: ${responseJson['message']}');
+  }
+}
 //==== End Api inbox Matches==========================================================================================
 
 //==== Start Api Shortlist==========================================================================================

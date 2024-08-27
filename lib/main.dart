@@ -1,13 +1,16 @@
+import 'dart:developer';
+
 import 'package:devotee/chat/firebase_options.dart';
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/lists/location_list.dart';
-import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_notification_channel/flutter_notification_channel.dart';
+import 'package:flutter_notification_channel/notification_importance.dart';
 import 'package:get/get.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,11 +51,11 @@ class MyApp extends StatelessWidget {
 Future<void> _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // var result = await FlutterNotificationChannel().registerNotificationChannel(
-  //     description: 'For Showing Message Notification',
-  //     id: 'chats',
-  //     importance: NotificationImportance.IMPORTANCE_HIGH,
-  //     name: 'Chats');
+  var result = await FlutterNotificationChannel.registerNotificationChannel(
+      description: 'For Showing Message Notification',
+      id: 'chats',
+      importance: NotificationImportance.IMPORTANCE_HIGH,
+      name: 'Chats');
 
-  // log('\nNotification Channel Result: $result');
+  log('\nNotification Channel Result: $result');
 }

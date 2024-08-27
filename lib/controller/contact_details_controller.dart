@@ -1,5 +1,4 @@
 import 'package:devotee/controller/flow_controller.dart';
-import 'package:devotee/model/basic_details_model.dart';
 import 'package:devotee/model/contact_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

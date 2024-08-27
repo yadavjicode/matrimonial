@@ -9,7 +9,6 @@ import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../controller/profile_details_controller.dart';
 
 class AllMatches extends StatefulWidget {
@@ -23,19 +22,27 @@ class _AllMatchesState extends State<AllMatches> {
   String selectedText = "";
   int selectedIndex = -1;
   final MatchesController matchesController = Get.put(MatchesController());
+  final ShortlistController shortlistController = Get.put(ShortlistController());
+  final SentInvitationController sentInvitationController = Get.put(SentInvitationController());
+  final ProfileDetailsController profileDetailsController = Get.put(ProfileDetailsController());
+  final ScrollController _scrollController = ScrollController();
 
-  final ShortlistController shortlistController =
-      Get.put(ShortlistController());
-  final SentInvitationController sentInvitationController =
-      Get.put(SentInvitationController());
-  final ProfileDetailsController profileDetailsController =
-      Get.put(ProfileDetailsController());
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      matchesController.matches(context, "matches");
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      matchesController.reset(context, "matches");
+      matchesController.fetchMatches(context, "matches");
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent &&
+          !matchesController.isLoading.value &&
+          matchesController.hasMore.value) {
+        matchesController.loadNextPage(context, "matches");
+      }
+    });
   }
 
   @override
@@ -43,9 +50,8 @@ class _AllMatchesState extends State<AllMatches> {
     return Obx(() {
       return Stack(
         children: [
-          if (matchesController.isLoading.value == false) AllMatchesContent(),
-          if (matchesController.isLoading.value ||
-              shortlistController.isLoading.value ||
+          AllMatchesContent(),
+          if (shortlistController.isLoading.value ||
               sentInvitationController.isLoading.value ||
               profileDetailsController.isLoading.value)
             Center(
@@ -59,14 +65,15 @@ class _AllMatchesState extends State<AllMatches> {
   }
 
   Widget AllMatchesContent() {
-    final member = matchesController.member;
-    if (member == null || member.searchData!.data == null) {
-      return Center(child: Text("No data available"));
-    }
+    // final member = matchesController.member;
+    // if (member == null || member.searchData!.data == null) {
+    //   return Center(child: Text("No data available"));
+    // }
     return SingleChildScrollView(
+      controller: _scrollController,
       scrollDirection: Axis.vertical,
-      child: Column(
-        children: matchesController.member!.searchData!.data!.map((data) {
+      child: Column(children: [
+        ...matchesController.matches.map((data) {
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
           String id = data.matriID ?? "";
           String image = data.photo1 != null
@@ -80,11 +87,7 @@ class _AllMatchesState extends State<AllMatches> {
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
-              //  width: 320,
               decoration: BoxDecoration(
-                // color: selectedIndex == index
-                //     ? Colors.grey.shade300
-                //     : Colors.white,
                 color: AppColors.constColor,
                 border: Border.all(color: Colors.grey.shade200),
                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -103,7 +106,7 @@ class _AllMatchesState extends State<AllMatches> {
                             child: Image.network(
                               "$image",
                               height: 196,
-                          width: 137,
+                              width: 137,
                               filterQuality: FilterQuality.high,
                               fit: BoxFit.fill,
                             ),
@@ -113,17 +116,16 @@ class _AllMatchesState extends State<AllMatches> {
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(top: 170),
                               child: GestureDetector(
-                                onTap: () {
-                                  print("${data.matriID}");
+                                onTap: () async {
+                                  setState(() {
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
                                     btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        matchesController.matches(
-                                            context, "matches");
-                                      }),
+                                      
                                     },
                                   );
                                 },
@@ -261,18 +263,18 @@ class _AllMatchesState extends State<AllMatches> {
                       children: [
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => {
+                            onTap: () async {
+                              setState(() {
+                                data.shortlistStatus =
+                                    data.shortlistStatus == 1 ? 0 : 1;
+                              });
                               shortlistController.shortlist(
                                 context,
                                 id,
                                 btnOkOnPress: () => {
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    matchesController.matches(
-                                        context, "matches");
-                                  }),
+                                  
                                 },
-                              ),
+                              );
                             },
                             child: Row(
                               children: [
@@ -306,7 +308,6 @@ class _AllMatchesState extends State<AllMatches> {
                                 await APIs.addChatUser(id).then((value) {
                                   if (!value) {
                                     Dialogs.showSnackbar(
-                                        
                                         context, 'User does not Exists!');
                                   } else {
                                     Get.to(HomeScreen());
@@ -370,7 +371,17 @@ class _AllMatchesState extends State<AllMatches> {
             ),
           );
         }).toList(),
-      ),
+        if (matchesController
+            .isLoading.value) // Progress indicator at the bottom
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primaryColor,
+              ),
+            ),
+          ),
+      ]),
     );
   }
 }

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:devotee/chat/Test/last_online.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/helper/my_date_util.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -28,10 +31,56 @@ class _SearchResultState extends State<SearchResult> {
       Get.put(SentInvitationController());
   bool age = true;
   bool height = true;
+  final Map<String, dynamic> arguments = Get.arguments;
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    final String ageFrom = arguments['ageFrom'];
+    final String ageTo = arguments['ageTo'];
+    final String heightFrom = arguments['heightFrom'];
+    final String heightTo = arguments['heightTo'];
+    final String maritalStatus = arguments['maritalStatus'];
+    final String religion = arguments['religion'];
+    final String caste = arguments['caste'];
+    final String country = arguments['country'];
+    final String state = arguments['state'];
+    final String city = arguments['city'];
+    final String education = arguments['education'];
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // final String keys = arguments['keys'];
+      searchController.reset(context, ageFrom, ageTo, heightFrom, heightTo,
+          maritalStatus, religion, caste, country, state, city, education);
+      searchController.Search(context, ageFrom, ageTo, heightFrom, heightTo,
+          maritalStatus, religion, caste, country, state, city, education);
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+              _scrollController.position.maxScrollExtent &&
+          !searchController.isLoading.value &&
+          searchController.hasMore.value) {
+        searchController.loadNextPage(
+            context,
+            ageFrom,
+            ageTo,
+            heightFrom,
+            heightTo,
+            maritalStatus,
+            religion,
+            caste,
+            country,
+            state,
+            city,
+            education); // Load next page
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> arguments = Get.arguments;
     final String ageFrom = arguments['ageFrom'];
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
@@ -78,11 +127,14 @@ class _SearchResultState extends State<SearchResult> {
             Column(
               children: [
                 Container(
+                  child: UserStatusWidget(userId: "DM36287"),
+                ),
+                Container(
                   padding:
                       EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
                   child: Row(
                     children: [
-                      if (age)
+                      if (age && ageFrom != "" || age && ageTo != "")
                         Expanded(
                           child: Container(
                             padding: EdgeInsets.all(5),
@@ -182,10 +234,10 @@ class _SearchResultState extends State<SearchResult> {
                   child: Container(
                     // height: 291,
                     child: SingleChildScrollView(
+                      controller: _scrollController,
                       scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: searchController.member!.responseData!.data!
-                            .map((data) {
+                      child: Column(children: [
+                        ...searchController.searchs.map((data) {
                           String name =
                               "${data.name ?? ""} ${data.surename ?? ""}";
                           String occupation = data.occupation ?? "";
@@ -238,31 +290,20 @@ class _SearchResultState extends State<SearchResult> {
                                             alignment: Alignment.center,
                                             margin: EdgeInsets.only(top: 170),
                                             child: GestureDetector(
-                                              onTap: () {
-                                                print("${data.matriID}");
+                                              onTap: () async {
+                                                setState(() {
+                                                  data.interestStatus =
+                                                      data.interestStatus == 0
+                                                          ? 1
+                                                          : 1;
+                                                });
                                                 sentInvitationController
                                                     .sentInvitation(
                                                   context,
                                                   data.matriID!,
-                                                  btnOkOnPress: () => {
-                                                    WidgetsBinding.instance
-                                                        .addPostFrameCallback(
-                                                            (_) {
-                                                      searchController.search(
-                                                          context,
-                                                          ageFrom,
-                                                          ageTo,
-                                                          heightFrom,
-                                                          heightTo,
-                                                          maritalStatus,
-                                                          religion,
-                                                          caste,
-                                                          country,
-                                                          state,
-                                                          city,
-                                                          education);
-                                                    })
-                                                  },
+                                                  // btnOkOnPress: () => {
+
+                                                  // },
                                                 );
                                               },
                                               child: Row(
@@ -431,30 +472,18 @@ class _SearchResultState extends State<SearchResult> {
                                       children: [
                                         Expanded(
                                           child: GestureDetector(
-                                            onTap: () => {
+                                            onTap: () async {
+                                              setState(() {
+                                                data.shortlistStatus =
+                                                    data.shortlistStatus == 1
+                                                        ? 0
+                                                        : 1;
+                                              });
                                               shortlistController.shortlist(
                                                 context,
                                                 id,
-                                                btnOkOnPress: () => {
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback(
-                                                          (_) {
-                                                    searchController.search(
-                                                        context,
-                                                        ageFrom,
-                                                        ageTo,
-                                                        heightFrom,
-                                                        heightTo,
-                                                        maritalStatus,
-                                                        religion,
-                                                        caste,
-                                                        country,
-                                                        state,
-                                                        city,
-                                                        education);
-                                                  })
-                                                },
-                                              ),
+                                                btnOkOnPress: () => {},
+                                              );
                                             },
                                             child: Row(
                                               children: [
@@ -489,7 +518,6 @@ class _SearchResultState extends State<SearchResult> {
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () async {
-                                      
                                               if (id.trim().isNotEmpty &&
                                                   id.trim() != null) {
                                                 await APIs.addChatUser(id)
@@ -498,9 +526,9 @@ class _SearchResultState extends State<SearchResult> {
                                                     Dialogs.showSnackbar(
                                                         context,
                                                         'User does not Exists!');
-                                                  }else {
-                                    Get.to(HomeScreen());
-                                  }
+                                                  } else {
+                                                    Get.to(HomeScreen());
+                                                  }
                                                 });
                                               }
                                             },
@@ -564,7 +592,17 @@ class _SearchResultState extends State<SearchResult> {
                                 ],
                               ));
                         }).toList(),
-                      ),
+                        if (searchController.isLoading
+                            .value) // Progress indicator at the bottom
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          )
+                      ]),
                     ),
                   ),
                 ),
@@ -572,7 +610,6 @@ class _SearchResultState extends State<SearchResult> {
             ),
             if (shortlistController.isLoading.value ||
                 profileDetailsController.isLoading.value ||
-                searchController.isLoading.value ||
                 sentInvitationController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
@@ -582,6 +619,77 @@ class _SearchResultState extends State<SearchResult> {
           ]);
         })
       ]),
+    );
+  }
+}
+
+// Replace with the correct import path
+
+class UserStatusWidget extends StatelessWidget {
+  final String userId;
+  final LastOnline lastOnlineService = LastOnline();
+
+  UserStatusWidget({required this.userId});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: lastOnlineService.getUserIsOnline(userId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // While the future is being resolved
+          return Text('Loading...');
+        } else if (snapshot.hasError) {
+          // If an error occurred
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasData) {
+          // If the future returned a value
+          bool isOnline = snapshot.data ?? false;
+
+          if (isOnline) {
+            return Row(
+              children: [
+                Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                            color: AppColors.green, shape: BoxShape.circle),
+                      ),
+                      SizedBox(width: 3,),
+                Text('Online', style: TextStyle(color: AppColors.green)),
+              ],
+            );
+          } else {
+            // If the user is not online, show the last active time
+            return FutureBuilder<String>(
+              future: lastOnlineService.getUserLastActive(userId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Text('Loading...');
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Row(
+                    children: [
+                      Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                            color: AppColors.grey, shape: BoxShape.circle),
+                      ),
+                      SizedBox(width: 3,),
+                      Text(
+                          'Last Online: ${MyDateUtil.getLastActiveTime(context: context, lastActive: "${snapshot.data}")}'),
+                    ],
+                  );
+                }
+              },
+            );
+          }
+        } else {
+          return Text('Unknown status');
+        }
+      },
     );
   }
 }

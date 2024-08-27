@@ -45,6 +45,7 @@ dependencies:
   restart_app: ^1.2.1
   carousel_slider: ^5.0.0
   dropdown_search: ^5.0.6
+  flutter_notification_channel: ^2.0.0
 
 dev_dependencies:
   flutter_test:

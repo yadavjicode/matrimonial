@@ -1,15 +1,9 @@
-import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/model/dashboard_model.dart';
-import 'package:devotee/pages/dashboard/inbox/sent/sent_accepted.dart';
-import 'package:devotee/pages/dashboard/inbox/sent/sent_declined.dart';
-import 'package:devotee/pages/dashboard/inbox/sent/sent_pending.dart';
 import 'package:devotee/pages/drawer_page/matches/all_matches/all_matches.dart';
 import 'package:devotee/pages/drawer_page/matches/daily_recommended/daily_recommended.dart';
 import 'package:devotee/pages/drawer_page/matches/desired_partners/desired_partners.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Matches extends StatefulWidget {
   const Matches({super.key});
@@ -64,11 +58,16 @@ class _MatchesState extends State<Matches> {
                         "  Desired Partners",
                         style: TextStyle(fontSize: 16),
                       ),
+                      
                     ],
                   ),
                   Expanded(
                     child: TabBarView(
-                      children: [AllMatches(), DailyRecommendeds(), DesiredPartner()],
+                      children: [
+                        AllMatches(),
+                        DailyRecommendeds(),
+                        DesiredPartner()
+                      ],
                     ),
                   ),
                 ],
@@ -80,4 +79,3 @@ class _MatchesState extends State<Matches> {
     );
   }
 }
-

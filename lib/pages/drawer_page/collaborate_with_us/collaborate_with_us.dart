@@ -157,9 +157,10 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                           ),
                                         );
                                       } else {
-                                        return buildDropdown2(
+                                        return buildDropdownWithSearch(
                                           'State',
                                           stateController.getStateList(),
+                                          radiusdrop: 6,
                                       //    stateController.selectedItem,
                                           (value) {
                                             setState(() {
@@ -198,9 +199,10 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                           ),
                                         );
                                       } else {
-                                        return buildDropdown2(
+                                        return buildDropdownWithSearch(
                                           'City',
                                           cityController.cityLists,
+                                           radiusdrop: 6,
                                           // cityControllerPermanent.selectedItem,
                                           (value) {
                                             setState(() {
