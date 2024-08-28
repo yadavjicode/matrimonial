@@ -1,28 +1,26 @@
-import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
-import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
-import 'package:devotee/controller/matches_controller.dart';
-import 'package:devotee/controller/sent_invitation_controller.dart';
-import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../../controller/profile_details_controller.dart';
+import 'package:devotee/controller/matches_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
+import 'package:devotee/controller/sent_invitation_controller.dart';
+import 'package:devotee/controller/shortlist_controller.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/screens/home_screen.dart';
 
-class AllMatches extends StatefulWidget {
-  const AllMatches({super.key});
+class SeeAll extends StatefulWidget {
+  const SeeAll({super.key});
 
   @override
-  State<AllMatches> createState() => _AllMatchesState();
+  State<SeeAll> createState() => _SeeAllState();
 }
 
-class _AllMatchesState extends State<AllMatches> {
-  String selectedText = "";
-  int selectedIndex = -1;
+class _SeeAllState extends State<SeeAll> {
   final MatchesController matchesController = Get.put(MatchesController());
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
@@ -30,67 +28,85 @@ class _AllMatchesState extends State<AllMatches> {
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  final Map<String, dynamic> arguments = Get.arguments;
   final ScrollController _scrollController = ScrollController();
   final DashboardController dashboardController =
       Get.put(DashboardController());
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      matchesController.reset(context, "matches");
-      matchesController.fetchMatches(context, "matches");
+      final String keys = arguments['keys'];
+      matchesController.reset(context, keys);
+      matchesController.fetchMatches(context, keys);
     });
 
     _scrollController.addListener(() {
+      final String keys = arguments['keys'];
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent &&
           !matchesController.isLoading.value &&
           matchesController.hasMore.value) {
-        matchesController.loadNextPage(context, "matches");
+        matchesController.loadNextPage(context, keys); // Load next page
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Stack(
-        children: [
-          AllMatchesContent(),
-          if (shortlistController.isLoading.value ||
-              sentInvitationController.isLoading.value ||
-              profileDetailsController.isLoading.value)
-            Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
+    final String appBarValue = arguments['appbar'];
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryColor,
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          appBarValue,
+          style: FontConstant.styleSemiBold(
+              fontSize: 18, color: AppColors.constColor),
+        ),
+      ),
+      body: Obx(() {
+        return Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              alignment: Alignment.topRight,
+              child: Image.asset("assets/images/bg3.png"),
             ),
-        ],
-      );
-    });
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: AllMatchesContent("keys"),
+            ),
+            if (shortlistController.isLoading.value ||
+                sentInvitationController.isLoading.value ||
+                profileDetailsController.isLoading.value)
+              Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              ),
+          ],
+        );
+      }),
+    );
   }
 
-  Widget AllMatchesContent() {
-    // final member = matchesController.member;
-    // if (member == null || member.searchData!.data == null) {
-    //   return Center(child: Text("No data available"));
-    // }
+  Widget AllMatchesContent(String keys) {
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: Axis.vertical,
       child: Column(children: [
         ...matchesController.matches.map((data) {
           String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID ?? "";
+          String id = data.matriID;
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
               : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
           return GestureDetector(
-            onTap: () {
-              // Get.toNamed('/profiledtls');
-            },
+            onTap: () {},
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
               decoration: BoxDecoration(
@@ -127,10 +143,17 @@ class _AllMatchesState extends State<AllMatches> {
                                     data.interestStatus =
                                         data.interestStatus == 0 ? 1 : 1;
                                   });
+
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
-                                    btnOkOnPress: () => {},
+                                    // btnOkOnPress: () => {
+                                    //   WidgetsBinding.instance
+                                    //       .addPostFrameCallback((_) {
+                                    //     matchesController.matches(
+                                    //         context, keys);
+                                    //   }),
+                                    // },
                                   );
                                 },
                                 child: Row(
@@ -185,7 +208,7 @@ class _AllMatchesState extends State<AllMatches> {
                                     color: AppColors.primaryColor),
                               ),
                               Text(
-                                "ID: ${id}",
+                                "ID: ${data.matriID}",
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               ),
@@ -252,10 +275,19 @@ class _AllMatchesState extends State<AllMatches> {
                               shortlistController.shortlist(
                                 context,
                                 id,
-                                btnOkOnPress: () => {
-                                  dashboardController.dashboard(context)
-                                },
+                                btnOkOnPress: () =>
+                                    {dashboardController.dashboard(context)},
                               );
+                              // // Handle result if needed
+                              // if (shortlistController.member!.message=="Shortlisted") {
+                              //   // Optionally show an error message or revert the UI update
+                              //   setState(() {
+                              //     data.shortlistStatus = data.shortlistStatus == 1 ? 0 : 1; // Revert if needed
+                              //   });
+                              // } else {
+                              //   // Optionally refresh data if needed
+                              // //  matchesController.fetchMatches(context, widget.keys);
+                              // }
                             },
                             child: Row(
                               children: [

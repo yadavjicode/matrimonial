@@ -1,3 +1,5 @@
+import 'package:devotee/chat/widgets/last_online.dart';
+import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -28,6 +30,8 @@ class _BasedMatchesState extends State<BasedMatches> {
       Get.put(ProfileDetailsController());
   final Map<String, dynamic> arguments = Get.arguments;
   final ScrollController _scrollController = ScrollController();
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   void initState() {
@@ -72,7 +76,7 @@ class _BasedMatchesState extends State<BasedMatches> {
               child: Image.asset("assets/images/bg3.png"),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+              padding: const EdgeInsets.only(left: 16, right: 16),
               child: AllMatchesContent("keys"),
             ),
             if (shortlistController.isLoading.value ||
@@ -213,30 +217,7 @@ class _BasedMatchesState extends State<BasedMatches> {
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        right: 5, bottom: 5, top: 5),
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      height: 10,
-                                      width: 10,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.grey,
-                                          shape: BoxShape.circle),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Last Online: 6 Jul 2024, 11:13 am",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 13, color: AppColors.grey),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              UserStatusWidget(userId: id),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 0, bottom: 5),
@@ -299,7 +280,9 @@ class _BasedMatchesState extends State<BasedMatches> {
                               shortlistController.shortlist(
                                 context,
                                 id,
-                                btnOkOnPress: () => {},
+                                btnOkOnPress: () => {
+                                  dashboardController.dashboard(context)
+                                },
                               );
                               // // Handle result if needed
                               // if (shortlistController.member!.message=="Shortlisted") {

@@ -155,6 +155,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
     }
     return imgList;
   }
+
   final EditProfileController user = Get.put(EditProfileController());
   bool compare(dynamic a, dynamic b) {
     if (a == null || b == null) {
@@ -177,6 +178,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
       return 0;
     }
   }
+
   int count() {
     int age = profileDetailsController.member!.data!.pEFromAge != null &&
             profileDetailsController.member!.data!.pEToAge != null &&
@@ -244,7 +246,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                     autoPlay: false,
                     enlargeCenterPage: true,
                     padEnds: false,
-                    aspectRatio: 20 / 20,
+                    aspectRatio: 20 / 22,
                     viewportFraction: 1.0,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -290,27 +292,65 @@ class ProfileHeaderState extends State<ProfileHeader> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""} (ID:${profileDetailsController.member?.data?.matriID ?? ""})',
-                        style: FontConstant.styleSemiBold(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            profileDetailsController.member?.data?.occupation ??
-                                "",
-                            style: FontConstant.styleSemiBold(
-                              fontSize: 12,
-                              color: Colors.white,
+                          profileDetailsController
+                                      .member!.data!.interestStatus ==
+                                  1
+                              ? Container(
+                                // margin: EdgeInsets.only(top: 5),
+                                  alignment: Alignment.center,
+                                  height: 22,
+                                  width: 22,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.green),
+                                  child: SvgPicture.asset(
+                                      "assets/images/icons/correct.svg"),
+                                )
+                              : Container(
+                                //  margin: EdgeInsets.only(top: 5),
+                                  alignment: Alignment.center,
+                                  height: 22,
+                                  width: 22,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white),
+                                  child: SvgPicture.asset(
+                                      "assets/images/icons/pinkcorrect.svg"),
+                                ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""}',
+                              style: FontConstant.styleSemiBold(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
                       ),
+                      SizedBox(height: 5,),
+                       Text(
+                        '(ID:${profileDetailsController.member?.data?.matriID ?? ""})',
+                        style: FontConstant.styleSemiBold(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
                       Text(
-                        '${profileDetailsController.member?.data?.age == null ? "" : "${profileDetailsController.member?.data?.age} Years | "}${profileDetailsController.member?.data?.height ?? ""}',
+                        '${profileDetailsController.member?.data?.occupation == null ? "" : "${profileDetailsController.member?.data?.occupation}"}${profileDetailsController.member?.data?.education==null||profileDetailsController.member?.data?.occupation==null?"":" - "}${profileDetailsController.member?.data?.education == null ? "" : "${profileDetailsController.member?.data?.education}"}',
+                        style: FontConstant.styleSemiBold(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        '${profileDetailsController.member?.data?.age == null ? "" : "${profileDetailsController.member?.data?.age} Years"}${profileDetailsController.member?.data?.age==null||profileDetailsController.member?.data?.height==null?"":" | "}${profileDetailsController.member?.data?.height == null ? "" : "${profileDetailsController.member?.data?.height}"}',
                         style: FontConstant.styleSemiBold(
                           fontSize: 12,
                           color: Colors.white,
@@ -361,7 +401,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "${((count()*100)/7).toInt()} %",
+                                "${((count() * 100) / 7).toInt()} %",
                                 style: FontConstant.styleRegular(
                                     fontSize: 10, color: AppColors.constColor),
                               ),
@@ -404,11 +444,18 @@ class ProfileHeaderState extends State<ProfileHeader> {
                               shape: BoxShape.circle,
                               border: Border.all(color: AppColors.constColor)),
                           child: Center(
-                            child: SvgPicture.asset(
-                              "assets/images/icons/like.svg",
-                              fit: BoxFit.contain,
-                              width: 25,
-                              height: 25,
+                            child: Icon(
+                              profileDetailsController
+                                          .member!.data!.shortlistStatus ==
+                                      1
+                                  ? (Icons.favorite)
+                                  : Icons.favorite_border_rounded,
+                              color: profileDetailsController
+                                          .member!.data!.shortlistStatus ==
+                                      1
+                                  ? Colors.red
+                                  : AppColors.constColor,
+                              size: 28,
                             ),
                           ),
                         ),
@@ -424,8 +471,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
 }
 
 class BasicDetails extends StatelessWidget {
-  const BasicDetails({super.key});
-
+   BasicDetails({super.key});
+final ProfileDetailsController profileDetailsController=Get.put(ProfileDetailsController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -435,11 +482,17 @@ class BasicDetails extends StatelessWidget {
           color: AppColors.constColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Profile created by myself',
-                style: FontConstant.styleSemiBold(
-                    fontSize: 12, color: Colors.black),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Profile created by myself',
+                    style: FontConstant.styleSemiBold(
+                        fontSize: 12, color: Colors.black),
+                  ),
+                ),
               ),
               const SizedBox(width: 2),
               Text(
@@ -448,10 +501,12 @@ class BasicDetails extends StatelessWidget {
                     fontSize: 12, color: Colors.black),
               ),
               const SizedBox(width: 2),
-              Text(
-                'Last Login: 3 minutes ago',
-                style: FontConstant.styleSemiBold(
-                    fontSize: 12, color: Colors.black),
+              Expanded(
+                child: Text(
+                  'Last Login: ${profileDetailsController.member!.data!.lastlogin??""}',
+                  style: FontConstant.styleSemiBold(
+                      fontSize: 12, color: Colors.black),
+                ),
               ),
             ],
           ),
@@ -523,7 +578,7 @@ class BasicDetailsGrid extends StatelessWidget {
           path: "assets/images/icons/location.svg",
           title: 'Lived In',
           value:
-              "${profileDetailsController.member?.data?.city ?? ""}, ${profileDetailsController.member?.data?.state ?? ""} " ??
+              "${profileDetailsController.member?.data?.city ?? ""}${profileDetailsController.member?.data?.city==null||profileDetailsController.member?.data?.state==null?"":", "}${profileDetailsController.member?.data?.state ?? ""} " ??
                   "",
         ),
         DetailRow(
@@ -553,8 +608,12 @@ class DetailRow extends StatelessWidget {
     return SizedBox(
       width: (MediaQuery.of(context).size.width / 2) - 24,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgPicture.asset(path, color: Colors.pink),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: SvgPicture.asset(path, color: Colors.pink),
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -616,7 +675,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
           indicatorColor: AppColors.primaryColor,
           labelColor: AppColors.primaryColor,
           tabs: const [
-            Tab(text: 'About Janvi'),
+            Tab(text: 'About'),
             Tab(text: 'Lifestyle & Appearances'),
             Tab(text: 'Background'),
             Tab(text: 'Contact Details'),
@@ -627,9 +686,9 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
           height: 300,
           child: TabBarView(
             controller: tabController,
-            children:  [
+            children: [
               AboutDetails(),
-               LifeStyle(),
+              LifeStyle(),
               BackgroundDetails(),
               Contact(),
               Professional()
@@ -639,8 +698,6 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       ],
     );
   }
-
-  
 }
 
 class Compatiblity extends StatefulWidget {
@@ -920,18 +977,18 @@ class InfoRow extends StatelessWidget {
   final bool backColor;
   final bool isValid;
 
-  const InfoRow(this.title, this.value,this.backColor, this.isValid, {super.key});
+  const InfoRow(this.title, this.value, this.backColor, this.isValid,
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-       
-       decoration: BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        color:backColor==true? AppColors.constColor:Colors.grey.shade100,
-       ),
+        color: backColor == true ? AppColors.constColor : Colors.grey.shade100,
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
         child: Row(
           children: [
             Expanded(

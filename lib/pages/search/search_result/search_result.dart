@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:devotee/chat/Test/last_online.dart';
+import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/helper/my_date_util.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
@@ -33,6 +34,8 @@ class _SearchResultState extends State<SearchResult> {
   bool height = true;
   final Map<String, dynamic> arguments = Get.arguments;
   final ScrollController _scrollController = ScrollController();
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   void initState() {
@@ -85,13 +88,6 @@ class _SearchResultState extends State<SearchResult> {
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
     final String heightTo = arguments['heightTo'];
-    final String maritalStatus = arguments['maritalStatus'];
-    final String religion = arguments['religion'];
-    final String caste = arguments['caste'];
-    final String country = arguments['country'];
-    final String state = arguments['state'];
-    final String city = arguments['city'];
-    final String education = arguments['education'];
 
     int selectedIndex = -1;
     return Scaffold(
@@ -127,11 +123,8 @@ class _SearchResultState extends State<SearchResult> {
             Column(
               children: [
                 Container(
-                  child: UserStatusWidget(userId: "DM36287"),
-                ),
-                Container(
                   padding:
-                      EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+                      EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 5),
                   child: Row(
                     children: [
                       if (age && ageFrom != "" || age && ageTo != "")
@@ -232,7 +225,6 @@ class _SearchResultState extends State<SearchResult> {
                 ),
                 Expanded(
                   child: Container(
-                    // height: 291,
                     child: SingleChildScrollView(
                       controller: _scrollController,
                       scrollDirection: Axis.vertical,
@@ -275,8 +267,7 @@ class _SearchResultState extends State<SearchResult> {
                                             left: 8, bottom: 8, top: 8),
                                         child: Stack(children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
+                                            borderRadius: BorderRadius.all(Radius.circular(10)),
                                             child: Image.network(
                                               "$image",
                                               height: 196,
@@ -300,7 +291,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 sentInvitationController
                                                     .sentInvitation(
                                                   context,
-                                                  data.matriID!,
+                                                  id,
                                                   // btnOkOnPress: () => {
 
                                                   // },
@@ -379,37 +370,7 @@ class _SearchResultState extends State<SearchResult> {
                                                     fontSize: 13,
                                                     color: AppColors.black),
                                               ),
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: 5,
-                                                        bottom: 5,
-                                                        top: 5),
-                                                    alignment: Alignment.center,
-                                                    child: Container(
-                                                      height: 10,
-                                                      width: 10,
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors.grey,
-                                                          shape:
-                                                              BoxShape.circle),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Last Online: 6 Jul 2024, 11:13 am",
-                                                      style: FontConstant
-                                                          .styleMedium(
-                                                              fontSize: 13,
-                                                              color: AppColors
-                                                                  .grey),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                              UserStatusWidget(userId: id),
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 8, bottom: 8),
@@ -482,7 +443,9 @@ class _SearchResultState extends State<SearchResult> {
                                               shortlistController.shortlist(
                                                 context,
                                                 id,
-                                                btnOkOnPress: () => {},
+                                                btnOkOnPress: () => {
+                                                  dashboardController.dashboard(context)
+                                                },
                                               );
                                             },
                                             child: Row(
@@ -625,71 +588,4 @@ class _SearchResultState extends State<SearchResult> {
 
 // Replace with the correct import path
 
-class UserStatusWidget extends StatelessWidget {
-  final String userId;
-  final LastOnline lastOnlineService = LastOnline();
 
-  UserStatusWidget({required this.userId});
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: lastOnlineService.getUserIsOnline(userId),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // While the future is being resolved
-          return Text('Loading...');
-        } else if (snapshot.hasError) {
-          // If an error occurred
-          return Text('Error: ${snapshot.error}');
-        } else if (snapshot.hasData) {
-          // If the future returned a value
-          bool isOnline = snapshot.data ?? false;
-
-          if (isOnline) {
-            return Row(
-              children: [
-                Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                            color: AppColors.green, shape: BoxShape.circle),
-                      ),
-                      SizedBox(width: 3,),
-                Text('Online', style: TextStyle(color: AppColors.green)),
-              ],
-            );
-          } else {
-            // If the user is not online, show the last active time
-            return FutureBuilder<String>(
-              future: lastOnlineService.getUserLastActive(userId),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('Loading...');
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Row(
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                            color: AppColors.grey, shape: BoxShape.circle),
-                      ),
-                      SizedBox(width: 3,),
-                      Text(
-                          'Last Online: ${MyDateUtil.getLastActiveTime(context: context, lastActive: "${snapshot.data}")}'),
-                    ],
-                  );
-                }
-              },
-            );
-          }
-        } else {
-          return Text('Unknown status');
-        }
-      },
-    );
-  }
-}

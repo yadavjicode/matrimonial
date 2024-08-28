@@ -1,3 +1,4 @@
+import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
@@ -9,6 +10,7 @@ import 'package:restart_app/restart_app.dart';
 class LogoutConfirmationDialog extends StatelessWidget {
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+    await APIs.updateActiveStatus(false);
     await prefs.setString('token', "");
 
     Get.delete<EditProfileController>();

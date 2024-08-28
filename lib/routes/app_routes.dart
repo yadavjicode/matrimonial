@@ -1,4 +1,5 @@
 import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';
@@ -45,7 +46,6 @@ import 'package:devotee/pages/dashboard/profile/edit_profile/edit_profile.dart';
 import 'package:devotee/pages/search/search_result/search_result.dart';
 import 'package:devotee/pages/extra/show_profile/show_profile.dart';
 import 'package:devotee/pages/ragistration/spiritual_counsellor_details/spiritual_counsellor_details.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/pages/ragistration/education_page/education_page.dart';
@@ -121,6 +121,7 @@ class AppRoutes {
    static const String editEducationDetails = '/editEducationDetails';
    static const String editProfessionDetails = '/editProfessionDetails';
 
+   static const String seeAll = '/seeAll';
 
   static final List<GetPage> routes = [
     GetPage(
@@ -460,6 +461,13 @@ class AppRoutes {
     GetPage(
       name: basedMatches,
       page: () => const BasedMatches(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+
+     GetPage(
+      name: seeAll,
+      page: () => const SeeAll(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

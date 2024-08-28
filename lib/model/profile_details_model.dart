@@ -323,6 +323,8 @@ class Data {
   dynamic instagramId;
   dynamic employmentSummary;
   List<ProfileImages>? profileImages;
+  dynamic shortlistStatus;
+  dynamic interestStatus;
 
   Data(
       {this.id,
@@ -627,7 +629,9 @@ class Data {
       this.spiritualName,
       this.instagramId,
       this.employmentSummary,
-      this.profileImages});
+      this.profileImages,
+      this.shortlistStatus,
+      this.interestStatus});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -934,6 +938,8 @@ class Data {
     step12 = json['step_12'];
     spiritualName = json['spiritual_name'];
     instagramId = json['instagram_id'];
+     shortlistStatus = json['shortlist_status'];
+    interestStatus = json['interest_status'];
     employmentSummary = json['employment_summary'];
     if (json['profile_images'] != null) {
       profileImages = <ProfileImages>[];
@@ -1251,6 +1257,8 @@ class Data {
     data['spiritual_name'] = this.spiritualName;
     data['instagram_id'] = this.instagramId;
     data['employment_summary'] = this.employmentSummary;
+    data['shortlist_status'] = this.shortlistStatus;
+    data['interest_status'] = this.interestStatus;
     if (this.profileImages != null) {
       data['profile_images'] =
           this.profileImages!.map((v) => v.toJson()).toList();

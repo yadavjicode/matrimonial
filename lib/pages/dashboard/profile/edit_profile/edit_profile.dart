@@ -225,7 +225,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       Column(
                         children: [
                           _buildText("Phone Number",
-                              _editProfileController.member!.member!.mobileverify?? ""),
+                              _editProfileController.member!.member!.mobile?? ""),
                           _buildText("Email Address",
                               _editProfileController.member!.member!.confirmEmail?? ""),
                           _buildText("Instagram ID",

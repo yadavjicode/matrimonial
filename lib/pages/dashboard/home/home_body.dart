@@ -67,12 +67,12 @@ class _HomeBodyState extends State<HomeBody> {
       children: [
         newMathches(dashboardController.member!.responseData!.matches!),
         discoverContent(discover),
-        ridConatent("Recently Joined", "See All",
+        ridConatent("Recently Joined", "See All","recently_joined","Recently Joined",
             dashboardController.member!.responseData!.recentlyJoined!),
-        ridConatent("Interested In You", "",
+        ridConatent("Interested In You", "See All","intrested_in_you","Interested In You",
             dashboardController.member!.responseData!.intrestedInYou!),
         profileStatus(),
-        ridConatent("Daily Recommendation", "",
+        ridConatent("Daily Recommendation", "See All","daily_recommendation","Daily Recommendation",
             dashboardController.member!.responseData!.dailyRecommendation!),
         SizedBox(
           height: 25,
@@ -96,7 +96,9 @@ class _HomeBodyState extends State<HomeBody> {
               ),
               Spacer(),
               GestureDetector(
-                onTap: () => {Get.toNamed("/matches")},
+                onTap: () => {
+                   Get.toNamed("/seeAll",arguments: {"keys":"matches","appbar":"New Matches"})
+                },
                 child: Text(
                   "See All",
                   style: FontConstant.styleSemiBold(
@@ -225,7 +227,7 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Widget ridConatent(
-      String leftTittle, String rightTitle, List<DailyRecommendation> list) {
+      String leftTittle, String rightTitle,String key,String appBarTittle, List<DailyRecommendation> list) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
@@ -240,10 +242,15 @@ class _HomeBodyState extends State<HomeBody> {
                     fontSize: 17, color: AppColors.black),
               ),
               Spacer(),
-              Text(
-                rightTitle,
-                style: FontConstant.styleSemiBold(
-                    fontSize: 14, color: AppColors.primaryColor),
+              GestureDetector(
+                onTap: () => {
+                   Get.toNamed("/seeAll",arguments: {"keys":key,"appbar":appBarTittle})
+                },
+                child: Text(
+                  rightTitle,
+                  style: FontConstant.styleSemiBold(
+                      fontSize: 14, color: AppColors.primaryColor),
+                ),
               )
             ],
           ),

@@ -1,8 +1,10 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
@@ -28,6 +30,8 @@ class _DesiredPartnerState extends State<DesiredPartner> {
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
   
   final ScrollController _scrollController = ScrollController();
 
@@ -69,10 +73,6 @@ class _DesiredPartnerState extends State<DesiredPartner> {
   }
 
   Widget AllMatchesContent() {
-    // final member = matchesController.member;
-    // if (member == null || member.searchData!.data == null) {
-    //   return Center(child: Text("No data available"));
-    // }
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: Axis.vertical,
@@ -189,30 +189,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.black),
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                        right: 5, bottom: 5, top: 5),
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      height: 10,
-                                      width: 10,
-                                      decoration: BoxDecoration(
-                                          color: AppColors.grey,
-                                          shape: BoxShape.circle),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Last Online: 6 Jul 2024, 11:13 am",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 13, color: AppColors.grey),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              UserStatusWidget(userId: id),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 0, bottom: 5),
@@ -276,7 +253,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 context,
                                 id,
                                 btnOkOnPress: () => {
-                                  
+                                  dashboardController.dashboard(context)
                                 },
                               );
                             },

@@ -197,26 +197,28 @@ class _HomeState extends State<Home> {
                     ]),
                     if (dashboardController.isLoading.value == false &&
                         editProfileController.isLoading.value == false)
-                      Expanded(
-                        child: RefreshIndicator(
-                          color: AppColors.primaryColor,
-                          onRefresh: () async {},
-                          child: Container(child: Obx(() {
-                            return Stack(children: [
-                              SingleChildScrollView(
-                                child: Stack(children: [HomeBody()]),
-                              ),
-                              if (shortlistController.isLoading.value ||
-                                  sentInvitationController.isLoading.value)
-                                Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.primaryColor,
-                                  ),
-                                )
-                            ]);
-                          })),
-                        ),
+                    Expanded(
+                      child: RefreshIndicator(
+                        color: AppColors.primaryColor,
+                        onRefresh: () async {
+                          dashboardController.dashboard(context);
+                        },
+                        child: Container(child: Obx(() {
+                          return Stack(children: [
+                            SingleChildScrollView(
+                              child: Stack(children: [HomeBody()]),
+                            ),
+                            if (shortlistController.isLoading.value ||
+                                sentInvitationController.isLoading.value)
+                              Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primaryColor,
+                                ),
+                              )
+                          ]);
+                        })),
                       ),
+                    ),
                     if (dashboardController.isLoading.value ||
                         editProfileController.isLoading.value)
                       Expanded(
