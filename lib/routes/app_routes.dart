@@ -212,7 +212,7 @@ class AppRoutes {
       page: () => const SpiritualDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
-    ),
+    ),   
     GetPage(
       name: horoscope,
       page: () => const HoroscopeDetails(),

@@ -3,23 +3,62 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
+import 'package:devotee/controller/search_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
+import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/pages/dashboard/profile/profile_details/about.dart';
+import 'package:devotee/pages/search/search_result/search_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ProfileDetailsScreen extends StatelessWidget {
+class ProfileDetailsScreen extends StatefulWidget {
   ProfileDetailsScreen({super.key});
-  SentInvitationController sentInvitationController =
+
+  @override
+  State<ProfileDetailsScreen> createState() => _ProfileDetailsScreenState();
+}
+
+class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
+  final SentInvitationController sentInvitationController =
       Get.put(SentInvitationController());
-  ProfileDetailsController profileDetailsController =
+
+  final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+
+  final ShortlistController shortlistController =
+      Get.put(ShortlistController());
+
+  final Map<String, dynamic> arguments = Get.arguments;
+
+  final SearchResult searchResult = Get.put(SearchResult());
+
+  final SearchsController searchController = Get.put(SearchsController());
+
+  final MatchesController matchesController = Get.put(MatchesController());
+
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
+    String keys = arguments['keys'];
+    String ageFrom = arguments['ageFrom'];
+    String ageTo = arguments['ageTo'];
+    String heightFrom = arguments['heightFrom'];
+    String heightTo = arguments['heightTo'];
+    String maritalStatus = arguments['maritalStatus'];
+    String religion = arguments['religion'];
+    String caste = arguments['caste'];
+    String country = arguments['country'];
+    String state = arguments['state'];
+    String city = arguments['city'];
+    String education = arguments['education'];
+
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -39,7 +78,22 @@ class ProfileDetailsScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        ProfileHeader(),
+                        ProfileHeader(
+                          value: keys,
+                          search: [
+                            ageFrom ?? "",
+                            ageTo ?? "",
+                            heightFrom ?? "",
+                            heightTo ?? "",
+                            maritalStatus ?? "",
+                            religion ?? "",
+                            caste ?? "",
+                            country ?? "",
+                            state ?? "",
+                            city ?? "",
+                            education ?? ""
+                          ],
+                        ),
                         BasicDetails(),
                         SizedBox(
                           height: 10,
@@ -57,7 +111,43 @@ class ProfileDetailsScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // setState(() {
+                          //   profileDetailsController.member!.data!
+                          //       .interestStatus = profileDetailsController
+                          //               .member!.data!.interestStatus ==
+                          //           0
+                          //       ? 1
+                          //       : 1;
+                          // });
+                          dashboardController.dashboard(context);
+                          print("value=====${keys}");
+                          if (keys == "near_by_list" ||
+                              keys == "education_list" ||
+                              keys == "profession_list" ||
+                              keys == "recently_joined" ||
+                              keys == "intrested_in_you" ||
+                              keys == "daily_recommendation" ||
+                              keys == "matches") {
+                            matchesController.reset(context, keys);
+                          }
+
+                          if (keys == "search") {
+                            searchController.reset(
+                                context,
+                                ageFrom,
+                                ageTo,
+                                heightFrom,
+                                heightTo,
+                                maritalStatus,
+                                religion,
+                                caste,
+                                country,
+                                state,
+                                city,
+                                education);
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: AppColors.primaryColor,
@@ -103,7 +193,8 @@ class ProfileDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            if (sentInvitationController.isLoading.value)
+            if (sentInvitationController.isLoading.value ||
+                shortlistController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -115,7 +206,10 @@ class ProfileDetailsScreen extends StatelessWidget {
 }
 
 class ProfileHeader extends StatefulWidget {
-  const ProfileHeader({super.key});
+  final String value;
+  final List<dynamic> search;
+  ProfileHeader({Key? key, required this.value, required this.search})
+      : super(key: key);
 
   @override
   ProfileHeaderState createState() => ProfileHeaderState();
@@ -123,7 +217,12 @@ class ProfileHeader extends StatefulWidget {
 
 class ProfileHeaderState extends State<ProfileHeader> {
   bool isFavorite = false;
-
+  final ShortlistController shortlistController =
+      Get.put(ShortlistController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
+  final MatchesController matchesController = Get.put(MatchesController());
+  final SearchsController searchController = Get.put(SearchsController());
   void toggleFavorite() {
     setState(() {
       isFavorite = !isFavorite;
@@ -288,18 +387,51 @@ class ProfileHeaderState extends State<ProfileHeader> {
                 Positioned(
                   bottom: 5,
                   left: 18,
-                  right: 90,
+                  right: 60,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                        alignment: Alignment.center,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: AppColors.constColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/Crown.png",
+                              height: 15,
+                              width: 15,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: Text(
+                                "Premium",
+                                style: FontConstant.styleMedium(
+                                    fontSize: 12, color: Color(0xFFF69506)),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           profileDetailsController
                                       .member!.data!.interestStatus ==
                                   1
                               ? Container(
-                                // margin: EdgeInsets.only(top: 5),
+                                  // margin: EdgeInsets.only(top: 5),
                                   alignment: Alignment.center,
                                   height: 22,
                                   width: 22,
@@ -310,7 +442,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                       "assets/images/icons/correct.svg"),
                                 )
                               : Container(
-                                //  margin: EdgeInsets.only(top: 5),
+                                  //  margin: EdgeInsets.only(top: 5),
                                   alignment: Alignment.center,
                                   height: 22,
                                   width: 22,
@@ -325,7 +457,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           ),
                           Expanded(
                             child: Text(
-                              '${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""}',
+                              '${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""}  (ID:${profileDetailsController.member?.data?.matriID ?? ""})',
+                              // overflow: TextOverflow.ellipsis,
                               style: FontConstant.styleSemiBold(
                                 fontSize: 18,
                                 color: Colors.white,
@@ -334,23 +467,18 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5,),
-                       Text(
-                        '(ID:${profileDetailsController.member?.data?.matriID ?? ""})',
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${profileDetailsController.member?.data?.occupation == null ? "" : "${profileDetailsController.member?.data?.occupation}"}${profileDetailsController.member?.data?.education == null || profileDetailsController.member?.data?.occupation == null ? "" : " - "}${profileDetailsController.member?.data?.education == null ? "" : "${profileDetailsController.member?.data?.education}"}',
                         style: FontConstant.styleSemiBold(
                           fontSize: 12,
                           color: Colors.white,
                         ),
                       ),
                       Text(
-                        '${profileDetailsController.member?.data?.occupation == null ? "" : "${profileDetailsController.member?.data?.occupation}"}${profileDetailsController.member?.data?.education==null||profileDetailsController.member?.data?.occupation==null?"":" - "}${profileDetailsController.member?.data?.education == null ? "" : "${profileDetailsController.member?.data?.education}"}',
-                        style: FontConstant.styleSemiBold(
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        '${profileDetailsController.member?.data?.age == null ? "" : "${profileDetailsController.member?.data?.age} Years"}${profileDetailsController.member?.data?.age==null||profileDetailsController.member?.data?.height==null?"":" | "}${profileDetailsController.member?.data?.height == null ? "" : "${profileDetailsController.member?.data?.height}"}',
+                        '${profileDetailsController.member?.data?.age == null ? "" : "${profileDetailsController.member?.data?.age} Years"}${profileDetailsController.member?.data?.age == null || profileDetailsController.member?.data?.height == null ? "" : " | "}${profileDetailsController.member?.data?.height == null ? "" : "${profileDetailsController.member?.data?.height}"}',
                         style: FontConstant.styleSemiBold(
                           fontSize: 12,
                           color: Colors.white,
@@ -437,25 +565,73 @@ class ProfileHeaderState extends State<ProfileHeader> {
                         SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.constColor)),
-                          child: Center(
-                            child: Icon(
-                              profileDetailsController
+                        GestureDetector(
+                          onTap: () async {
+                            setState(() {
+                              profileDetailsController.member!.data!
+                                  .shortlistStatus = profileDetailsController
                                           .member!.data!.shortlistStatus ==
                                       1
-                                  ? (Icons.favorite)
-                                  : Icons.favorite_border_rounded,
-                              color: profileDetailsController
-                                          .member!.data!.shortlistStatus ==
-                                      1
-                                  ? Colors.red
-                                  : AppColors.constColor,
-                              size: 28,
+                                  ? 0
+                                  : 1;
+                            });
+                            shortlistController.shortlist(
+                              context,
+                              profileDetailsController.member!.data!.matriID,
+                              btnOkOnPress: () => {
+                                dashboardController.dashboard(context),
+                                print("value=====${widget.value}"),
+                                if (widget.value == "near_by_list" ||
+                                    widget.value == "education_list" ||
+                                    widget.value == "profession_list" ||
+                                    widget.value == "recently_joined" ||
+                                    widget.value == "intrested_in_you" ||
+                                    widget.value == "daily_recommendation" ||
+                                    widget.value == "matches")
+                                  {
+                                    matchesController.reset(
+                                        context, widget.value),
+                                  },
+                                if (widget.value == "search")
+                                  {
+                                    searchController.reset(
+                                        context,
+                                        widget.search[0] ?? "",
+                                        widget.search[1] ?? "",
+                                        widget.search[2] ?? "",
+                                        widget.search[3] ?? "",
+                                        widget.search[4] ?? "",
+                                        widget.search[5] ?? "",
+                                        widget.search[6] ?? "",
+                                        widget.search[7] ?? "",
+                                        widget.search[8] ?? "",
+                                        widget.search[9] ?? "",
+                                        widget.search[10] ?? "")
+                                  }
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border:
+                                    Border.all(color: AppColors.constColor)),
+                            child: Center(
+                              child: Icon(
+                                profileDetailsController
+                                            .member!.data!.shortlistStatus ==
+                                        1
+                                    ? (Icons.favorite)
+                                    : Icons.favorite_border_rounded,
+                                color: profileDetailsController
+                                            .member!.data!.shortlistStatus ==
+                                        1
+                                    ? Colors.red
+                                    : AppColors.constColor,
+                                size: 28,
+                              ),
                             ),
                           ),
                         ),
@@ -471,8 +647,9 @@ class ProfileHeaderState extends State<ProfileHeader> {
 }
 
 class BasicDetails extends StatelessWidget {
-   BasicDetails({super.key});
-final ProfileDetailsController profileDetailsController=Get.put(ProfileDetailsController());
+  BasicDetails({super.key});
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -503,7 +680,7 @@ final ProfileDetailsController profileDetailsController=Get.put(ProfileDetailsCo
               const SizedBox(width: 2),
               Expanded(
                 child: Text(
-                  'Last Login: ${profileDetailsController.member!.data!.lastlogin??""}',
+                  'Last Login: ${profileDetailsController.member!.data!.lastlogin ?? ""}',
                   style: FontConstant.styleSemiBold(
                       fontSize: 12, color: Colors.black),
                 ),
@@ -532,6 +709,8 @@ final ProfileDetailsController profileDetailsController=Get.put(ProfileDetailsCo
     );
   }
 }
+
+//start Basic deatils ==================================================================================================================
 
 class BasicDetailsGrid extends StatelessWidget {
   BasicDetailsGrid({super.key});
@@ -578,7 +757,7 @@ class BasicDetailsGrid extends StatelessWidget {
           path: "assets/images/icons/location.svg",
           title: 'Lived In',
           value:
-              "${profileDetailsController.member?.data?.city ?? ""}${profileDetailsController.member?.data?.city==null||profileDetailsController.member?.data?.state==null?"":", "}${profileDetailsController.member?.data?.state ?? ""} " ??
+              "${profileDetailsController.member?.data?.city ?? ""}${profileDetailsController.member?.data?.city == null || profileDetailsController.member?.data?.state == null ? "" : ", "}${profileDetailsController.member?.data?.state ?? ""} " ??
                   "",
         ),
         DetailRow(
@@ -590,6 +769,8 @@ class BasicDetailsGrid extends StatelessWidget {
     );
   }
 }
+
+//End Basic deatils ==================================================================================================================
 
 class DetailRow extends StatelessWidget {
   final String path;

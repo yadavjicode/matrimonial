@@ -3,6 +3,7 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/logout.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/pages/dashboard/home/home_body.dart';
@@ -29,6 +30,8 @@ class _HomeState extends State<Home> {
       Get.put(ShortlistController());
   final SentInvitationController sentInvitationController =
       Get.put(SentInvitationController());
+  final  ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
 
   @override
   void initState() {
@@ -209,7 +212,7 @@ class _HomeState extends State<Home> {
                               child: Stack(children: [HomeBody()]),
                             ),
                             if (shortlistController.isLoading.value ||
-                                sentInvitationController.isLoading.value)
+                                sentInvitationController.isLoading.value||profileDetailsController.isLoading.value)
                               Center(
                                 child: CircularProgressIndicator(
                                   color: AppColors.primaryColor,

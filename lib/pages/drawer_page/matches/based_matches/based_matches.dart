@@ -52,9 +52,10 @@ class _BasedMatchesState extends State<BasedMatches> {
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
+    final String keys = arguments['keys'];
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -77,7 +78,7 @@ class _BasedMatchesState extends State<BasedMatches> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: AllMatchesContent("keys"),
+              child: AllMatchesContent(keys),
             ),
             if (shortlistController.isLoading.value ||
                 sentInvitationController.isLoading.value ||
@@ -143,12 +144,12 @@ class _BasedMatchesState extends State<BasedMatches> {
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(top: 170),
                               child: GestureDetector(
-                                onTap: () async{
+                                onTap: () async {
                                   setState(() {
-                                data.interestStatus =
-                                    data.interestStatus == 0?1:1;
-                              });
-                              
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
+
                                   sentInvitationController.sentInvitation(
                                     context,
                                     data.matriID!,
@@ -212,10 +213,49 @@ class _BasedMatchesState extends State<BasedMatches> {
                                     fontSize: 15,
                                     color: AppColors.primaryColor),
                               ),
-                              Text(
-                                "ID: ${data.matriID}",
-                                style: FontConstant.styleMedium(
-                                    fontSize: 13, color: AppColors.black),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "ID: ${data.matriID}",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 13, color: AppColors.black),
+                                    ),
+                                  ),
+                                  if (data.accountType == 1)
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      width: 1,
+                                      height: 12,
+                                      color: AppColors.grey,
+                                    ),
+                                  if (data.accountType == 1)
+                                    Expanded(
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/Crown.png",
+                                              height: 15,
+                                              width: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Premium",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: Color(0xFFF69506)),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                ],
                               ),
                               UserStatusWidget(userId: id),
                               Padding(
@@ -280,9 +320,8 @@ class _BasedMatchesState extends State<BasedMatches> {
                               shortlistController.shortlist(
                                 context,
                                 id,
-                                btnOkOnPress: () => {
-                                  dashboardController.dashboard(context)
-                                },
+                                btnOkOnPress: () =>
+                                    {dashboardController.dashboard(context)},
                               );
                               // // Handle result if needed
                               // if (shortlistController.member!.message=="Shortlisted") {
@@ -359,7 +398,19 @@ class _BasedMatchesState extends State<BasedMatches> {
                           child: GestureDetector(
                             onTap: () => {
                               profileDetailsController.profileDetails(
-                                  context, id)
+                                  context, id, keys, [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]),
                             },
                             child: Row(
                               children: [

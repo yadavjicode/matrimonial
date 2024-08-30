@@ -76,6 +76,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       body: PageView(
         controller: controller,
+        physics: NeverScrollableScrollPhysics(),
         children: const [
           Inbox(),
           ProfileEdit(),

@@ -67,12 +67,24 @@ class _HomeBodyState extends State<HomeBody> {
       children: [
         newMathches(dashboardController.member!.responseData!.matches!),
         discoverContent(discover),
-        ridConatent("Recently Joined", "See All","recently_joined","Recently Joined",
+        ridConatent(
+            "Recently Joined",
+            "See All",
+            "recently_joined",
+            "Recently Joined",
             dashboardController.member!.responseData!.recentlyJoined!),
-        ridConatent("Interested In You", "See All","intrested_in_you","Interested In You",
+        ridConatent(
+            "Interested In You",
+            "See All",
+            "intrested_in_you",
+            "Interested In You",
             dashboardController.member!.responseData!.intrestedInYou!),
         profileStatus(),
-        ridConatent("Daily Recommendation", "See All","daily_recommendation","Daily Recommendation",
+        ridConatent(
+            "Daily Recommendation",
+            "See All",
+            "daily_recommendation",
+            "Daily Recommendation",
             dashboardController.member!.responseData!.dailyRecommendation!),
         SizedBox(
           height: 25,
@@ -97,7 +109,8 @@ class _HomeBodyState extends State<HomeBody> {
               Spacer(),
               GestureDetector(
                 onTap: () => {
-                   Get.toNamed("/seeAll",arguments: {"keys":"matches","appbar":"New Matches"})
+                  Get.toNamed("/seeAll",
+                      arguments: {"keys": "matches", "appbar": "New Matches"})
                 },
                 child: Text(
                   "See All",
@@ -124,7 +137,7 @@ class _HomeBodyState extends State<HomeBody> {
                     return GestureDetector(
                       onTap: () {
                         profileDetailsController.profileDetails(
-                            context, data.matriID!);
+                            context, data.matriID!,"",["1","2","3","4","5","6","7","8","9","10","11"]);
                       },
                       child: Container(
                         margin: EdgeInsets.only(
@@ -134,86 +147,129 @@ class _HomeBodyState extends State<HomeBody> {
                           border: Border.all(color: Colors.grey.shade200),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10)),
-                              child: Stack(children: [
-                                Image.network(
-                                  image,
-                                  width: 315,
-                                  height: 290,
-                                  filterQuality: FilterQuality.high,
-                                  fit: BoxFit.fill,
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 40,
-                                  width: 40,
-                                  margin: EdgeInsets.only(top: 268, left: 265),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white),
-                                  child: GestureDetector(
-                                    onTap: () => {
-                                      setState(() {
-                                        isFavorite = !isFavorite;
-                                      }),
-                                    },
-                                    child: Icon(
-                                      data.shortlistStatus == 1
-                                          ? (Icons.favorite)
-                                          : Icons.favorite_border_rounded,
-                                      color: data.shortlistStatus == 1
-                                          ? Colors.red
-                                          : AppColors.primaryColor,
-                                      size: 30,
+                        child: Stack(children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                child: Stack(children: [
+                                  Image.network(
+                                    image,
+                                    width: 315,
+                                    height: 290,
+                                    filterQuality: FilterQuality.high,
+                                    fit: BoxFit.fill,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    height: 40,
+                                    width: 40,
+                                    margin:
+                                        EdgeInsets.only(top: 268, left: 265),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white),
+                                    child: GestureDetector(
+                                      onTap: () => {
+                                        setState(() {
+                                          shortlistController.shortlist(
+                                            context,
+                                            data.matriID!,
+                                            btnOkOnPress: () => {
+                                              WidgetsBinding.instance
+                                                  .addPostFrameCallback((_) {
+                                                dashboardController
+                                                    .dashboard(context);
+                                              })
+                                            },
+                                          );
+                                        }),
+                                      },
+                                      child: Icon(
+                                        data.shortlistStatus == 1
+                                            ? (Icons.favorite)
+                                            : Icons.favorite_border_rounded,
+                                        color: data.shortlistStatus == 1
+                                            ? Colors.red
+                                            : AppColors.primaryColor,
+                                        size: 30,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ]),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleSemiBold(
-                                        fontSize: 17,
-                                        color: AppColors.primaryColor),
-                                  ),
-                                  Text(
-                                    occupation,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 14,
-                                        color: AppColors.darkgrey),
-                                  ),
-                                  Text(
-                                    "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 14,
-                                        color: AppColors.darkgrey),
-                                  ),
-                                  Text(
-                                    "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 14, color: AppColors.black),
-                                  )
-                                ],
+                                ]),
                               ),
-                            ),
-                          ],
-                        ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FontConstant.styleSemiBold(
+                                          fontSize: 17,
+                                          color: AppColors.primaryColor),
+                                    ),
+                                    Text(
+                                      occupation,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 14,
+                                          color: AppColors.darkgrey),
+                                    ),
+                                    Text(
+                                      "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 14,
+                                          color: AppColors.darkgrey),
+                                    ),
+                                    Text(
+                                      "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 14, color: AppColors.black),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          
+                         if(data.accountType==1)  Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 8),
+                                decoration: BoxDecoration(
+                                    color: AppColors.constColor,
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),topRight: Radius.circular(10))),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/Crown.png",
+                                      height: 15,
+                                      width: 15,
+                                    ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      "Premium",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 12,
+                                          color: Color(0xFFF69506)),
+                                    )
+                                  ],
+                                ),
+                              ))
+                        ]),
                       ),
                     );
                   }).toList(),
@@ -226,8 +282,8 @@ class _HomeBodyState extends State<HomeBody> {
     );
   }
 
-  Widget ridConatent(
-      String leftTittle, String rightTitle,String key,String appBarTittle, List<DailyRecommendation> list) {
+  Widget ridConatent(String leftTittle, String rightTitle, String key,
+      String appBarTittle, List<DailyRecommendation> list) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
@@ -244,7 +300,8 @@ class _HomeBodyState extends State<HomeBody> {
               Spacer(),
               GestureDetector(
                 onTap: () => {
-                   Get.toNamed("/seeAll",arguments: {"keys":key,"appbar":appBarTittle})
+                  Get.toNamed("/seeAll",
+                      arguments: {"keys": key, "appbar": appBarTittle})
                 },
                 child: Text(
                   rightTitle,
@@ -277,226 +334,264 @@ class _HomeBodyState extends State<HomeBody> {
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 5, right: 5),
                         decoration: BoxDecoration(
-                          // color: selectedIndex == index
-                          //     ? Colors.grey.shade300
-                          //     : Colors.white,
                           color: AppColors.constColor,
                           border: Border.all(color: Colors.grey.shade200),
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        child: Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () => {
-                                profileDetailsController.profileDetails(
-                                    context, data.matriID!)
-                              },
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: 70,
-                                      height: 70,
-                                      decoration:
-                                          BoxDecoration(shape: BoxShape.circle),
-                                      child: ClipOval(
-                                        child: Image.network(
-                                          "$image",
-                                          filterQuality: FilterQuality.high,
-                                          fit: BoxFit.fill,
+                        child: Stack(children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () => {
+                                  profileDetailsController.profileDetails(
+                                      context, data.matriID!,"",["1","2","3","4","5","6","7","8","9","10","11"])
+                                },
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: 70,
+                                        height: 70,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle),
+                                        child: ClipOval(
+                                          child: Image.network(
+                                            "$image",
+                                            filterQuality: FilterQuality.high,
+                                            fit: BoxFit.fill,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 250,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                name,
-                                                overflow: TextOverflow.ellipsis,
-                                                style:
-                                                    FontConstant.styleSemiBold(
-                                                        fontSize: 15,
-                                                        color: AppColors
-                                                            .primaryColor),
-                                              ),
-                                              Text(
-                                                occupation,
-                                                overflow: TextOverflow.ellipsis,
+                                    Container(
+                                      width: 250,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  name,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: FontConstant
+                                                      .styleSemiBold(
+                                                          fontSize: 15,
+                                                          color: AppColors
+                                                              .primaryColor),
+                                                ),
+                                                Text(
+                                                  occupation,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style:
+                                                      FontConstant.styleMedium(
+                                                          fontSize: 12,
+                                                          color: AppColors
+                                                              .darkgrey),
+                                                ),
+                                                Text(
+                                                  "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style:
+                                                      FontConstant.styleMedium(
+                                                          fontSize: 12,
+                                                          color: AppColors
+                                                              .darkgrey),
+                                                ),
+                                                Text(
+                                                  "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style:
+                                                      FontConstant.styleMedium(
+                                                          fontSize: 12,
+                                                          color:
+                                                              AppColors.black),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                height: 1,
+                                width: 320,
+                                color: Colors.grey.shade200,
+                              ),
+                              Container(
+                                width: 320,
+                                padding: EdgeInsets.only(top: 10, bottom: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          shortlistController.shortlist(
+                                            context,
+                                            data.matriID!,
+                                            btnOkOnPress: () => {
+                                              WidgetsBinding.instance
+                                                  .addPostFrameCallback((_) {
+                                                dashboardController
+                                                    .dashboard(context);
+                                              })
+                                            },
+                                          );
+                                        },
+                                        child: Row(
+                                          children: [
+                                            // SvgPicture.asset(
+                                            //   "assets/images/like.svg",
+
+                                            //   height: 20,
+                                            //   width: 20,
+                                            // ),
+                                            Icon(
+                                              data.shortlistStatus == 1
+                                                  ? (Icons.favorite)
+                                                  : Icons
+                                                      .favorite_border_rounded,
+                                              color: data.shortlistStatus == 1
+                                                  ? Colors.red
+                                                  : AppColors.primaryColor,
+                                              size: 20,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Shortlist",
                                                 style: FontConstant.styleMedium(
-                                                    fontSize: 12,
-                                                    color: AppColors.darkgrey),
-                                              ),
-                                              Text(
-                                                "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 12,
-                                                    color: AppColors.darkgrey),
-                                              ),
-                                              Text(
-                                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                                overflow: TextOverflow.ellipsis,
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 12,
+                                                    fontSize: 11,
                                                     color: AppColors.black),
-                                              )
-                                            ],
-                                          ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 10, right: 10),
-                              height: 1,
-                              width: 320,
-                              color: Colors.grey.shade200,
-                            ),
-                            Container(
-                              width: 320,
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print(
-                                            "${profileDetailsController.member?.data?.matriID}");
-                                        shortlistController.shortlist(
-                                          context,
-                                          data.matriID!,
-                                          btnOkOnPress: () => {
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) {
-                                              dashboardController
-                                                  .dashboard(context);
-                                            })
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          // SvgPicture.asset(
-                                          //   "assets/images/like.svg",
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          //hide alert dialog
 
-                                          //   height: 20,
-                                          //   width: 20,
-                                          // ),
-                                          Icon(
-                                            data.shortlistStatus == 1
-                                                ? (Icons.favorite)
-                                                : Icons.favorite_border_rounded,
-                                            color: data.shortlistStatus == 1
-                                                ? Colors.red
-                                                : AppColors.primaryColor,
-                                            size: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "Shortlist",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 11,
-                                                  color: AppColors.black),
+                                          if (data.matriID!.trim().isNotEmpty &&
+                                              data.matriID != null) {
+                                            await APIs.addChatUser(
+                                                    data.matriID!)
+                                                .then((value) {
+                                              if (!value) {
+                                                Dialogs.showSnackbar(context,
+                                                    'User does not Exists!');
+                                              } else {
+                                                Get.to(HomeScreen());
+                                              }
+                                            });
+                                          }
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/images/chat_d.svg",
+                                              height: 20,
+                                              width: 20,
                                             ),
-                                          )
-                                        ],
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Chat Now",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 11,
+                                                    color: AppColors.black),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        //hide alert dialog
-
-                                        if (data.matriID!.trim().isNotEmpty &&
-                                            data.matriID != null) {
-                                          await APIs.addChatUser(data.matriID!)
-                                              .then((value) {
-                                            if (!value) {
-                                              Dialogs.showSnackbar(context,
-                                                  'User does not Exists!');
-                                            } else {
-                                              Get.to(HomeScreen());
-                                            }
-                                          });
-                                        }
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/images/chat_d.svg",
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "Chat Now",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 11,
-                                                  color: AppColors.black),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          print("${data.matriID}");
+                                          sentInvitationController
+                                              .sentInvitation(
+                                                  context, data.matriID!);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/images/send_icon.svg",
+                                              height: 20,
+                                              width: 20,
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print("${data.matriID}");
-                                        sentInvitationController.sentInvitation(
-                                            context, data.matriID!);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/images/send_icon.svg",
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "Send Interest",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 11,
-                                                  color: AppColors.black),
+                                            SizedBox(
+                                              width: 3,
                                             ),
-                                          )
-                                        ],
+                                            Expanded(
+                                              child: Text(
+                                                "Send Interest",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 11,
+                                                    color: AppColors.black),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        if(data.accountType==1)  Positioned(
+                              right: 0,
+                              top: 0,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 8),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10))),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/Crown.png",
+                                      height: 15,
+                                      width: 15,
                                     ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      "Premium",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 12,
+                                          color: Color(0xFFF69506)),
+                                    )
+                                  ],
+                                ),
+                              ))
+                        ]),
                       ),
                     );
                   }).toList(),
@@ -535,17 +630,17 @@ class _HomeBodyState extends State<HomeBody> {
                 ),
                 Row(
                   children: discover.asMap().entries.map((entry) {
-                    
                     String image = entry.value[0];
                     String name = entry.value[1];
                     String num = entry.value[2];
-                    String keys=entry.value[3];
+                    String keys = entry.value[3];
 
                     return GestureDetector(
                       onTap: () {},
                       child: GestureDetector(
                         onTap: () => {
-                          Get.toNamed("/basedMatches",arguments: {"keys":keys})
+                          Get.toNamed("/basedMatches",
+                              arguments: {"keys": keys})
                         },
                         child: Container(
                           padding: EdgeInsets.only(left: 5, right: 5),
@@ -638,9 +733,7 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
           GestureDetector(
-            onTap: () => {
-            Get.toNamed("/profileedit")
-            },
+            onTap: () => {Get.toNamed("/profileedit")},
             child: Container(
               padding: EdgeInsets.all(5),
               child: Text(

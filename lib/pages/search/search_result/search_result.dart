@@ -23,7 +23,7 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
-  SearchsController searchController = Get.put(SearchsController());
+ final SearchsController searchController = Get.put(SearchsController());
   ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
   final ShortlistController shortlistController =
@@ -52,7 +52,6 @@ class _SearchResultState extends State<SearchResult> {
     final String education = arguments['education'];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // final String keys = arguments['keys'];
       searchController.reset(context, ageFrom, ageTo, heightFrom, heightTo,
           maritalStatus, religion, caste, country, state, city, education);
       searchController.Search(context, ageFrom, ageTo, heightFrom, heightTo,
@@ -88,6 +87,13 @@ class _SearchResultState extends State<SearchResult> {
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
     final String heightTo = arguments['heightTo'];
+    final String maritalStatus = arguments['maritalStatus'];
+    final String religion = arguments['religion'];
+    final String caste = arguments['caste'];
+    final String country = arguments['country'];
+    final String state = arguments['state'];
+    final String city = arguments['city'];
+    final String education = arguments['education'];
 
     int selectedIndex = -1;
     return Scaffold(
@@ -239,7 +245,7 @@ class _SearchResultState extends State<SearchResult> {
                           String height = data.height ?? "";
                           String aadress =
                               " ${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"}${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country ?? ""}";
-                          String id = data.matriID;
+                          String id = data.matriID ?? "";
                           String image = data.photo1 != null
                               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
                               : "https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
@@ -267,7 +273,8 @@ class _SearchResultState extends State<SearchResult> {
                                             left: 8, bottom: 8, top: 8),
                                         child: Stack(children: [
                                           ClipRRect(
-                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
                                             child: Image.network(
                                               "$image",
                                               height: 196,
@@ -364,11 +371,54 @@ class _SearchResultState extends State<SearchResult> {
                                                         color: AppColors
                                                             .primaryColor),
                                               ),
-                                              Text(
-                                                "ID: ${id ?? ""}",
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 13,
-                                                    color: AppColors.black),
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      "ID: ${id}",
+                                                      style: FontConstant
+                                                          .styleMedium(
+                                                              fontSize: 13,
+                                                              color: AppColors
+                                                                  .black),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 5),
+                                                    width: 1,
+                                                    height: 12,
+                                                    color: AppColors.grey,
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      child: Row(
+                                                        children: [
+                                                          Image.asset(
+                                                            "assets/images/Crown.png",
+                                                            height: 15,
+                                                            width: 15,
+                                                          ),
+                                                          SizedBox(
+                                                            width: 3,
+                                                          ),
+                                                          Expanded(
+                                                            child: Text(
+                                                              "Premium",
+                                                              style: FontConstant
+                                                                  .styleMedium(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Color(
+                                                                          0xFFF69506)),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                               UserStatusWidget(userId: id),
                                               Padding(
@@ -444,7 +494,8 @@ class _SearchResultState extends State<SearchResult> {
                                                 context,
                                                 id,
                                                 btnOkOnPress: () => {
-                                                  dashboardController.dashboard(context)
+                                                  dashboardController
+                                                      .dashboard(context)
                                                 },
                                               );
                                             },
@@ -523,7 +574,20 @@ class _SearchResultState extends State<SearchResult> {
                                           child: GestureDetector(
                                             onTap: () => {
                                               profileDetailsController
-                                                  .profileDetails(context, id)
+                                                  .profileDetails(
+                                                      context, id, "search", [
+                                                ageFrom,
+                                                ageTo,
+                                                heightFrom,
+                                                heightTo,
+                                                maritalStatus,
+                                                religion,
+                                                caste,
+                                                country,
+                                                state,
+                                                city,
+                                                education
+                                              ])
                                             },
                                             child: Row(
                                               children: [

@@ -314,7 +314,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                     child: GestureDetector(
                                       onTap: () => {
                                         profileDetailsController.profileDetails(
-                                            context, data.matId!)
+                                            context, data.matId!,"",[])
                                       },
                                       child: Text(
                                         "View Profile",
