@@ -1,4 +1,5 @@
 import 'package:devotee/api_service/api_service.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/model/login_model.dart';
 import 'package:devotee/model/otp_model.dart';
 import 'package:devotee/pages/login/otp_page/otp_page.dart';
@@ -23,26 +24,16 @@ class LoginController with ChangeNotifier {
       _member = await apiService.login(mobileno.text.toString().trim());
 
       print('${_member?.data?.data}');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.grey.shade200,
-        content: Text(
-          '${_member?.data?.data}',
-          style: TextStyle(color: Colors.black),
-        ),
-      ));
 
+      // ignore: use_build_context_synchronously
+      Dialogs.showSnackbar(context, '${_member?.data?.data}');
       Get.off(() => OTPScreen(mobileNumber: mobileno.text.toString().trim()));
+
       print("success");
     } catch (e) {
       _error = e.toString();
       print(_error);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.grey.shade200,
-        content: Text(
-          '${_error}',
-          style: TextStyle(color: Colors.black),
-        ),
-      ));
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

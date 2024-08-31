@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/about_groombride_model.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +22,14 @@ class AboutGroomBrideController with ChangeNotifier {
 
     try {
       _member = await apiService.aboutGroomBride(characteristics, hobbies);
+      // ignore: use_build_context_synchronously
       flowController.Flow(context, 10);
       // Get.toNamed('/horoscope');
     } catch (e) {
       _error = e.toString();
       print(_error);
-
       // Show error message using ScaffoldMessenger
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.grey.shade200,
-        content: Text(
-          '${_error}',
-          style: TextStyle(color: Colors.black),
-        ),
-      ));
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

@@ -81,17 +81,17 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                         ProfileHeader(
                           value: keys,
                           search: [
-                            ageFrom ?? "",
-                            ageTo ?? "",
-                            heightFrom ?? "",
-                            heightTo ?? "",
-                            maritalStatus ?? "",
-                            religion ?? "",
-                            caste ?? "",
-                            country ?? "",
-                            state ?? "",
-                            city ?? "",
-                            education ?? ""
+                            ageFrom,
+                            ageTo,
+                            heightFrom,
+                            heightTo,
+                            maritalStatus,
+                            religion,
+                            caste,
+                            country,
+                            state,
+                            city,
+                            education
                           ],
                         ),
                         BasicDetails(),
@@ -233,8 +233,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
       Get.put(ProfileDetailsController());
   int _currentIndex = 0;
 
-  List<String> getImageList() {
-    List<String> imgList = [];
+  List<String> getImageList() {   
+    List<String> imgList = [];  
 
     // Check each photo field and add to the list if it's not null
     if (profileDetailsController.member?.data?.photo1 != null) {
@@ -391,39 +391,43 @@ class ProfileHeaderState extends State<ProfileHeader> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-                        alignment: Alignment.center,
-                        width: 100,
-                        decoration: BoxDecoration(
-                            color: AppColors.constColor,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/images/Crown.png",
-                              height: 15,
-                              width: 15,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "Premium",
-                                style: FontConstant.styleMedium(
-                                    fontSize: 12, color: Color(0xFFF69506)),
+                      if (profileDetailsController.member!.data!.accountType ==
+                          1)
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                          alignment: Alignment.center,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              color: AppColors.constColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/Crown.png",
+                                height: 15,
+                                width: 15,
                               ),
-                            )
-                          ],
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Premium",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 12, color: Color(0xFFF69506)),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
+                      if (profileDetailsController.member!.data!.accountType ==
+                          1)
+                        SizedBox(
+                          height: 5,
+                        ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [

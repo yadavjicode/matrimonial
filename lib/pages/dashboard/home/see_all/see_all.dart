@@ -1,4 +1,6 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
+import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -217,42 +219,39 @@ class _SeeAllState extends State<SeeAll> {
                                           fontSize: 13, color: AppColors.black),
                                     ),
                                   ),
-
-                               if(data.accountType==1)   Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 5),
-                                    width: 1,
-                                    height: 12,
-                                    color: AppColors.grey,
-                                  ),
-                                if(data.accountType==1)Expanded(
-                                  
-                                    child:
-                                    
-                                     Container(
-                                      
-                                      child: Row(
-                                        children: [
-                                          
-                                          Image.asset(
-                                            "assets/images/Crown.png",
-                                            height: 15,
-                                            width: 15,
-                                          ),
-                                          SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "Premium",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: Color(0xFFF69506)),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                  if (data.accountType == 1)
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      width: 1,
+                                      height: 12,
+                                      color: AppColors.grey,
                                     ),
-                                  )
+                                  if (data.accountType == 1)
+                                    Expanded(
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/Crown.png",
+                                              height: 15,
+                                              width: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Premium",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: Color(0xFFF69506)),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
                                 ],
                               ),
                               UserStatusWidget(userId: id),
@@ -360,15 +359,20 @@ class _SeeAllState extends State<SeeAll> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
-                              if (id.trim().isNotEmpty && id.trim() != null) {
-                                await APIs.addChatUser(id).then((value) {
-                                  if (!value) {
-                                    Dialogs.showSnackbar(
-                                        context, 'User does not Exists!');
-                                  } else {
-                                    Get.to(HomeScreen());
-                                  }
-                                });
+                              if (data.chatStatus == 1) {
+                                if (id.trim().isNotEmpty && id.trim() != null) {
+                                  await APIs.addChatUser(id).then((value) {
+                                    if (!value) {
+                                      Dialogs.showSnackbar(
+                                          context, 'User does not Exists!');
+                                    } else {
+                                      Get.to(HomeScreen());
+                                    }
+                                  });
+                                }
+                              } else {
+                               Dialogs.showSnackbar(
+                                          context, 'User does not accepted list!');
                               }
                             },
                             child: Row(
@@ -396,7 +400,19 @@ class _SeeAllState extends State<SeeAll> {
                           child: GestureDetector(
                             onTap: () => {
                               profileDetailsController.profileDetails(
-                                  context, id,keys,["1","2","3","4","5","6","7","8","9","10","11"])
+                                  context, id, keys, [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ])
                             },
                             child: Row(
                               children: [

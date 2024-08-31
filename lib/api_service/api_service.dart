@@ -1,6 +1,7 @@
 import 'package:devotee/model/about_groombride_model.dart';
 import 'package:devotee/model/accepted_model.dart';
 import 'package:devotee/model/basic_details_model.dart';
+import 'package:devotee/model/buy_package_model.dart';
 import 'package:devotee/model/collaborate_model.dart';
 import 'package:devotee/model/complaint_model.dart';
 import 'package:devotee/model/contact_details_model.dart';
@@ -32,13 +33,8 @@ import 'package:devotee/model/suggestion_model.dart';
 import 'package:devotee/model/testimonial_model.dart';
 import 'package:devotee/model/user_model.dart';
 import 'package:devotee/model/withdrawal_model.dart';
-import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
-import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/utils/constants.dart';
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'dart:convert';
-import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -1325,6 +1321,36 @@ class ApiService {
       throw Exception('Failed: ${responseJson['message']}');
     }
   }
-//==== End Api Package==========================================================================================
+//==== End Api Package================================================================================================
+
+//==== Start Api Buy Package==========================================================================================
+
+  Future<BuyPackageModel> BuyPackage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.buyPackage_Url}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return BuyPackageModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Buy Package==========================================================================================
 
 }

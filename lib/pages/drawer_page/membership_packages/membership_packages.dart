@@ -2,26 +2,25 @@ import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/coupons_controller.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:get/get.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../model/coupons_model.dart';
 
 class MembershipPackages extends StatefulWidget {
   const MembershipPackages({super.key});
-
   @override
   State<MembershipPackages> createState() => _MembershipPackagesState();
 }
 
 class _MembershipPackagesState extends State<MembershipPackages> {
   final CouponsController couponsController = Get.put(CouponsController());
+  final EditProfileController editProfileController =
+      Get.put(EditProfileController());
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       couponsController.coupons(context);
     });
@@ -121,7 +120,8 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           ],
                         ),
                       ),
-                      _buildPack(),
+                      _buildPack(editProfileController.isLoading.value==false?
+                          editProfileController.member!.member!.accountType:editProfileController.member!.member!.accountType),
                       Text(
                         "\nIf we compare this application with other commercial matrimonial application, then it is more than 85% cheaper than such commercial applications. We are not having multiple kind of packages to confuse the public, we have only 2 versions. One is Free Version and Other one is Premium Version.\n",
                         textAlign: TextAlign.center,
@@ -173,7 +173,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
   }
 }
 
-Widget _buildPack() {
+Widget _buildPack(int package) {
   return Padding(
     padding: const EdgeInsets.only(top: 15),
     child: Row(
@@ -183,7 +183,9 @@ Widget _buildPack() {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                color: AppColors.constColor,
+                color: package != 1
+                    ? AppColors.constColor
+                    : AppColors.primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: AppColors.primaryColor)),
             child: Container(
@@ -197,7 +199,11 @@ Widget _buildPack() {
                       "Free Pack",
                       textAlign: TextAlign.start,
                       style: FontConstant.styleSemiBold(
-                          fontSize: 16, color: AppColors.black),
+                        fontSize: 16,
+                        color: package != 1
+                            ? AppColors.black
+                            : AppColors.constColor,
+                      ),
                     ),
                   ),
                   Padding(
@@ -205,7 +211,9 @@ Widget _buildPack() {
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.grey,
+                        color: package != 1
+                            ? AppColors.grey
+                            : AppColors.constColor,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       alignment: Alignment.center,
@@ -221,10 +229,14 @@ Widget _buildPack() {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: AppColors.primaryColor,
+                                color: package == 1
+                                    ? AppColors.grey
+                                    : AppColors.primaryColor,
                               ),
-                              child: SvgPicture.asset(
-                                  "assets/images/icons/correct.svg"),
+                              child: package != 1
+                                  ? SvgPicture.asset(
+                                      "assets/images/icons/correct.svg")
+                                  : Container(),
                             ),
                             SizedBox(
                               width: 5,
@@ -232,9 +244,12 @@ Widget _buildPack() {
                             Expanded(
                               child: Text(
                                 textAlign: TextAlign.center,
-                                "Current Pack",
+                                package != 1 ? "Current Pack" : "Select Pack",
                                 style: FontConstant.styleRegular(
-                                    fontSize: 12, color: AppColors.black),
+                                    fontSize: 12,
+                                    color: package != 1
+                                        ? AppColors.constColor
+                                        : AppColors.black),
                               ),
                             ),
                           ],
@@ -255,7 +270,9 @@ Widget _buildPack() {
             alignment: Alignment.center,
             padding: EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
-                color: AppColors.primaryColor,
+                color: package == 1
+                    ? AppColors.constColor
+                    : AppColors.primaryColor,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: AppColors.primaryColor)),
             child: Container(
@@ -280,7 +297,10 @@ Widget _buildPack() {
                             "Premium Pack",
                             textAlign: TextAlign.start,
                             style: FontConstant.styleSemiBold(
-                                fontSize: 16, color: AppColors.constColor),
+                                fontSize: 16,
+                                color: package == 1
+                                    ? AppColors.black
+                                    : AppColors.constColor),
                           ),
                         ),
                       ],
@@ -291,7 +311,9 @@ Widget _buildPack() {
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.constColor,
+                        color: package == 1
+                            ? AppColors.grey
+                            : AppColors.constColor,
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                       alignment: Alignment.center,
@@ -301,26 +323,32 @@ Widget _buildPack() {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              height: 20,
-                              width: 20,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.grey,
-                              ),
-                              // child: SvgPicture.asset(
-                              //     "assets/images/icons/correct.svg"),
-                            ),
+                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                height: 20,
+                                width: 20,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: package != 1
+                                      ? AppColors.grey
+                                      : AppColors.primaryColor,
+                                ),
+                                child: package == 1
+                                    ? SvgPicture.asset(
+                                        "assets/images/icons/correct.svg")
+                                    : Container()),
                             SizedBox(
                               width: 5,
                             ),
                             Expanded(
                               child: Text(
                                 textAlign: TextAlign.center,
-                                "Select Pack",
+                                package == 1 ? "Current Pack" : "Select Pack",
                                 style: FontConstant.styleRegular(
-                                    fontSize: 12, color: AppColors.black),
+                                    fontSize: 12,
+                                    color: package == 1
+                                        ? AppColors.constColor
+                                        : AppColors.black),
                               ),
                             ),
                           ],
@@ -450,7 +478,6 @@ Widget _buildDiscount(BuildContext context, List<Data> list) {
                     )
                   ]),
             ),
-            
           ],
         ),
       );

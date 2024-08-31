@@ -1,4 +1,5 @@
 import 'package:devotee/api_service/api_service.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../model/matches_model.dart';
@@ -39,6 +40,7 @@ class MatchesController extends GetxController {
         }
       }
     } catch (e) {
+      Dialogs.showSnackbar(context, "Error fetching matches: $e");
       // Handle exceptions
       print("Error fetching matches: $e");
     } finally {

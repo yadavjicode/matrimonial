@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/model/suggestion_model.dart';
 import 'package:devotee/model/testimonial_model.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,7 @@ class TestimonialController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.grey.shade200,
-        content: Text(
-          '${_error}',
-          style: TextStyle(color: Colors.black),
-        ),
-      ));
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

@@ -1,4 +1,5 @@
 import 'package:devotee/api_service/api_service.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/otp_model.dart';
 import 'package:flutter/material.dart';
@@ -60,15 +61,7 @@ class OtpController with ChangeNotifier {
       print('Error: $_error');
 
       // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.grey.shade200,
-          content: Text(
-            _error ?? 'An unknown error occurred',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      );
+    Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

@@ -148,7 +148,7 @@ class Member {
   dynamic photo2Approve;
   dynamic photo3;
   dynamic photo4;
-  dynamic Photo5;
+  dynamic photo5;
   dynamic photo5Approve;
   dynamic photo4Approve;
   dynamic photo3Approve;
@@ -336,6 +336,7 @@ class Member {
   dynamic instagramId;
   dynamic employmentSummary;
   dynamic Photo1;
+  dynamic accountType;
   
 
   Member(
@@ -456,6 +457,8 @@ class Member {
       this.photo3,
       this.photo4,
       this.photo4Approve,
+      this.photo5,
+      this.photo5Approve,
       this.photo3Approve,
       this.photoRemindCnt,
       this.logincount,
@@ -641,7 +644,7 @@ class Member {
       this.instagramId,
       this.employmentSummary,
       this.Photo1,
-      
+      this.accountType
       });
 
   Member.fromJson(Map<String, dynamic> json) {
@@ -762,7 +765,7 @@ class Member {
     photo3 = json['Photo3'];
     photo4 = json['Photo4'];
     photo4Approve = json['Photo4Approve'];
-    Photo5 = json['Photo5'];
+    photo5 = json['Photo5'];
     photo5Approve = json['Photo5Approve'];
     photo3Approve = json['Photo3Approve'];
     photoRemindCnt = json['photo_remind_cnt'];
@@ -948,6 +951,7 @@ class Member {
     step11 = json['step_11'];
     step12 = json['step_12'];
     step13 = json['step_13'];
+     accountType = json['account_type'];
     spiritualName = json['spiritual_name'];
     instagramId = json['instagram_id'];
     employmentSummary = json['employment_summary'];
@@ -1074,7 +1078,7 @@ class Member {
     data['Photo3'] = this.photo3;
     data['Photo4'] = this.photo4;
     data['Photo4Approve'] = this.photo4Approve;
-    data['Photo5'] = this.Photo5;
+    data['Photo5'] = this.photo5;
     data['Photo5Approve'] = this.photo5Approve;
     data['Photo3Approve'] = this.photo3Approve;
     data['photo_remind_cnt'] = this.photoRemindCnt;
@@ -1265,7 +1269,7 @@ class Member {
     data['instagram_id'] = this.instagramId;
     data['employment_summary'] = this.employmentSummary;
     data['Photo1'] = this.Photo1;
-    
+    data['account_type'] = this.accountType;
     return data;
   }
 }

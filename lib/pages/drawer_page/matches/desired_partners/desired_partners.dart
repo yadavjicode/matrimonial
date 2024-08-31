@@ -320,16 +320,21 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         ),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () async {
-                              if (id.trim().isNotEmpty && id.trim() != null) {
-                                await APIs.addChatUser(id).then((value) {
-                                  if (!value) {
-                                    Dialogs.showSnackbar(
-                                        context, 'User does not Exists!');
-                                  } else {
-                                    Get.to(HomeScreen());
-                                  }
-                                });
+                           onTap: () async {
+                              if (data.chatStatus == 1) {
+                                if (id.trim().isNotEmpty && id.trim() != null) {
+                                  await APIs.addChatUser(id).then((value) {
+                                    if (!value) {
+                                      Dialogs.showSnackbar(
+                                          context, 'User does not Exists!');
+                                    } else {
+                                      Get.to(HomeScreen());
+                                    }
+                                  });
+                                }
+                              } else {
+                                Dialogs.showSnackbar(
+                                    context, 'User does not accepted list!');
                               }
                             },
                             child: Row(

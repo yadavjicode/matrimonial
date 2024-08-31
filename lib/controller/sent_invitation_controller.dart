@@ -18,11 +18,9 @@ class SentInvitationController with ChangeNotifier {
 
   Future<void> sentInvitation(
     BuildContext context,
-    String id,
-     {
+    String id, {
     VoidCallback? btnOkOnPress, // Optional btnOkOnPress function
-  }
-  ) async {
+  }) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -30,24 +28,24 @@ class SentInvitationController with ChangeNotifier {
     try {
       _member = await apiService.SentInvitation(id);
       CustomDialog.show(
-                  context,
-                  'Sent Invitation',
-                  '${member!.message}',
-                  dialogType:DialogType.success,
-                  btnOkOnPress: btnOkOnPress ?? () {
-          // Navigator.of(context).pop(); // Default action if none is provided
-        },
-                );
+        context,
+        'Sent Invitation',
+        '${member!.message}',
+        dialogType: DialogType.success,
+        btnOkOnPress: btnOkOnPress ??
+            () {
+              // Navigator.of(context).pop(); // Default action if none is provided
+            },
+      );
     } catch (e) {
       _error = e.toString();
       print(_error);
-       CustomDialog.show(
-                  context,
-                  'Error',
-                  '${_error}',
-                  dialogType:DialogType.error,
-                 
-                );
+      CustomDialog.show(
+        context,
+        'error',
+        '${_error}',
+        dialogType: DialogType.error,
+      );
     } finally {
       isLoading.value = false;
       notifyListeners();

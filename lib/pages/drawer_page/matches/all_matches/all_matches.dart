@@ -181,7 +181,6 @@ class _AllMatchesState extends State<AllMatches> {
                                     color: AppColors.primaryColor),
                               ),
                               Row(
-                                
                                 children: [
                                   Expanded(
                                     child: Text(
@@ -190,37 +189,39 @@ class _AllMatchesState extends State<AllMatches> {
                                           fontSize: 13, color: AppColors.black),
                                     ),
                                   ),
-                                if(data.accountType==1)  Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 5),
-                                    width: 1,
-                                    height: 12,
-                                    color: AppColors.grey,
-                                  ),
-                               if(data.accountType==1)   Expanded(
-                                    child: Container(
-                                 
-                                     child: Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/Crown.png",
-                                      height: 15,
-                                      width: 15,
+                                  if (data.accountType == 1)
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      width: 1,
+                                      height: 12,
+                                      color: AppColors.grey,
                                     ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
+                                  if (data.accountType == 1)
                                     Expanded(
-                                      child: Text(
-                                        "Premium",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: Color(0xFFF69506)),
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/Crown.png",
+                                              height: 15,
+                                              width: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Premium",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: Color(0xFFF69506)),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     )
-                                  ],
-                                ),
-                                    ),
-                                  )
                                 ],
                               ),
                               UserStatusWidget(userId: id),
@@ -286,9 +287,8 @@ class _AllMatchesState extends State<AllMatches> {
                               shortlistController.shortlist(
                                 context,
                                 id,
-                                btnOkOnPress: () => {
-                                  dashboardController.dashboard(context)
-                                },
+                                btnOkOnPress: () =>
+                                    {dashboardController.dashboard(context)},
                               );
                             },
                             child: Row(
@@ -319,15 +319,20 @@ class _AllMatchesState extends State<AllMatches> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
-                              if (id.trim().isNotEmpty && id.trim() != null) {
-                                await APIs.addChatUser(id).then((value) {
-                                  if (!value) {
-                                    Dialogs.showSnackbar(
-                                        context, 'User does not Exists!');
-                                  } else {
-                                    Get.to(HomeScreen());
-                                  }
-                                });
+                              if (data.chatStatus == 1) {
+                                if (id.trim().isNotEmpty && id.trim() != null) {
+                                  await APIs.addChatUser(id).then((value) {
+                                    if (!value) {
+                                      Dialogs.showSnackbar(
+                                          context, 'User does not Exists!');
+                                    } else {
+                                      Get.to(HomeScreen());
+                                    }
+                                  });
+                                }
+                              } else {
+                                Dialogs.showSnackbar(
+                                    context, 'User does not accepted list!');
                               }
                             },
                             child: Row(
@@ -355,7 +360,19 @@ class _AllMatchesState extends State<AllMatches> {
                           child: GestureDetector(
                             onTap: () => {
                               profileDetailsController.profileDetails(
-                                  context, id,"matches",["1","2","3","4","5","6","7","8","9","10","11"])
+                                  context, id, "matches", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ])
                             },
                             child: Row(
                               children: [

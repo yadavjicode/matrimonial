@@ -40,6 +40,7 @@ class _SentTabState extends State<SentTab> {
                 labelColor: AppColors.primaryColor,
                 labelPadding: EdgeInsets.only(bottom: 10),
                 unselectedLabelColor: Colors.black,
+                
                 tabs: [
                //   if (inboxSentController.isLoading.value == false)
                   Text(
@@ -69,6 +70,7 @@ class _SentTabState extends State<SentTab> {
             ),
             Expanded(
               child: TabBarView(
+                   physics: NeverScrollableScrollPhysics(),
                 children: [SentPending(), SentAccepted(), SentDeclined()],
               ),
             ),

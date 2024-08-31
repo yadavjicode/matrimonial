@@ -23,15 +23,14 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
   final TextEditingController name = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
- // StateController countryController = Get.put(StateController());
+  // StateController countryController = Get.put(StateController());
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
-  final  StateController stateController = Get.put(StateController());
+  final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final CollaborateController collaborateController =
       Get.put(CollaborateController());
 
-  
   String? selectedState;
   String? selectedCity;
   bool isState = false;
@@ -116,6 +115,8 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                     child: CustomTextField(
                                       controller: phone,
                                       labelText: "Phone No.",
+                                      maxlength: 10,
+                                      keyboardType: TextInputType.phone,
                                       borderRadius: 5,
                                       validator: (value) {
                                         return Validation.validatePhoneno(
@@ -141,7 +142,6 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                               SizedBox(
                                 height: 10,
                               ),
-                           
                               Row(
                                 children: [
                                   Expanded(
@@ -161,7 +161,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                           'State',
                                           stateController.getStateList(),
                                           radiusdrop: 6,
-                                      //    stateController.selectedItem,
+                                          //    stateController.selectedItem,
                                           (value) {
                                             setState(() {
                                               selectedState = value;
@@ -202,7 +202,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                         return buildDropdownWithSearch(
                                           'City',
                                           cityController.cityLists,
-                                           radiusdrop: 6,
+                                          radiusdrop: 6,
                                           // cityControllerPermanent.selectedItem,
                                           (value) {
                                             setState(() {

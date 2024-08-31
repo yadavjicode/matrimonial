@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/model/search_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -174,6 +175,7 @@ String convertToFeetAndInches(double value) {
     } catch (e) {
       // Handle exceptions
       print("Error fetching matches: $e");
+      Dialogs.showSnackbar(context, "Error fetching matches: $e");
     } finally {
       isLoading.value = false;
     }

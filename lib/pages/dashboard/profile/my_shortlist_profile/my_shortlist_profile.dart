@@ -60,8 +60,10 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
         Obx(() {
           return Stack(
             children: [
-              if (!shortlistedListController.isLoading.value &&
-                  !shortlistController.isLoading.value)
+              if (!shortlistedListController.isLoading.value
+              // &&
+                 // !shortlistController.isLoading.value
+                  )
                 shortlistedContent(),
               if (shortlistedListController.isLoading.value ||
                   shortlistController.isLoading.value ||
@@ -273,6 +275,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () async {
+                                        if(data.chat_status==1){
                                         if (data.matId!.trim().isNotEmpty &&
                                             data.matId != null) {
                                           await APIs.addChatUser(data.matId!)
@@ -284,6 +287,11 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                               Get.to(HomeScreen());
                                             }
                                           });
+                                        }
+                                        }
+                                        else{
+                                          Dialogs.showSnackbar(context,
+                                                  'User does not accepted list!');
                                         }
                                       },
                                       //hide alert dialog
@@ -314,7 +322,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                     child: GestureDetector(
                                       onTap: () => {
                                         profileDetailsController.profileDetails(
-                                            context, data.matId!,"",[])
+                                            context, data.matId!,"",["1","2","3","4","5","6","7","8","9","10","11"])
                                       },
                                       child: Text(
                                         "View Profile",

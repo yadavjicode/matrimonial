@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/model/user_model.dart';
 import 'package:devotee/utils/flow.dart';
 import 'package:flutter/material.dart';
@@ -45,13 +46,7 @@ class FlowController with ChangeNotifier {
       _error = e.toString();
       print(_error);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.grey.shade200,
-        content: Text(
-          '${_error}',
-          style: TextStyle(color: Colors.black),
-        ),
-      ));
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

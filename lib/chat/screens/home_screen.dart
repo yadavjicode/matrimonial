@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //if data is loading
               case ConnectionState.waiting:
               case ConnectionState.none:
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
 
               //if some or all data is loaded then show it
               case ConnectionState.active:
@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               });
                         } else {
                           return const Center(
-                            child: Text('No Connections Found!',
+                            child: Text('No user Found!',
                                 style: TextStyle(fontSize: 20)),
                           );
                         }

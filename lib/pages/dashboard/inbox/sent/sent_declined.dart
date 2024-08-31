@@ -1,9 +1,7 @@
 import 'package:devotee/controller/inbox_sent_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -26,15 +24,14 @@ class _SentDeclinedState extends State<SentDeclined> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
+
 
     return Scaffold(
         backgroundColor: AppColors.constColor,
         body: Obx(() {
           return Stack(
             children: [
-              if (inboxSentController.isLoading.value == false)
+             if (inboxSentController.isLoading.value == false)
                 declineContent(),
               if (inboxSentController.isLoading.value)
                 Center(

@@ -124,6 +124,7 @@ class Data {
   dynamic regdate;
   dynamic dOB;
   dynamic occupation;
+  dynamic chat_status;
 
   Data(
       {this.shortId,
@@ -148,7 +149,8 @@ class Data {
       this.religion,
       this.regdate,
       this.dOB,
-      this.occupation});
+      this.occupation,
+      this.chat_status});
 
   Data.fromJson(Map<String, dynamic> json) {
     shortId = json['short_id'];
@@ -174,6 +176,7 @@ class Data {
     regdate = json['Regdate'];
     dOB = json['DOB'];
     occupation = json['Occupation'];
+    chat_status = json['chat_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -201,6 +204,7 @@ class Data {
     data['Regdate'] = this.regdate;
     data['DOB'] = this.dOB;
     data['Occupation'] = this.occupation;
+    data['chat_status'] = this.chat_status;
     return data;
   }
 }

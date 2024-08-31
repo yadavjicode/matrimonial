@@ -23,7 +23,7 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
- final SearchsController searchController = Get.put(SearchsController());
+  final SearchsController searchController = Get.put(SearchsController());
   ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
   final ShortlistController shortlistController =
@@ -383,41 +383,43 @@ class _SearchResultState extends State<SearchResult> {
                                                                   .black),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 5),
-                                                    width: 1,
-                                                    height: 12,
-                                                    color: AppColors.grey,
-                                                  ),
-                                                  Expanded(
-                                                    child: Container(
-                                                      child: Row(
-                                                        children: [
-                                                          Image.asset(
-                                                            "assets/images/Crown.png",
-                                                            height: 15,
-                                                            width: 15,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 3,
-                                                          ),
-                                                          Expanded(
-                                                            child: Text(
-                                                              "Premium",
-                                                              style: FontConstant
-                                                                  .styleMedium(
-                                                                      fontSize:
-                                                                          12,
-                                                                      color: Color(
-                                                                          0xFFF69506)),
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
+                                                  if (data.accountType == 1)
+                                                    Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 5),
+                                                      width: 1,
+                                                      height: 12,
+                                                      color: AppColors.grey,
                                                     ),
-                                                  )
+                                                  if (data.accountType == 1)
+                                                    Expanded(
+                                                      child: Container(
+                                                        child: Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              "assets/images/Crown.png",
+                                                              height: 15,
+                                                              width: 15,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 3,
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                "Premium",
+                                                                style: FontConstant
+                                                                    .styleMedium(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Color(
+                                                                            0xFFF69506)),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
                                                 ],
                                               ),
                                               UserStatusWidget(userId: id),
@@ -532,18 +534,24 @@ class _SearchResultState extends State<SearchResult> {
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () async {
-                                              if (id.trim().isNotEmpty &&
-                                                  id.trim() != null) {
-                                                await APIs.addChatUser(id)
-                                                    .then((value) {
-                                                  if (!value) {
-                                                    Dialogs.showSnackbar(
-                                                        context,
-                                                        'User does not Exists!');
-                                                  } else {
-                                                    Get.to(HomeScreen());
-                                                  }
-                                                });
+                                              if (data.chat_status == 1) {
+                                                if (id.trim().isNotEmpty &&
+                                                    id.trim() != null) {
+                                                  await APIs.addChatUser(id)
+                                                      .then((value) {
+                                                    if (!value) {
+                                                      Dialogs.showSnackbar(
+                                                          context,
+                                                          'User does not Exists!');
+                                                    } else {
+                                                      Get.to(HomeScreen());
+                                                    }
+                                                  });
+                                                }
+                                              } else {
+                                                Dialogs.showSnackbar(
+                                                          context,
+                                                          'User does not accepted list!');
                                               }
                                             },
                                             child: Row(

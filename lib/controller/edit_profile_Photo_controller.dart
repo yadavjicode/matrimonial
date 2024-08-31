@@ -111,6 +111,7 @@ class EditProfilePhotoController extends GetxController {
           content: Text('No image selected.'),
             duration: Duration(seconds: 1)
         ));
+        
       }
     } catch (e) {
       print('Error while selecting image: $e');

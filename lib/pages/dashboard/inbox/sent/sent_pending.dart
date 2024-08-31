@@ -26,8 +26,7 @@ class _SentPendingState extends State<SentPending> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
+    
 
     return Scaffold(
         backgroundColor: AppColors.constColor,

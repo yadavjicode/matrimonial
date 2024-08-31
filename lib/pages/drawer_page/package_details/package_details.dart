@@ -1,8 +1,8 @@
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/buy_package_controller.dart';
 import 'package:devotee/controller/package_Controller.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -16,10 +16,12 @@ class PackageDetails extends StatefulWidget {
 
 class _PackageDetailsState extends State<PackageDetails> {
   final PackageController packageController = Get.put(PackageController());
+  final BuyPackageController buyPackageController =
+      Get.put(BuyPackageController());
+
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       packageController.package(context);
     });
@@ -172,9 +174,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 // height: 81,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "${packageController
-                                .member!.data!.free!.sendInterest!
-                                .toInt()} Per Day",
+                                  "${packageController.member!.data!.free!.sendInterest!.toInt()} Per Day",
                                   style: FontConstant.styleBold(
                                       fontSize: 12, color: AppColors.green),
                                 )),
@@ -184,9 +184,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 color: AppColors.constColor,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "${packageController
-                                .member!.data!.premium!.sendInterest!
-                                .toInt()} Per Day",
+                                  "${packageController.member!.data!.premium!.sendInterest!.toInt()} Per Day",
                                   style: FontConstant.styleBold(
                                       fontSize: 12, color: AppColors.green),
                                 ))
@@ -197,6 +195,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                           child: CustomButton(
                               text: "Buy Premium Pack Now",
                               onPressed: () => {
+                                    buyPackageController.buyPackage(context)
                                     //  Get.toNamed("/package")
                                   },
                               color: AppColors.primaryColor,

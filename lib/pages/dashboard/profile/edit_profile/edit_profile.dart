@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -23,6 +24,30 @@ class _ProfileEditState extends State<ProfileEdit> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
+  }
+
+  int _currentIndex = 0;
+
+  List<String> getImageList() {
+    List<String> imgList = [];
+
+    // Check each photo field and add to the list if it's not null
+    if (_editProfileController.member?.member?.Photo1 != null) {
+      imgList.add(_editProfileController.member!.member!.photo1!);
+    }
+    if (_editProfileController.member?.member?.photo2 != null) {
+      imgList.add(_editProfileController.member!.member!.photo2!);
+    }
+    if (_editProfileController.member?.member?.photo3 != null) {
+      imgList.add(_editProfileController.member!.member!.photo3!);
+    }
+    if (_editProfileController.member?.member?.photo4 != null) {
+      imgList.add(_editProfileController.member!.member!.photo4!);
+    }
+    if (_editProfileController.member?.member?.photo5 != null) {
+      imgList.add(_editProfileController.member!.member!.photo5!);
+    }
+    return imgList;
   }
 
   @override
@@ -59,6 +84,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   Widget _buildProfileContent() {
+    final List<String> imgList = getImageList();
     return Stack(
       children: [
         Container(
@@ -69,30 +95,112 @@ class _ProfileEditState extends State<ProfileEdit> {
         SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                alignment: Alignment.center,
-                height: 305,
-                width: double.infinity,
-                color: AppColors.constColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/noimage.png",
-                      width: 179,
-                      height: 172,
+              Stack(
+                children: [
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      autoPlay: false,
+                      enlargeCenterPage: true,
+                      padEnds: false,
+                      aspectRatio: 20 / 20,
+                      viewportFraction: 1.0,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
                     ),
-                    Text(
-                      "+ Add Image",
-                      style: FontConstant.styleRegular(
-                        fontSize: 23,
-                        color: Color(0xff583689),
+                    items: imgList
+                        .map((item) => Container(
+                              width: double.infinity,
+                              child: ClipRRect(
+                                child: Image.network(
+                                  "http://devoteematrimony.aks.5g.in/${item}",
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                  filterQuality: FilterQuality.high,
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.9),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Positioned(
+                    right: 8,
+                    bottom: 8,
+                    child: SvgPicture.asset(
+                      "assets/images/icons/penicon.svg",
+                      color: Colors.white,
+                      width: 25,
+                      height: 25,
+                    ),
+                  ),
+                  Positioned(
+                    bottom:
+                        5.0, // Position the indicator 10 pixels from the bottom
+                    left: 0.0,
+                    right: 0.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: imgList.map((url) {
+                        int index = imgList.indexOf(url);
+                        return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 2.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentIndex == index
+                                ? AppColors.primaryColor
+                                : AppColors.constColor,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
+              // Container(
+              //   alignment: Alignment.center,
+              //   height: 305,
+              //   width: double.infinity,
+              //   color: AppColors.constColor,
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       Image.asset(
+              //         "assets/images/noimage.png",
+              //         width: 179,
+              //         height: 172,
+              //       ),
+              //       Text(
+              //         "+ Add Image",
+              //         style: FontConstant.styleRegular(
+              //           fontSize: 23,
+              //           color: Color(0xff583689),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Row(
                 children: [
                   Expanded(
@@ -150,7 +258,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 padding: EdgeInsets.only(top: 20),
                 alignment: Alignment.center,
                 child: Text(
-                  "Your profile is ${_editProfileController.member!.profilePercentage??""}% Complete",
+                  "Your profile is ${_editProfileController.member!.profilePercentage ?? ""}% Complete",
                   style: FontConstant.styleRegular(
                     fontSize: 16,
                     color: AppColors.black,
@@ -164,7 +272,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: LinearProgressIndicator(
-                     value: (_editProfileController.member!.profilePercentage) / 100,
+                    value: (_editProfileController.member!.profilePercentage) /
+                        100,
                     backgroundColor: Colors.grey.shade100,
                     color: Color(0xff583689),
                   ),
@@ -195,27 +304,48 @@ class _ProfileEditState extends State<ProfileEdit> {
                       "/editBasicDetails",
                       Column(
                         children: [
-                          _buildText("Posted by",
-                              _editProfileController.member!.member!.profileFor?? ""),
-                          _buildText("Title",
-                              _editProfileController.member!.member!.nameTitle?? ""),
-                          _buildText("Name",
-                              _editProfileController.member!.member!.name?? ""),
-                          _buildText("Surname",
-                              _editProfileController.member!.member!.surename?? ""),
-                          _buildText("Spiritual Name",
-                              _editProfileController.member!.member!.spiritualName?? ""),
-                          _buildText("Marital Status",
-                              _editProfileController.member!.member!.maritalstatus?? ""),
-                          _buildText("Height",
-                              _editProfileController.member!.member!.height?? ""),
-                          _buildText("Weight",
-                              "${_editProfileController.member!.member!.weight} KG"?? ""),
-                              _buildText("Date of Birth",
-                              _editProfileController.member!.member!.dOB?? ""),
-                          _buildText("Hobbies",
-                              _editProfileController.member!.member!.hobbies?? ""),
-                          
+                          _buildText(
+                              "Posted by",
+                              _editProfileController
+                                      .member!.member!.profileFor ??
+                                  ""),
+                          _buildText(
+                              "Title",
+                              _editProfileController
+                                      .member!.member!.nameTitle ??
+                                  ""),
+                          _buildText(
+                              "Name",
+                              _editProfileController.member!.member!.name ??
+                                  ""),
+                          _buildText(
+                              "Surname",
+                              _editProfileController.member!.member!.surename ??
+                                  ""),
+                          _buildText(
+                              "Spiritual Name",
+                              _editProfileController
+                                      .member!.member!.spiritualName ??
+                                  ""),
+                          _buildText(
+                              "Marital Status",
+                              _editProfileController
+                                      .member!.member!.maritalstatus ??
+                                  ""),
+                          _buildText(
+                              "Height",
+                              _editProfileController.member!.member!.height ??
+                                  ""),
+                          _buildText(
+                              "Weight",
+                              "${_editProfileController.member!.member!.weight} KG" ??
+                                  ""),
+                          _buildText("Date of Birth",
+                              _editProfileController.member!.member!.dOB ?? ""),
+                          _buildText(
+                              "Hobbies",
+                              _editProfileController.member!.member!.hobbies ??
+                                  ""),
                         ],
                       ),
                     ),
@@ -224,113 +354,139 @@ class _ProfileEditState extends State<ProfileEdit> {
                       "/editContactDetails",
                       Column(
                         children: [
-                          _buildText("Phone Number",
-                              _editProfileController.member!.member!.mobile?? ""),
-                          _buildText("Email Address",
-                              _editProfileController.member!.member!.confirmEmail?? ""),
-                          _buildText("Instagram ID",
-                              _editProfileController.member!.member!.instagramId?? ""),
-                          
-                          
+                          _buildText(
+                              "Phone Number",
+                              _editProfileController.member!.member!.mobile ??
+                                  ""),
+                          _buildText(
+                              "Email Address",
+                              _editProfileController
+                                      .member!.member!.confirmEmail ??
+                                  ""),
+                          _buildText(
+                              "Instagram ID",
+                              _editProfileController
+                                      .member!.member!.instagramId ??
+                                  ""),
                         ],
                       ),
                     ),
                     _buildCont(
                       "Location Details",
-                       "/editLocationDetails",
+                      "/editLocationDetails",
                       Column(
                         children: [
                           _buildText(
                               "Nationality",
-                              _editProfileController.member!.member!.country?? ""
-                                  ),
+                              _editProfileController.member!.member!.country ??
+                                  ""),
                           _buildText(
                               "Residence Type",
-                              _editProfileController.member!.member!.state?? ""
-                                  ),
+                              _editProfileController.member!.member!.state ??
+                                  ""),
                           _buildText(
                               "Permanent House Type",
-                              _editProfileController.member!.member!.permanentHouseType?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.permanentHouseType ??
+                                  ""),
                           _buildText(
                               "Permanent State",
-                              _editProfileController.member!.member!.permanentState?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.permanentState ??
+                                  ""),
                           _buildText(
                               "Permanent City",
-                              _editProfileController.member!.member!.permanentCity?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.permanentCity ??
+                                  ""),
                           _buildText(
                               "Permanent Pin Code",
-                              _editProfileController.member!.member!.permanentPincode?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.permanentPincode ??
+                                  ""),
                           _buildText(
                               "Temporary State",
-                              _editProfileController.member!.member!.tempState?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.tempState ??
+                                  ""),
                           _buildText(
                               "Temporary City",
-                              _editProfileController.member!.member!.tempCity?? ""
-                                  ),
+                              _editProfileController.member!.member!.tempCity ??
+                                  ""),
                           _buildText(
                               "Temporary Pin Code",
-                              _editProfileController.member!.member!.tempPincode?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.tempPincode ??
+                                  ""),
                           _buildText(
                               "References 1 Relation",
-                              _editProfileController.member!.member!.reference1Reletion?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference1Reletion ??
+                                  ""),
                           _buildText(
                               "References 1 Name",
-                              _editProfileController.member!.member!.reference1Name?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference1Name ??
+                                  ""),
                           _buildText(
                               "References 1 Email",
-                              _editProfileController.member!.member!.reference1Email?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference1Email ??
+                                  ""),
                           _buildText(
                               "References 1 Mobile",
-                              _editProfileController.member!.member!.reference1Mobile?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference1Mobile ??
+                                  ""),
                           _buildText(
                               "References 2 Relation",
-                              _editProfileController.member!.member!.reference2Reletion?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference2Reletion ??
+                                  ""),
                           _buildText(
                               "References 2 Name",
-                              _editProfileController.member!.member!.reference2Name?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference2Name ??
+                                  ""),
                           _buildText(
                               "References 2 Email",
-                              _editProfileController.member!.member!.reference2Email?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference2Email ??
+                                  ""),
                           _buildText(
                               "References 2 Mobile",
-                              _editProfileController.member!.member!.reference2Mobile?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.reference2Mobile ??
+                                  ""),
                         ],
                       ),
                     ),
                     _buildCont(
                       "Educational Details",
-                       "/editEducationDetails",
+                      "/editEducationDetails",
                       Column(
                         children: [
                           _buildText(
                               "Highest Qualification",
-                              _editProfileController.member!.member!.education?? ""
-                                  ),
+                              _editProfileController
+                                      .member!.member!.education ??
+                                  ""),
                           _buildText(
                               "Professional Qualification",
-                                _editProfileController.member!.member!.professionalQualification?? ""
-                                  ),
-                          _buildText("Other Details",   _editProfileController.member!.member!.otherQualification?? ""),
+                              _editProfileController.member!.member!
+                                      .professionalQualification ??
+                                  ""),
+                          _buildText(
+                              "Other Details",
+                              _editProfileController
+                                      .member!.member!.otherQualification ??
+                                  ""),
                         ],
                       ),
                     ),
                     _buildCont(
                       "Profession Details",
-                       "/prof",
+                      "/prof",
                       Column(
                         children: [
                           _buildText(
@@ -364,7 +520,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Devotional Details",
-                       "/editBasicDetails",
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -390,7 +546,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Spiritual Counsellor Details",
-                       "/editBasicDetails",
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -421,7 +577,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Family & More Details",
-                       "/editBasicDetails",
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText("Religion",
@@ -441,7 +597,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Horoscope Details",
-                       "/editBasicDetails",
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText("Date of Birth",
@@ -503,7 +659,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     );
   }
 
-  Widget _buildCont(String tittle,String move, Column column) {
+  Widget _buildCont(String tittle, String move, Column column) {
     return Column(
       children: [
         Padding(
@@ -520,7 +676,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                //  final data = {'goto': 'edit'};
+                  //  final data = {'goto': 'edit'};
                   // Get.toNamed('/prof', arguments: data);
                   Get.toNamed(move);
                 },

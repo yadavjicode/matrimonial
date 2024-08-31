@@ -129,6 +129,7 @@ class Data {
   dynamic shortlistStatus;
   dynamic interestStatus;
   dynamic accountType;
+  dynamic chatStatus;
 
   Data(
       {this.hideIncome,
@@ -158,7 +159,9 @@ class Data {
       this.photo1,
       this.shortlistStatus,
       this.interestStatus,
-      this.accountType});
+      this.accountType,
+      this.chatStatus
+      });
 
   Data.fromJson(Map<String, dynamic> json) {
     hideIncome = json['hide_income'];
@@ -189,6 +192,7 @@ class Data {
     shortlistStatus = json['shortlist_status'];
     interestStatus = json['interest_status'];
     accountType = json['account_type'];
+    chatStatus = json['chat_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -220,7 +224,8 @@ class Data {
     data['Photo1'] = this.photo1;
     data['shortlist_status'] = this.shortlistStatus;
     data['interest_status'] = this.interestStatus;
-     data['account_type'] = this.accountType;
+    data['account_type'] = this.accountType;
+    data['chat_status'] = this.chatStatus;
     return data;
   }
 }

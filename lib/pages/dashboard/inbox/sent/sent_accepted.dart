@@ -26,15 +26,14 @@ class _SentAcceptedState extends State<SentAccepted> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
+    
 
     return Scaffold(
         backgroundColor: AppColors.constColor,
         body: Obx(() {
           return Stack(
             children: [
-              if (inboxSentController.isLoading.value == false)
+            if (inboxSentController.isLoading.value == false)
                 acceptedContent(),
               if (inboxSentController.isLoading.value)
                 Center(

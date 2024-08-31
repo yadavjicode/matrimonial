@@ -50,6 +50,7 @@ class _ReceivedTabState extends State<ReceivedTab> {
             ),
             Expanded(
               child: TabBarView(
+                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   ReceivedPending(),
                   ReceivedAccepted(),

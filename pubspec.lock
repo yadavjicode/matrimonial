@@ -370,10 +370,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_floating_bottom_bar
-      sha256: e131b970405b46d678fef49f791e4a5332b06e48fe9d41d88cd91d0ab6c52c4a
+      sha256: "5aff247b2015837bd121b6c694fb30107ed5677cd74e3088f6a5a18e369bc0ec"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1+1"
   flutter_lints:
     dependency: "direct dev"
     description:

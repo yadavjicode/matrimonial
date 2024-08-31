@@ -491,7 +491,7 @@ class _HomeBodyState extends State<HomeBody> {
                                       child: GestureDetector(
                                         onTap: () async {
                                           //hide alert dialog
-
+                                          if(data.chatStatus==1){
                                           if (data.matriID!.trim().isNotEmpty &&
                                               data.matriID != null) {
                                             await APIs.addChatUser(
@@ -504,6 +504,10 @@ class _HomeBodyState extends State<HomeBody> {
                                                 Get.to(HomeScreen());
                                               }
                                             });
+                                          }
+                                          }else{
+                                             Dialogs.showSnackbar(context,
+                                                    'User does not accepted list!');
                                           }
                                         },
                                         child: Row(
