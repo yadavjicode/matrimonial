@@ -25,32 +25,31 @@ class _ReceivedTabState extends State<ReceivedTab> {
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
-            Container(
-              child: TabBar(
+            Container(child: Obx(() {
+              return TabBar(
                 indicatorColor: AppColors.primaryColor,
                 labelColor: AppColors.primaryColor,
                 labelPadding: EdgeInsets.only(bottom: 10),
                 unselectedLabelColor: Colors.black,
-                
                 tabs: [
                   Text(
-                    "Pending (${(inboxReceivedController.isLoading.value == false)?inboxReceivedController.member!.pendingInvitationCount:inboxReceivedController.member!.pendingInvitationCount})",
+                    "Pending (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member!.pendingInvitationCount : inboxReceivedController.member!.pendingInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Accepted (${(inboxReceivedController.isLoading.value == false)?inboxReceivedController.member!.acceptedInvitationCount:inboxReceivedController.member!.acceptedInvitationCount})",
+                    "Accepted (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member!.acceptedInvitationCount : inboxReceivedController.member!.acceptedInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Declined (${(inboxReceivedController.isLoading.value == false)?inboxReceivedController.member!.declinedInvitationCount:inboxReceivedController.member!.declinedInvitationCount})",
+                    "Declined (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member!.declinedInvitationCount : inboxReceivedController.member!.declinedInvitationCount})",
                     style: TextStyle(fontSize: 16),
                   ),
                 ],
-              ),
-            ),
+              );
+            })),
             Expanded(
               child: TabBarView(
-                 physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   ReceivedPending(),
                   ReceivedAccepted(),

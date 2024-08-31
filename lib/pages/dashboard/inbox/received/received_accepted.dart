@@ -1,4 +1,5 @@
 import 'package:devotee/controller/inbox_received_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
@@ -17,6 +18,8 @@ class ReceivedAccepted extends StatefulWidget {
 class _ReceivedAcceptedState extends State<ReceivedAccepted> {
   InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -27,9 +30,6 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
-
     return Scaffold(
         backgroundColor: AppColors.constColor,
         body: Obx(() {
@@ -37,7 +37,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
             children: [
               if (inboxReceivedController.isLoading.value == false)
                 acceptContent(),
-              if (inboxReceivedController.isLoading.value)
+              if (inboxReceivedController.isLoading.value ||
+                  profileDetailsController.isLoading.value)
                 Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -74,14 +75,9 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                 // Get.toNamed('/profiledtls');
               },
               child: Container(
-                //  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 decoration: BoxDecoration(
-                  // color: selectedIndex == index
-                  //     ? Colors.grey.shade300
-                  //     : Colors.white,
                   color: Colors.white,
                   border: Border.all(color: Colors.grey.shade200),
-                  //  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
                   children: [
@@ -161,21 +157,42 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Spacer(),
-                        SvgPicture.asset(
-                          "assets/images/pink_search.svg",
-                          height: 20,
-                          width: 20,
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          "View Profile",
-                          style: FontConstant.styleMedium(
-                              fontSize: 12, color: AppColors.black),
-                        )
-                      ],
+                    InkWell(
+                      onTap: () => {
+                        profileDetailsController.profileDetails(
+                            context, mId, "", [
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9",
+                          "10",
+                          "11"
+                        ])
+                      },
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          SvgPicture.asset(
+                            "assets/images/pink_search.svg",
+                            height: 20,
+                            width: 20,
+                          ),
+                          SizedBox(width: 3),
+                          Text(
+                            "View Profile",
+                            style: FontConstant.styleMedium(
+                                fontSize: 12, color: AppColors.black),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

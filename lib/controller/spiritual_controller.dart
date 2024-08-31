@@ -18,6 +18,7 @@ class SpiritualDetailsController with ChangeNotifier {
 
   Future<void> spiritualDetails(
       BuildContext context,
+      String spiritualConnected,
       String nameCounselor,
       String connectCounselor,
       String templeCounselor,
@@ -30,6 +31,7 @@ class SpiritualDetailsController with ChangeNotifier {
 
     try {
       _member = await apiService.spiritualDetails(
+        spiritualConnected,
           nameCounselor,
           connectCounselor,
           templeCounselor,

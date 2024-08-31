@@ -1,4 +1,5 @@
 import 'package:devotee/controller/inbox_sent_controller.dart';
+import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
@@ -16,6 +17,8 @@ class SentAccepted extends StatefulWidget {
 
 class _SentAcceptedState extends State<SentAccepted> {
   InboxSentController inboxSentController = Get.put(InboxSentController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -26,16 +29,15 @@ class _SentAcceptedState extends State<SentAccepted> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
         backgroundColor: AppColors.constColor,
         body: Obx(() {
           return Stack(
             children: [
-            if (inboxSentController.isLoading.value == false)
+              if (inboxSentController.isLoading.value == false)
                 acceptedContent(),
-              if (inboxSentController.isLoading.value)
+              if (inboxSentController.isLoading.value ||
+                  profileDetailsController.isLoading.value)
                 Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -71,14 +73,9 @@ class _SentAcceptedState extends State<SentAccepted> {
                 // Get.toNamed('/profiledtls');
               },
               child: Container(
-                //  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                 decoration: BoxDecoration(
-                  // color: selectedIndex == index
-                  //     ? Colors.grey.shade300
-                  //     : Colors.white,
                   color: Colors.white,
                   border: Border.all(color: Colors.grey.shade200),
-                  //  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
                   children: [
@@ -152,21 +149,43 @@ class _SentAcceptedState extends State<SentAccepted> {
                                         color: AppColors.darkgrey),
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    SvgPicture.asset(
-                                      "assets/images/pink_search.svg",
-                                      height: 20,
-                                      width: 20,
-                                    ),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      "View Profile",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12, color: AppColors.black),
-                                    )
-                                  ],
+                                InkWell(
+                                  onTap: () => {
+                                    profileDetailsController.profileDetails(
+                                        context, mId, "", [
+                                      "1",
+                                      "2",
+                                      "3",
+                                      "4",
+                                      "5",
+                                      "6",
+                                      "7",
+                                      "8",
+                                      "9",
+                                      "10",
+                                      "11"
+                                    ])
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Spacer(),
+                                      SvgPicture.asset(
+                                        "assets/images/pink_search.svg",
+                                        height: 20,
+                                        width: 20,
+                                      ),
+                                      SizedBox(width: 3),
+                                      Text(
+                                        "View Profile",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: AppColors.black),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      )
+                                    ],
+                                  ),
                                 )
                               ],
                             ),

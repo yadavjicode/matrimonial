@@ -246,10 +246,10 @@ class ApiService {
         "reference1_name": referAName,
         "reference1_email": referAEmail,
         "reference1_mobile": referAMobileno,
-        "reference2_reletion": referARelation,
-        "reference2_name": referAName,
-        "reference2_email": referAEmail,
-        "reference2_mobile": referAMobileno,
+        "reference2_reletion": referBRelation,
+        "reference2_name": referBName,
+        "reference2_email": referBEmail,
+        "reference2_mobile": referBMobileno,
       }),
     );
 
@@ -392,6 +392,7 @@ class ApiService {
 //==== Start Api Spiritual Details ==========================================================================================
 
   Future<SpiritualDetailsModel> spiritualDetails(
+    String spiritualConnected,
       String nameCounselor,
       String connectCounselor,
       String templeCounselor,
@@ -413,6 +414,7 @@ class ApiService {
       },
       body: jsonEncode({
         "step_8": "1",
+        "spiritual_counseler_connected":spiritualConnected,
         "name_of_the_counselor_of_my_spiritual_path": nameCounselor,
         'connected_with_my_counseler_since': connectCounselor,
         "with_which_temple_your_counselor_is_connected_to": templeCounselor,

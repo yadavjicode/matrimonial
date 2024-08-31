@@ -44,9 +44,12 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
 
   String working() {
     if (selectedRadioValue == 1) {
-      return "yes";
-    } else {
-      return "no";
+      return "Yes";
+    } else if(selectedRadioValue==2)
+    {
+      return "No";
+    }else{
+      return "";
     }
   }
 
@@ -148,7 +151,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                           )
                         ],
                       ),
-                      if (working() == "yes")
+                      if (selectedRadioValue== 1)
                         Column(
                           children: [
                             Padding(

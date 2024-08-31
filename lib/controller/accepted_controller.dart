@@ -1,5 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/model/accepted_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,26 +18,36 @@ class AcceptedController with ChangeNotifier {
   Future<void> accepted(
     BuildContext context,
     String id,
-  ) async {
+   { VoidCallback? btnOkOnPress,}
+  ) async {   
     isLoading.value = true;
     _error = null;
     notifyListeners();
+   
 
     try {
       _member = await apiService.Accepted(id);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: AppColors.primaryColor,
-        content: Text(
-          '${member?.status}',
-          style: TextStyle(color: AppColors.constColor),
-        ),
-      ));
+      CustomDialog.show(
+        context,
+        'Accepted',
+        '${member!.status}',
+        dialogType: DialogType.success,
+        btnOkOnPress: btnOkOnPress ??
+            () {
+              // Navigator.of(context).pop(); // Default action if none is provided
+            },
+      );
     } catch (e) {
       _error = e.toString();
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     Dialogs.showSnackbar(context, '${_error}');
+      CustomDialog.show(
+        context,
+        'Error',
+        '${_error}',
+        dialogType: DialogType.error,
+      );
     } finally {
       isLoading.value = false;
       notifyListeners();

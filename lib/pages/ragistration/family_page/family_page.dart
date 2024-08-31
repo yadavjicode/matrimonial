@@ -1,6 +1,5 @@
 import 'package:devotee/constants/lists/catagory.dart';
 import 'package:devotee/constants/lists/income_list.dart';
-import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/mother_tongue_list.dart';
 import 'package:devotee/constants/lists/title_profession_list.dart';
 import 'package:devotee/controller/family_details_controller.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/constants/CustomTextFeild.dart';
-import 'package:devotee/constants/profile_constant.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
@@ -116,7 +114,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (fatherAlive == 2) {
       return "NO";
     } else {
-      return "null";
+      return "";
     }
   }
 
@@ -126,7 +124,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (motherAlive == 2) {
       return "NO";
     } else {
-      return "null";
+      return "";
     }
   }
 
@@ -136,7 +134,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (sister == 2) {
       return "NO";
     } else {
-      return "null";
+      return "";
     }
   }
 
@@ -146,7 +144,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (brother == 2) {
       return "NO";
     } else {
-      return "null";
+      return "";
     }
   }
 
@@ -156,7 +154,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (familytype == 2) {
       return "Nuclear";
     } else {
-      return "null";
+      return "";
     }
   }
 
@@ -168,7 +166,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (familyValue == 3) {
       return "Liberal";
     } else {
-      return "null";
+      return "";
     }
   }
 
@@ -182,7 +180,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (affluenceLevel == 4) {
       return "Upper class";
     } else {
-      return "null";
+      return "l";
     }
   }
 

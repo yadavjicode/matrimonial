@@ -1,12 +1,9 @@
 import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/lists/location_list.dart';
-import 'package:devotee/constants/profile_constant.dart';
-import 'package:devotee/controller/list_controller.dart';
 import 'package:devotee/controller/spiritual_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +28,16 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
   String? selectedState;
   String? selectedCity;
   int? counsellor;
+
+   String getCounsellor() {
+    if (counsellor == 1) {
+      return "Joint";
+    } else if (counsellor == 2) {
+      return "Nuclear";
+    } else {
+      return "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,6 +226,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                               onPressed: () => {
                                     spiritualController.spiritualDetails(
                                         context,
+                                        getCounsellor(),
                                         nameCounselor.text.toString().trim(),
                                         connectCounselor.text.toString().trim(),
                                         templeCounselor.text.toString().trim(),

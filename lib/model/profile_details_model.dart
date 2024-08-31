@@ -326,6 +326,7 @@ class Data {
   dynamic shortlistStatus;
   dynamic interestStatus;
   dynamic accountType;
+  dynamic spiritualConnected;
 
   Data(
       {this.id,
@@ -633,7 +634,8 @@ class Data {
       this.profileImages,
       this.shortlistStatus,
       this.interestStatus,
-      this.accountType
+      this.accountType,
+      this.spiritualConnected
       });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -945,6 +947,7 @@ class Data {
     interestStatus = json['interest_status'];
     accountType = json['account_type'];
     employmentSummary = json['employment_summary'];
+    spiritualConnected = json['spiritual_counseler_connected'];
     if (json['profile_images'] != null) {
       profileImages = <ProfileImages>[];
       json['profile_images'].forEach((v) {
@@ -1264,6 +1267,7 @@ class Data {
     data['shortlist_status'] = this.shortlistStatus;
     data['interest_status'] = this.interestStatus;
     data['account_type'] = this.accountType;
+    data['spiritual_counseler_connected'] = this.spiritualConnected;
     if (this.profileImages != null) {
       data['profile_images'] =
           this.profileImages!.map((v) => v.toJson()).toList();

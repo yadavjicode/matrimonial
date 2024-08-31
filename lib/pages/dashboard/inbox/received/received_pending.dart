@@ -37,9 +37,11 @@ class _ReceivedPendingState extends State<ReceivedPending> {
       body: Obx(() {
         return Stack(
           children: [
-            if (!inboxReceivedController.isLoading.value &&
-                !declinedController.isLoading.value &&
-                !acceptedController.isLoading.value)
+            if (!inboxReceivedController.isLoading.value
+            //  &&
+            //     !declinedController.isLoading.value &&
+            //     !acceptedController.isLoading.value
+                )
               pendingContent(),
             if (inboxReceivedController.isLoading.value ||
                 declinedController.isLoading.value ||
@@ -158,78 +160,78 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                                         color: AppColors.darkgrey),
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 26,
-                                      width: 26,
-                                      decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          shape: BoxShape.circle),
-                                      alignment: Alignment.center,
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: AppColors.constColor,
-                                      ),
-                                    ),
-                                    SizedBox(width: 3),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () => {
-                                          declinedController.declined(
-                                              context, mId),
-                                          WidgetsBinding.instance
-                                              .addPostFrameCallback((_) {
-                                            inboxReceivedController.inboxSent(
-                                                context, "Pending");
-                                          })
-                                        },
-                                        child: Text(
-                                          "Delete Request",
-                                          style: FontConstant.styleMedium(
-                                              fontSize: 12, color: Colors.red),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 26,
-                                      width: 26,
-                                      decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          shape: BoxShape.circle),
-                                      alignment: Alignment.center,
-                                      child: SvgPicture.asset(
-                                          "assets/images/icons/correct.svg"),
-                                    ),
-                                    SizedBox(width: 3),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () => {
-                                          acceptedController.accepted(
-                                              context, mId),
-                                          WidgetsBinding.instance
-                                              .addPostFrameCallback((_) {
-                                            inboxReceivedController.inboxSent(
-                                                context, "Pending");
-                                          })
-                                        },
-                                        child: Text(
-                                          "Accept Request",
-                                          style: FontConstant.styleMedium(
-                                              fontSize: 12,
-                                              color: Colors.green),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           ),
                         ),
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 26,
+                            width: 26,
+                            decoration: BoxDecoration(
+                                color: Colors.red, shape: BoxShape.circle),
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.delete,
+                              color: AppColors.constColor,
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => {
+                                declinedController.declined(context, mId,btnOkOnPress: () => {
+                                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  inboxReceivedController.inboxSent(
+                                      context, "Pending");
+                                })
+                                },),
+                               
+                              },
+                              child: Text(
+                                "Delete Request",
+                                style: FontConstant.styleMedium(
+                                    fontSize: 12, color: Colors.red),
+                              ),
+                            ),
+                          ),
+                          
+                          Container(
+                            height: 26,
+                            width: 26,
+                            decoration: BoxDecoration(
+                                color: Colors.green, shape: BoxShape.circle),
+                            alignment: Alignment.center,
+                            child: SvgPicture.asset(
+                                "assets/images/icons/correct.svg"),
+                          ),
+                          SizedBox(width: 5),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () => {
+                                acceptedController.accepted(context, mId,btnOkOnPress :()=>{
+                                 WidgetsBinding.instance.addPostFrameCallback((_) {
+                                  inboxReceivedController.inboxSent(
+                                      context, "Pending");
+                                })
+                                }),
+                               
+                              },
+                              child: Text(
+                                "Accept Request",
+                                style: FontConstant.styleMedium(
+                                    fontSize: 12, color: Colors.green),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
