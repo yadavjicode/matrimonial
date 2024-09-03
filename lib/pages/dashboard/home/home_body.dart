@@ -1,6 +1,8 @@
 import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/chat/models/chat_user.dart';
+import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
@@ -32,6 +34,26 @@ class _HomeBodyState extends State<HomeBody> {
       Get.put(SentInvitationController());
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
+
+  Future<void> _fetchUser(String userId) async {
+    ChatUser? _chatUser;
+    ChatUser? user = await directChatController.getUserById(userId);
+    setState(() {
+      _chatUser = user;
+    });
+    if (_chatUser != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatScreen(user: _chatUser!),
+        ),
+      );
+    } else {
+      Dialogs.showSnackbar(context, 'unable to fetch data');
+    }
+  }
 
   @override
   void initState() {
@@ -137,9 +159,22 @@ class _HomeBodyState extends State<HomeBody> {
                     return GestureDetector(
                       onTap: () {
                         profileDetailsController.profileDetails(
-                            context, data.matriID!,"",["1","2","3","4","5","6","7","8","9","10","11"]);
+                            context, data.matriID!, "", [
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9",
+                          "10",
+                          "11"
+                        ]);
                       },
                       child: Container(
+                        width: 280,
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 10, right: 10),
                         decoration: BoxDecoration(
@@ -158,17 +193,17 @@ class _HomeBodyState extends State<HomeBody> {
                                 child: Stack(children: [
                                   Image.network(
                                     image,
-                                    width: 315,
-                                    height: 290,
+                                    width: 280,
+                                    height: 300,
                                     filterQuality: FilterQuality.high,
-                                    fit: BoxFit.fill,
+                                    fit: BoxFit.cover,
                                   ),
                                   Container(
                                     alignment: Alignment.center,
                                     height: 40,
                                     width: 40,
                                     margin:
-                                        EdgeInsets.only(top: 268, left: 265),
+                                        EdgeInsets.only(top: 280, left: 230),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.white),
@@ -239,36 +274,37 @@ class _HomeBodyState extends State<HomeBody> {
                               ),
                             ],
                           ),
-                          
-                         if(data.accountType==1)  Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 8),
-                                decoration: BoxDecoration(
-                                    color: AppColors.constColor,
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),topRight: Radius.circular(10))),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/Crown.png",
-                                      height: 15,
-                                      width: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text(
-                                      "Premium",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12,
-                                          color: Color(0xFFF69506)),
-                                    )
-                                  ],
-                                ),
-                              ))
+                          if (data.accountType == 1)
+                            Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 8),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.constColor,
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10))),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/Crown.png",
+                                        height: 15,
+                                        width: 15,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        "Premium",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: Color(0xFFF69506)),
+                                      )
+                                    ],
+                                  ),
+                                ))
                         ]),
                       ),
                     );
@@ -344,7 +380,19 @@ class _HomeBodyState extends State<HomeBody> {
                               GestureDetector(
                                 onTap: () => {
                                   profileDetailsController.profileDetails(
-                                      context, data.matriID!,"",["1","2","3","4","5","6","7","8","9","10","11"])
+                                      context, data.matriID!, "", [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11"
+                                  ])
                                 },
                                 child: Row(
                                   children: [
@@ -490,24 +538,29 @@ class _HomeBodyState extends State<HomeBody> {
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () async {
-                                          //hide alert dialog
-                                          if(data.chatStatus==1){
-                                          if (data.matriID!.trim().isNotEmpty &&
-                                              data.matriID != null) {
-                                            await APIs.addChatUser(
-                                                    data.matriID!)
-                                                .then((value) {
-                                              if (!value) {
-                                                Dialogs.showSnackbar(context,
-                                                    'User does not Exists!');
-                                              } else {
-                                                Get.to(HomeScreen());
-                                              }
-                                            });
-                                          }
-                                          }else{
-                                             Dialogs.showSnackbar(context,
-                                                    'User does not accepted list!');
+                                          if (data.chatStatus == 1) {
+                                            if (data.matriID!
+                                                    .trim()
+                                                    .isNotEmpty &&
+                                                data.matriID != null) {
+                                              await APIs.addChatUser(
+                                                      data.matriID!)
+                                                  .then((value) {
+                                                if (!value) {
+                                                  Dialogs.showSnackbar(context,
+                                                      'User does not Exists!');
+                                                } else {
+                                                  _fetchUser(
+                                                    data.matriID
+                                                        .toString()
+                                                        .trim(),
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          } else {
+                                            Dialogs.showSnackbar(context,
+                                                'User does not accepted list!');
                                           }
                                         },
                                         child: Row(
@@ -567,34 +620,35 @@ class _HomeBodyState extends State<HomeBody> {
                               )
                             ],
                           ),
-                        if(data.accountType==1)  Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 8),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10))),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/Crown.png",
-                                      height: 15,
-                                      width: 15,
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text(
-                                      "Premium",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12,
-                                          color: Color(0xFFF69506)),
-                                    )
-                                  ],
-                                ),
-                              ))
+                          if (data.accountType == 1)
+                            Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(10))),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/Crown.png",
+                                        height: 15,
+                                        width: 15,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        "Premium",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: Color(0xFFF69506)),
+                                      )
+                                    ],
+                                  ),
+                                ))
                         ]),
                       ),
                     );

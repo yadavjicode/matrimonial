@@ -47,7 +47,9 @@ class _OfferingGratitudeState extends State<OfferingGratitude> {
                     ),
                     DrawerCommanCode()
                         .buildTextSemiBold("Offering Your Gratitude\n"),
-                    DrawerCommanCode().buildText("Coming Soon")
+                    DrawerCommanCode().buildTextBold("Hare Krishna!\n"),
+                    DrawerCommanCode().buildText(
+                        "As you know that we are taking only nominal charges as a subscription amount to keep continue this application, to maintain this application and to promote this application in public domain, we needs some financial support, if you like our work and if you want to offer your Gratitude in terms of financial support, then you can provide us financial support via the Bank Account Details given below.")
                   ],
                 ),
               )

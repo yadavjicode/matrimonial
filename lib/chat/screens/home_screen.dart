@@ -1,18 +1,14 @@
 import 'dart:developer';
 
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/main.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lottie/lottie.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
 import '../models/chat_user.dart';
 import '../widgets/chat_user_card.dart';
 import '../widgets/profile_image.dart';
-import 'ai_screen.dart';
 import 'profile_screen.dart';
 
 //home screen -- where all available contacts are shown
@@ -36,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-
+    
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
@@ -113,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name, Email, ...',
+                      
                       hintStyle: TextStyle(color: AppColors.constColor)),
                   autofocus: true,
                   style: const TextStyle(fontSize: 17, letterSpacing: 0.5),
@@ -151,17 +148,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
 
-        //floating button to add new user
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: FloatingActionButton(
-              backgroundColor: Colors.white,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const AiScreen()));
-              },
-              child: Lottie.asset('assets/lottie/ai.json', width: 40)),
-        ),
+        //floating button to add AI Screen
+        // floatingActionButton: Padding(
+        //   padding: const EdgeInsets.only(bottom: 10),
+        //   child: FloatingActionButton(
+        //       backgroundColor: Colors.white,
+        //       onPressed: () {
+        //         Navigator.push(context,
+        //             MaterialPageRoute(builder: (_) => const AiScreen()));
+        //       },
+        //       child: Lottie.asset('assets/lottie/ai.json', width: 40)),
+        // ),
 
         //body
         body: StreamBuilder(

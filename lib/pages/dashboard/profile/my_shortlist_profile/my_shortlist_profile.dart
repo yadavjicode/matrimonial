@@ -1,10 +1,12 @@
 import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/models/chat_user.dart';
+import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/controller/shortlisted_list_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -26,6 +28,26 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
       Get.put(ProfileDetailsController());
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
+
+  Future<void> _fetchUser(String userId) async {
+    ChatUser? _chatUser;
+    ChatUser? user = await directChatController.getUserById(userId);
+    setState(() {
+      _chatUser = user;
+    });
+    if (_chatUser != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatScreen(user: _chatUser!),
+        ),
+      );
+    } else {
+      Dialogs.showSnackbar(context, 'unable to fetch data');
+    }
+  }
 
   @override
   void initState() {
@@ -61,13 +83,14 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           return Stack(
             children: [
               if (!shortlistedListController.isLoading.value
-              // &&
-                 // !shortlistController.isLoading.value
+                  // &&
+                  // !shortlistController.isLoading.value
                   )
                 shortlistedContent(),
               if (shortlistedListController.isLoading.value ||
                   shortlistController.isLoading.value ||
-                  profileDetailsController.isLoading.value)
+                  profileDetailsController.isLoading.value ||
+                  directChatController.isLoading.value)
                 Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -275,23 +298,24 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () async {
-                                        if(data.chat_status==1){
-                                        if (data.matId!.trim().isNotEmpty &&
-                                            data.matId != null) {
-                                          await APIs.addChatUser(data.matId!)
-                                              .then((value) {
-                                            if (!value) {
-                                              Dialogs.showSnackbar(context,
-                                                  'User does not Exists!');
-                                            } else {
-                                              Get.to(HomeScreen());
-                                            }
-                                          });
-                                        }
-                                        }
-                                        else{
+                                        if (data.chat_status == 1) {
+                                          if (data.matId!.trim().isNotEmpty &&
+                                              data.matId != null) {
+                                            await APIs.addChatUser(data.matId!)
+                                                .then((value) {
+                                              if (!value) {
+                                                Dialogs.showSnackbar(context,
+                                                    'User does not Exists!');
+                                              } else {
+                                                _fetchUser(
+                                                  data.matId.toString().trim(),
+                                                );
+                                              }
+                                            });
+                                          }
+                                        } else {
                                           Dialogs.showSnackbar(context,
-                                                  'User does not accepted list!');
+                                              'User does not accepted list!');
                                         }
                                       },
                                       //hide alert dialog
@@ -322,7 +346,19 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                     child: GestureDetector(
                                       onTap: () => {
                                         profileDetailsController.profileDetails(
-                                            context, data.matId!,"",["1","2","3","4","5","6","7","8","9","10","11"])
+                                            context, data.matId!, "", [
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                          "11"
+                                        ])
                                       },
                                       child: Text(
                                         "View Profile",

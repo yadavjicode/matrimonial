@@ -14,6 +14,7 @@ class SuggestionController with ChangeNotifier {
 
   Future<void> suggestion(
     BuildContext context,
+    String email,
     String suggestion,
   ) async {
     isLoading.value = true;
@@ -21,7 +22,7 @@ class SuggestionController with ChangeNotifier {
     notifyListeners();
 
     try {
-      _member = await apiService.Suggestion(suggestion);
+      _member = await apiService.Suggestion(email,suggestion);
 
       // ignore: use_build_context_synchronously
       Dialogs.showSnackbarPop(context, '${member?.message}');

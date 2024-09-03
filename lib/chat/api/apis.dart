@@ -7,6 +7,7 @@ import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import '../models/chat_user.dart';
@@ -14,7 +15,7 @@ import '../models/message.dart';
 
 
 class APIs with ChangeNotifier {
-  static EditProfileController _editProfileController =
+  static final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   static String myid =
       _editProfileController.member!.member!.matriID.toString();
@@ -23,8 +24,9 @@ class APIs with ChangeNotifier {
   static String email =
       _editProfileController.member!.member!.confirmEmail.toString();
 
-  static String image =_editProfileController.member!.member!.photo1!=null?"http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.photo1}":
-      "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
+  static String image = _editProfileController.member!.member!.photo1 != null
+      ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.photo1}"
+      : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
           .toString();
 
   // for authentication
@@ -50,6 +52,46 @@ class APIs with ChangeNotifier {
 
   // to return current user
   // static User get user => auth.currentUser!;
+
+  //start find another user deatils to user id =====================================================================
+  Future<ChatUser?> getUserById(String userId) async {
+    try {
+      DocumentSnapshot doc =
+          await firestore.collection('users').doc(userId).get();
+
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return ChatUser.fromJson(data);
+      } else {
+        print('User not found');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching user: $e');
+      return null;
+    }
+  }
+//End find another user deatils to user id =====================================================================
+
+//Start Update image ===========================================================================================
+static Future<bool> updateUserImage(String imageurl) async {
+    try {
+      me.image=await imageurl;
+   
+      // String imageUrl =  imageurl;
+      await firestore.collection('users').doc(myid).update({
+        'image': me.image,
+      });
+      
+      print('Image updated successfully');
+      return true;
+    } catch (e) {
+      print('Error updating image: $e');
+      return false;
+    }
+}
+//End Update image ===========================================================================================
+
 
   // for accessing firebase messaging (Push Notification)
   static FirebaseMessaging fMessaging = FirebaseMessaging.instance;
@@ -120,15 +162,13 @@ class APIs with ChangeNotifier {
 
   // for checking if user exists or not?
   static Future<bool> userExists() async {
-    
-    print(
-        "my user ====${_editProfileController.member!.member!.matriID.toString()}");
+    print( "my user ====${_editProfileController.member!.member!.matriID.toString()}");
+
     return (await firestore
             .collection('users')
             .doc(_editProfileController.member!.member!.matriID)
             .get())
         .exists;
-        
   }
 
   // for adding an chat user for our conversation
@@ -172,7 +212,6 @@ class APIs with ChangeNotifier {
         await createUser().then((value) => getSelfInfo());
       }
     });
-    
   }
 
   // for creating a new user

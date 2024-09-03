@@ -14,14 +14,15 @@ class ComplaintController with ChangeNotifier {
 
   Future<void> complaint(
     BuildContext context,
-    String compalint,
+    String name, String phoneno, String email, String complaint
   ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.Complaint(compalint);
+      _member = await apiService.Complaint(name,phoneno,email
+      ,complaint);
       // ignore: use_build_context_synchronously
       Dialogs.showSnackbarPop(context, '${member?.message}');
     } catch (e) {

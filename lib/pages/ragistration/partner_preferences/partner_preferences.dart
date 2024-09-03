@@ -128,7 +128,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAndToNamed('/profile');
+              Get.offAndToNamed('/aboutgroom');
             },
           ),
         ),

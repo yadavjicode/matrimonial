@@ -56,7 +56,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAndToNamed('/aboutgroom');
+              Get.offAndToNamed('/family');
             },
           ),
         ),

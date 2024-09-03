@@ -1,3 +1,6 @@
+import 'package:devotee/chat/api/direct_chat_controller.dart';
+import 'package:devotee/chat/models/chat_user.dart';
+import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +35,26 @@ class _BasedMatchesState extends State<BasedMatches> {
   final ScrollController _scrollController = ScrollController();
   final DashboardController dashboardController =
       Get.put(DashboardController());
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
+
+  Future<void> _fetchUser(String userId) async {
+    ChatUser? _chatUser;
+    ChatUser? user = await directChatController.getUserById(userId);
+    setState(() {
+      _chatUser = user;
+    });
+    if (_chatUser != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatScreen(user: _chatUser!),
+        ),
+      );
+    } else {
+      Dialogs.showSnackbar(context, 'unable to fetch data');
+    }
+  }
 
   @override
   void initState() {
@@ -82,7 +105,8 @@ class _BasedMatchesState extends State<BasedMatches> {
             ),
             if (shortlistController.isLoading.value ||
                 sentInvitationController.isLoading.value ||
-                profileDetailsController.isLoading.value)
+                profileDetailsController.isLoading.value ||
+                directChatController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -361,15 +385,20 @@ class _BasedMatchesState extends State<BasedMatches> {
                         ),
                         Expanded(
                           child: GestureDetector(
+                            
                             onTap: () async {
                               if (data.chatStatus == 1) {
-                                if (id.trim().isNotEmpty && id.trim() != null) {
-                                  await APIs.addChatUser(id).then((value) {
+                                if (data.matriID!.trim().isNotEmpty &&
+                                    data.matriID != null) {
+                                  await APIs.addChatUser(data.matriID!)
+                                      .then((value) {
                                     if (!value) {
                                       Dialogs.showSnackbar(
                                           context, 'User does not Exists!');
                                     } else {
-                                      Get.to(HomeScreen());
+                                      _fetchUser(
+                                        data.matriID.toString().trim(),
+                                      );
                                     }
                                   });
                                 }

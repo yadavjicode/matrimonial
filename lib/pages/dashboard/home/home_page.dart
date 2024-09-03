@@ -1,3 +1,4 @@
+import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/logout.dart';
@@ -32,6 +33,7 @@ class _HomeState extends State<Home> {
       Get.put(SentInvitationController());
   final  ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+    final DirectChatController directChatController=Get.put(DirectChatController());
 
   @override
   void initState() {
@@ -212,7 +214,7 @@ class _HomeState extends State<Home> {
                               child: Stack(children: [HomeBody()]),
                             ),
                             if (shortlistController.isLoading.value ||
-                                sentInvitationController.isLoading.value||profileDetailsController.isLoading.value)
+                                sentInvitationController.isLoading.value||profileDetailsController.isLoading.value||directChatController.isLoading.value)
                               Center(
                                 child: CircularProgressIndicator(
                                   color: AppColors.primaryColor,

@@ -12,7 +12,6 @@ class LogoutConfirmationDialog extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
     await APIs.updateActiveStatus(false);
     await prefs.setString('token', "");
-
     Get.delete<EditProfileController>();
 
     // Delay a little to ensure the dialog is fully closed before restarting

@@ -709,26 +709,26 @@ class ProfessionsController extends GetxController {
 //   }
 // }
 
-class LanguageController extends GetxController {
-  var selectedItem = RxnString();
+// class LanguageController extends GetxController {
+//   var selectedItem = RxnString();
 
-  static List<String> languageList() {
-    return [
-      'English',
-      'Spanish',
-      'French',
-      'German',
-      'Chinese',
-      'Japanese',
-      'Hindi',
-      'Other',
-    ];
-  }
+//   static List<String> languageList() {
+//     return [
+//       'English',
+//       'Spanish',
+//       'French',
+//       'German',
+//       'Chinese',
+//       'Japanese',
+//       'Hindi',
+//       'Other',
+//     ];
+//   }
 
-  void selectItem(String? value) {
-    selectedItem.value = value;
-  }
-}
+//   void selectItem(String? value) {
+//     selectedItem.value = value;
+//   }
+// }
 
 class NumberController extends GetxController {
   var selectedItem = RxnString();

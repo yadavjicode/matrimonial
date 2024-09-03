@@ -6,6 +6,7 @@ import 'package:devotee/main.dart';
 import 'package:devotee/utils/constants.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
@@ -30,6 +31,26 @@ class _ChatScreenState extends State<ChatScreen> {
 
   //for handling message text changes
   final _textController = TextEditingController();
+  @override
+  void initState() {
+    
+    // TODO: implement initState
+    super.initState();
+    APIs.getSelfInfo();
+    SystemChannels.lifecycle.setMessageHandler((message) {
+      log('Message: $message');
+
+      if (APIs.myid != null) {
+        if (message.toString().contains('resume')) {
+          APIs.updateActiveStatus(true);
+        }
+        if (message.toString().contains('pause')) {
+          APIs.updateActiveStatus(false);
+        }
+      }
+      return Future.value(message);
+    });
+  }
 
   //showEmoji -- for storing value of showing or hiding emoji
   //isUploading -- for checking if image is uploading or not?

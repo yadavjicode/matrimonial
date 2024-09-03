@@ -35,7 +35,6 @@ Widget buildDropdown(
           hintText: hintText ?? '',
           items: items,
           onChanged: onChanged,
-          
         ),
       ),
     ],
@@ -136,6 +135,7 @@ Widget buildDropdownWithSearch(
   double? radiusdrop,
   Color borderColor = AppColors.darkgrey,
   String? selectedItem,
+  bool isMultiSelection = true,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,19 +166,104 @@ Widget buildDropdownWithSearch(
                           .primaryColor), // Set color for focused state
                 ),
                 enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.grey),
-                    // Set color for enabled state
-                    ),
+                  borderSide: BorderSide(color: AppColors.grey),
+                  // Set color for enabled state
+                ),
               ),
             ),
 
             menuProps: MenuProps(
               backgroundColor: AppColors.primaryLight,
+
               // Background color of the dropdown menu
             ),
           ),
           items: items,
           selectedItem: selectedItem,
+          dropdownDecoratorProps: DropDownDecoratorProps(
+            baseStyle:
+                FontConstant.styleRegular(fontSize: 16, color: Colors.black),
+            dropdownSearchDecoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(radiusdrop ?? 23),
+                borderSide: BorderSide(color: borderColor),
+              ),
+
+              suffixIconColor: AppColors.darkgrey,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(radiusdrop ?? 23),
+                borderSide: BorderSide(color: borderColor),
+              ),
+              hintText: hintText ?? '',
+              //   labelText: hintText ?? '',
+            ),
+          ),
+          onChanged: onChanged,
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildDropdownWithSearchMulti(
+  String? title,
+  List<String> items,
+  Function(List<String>) onChanged, {
+  String? hintText,
+  double? radiusdrop,
+  Color borderColor = AppColors.darkgrey,
+  List<String>? selectedItems, // Change from String? to List<String>?
+  bool isMultiSelection = false,
+
+  // Added this to toggle multi-selection
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (title != null && title.isNotEmpty)
+        Text(
+          title,
+          style: FontConstant.styleRegular(fontSize: 16, color: Colors.black),
+        ),
+      Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: DropdownSearch<String>.multiSelection(
+          popupProps: PopupPropsMultiSelection.menu(
+            showSearchBox: true,
+            // Enable the search box
+            searchFieldProps: TextFieldProps(
+              decoration: InputDecoration(
+                labelText: "Search",
+                hintText: "Search for $title",
+                labelStyle: FontConstant.styleRegular(
+                    fontSize: 15, color: AppColors.black),
+                hintStyle: FontConstant.styleRegular(
+                    fontSize: 15, color: AppColors.grey),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: AppColors
+                          .primaryColor), // Set color for focused state
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.grey),
+                  // Set color for enabled state
+                ),
+              ),
+            ),
+
+            menuProps: MenuProps(
+              backgroundColor: AppColors.primaryLight,
+            ),
+          ),
+
+          items: items,
+          selectedItems: selectedItems ?? [],
+
+          // dropdownButtonProps: DropdownButtonProps(color: AppColors.primaryColor),
           dropdownDecoratorProps: DropDownDecoratorProps(
             baseStyle:
                 FontConstant.styleRegular(fontSize: 16, color: Colors.black),
@@ -197,16 +282,18 @@ Widget buildDropdownWithSearch(
                 borderSide: BorderSide(color: borderColor),
               ),
               hintText: hintText ?? '',
-              //   labelText: hintText ?? '',
             ),
           ),
+
           onChanged: onChanged,
         ),
       ),
     ],
   );
 }
- 
+
+
+
 class CustomDropdowns extends StatelessWidget {
   final List<String> items;
   final String? value; // Add this parameter

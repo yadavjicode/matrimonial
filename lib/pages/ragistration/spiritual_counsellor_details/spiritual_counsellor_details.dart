@@ -6,8 +6,8 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/controller/spiritual_controller.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+
 
 class SpiritualDetails extends StatefulWidget {
   const SpiritualDetails({super.key});
@@ -48,7 +48,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
           elevation: 0,
           backgroundColor: AppColors.primaryColor,
           title: Text(
-            "Spiritual Counselor Details",
+            "Spiritual Counsellor Details",
             style: FontConstant.styleSemiBold(
                 fontSize: 18, color: AppColors.constColor),
           ),
@@ -84,7 +84,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                           height: 30,
                         ),
                         Text(
-                          "I am connected with any Spirtual Counselor",
+                          "I am connected with any Spirtual Counsellor",
                           style: FontConstant.styleRegular(
                               fontSize: 16, color: AppColors.black),
                         ),
@@ -132,7 +132,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   labelText:
-                                      "Name of the Counselor for my Spiritual Path",
+                                      "Name of the Counsellor for my Spiritual Path",
                                   controller: nameCounselor,
                                 ),
                               ),
@@ -140,7 +140,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   labelText:
-                                      "Connected with my Counselor Since (Year)",
+                                      "Connected with my Counsellor Since (Year)",
                                   controller: connectCounselor,
                                   keyboardType: TextInputType.number,
                                   maxlength: 4,
@@ -150,7 +150,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   labelText:
-                                      "With which temple your counselor is connected to?",
+                                      "With which temple your Counsellor is connected to?",
                                   controller: templeCounselor,
                                 ),
                               ),
@@ -166,7 +166,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   );
                                 } else {
                                   return buildDropdownWithSearch(
-                                    'Counselor residing in State',
+                                    'Counsellor residing in State',
                                     stateController.getStateList(),
                                     //  stateControllerPermanent.selectedItem,
                                     (value) {
@@ -193,7 +193,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   );
                                 } else {
                                   return buildDropdownWithSearch(
-                                    'Counselor residing in City',
+                                    'Counsellor residing in City',
                                     cityController.cityLists,
                                     // cityControllerPermanent.selectedItem,
                                     (value) {
@@ -212,7 +212,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   labelText:
-                                      "Something more about the counselor",
+                                      "Something more about the Counsellor",
                                   maxline: 5,
                                   controller: SomethingCounselor,
                                 ),

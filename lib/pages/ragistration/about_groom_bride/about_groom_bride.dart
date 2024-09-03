@@ -77,14 +77,14 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
           elevation: 0,
           backgroundColor: AppColors.primaryColor,
           title: Text(
-            "About Groom/Bride",
+            "Partner's Desired Qualities",
             style: FontConstant.styleSemiBold(
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAndToNamed('/family');
+              Get.offAndToNamed('/profile');
             },
           ),
         ),
@@ -245,7 +245,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/horoscope')},
+                          onTap: () => {Get.offAndToNamed('/partner')},
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             padding: EdgeInsets.all(5),

@@ -463,7 +463,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Educational Details",
-                      "/editEducationDetails",
+                      "/family",
                       Column(
                         children: [
                           _buildText(

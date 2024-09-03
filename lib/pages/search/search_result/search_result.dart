@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:devotee/chat/api/direct_chat_controller.dart';
+import 'package:devotee/chat/models/chat_user.dart';
+import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
-import 'package:devotee/chat/helper/my_date_util.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
@@ -36,6 +36,27 @@ class _SearchResultState extends State<SearchResult> {
   final ScrollController _scrollController = ScrollController();
   final DashboardController dashboardController =
       Get.put(DashboardController());
+
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
+
+  Future<void> _fetchUser(String userId) async {
+    ChatUser? _chatUser;
+    ChatUser? user = await directChatController.getUserById(userId);
+    setState(() {
+      _chatUser = user;
+    });
+    if (_chatUser != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatScreen(user: _chatUser!),
+        ),
+      );
+    } else {
+      Dialogs.showSnackbar(context, 'unable to fetch data');
+    }
+  }
 
   @override
   void initState() {
@@ -535,23 +556,29 @@ class _SearchResultState extends State<SearchResult> {
                                           child: GestureDetector(
                                             onTap: () async {
                                               if (data.chat_status == 1) {
-                                                if (id.trim().isNotEmpty &&
-                                                    id.trim() != null) {
-                                                  await APIs.addChatUser(id)
+                                                if (data.matriID!
+                                                        .trim()
+                                                        .isNotEmpty &&
+                                                    data.matriID != null) {
+                                                  await APIs.addChatUser(
+                                                          data.matriID!)
                                                       .then((value) {
                                                     if (!value) {
                                                       Dialogs.showSnackbar(
                                                           context,
                                                           'User does not Exists!');
                                                     } else {
-                                                      Get.to(HomeScreen());
+                                                      _fetchUser(
+                                                        data.matriID
+                                                            .toString()
+                                                            .trim(),
+                                                      );
                                                     }
                                                   });
                                                 }
                                               } else {
-                                                Dialogs.showSnackbar(
-                                                          context,
-                                                          'User does not accepted list!');
+                                                Dialogs.showSnackbar(context,
+                                                    'User does not accepted list!');
                                               }
                                             },
                                             child: Row(
@@ -645,7 +672,8 @@ class _SearchResultState extends State<SearchResult> {
             ),
             if (shortlistController.isLoading.value ||
                 profileDetailsController.isLoading.value ||
-                sentInvitationController.isLoading.value)
+                sentInvitationController.isLoading.value ||
+                directChatController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

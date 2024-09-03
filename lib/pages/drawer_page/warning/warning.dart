@@ -40,7 +40,15 @@ class _WarningState extends State<Warning> {
                     SizedBox(
                       height: 10,
                     ),
-                    DrawerCommanCode().buildText("Coming Soon")
+                    DrawerCommanCode().buildTextBold("Hare Krishna!\n"),
+                    DrawerCommanCode().buildText(
+                        "There may be some people (fraudsters) who will call you and pretend that they are part of team of "
+                        "Devotee Matrimony"
+                        " and may ask some amount from you on their personal UPI Number or Bank Account Number,  so please don't pay any singe rupee on Personal UPI/ Bank account number.\n"),
+                    DrawerCommanCode().buildText(
+                        "Our real team members will never encourage you to pay on any personal bank account details, if in case, our team member will call you then they will always suggest you to pay via the link provided in this application.\n"),
+                    DrawerCommanCode().buildText(
+                        "So, please save your money from such fraudsters.")
                   ],
                 ),
               )

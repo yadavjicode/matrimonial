@@ -1,5 +1,6 @@
 import 'package:devotee/constants/lists/catagory.dart';
 import 'package:devotee/constants/lists/income_list.dart';
+import 'package:devotee/constants/lists/language_list.dart';
 import 'package:devotee/constants/lists/mother_tongue_list.dart';
 import 'package:devotee/constants/lists/title_profession_list.dart';
 import 'package:devotee/controller/family_details_controller.dart';
@@ -21,24 +22,24 @@ class FamilyDetails extends StatefulWidget {
 }
 
 class _FamilyDetailsState extends State<FamilyDetails> {
-  FamilyDetailsController _familyDetailsController =
+  final FamilyDetailsController _familyDetailsController =
       Get.put(FamilyDetailsController());
-  ReligionsController religionController = Get.put(ReligionsController());
-  ProfessionController professionController = Get.put(ProfessionController());
-  IncomeController incomeController = Get.put(IncomeController());
-  NumberController numberController = Get.put(NumberController());
-  CastController castController = Get.put(CastController());
-  LanguageController languageController = Get.put(LanguageController());
-  SubCastController subCastController = Get.put(SubCastController());
-  
+  final ReligionsController religionController = Get.put(ReligionsController());
+  final ProfessionController professionController =
+      Get.put(ProfessionController());
+  final IncomeController incomeController = Get.put(IncomeController());
+  final NumberController numberController = Get.put(NumberController());
+  final CastController castController = Get.put(CastController());
+  final SubCastController subCastController = Get.put(SubCastController());
 
   final TextEditingController gotraController = TextEditingController();
   final TextEditingController fathernameController = TextEditingController();
   final TextEditingController fatherbusinessController =
       TextEditingController();
   final TextEditingController mothernameController = TextEditingController();
-  MotherTongueController motherTongueController =
+  final MotherTongueController motherTongueController =
       Get.put(MotherTongueController());
+  final LanguageController languageController = Get.put(LanguageController());
 
   List<String> selectedLanguagesList = []; // List to store selected languages
 
@@ -63,6 +64,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   String? selectedState;
   String? selectedCity;
   String? selectedMothertongue;
+  List<String>? selectedLanguage;
   String? selectedFatherOccupation;
   String? selectedFatherAnnualTurn;
   String? selectedFatherAnnualIncomeRange;
@@ -77,23 +79,10 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   String? selectedNoMarriedBrother;
   String? selectedHowManyMember;
 
-  List<String> languages = [
-    'Hindi',
-    'Bengali',
-    'Telugu',
-    'Marathi',
-    'Tamil',
-    'Gujarati',
-    'Kannada',
-    'Odia',
-    'Malayalam',
-    'Punjabi',
-    'Assamese',
-    'Urdu'
-  ];
+  String getLanguageKnown(List<String> language) {
+    return language.join(', ');
+  }
 
-  bool showAll = false;
-  Set<String> selectedLanguages = {};
   TextEditingController time = TextEditingController();
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -234,24 +223,23 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 alignment: Alignment.center,
                                 child: Image.asset(
                                     'assets/images/familyicon.png')),
-                             buildDropdownWithSearch(
-                                  'Religion',
-                                  religionController.getReligionNames(),
-                                  (value) {
-                                    setState(() {
-                                      selectedReligion = religionController
-                                          .religionsLists
-                                          .firstWhere((religion) =>
-                                              religion['name'] == value)['id'];
-                                      selectedReligionName = value;
-                                    });
+                            buildDropdownWithSearch(
+                              'Religion',
+                              religionController.getReligionNames(),
+                              (value) {
+                                setState(() {
+                                  selectedReligion = religionController
+                                      .religionsLists
+                                      .firstWhere((religion) =>
+                                          religion['name'] == value)['id'];
+                                  selectedReligionName = value;
+                                });
 
-                                    religionController.selectItem(value);
-                                  },
-                                  hintText: 'Select Religion',
-                                ),
-                              
-                            
+                                religionController.selectItem(value);
+                              },
+                              hintText: 'Select Religion',
+                            ),
+
                             const SizedBox(height: 15),
                             Obx(() {
                               if (castController.isLoading.value) {
@@ -301,150 +289,162 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               }
                             }),
 
-                            // buildDropdown(
-                            //   'Sub caste',
-                            //   CasteController.casteStatus(),
-                            //   casteController.selectedItem.call,
-                            //   hintText: 'Rathore',
-                            // ),
                             const SizedBox(height: 15),
                             CustomTextField(
                                 controller: gotraController,
                                 labelText: 'Gotra'),
-                            const SizedBox(height: 15),
-                            Text(
-                              'Languages known',
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                            const SizedBox(height: 15),
+                            // const SizedBox(height: 15),
+                            // Text(
+                            //   'Languages known',
+                            //   style: FontConstant.styleRegular(
+                            //       fontSize: 16, color: Colors.black),
+                            // ),
+                            // const SizedBox(height: 15),
+                            // SizedBox(
+                            //   height: 130,
+                            //   child: GridView.builder(
+                            //     scrollDirection: Axis.vertical,
+                            //     gridDelegate:
+                            //         const SliverGridDelegateWithFixedCrossAxisCount(
+                            //       crossAxisCount: 2,
+                            //       crossAxisSpacing: 10,
+                            //       mainAxisSpacing: 10,
+                            //       childAspectRatio: 29 / 6,
+                            //     ),
+                            //     itemCount: showAll ? languages.length : 6,
+                            //     itemBuilder: (context, index) {
+                            //       String language = languages[index];
+                            //       bool isSelected =
+                            //           selectedLanguages.contains(language);
+                            //       if (!showAll && index == 5) {
+                            //         return GestureDetector(
+                            //           onTap: () {
+                            //             setState(() {
+                            //               showAll = true;
+                            //             });
+                            //           },
+                            //           child: Container(
+                            //             decoration: BoxDecoration(
+                            //               border: Border.all(
+                            //                   color: Colors.grey, width: 1.0),
+                            //               borderRadius:
+                            //                   BorderRadius.circular(20),
+                            //             ),
+                            //             alignment: Alignment.center,
+                            //             child: const Row(
+                            //               mainAxisAlignment:
+                            //                   MainAxisAlignment.center,
+                            //               children: [
+                            //                 Icon(
+                            //                   CupertinoIcons.plus,
+                            //                   size: 15,
+                            //                 ),
+                            //                 SizedBox(
+                            //                   width: 2,
+                            //                 ),
+                            //                 Text('More'),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //         );
+                            //       } else {
+                            //         String language = languages[index];
+                            //         bool isSelected =
+                            //             selectedLanguages.contains(language);
+                            //         return GestureDetector(
+                            //           onTap: () {
+                            //             setState(
+                            //               () {
+                            //                 if (isSelected) {
+                            //                   selectedLanguages
+                            //                       .remove(language);
+                            //                   selectedLanguagesList
+                            //                       .remove(language);
+                            //                 } else {
+                            //                   selectedLanguages.add(language);
+                            //                   selectedLanguagesList
+                            //                       .add(language); // Add to list
+                            //                 }
+                            //               },
+                            //             );
+                            //           },
+                            //           child: Container(
+                            //             alignment: Alignment.center,
+                            //             decoration: BoxDecoration(
+                            //               color: isSelected
+                            //                   ? Colors.white
+                            //                   : Colors.transparent,
+                            //               border: Border.all(
+                            //                   color: isSelected
+                            //                       ? Colors.white
+                            //                       : Colors.grey,
+                            //                   width: 1.0),
+                            //               borderRadius:
+                            //                   BorderRadius.circular(20),
+                            //             ),
+                            //             child: Container(
+                            //               decoration: BoxDecoration(
+                            //                 border: Border.all(
+                            //                     color: Colors.grey, width: 0.2),
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(20),
+                            //               ),
+                            //               alignment: Alignment.center,
+                            //               child: Row(
+                            //                 crossAxisAlignment:
+                            //                     CrossAxisAlignment.center,
+                            //                 mainAxisAlignment:
+                            //                     MainAxisAlignment.center,
+                            //                 children: [
+                            //                   if (isSelected)
+                            //                     const Icon(
+                            //                       CupertinoIcons.checkmark_alt,
+                            //                       size: 20,
+                            //                       color: AppColors.primaryColor,
+                            //                     ),
+                            //                   if (isSelected) const SizedBox(),
+                            //                   const SizedBox(
+                            //                     width: 4,
+                            //                   ),
+                            //                   // const SizedBox(
+                            //                   //   width: 40,
+                            //                   // ),
+                            //                   Text(
+                            //                     language,
+                            //                     style:
+                            //                         FontConstant.styleRegular(
+                            //                             fontSize: 16,
+                            //                             color: isSelected
+                            //                                 ? AppColors
+                            //                                     .primaryColor
+                            //                                 : AppColors.black),
+                            //                   ),
+                            //                 ],
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         );
+                            //       }
+                            //     },
+                            //   ),
+                            // ),
                             SizedBox(
-                              height: 130,
-                              child: GridView.builder(
-                                scrollDirection: Axis.vertical,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                  childAspectRatio: 29 / 6,
-                                ),
-                                itemCount: showAll ? languages.length : 6,
-                                itemBuilder: (context, index) {
-                                  String language = languages[index];
-                                  bool isSelected =
-                                      selectedLanguages.contains(language);
-                                  if (!showAll && index == 5) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          showAll = true;
-                                        });
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.grey, width: 1.0),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              CupertinoIcons.plus,
-                                              size: 15,
-                                            ),
-                                            SizedBox(
-                                              width: 2,
-                                            ),
-                                            Text('More'),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    String language = languages[index];
-                                    bool isSelected =
-                                        selectedLanguages.contains(language);
-                                    return GestureDetector(
-                                      onTap: () {
-                                        setState(
-                                          () {
-                                            if (isSelected) {
-                                              selectedLanguages
-                                                  .remove(language);
-                                              selectedLanguagesList
-                                                  .remove(language);
-                                            } else {
-                                              selectedLanguages.add(language);
-                                              selectedLanguagesList
-                                                  .add(language); // Add to list
-                                            }
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: isSelected
-                                              ? Colors.white
-                                              : Colors.transparent,
-                                          border: Border.all(
-                                              color: isSelected
-                                                  ? Colors.white
-                                                  : Colors.grey,
-                                              width: 1.0),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.grey, width: 0.2),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              if (isSelected)
-                                                const Icon(
-                                                  CupertinoIcons.checkmark_alt,
-                                                  size: 20,
-                                                  color: AppColors.primaryColor,
-                                                ),
-                                              if (isSelected) const SizedBox(),
-                                              const SizedBox(
-                                                width: 4,
-                                              ),
-                                              // const SizedBox(
-                                              //   width: 40,
-                                              // ),
-                                              Text(
-                                                language,
-                                                style:
-                                                    FontConstant.styleRegular(
-                                                        fontSize: 16,
-                                                        color: isSelected
-                                                            ? AppColors
-                                                                .primaryColor
-                                                            : AppColors.black),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
+                              height: 15,
+                            ),
+                            buildDropdownWithSearchMulti(
+                              'Languages Known',
+                              languageController.getlanguageList(),
+                              //  languageController.selectedItem.call,
+                              (value) {
+                                setState(() {
+                                  selectedLanguage = value; // Update the state
+                                });
+                                // motherTongueController.selectItem(
+                                //     value); // Call the controller method
+                                print(
+                                    "language===============${getLanguageKnown(selectedLanguage ?? [])}");
+                              },
+                              hintText: 'Select Languages Known',
                             ),
                             SizedBox(
                               height: 15,
@@ -460,6 +460,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 });
                                 motherTongueController.selectItem(
                                     value); // Call the controller method
+                                    print(
+                                    "selectedMothertongue===============$selectedMothertongue");
                               },
                               hintText: 'Select Mother tongue',
                             ),
@@ -1059,10 +1061,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 onPressed: () {
                                   String gotra =
                                       gotraController.text.toString().trim();
-
-                                  String language =
-                                      getSelectedLanguagesString();
-
                                   String fathername = fathernameController.text
                                       .toString()
                                       .trim();
@@ -1073,14 +1071,14 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                   String mothername = mothernameController.text
                                       .toString()
                                       .trim();
-
                                   _familyDetailsController.familyDetails(
                                       context,
                                       selectedReligionName ?? "",
                                       selectedCastName ?? "",
                                       selectedSubCastName ?? "",
                                       gotra,
-                                      language,
+                                      getLanguageKnown(selectedLanguage ?? [])
+                                          .toString(),
                                       selectedMothertongue ?? "",
                                       getFatherAlive(),
                                       fathername,
@@ -1113,7 +1111,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               child: CustomButton(
                                 text: 'Skip',
                                 onPressed: () {
-                                  Get.offAndToNamed('/aboutgroom');
+                                  Get.offAndToNamed('/horoscope');
                                 },
                                 color: Colors.transparent,
                                 textStyle: FontConstant.styleRegular(

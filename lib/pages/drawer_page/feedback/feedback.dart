@@ -67,7 +67,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                 DrawerCommanCode()
                                     .buildTextBold("Hare Krishna!\n"),
                                 DrawerCommanCode().buildText(
-                                    "If you liked our work and you also want to become a part of this glorious seva then you can give us your details, our team will contact you.\n"),
+                                    "We love to hear from you about our Genuine Efforts. If you liked our work then please give us a feedback here. Your comments will be public and can be read by everyone\n"),
                                 CustomTextField(
                                   controller: feedback,
                                   maxline: 7,

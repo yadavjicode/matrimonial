@@ -1,4 +1,5 @@
 import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -34,34 +35,26 @@ class _DashboardState extends State<Dashboard> {
 
   void login() async {
     if (_editProfileController.member!.member!.matriID != null) {
-      // log('\nUser: ${user.user}');
-      // log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
-
+      print("===================================login chat");
       if (await APIs.userExists() && mounted) {
-        _editProfileController.userDetails(context);
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+        // ignore: use_build_context_synchronously
+        // _editProfileController.userDetails(context);
+        // APIs.updateUserImage("http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.Photo1}");
       } else {
-        _editProfileController.userDetails(context);
-        await APIs.createUser().then((value) {
-          // Navigator.pushReplacement(
-          //     context, MaterialPageRoute(builder: (_) => const HomeScreen()));
-        });
+        // ignore: use_build_context_synchronously
+        // _editProfileController.userDetails(context);
+        await APIs.createUser().then((value) {});
       }
-    }
+    } else {}
   }
 
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-
-    // });
-    _editProfileController.userDetails(context);
+    _editProfileController.userDetails(context).then((value) => login());
     inboxSentController.inboxSent(context, "Pending");
     inboxReceivedController.inboxSent(context, "Pending");
     stateController.fetchStateList();
-
-    login();
+    //  login();
     super.initState();
   }
 
@@ -74,16 +67,23 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: controller,
-        physics: NeverScrollableScrollPhysics(),
-        children: const [
-          Inbox(),
-          ProfileEdit(),
-          MyShorlistProfile(),
-          HomeScreen(),
-          Home(),
-        ],
+      body:WillPopScope(
+      onWillPop: () async {
+        // Show the confirmation dialog
+        bool shouldExit = await _showExitConfirmationDialog(context);
+        return shouldExit;
+      },
+        child: PageView(
+          controller: controller,
+          physics: NeverScrollableScrollPhysics(),
+          children: const [
+            Inbox(),
+            ProfileEdit(),
+            MyShorlistProfile(),
+            HomeScreen(),
+            Home(),
+          ],
+        ),
       ),
       bottomNavigationBar: StylishBottomBar(
         notchStyle: NotchStyle.circle,
@@ -162,4 +162,30 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+    Future<bool> _showExitConfirmationDialog(BuildContext context) async {
+    return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Exit App',),
+            content: Text('Do you want to exit the app?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false), // Cancel
+                child: Text('Cancel',style: FontConstant.styleSemiBold(
+                fontSize: 15, color: AppColors.black),),
+              ),
+              TextButton(
+                onPressed: () =>{
+                 APIs.updateActiveStatus(false),
+                  Navigator.of(context).pop(true),
+                }  ,// Exit
+                child: Text('Exit',style: FontConstant.styleSemiBold(
+                fontSize: 15, color: AppColors.black),),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
 }
+

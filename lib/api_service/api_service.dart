@@ -256,7 +256,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final responseJson = json.decode(response.body);
       print(responseJson);
-      
+
       return LocationDetailsModel.fromJson(responseJson);
     } else {
       final responseJson = json.decode(response.body);
@@ -392,7 +392,7 @@ class ApiService {
 //==== Start Api Spiritual Details ==========================================================================================
 
   Future<SpiritualDetailsModel> spiritualDetails(
-    String spiritualConnected,
+      String spiritualConnected,
       String nameCounselor,
       String connectCounselor,
       String templeCounselor,
@@ -414,7 +414,7 @@ class ApiService {
       },
       body: jsonEncode({
         "step_8": "1",
-        "spiritual_counseler_connected":spiritualConnected,
+        "spiritual_counseler_connected": spiritualConnected,
         "name_of_the_counselor_of_my_spiritual_path": nameCounselor,
         'connected_with_my_counseler_since': connectCounselor,
         "with_which_temple_your_counselor_is_connected_to": templeCounselor,
@@ -652,7 +652,7 @@ class ApiService {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
-        "step_13":"1",
+        "step_13": "1",
         "PE_FromAge": ageFrom,
         "PE_ToAge": ageto,
         'PE_FromWeight': weightFrom,
@@ -726,7 +726,8 @@ class ApiService {
     }
 
     final response = await http.post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.search_Url}?page=$page'),
+        Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.search_Url}?page=$page'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -984,7 +985,8 @@ class ApiService {
 
 //==== Start Api Complaint==========================================================================================
 
-  Future<ComplaintModel> Complaint(String complaint) async {
+  Future<ComplaintModel> Complaint(
+      String name, String phoneno, String email, String complaint) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -998,7 +1000,12 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode({"complaint": complaint}),
+      body: jsonEncode({
+        "name": name,
+        "mobile": phoneno,
+        "email": email,
+        "complaint": complaint,
+      }),
     );
 
     if (response.statusCode == 200) {
@@ -1072,7 +1079,7 @@ class ApiService {
 
 //==== Start Api Suggestion==========================================================================================
 
-  Future<SuggestionModel> Suggestion(String suggestion) async {
+  Future<SuggestionModel> Suggestion(String email, String suggestion) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -1086,7 +1093,11 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode({"suggestion": suggestion}),
+      body: jsonEncode({
+        "email":email,
+        "suggestion": suggestion,
+        
+        }),
     );
 
     if (response.statusCode == 200) {
@@ -1140,34 +1151,34 @@ class ApiService {
 //==== Start Api inbox Matches==========================================================================================
 
   Future<MatchesModel> fetchMatches(int page, String type) async {
-  final prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString('token');
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
 
-  if (token == null) {
-    throw Exception('Token is not available');
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse(
+          '${ApiConstants.baseUrl}${ApiConstants.matches_Url}?page=$page'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        "type": type,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return MatchesModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
   }
-
-  final response = await http.post(
-    Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matches_Url}?page=$page'),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    },
-    body: jsonEncode({
-      "type": type,
-     
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    final responseJson = json.decode(response.body);
-    print(responseJson);
-    return MatchesModel.fromJson(responseJson);
-  } else {
-    final responseJson = json.decode(response.body);
-    throw Exception('Failed: ${responseJson['message']}');
-  }
-}
 //==== End Api inbox Matches==========================================================================================
 
 //==== Start Api Shortlist==========================================================================================
@@ -1235,7 +1246,9 @@ class ApiService {
 
 //==== Start Api Withdrawal==========================================================================================
 
-  Future<WithDrawalModel> Withdrawal( String id,) async {
+  Future<WithDrawalModel> Withdrawal(
+    String id,
+  ) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -1281,7 +1294,6 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-    
     );
 
     if (response.statusCode == 200) {
@@ -1311,7 +1323,6 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-    
     );
 
     if (response.statusCode == 200) {
@@ -1341,7 +1352,6 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-    
     );
 
     if (response.statusCode == 200) {
@@ -1354,5 +1364,4 @@ class ApiService {
     }
   }
 //==== End Api Buy Package==========================================================================================
-
 }

@@ -4,6 +4,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/complaint_controller.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
+import 'package:devotee/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,9 @@ class _ComplaintState extends State<Complaint> {
   final ComplaintController complaintController =
       Get.put(ComplaintController());
   final TextEditingController complaint = TextEditingController();
+  final TextEditingController name = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController email = TextEditingController();
   @override
   void dispose() {
     // TODO: implement dispose
@@ -73,6 +77,53 @@ class _ComplaintState extends State<Complaint> {
                                 height: 10,
                               ),
                               CustomTextField(
+                                controller: name,
+                                labelText: "Your Name",
+                                borderRadius: 5,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter name';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomTextField(
+                                      controller: phone,
+                                      labelText: "Phone No.",
+                                      maxlength: 10,
+                                      keyboardType: TextInputType.phone,
+                                      borderRadius: 5,
+                                      validator: (value) {
+                                        return Validation.validatePhoneno(
+                                            value);
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: CustomTextField(
+                                      controller: email,
+                                      labelText: "Email ID",
+                                      borderRadius: 5,
+                                      validator: (value) {
+                                        return Validation.validateEmail(value);
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CustomTextField(
                                 controller: complaint,
                                 labelText: "Complaint",
                                 maxline: 7,
@@ -96,7 +147,11 @@ class _ComplaintState extends State<Complaint> {
                                     onPressed: () => {
                                       if (_formKey.currentState!.validate())
                                         {
-                                          complaintController.complaint(context,
+                                          complaintController.complaint(
+                                              context,
+                                              name.text.toString().trim(),
+                                              phone.text.toString().trim(),
+                                              email.text.toString().trim(),
                                               complaint.text.toString().trim()),
                                         }
                                     },

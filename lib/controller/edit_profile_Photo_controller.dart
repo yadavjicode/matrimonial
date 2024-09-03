@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
@@ -27,40 +28,35 @@ class EditProfilePhotoController extends GetxController {
           profileModel, selectedImage.value!);
       if (response["status"] == true) {
         print('Profile update successful: ${response['data']}');
-        editProfileController.userDetails(context);
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-       
-        backgroundColor: AppColors.primaryColor,
-        content: Text(
-          'Profile update successful: ${response['data']}',
-          style: TextStyle(color: AppColors.constColor),
-          
-        ),
-        duration: Duration(seconds: 1)
-      )).closed.then((_) {
-        // After the SnackBar is dismissed, navigate back
-        Navigator.pop(context);
-      });
-            
+        editProfileController.userDetails(context).then((value) =>
+            APIs.updateUserImage(
+                "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.Photo1}"));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+                backgroundColor: AppColors.primaryColor,
+                content: Text(
+                  'Profile update successful: ${response['data']}',
+                  style: TextStyle(color: AppColors.constColor),
+                ),
+                duration: Duration(seconds: 1)))
+            .closed
+            .then((_) {
+          // After the SnackBar is dismissed, navigate back
+          Navigator.pop(context);
+        });
       } else {
         print('Profile update failed: ${response['message']}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          
-          SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             backgroundColor: AppColors.primaryColor,
-          content: Text('Profile update failed: ${response['message']}'),
-          duration: Duration(seconds: 1)
-          
-        ));
+            content: Text('Profile update failed: ${response['message']}'),
+            duration: Duration(seconds: 1)));
       }
     } catch (e) {
       print('Profile update failed: $e');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: AppColors.primaryColor,
-        content: Text('Profile update failed: $e'),
-          duration: Duration(seconds: 1)
-      ));
+          backgroundColor: AppColors.primaryColor,
+          content: Text('Profile update failed: $e'),
+          duration: Duration(seconds: 1)));
     } finally {
       isLoading.value = false;
     }
@@ -82,44 +78,40 @@ class EditProfilePhotoController extends GetxController {
       } else {
         print('No image selected.');
         ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-          backgroundColor: AppColors.primaryColor,
-          content: Text('No image selected.'),
-            duration: Duration(seconds: 1)
-        ));
+            backgroundColor: AppColors.primaryColor,
+            content: Text('No image selected.'),
+            duration: Duration(seconds: 1)));
       }
     } catch (e) {
       print('Error while selecting image: $e');
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-        backgroundColor: AppColors.primaryColor,
-        content: Text('Error while selecting image: $e'),
-          duration: Duration(seconds: 1)
-      ));
+          backgroundColor: AppColors.primaryColor,
+          content: Text('Error while selecting image: $e'),
+          duration: Duration(seconds: 1)));
     }
   }
 
   Future<void> pickImageFromCamera() async {
     final picker = ImagePicker();
     try {
-      final XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
+      final XFile? pickedFile =
+          await picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         selectedImage.value = File(pickedFile.path);
         Get.back(); // Close bottom sheet after selection
       } else {
         print('No image selected.');
         ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-          backgroundColor: AppColors.primaryColor,
-          content: Text('No image selected.'),
-            duration: Duration(seconds: 1)
-        ));
-        
+            backgroundColor: AppColors.primaryColor,
+            content: Text('No image selected.'),
+            duration: Duration(seconds: 1)));
       }
     } catch (e) {
       print('Error while selecting image: $e');
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-        backgroundColor: AppColors.primaryColor,
-        content: Text('Error while selecting image: $e'),
-          duration: Duration(seconds: 1)
-      ));
+          backgroundColor: AppColors.primaryColor,
+          content: Text('Error while selecting image: $e'),
+          duration: Duration(seconds: 1)));
     }
   }
 }

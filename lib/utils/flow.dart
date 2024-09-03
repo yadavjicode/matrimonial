@@ -56,11 +56,11 @@ class Flows with ChangeNotifier {
       case 9:
         return FamilyDetails();
       case 10:
-        return AboutGroomBride();
-      case 11:
         return HoroscopeDetails();
-      case 12:
+      case 11:
         return UploadYourProfile();
+      case 12:
+        return AboutGroomBride();
       case 13:
         return PartnerPreferences();
       default:
