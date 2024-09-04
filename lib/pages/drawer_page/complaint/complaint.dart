@@ -79,6 +79,7 @@ class _ComplaintState extends State<Complaint> {
                               CustomTextField(
                                 controller: name,
                                 labelText: "Your Name",
+                                hintText: "Enter name",
                                 borderRadius: 5,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -96,6 +97,7 @@ class _ComplaintState extends State<Complaint> {
                                     child: CustomTextField(
                                       controller: phone,
                                       labelText: "Phone No.",
+                                      hintText: "Enter phone no.",
                                       maxlength: 10,
                                       keyboardType: TextInputType.phone,
                                       borderRadius: 5,
@@ -112,6 +114,7 @@ class _ComplaintState extends State<Complaint> {
                                     child: CustomTextField(
                                       controller: email,
                                       labelText: "Email ID",
+                                       hintText: "Enter email ID",
                                       borderRadius: 5,
                                       validator: (value) {
                                         return Validation.validateEmail(value);
@@ -128,7 +131,7 @@ class _ComplaintState extends State<Complaint> {
                                 labelText: "Complaint",
                                 maxline: 7,
                                 borderRadius: 5,
-                                hintText: "Please enter Complaint",
+                                hintText: "Please your Complaint",
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter Complaint';

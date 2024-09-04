@@ -269,7 +269,7 @@ class _SearchResultState extends State<SearchResult> {
                           String id = data.matriID ?? "";
                           String image = data.photo1 != null
                               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                              : "https://as2.ftcdn.net/v2/jpg/00/64/67/63/1000_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
+                              : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
                           return Container(
                               margin: EdgeInsets.only(

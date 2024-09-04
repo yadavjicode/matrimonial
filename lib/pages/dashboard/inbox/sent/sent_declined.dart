@@ -62,7 +62,7 @@ class _SentDeclinedState extends State<SentDeclined> {
             String mId = data.receicedMatriID ?? "";
             String image = data.photo1 != null
                 ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+                : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
             return GestureDetector(
               onTap: () {

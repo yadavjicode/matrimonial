@@ -308,44 +308,44 @@ class _ProfileEditState extends State<ProfileEdit> {
                               "Posted by",
                               _editProfileController
                                       .member!.member!.profileFor ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Title",
                               _editProfileController
                                       .member!.member!.nameTitle ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Name",
                               _editProfileController.member!.member!.name ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Surname",
                               _editProfileController.member!.member!.surename ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Spiritual Name",
                               _editProfileController
                                       .member!.member!.spiritualName ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Marital Status",
                               _editProfileController
                                       .member!.member!.maritalstatus ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Height",
                               _editProfileController.member!.member!.height ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Weight",
                               "${_editProfileController.member!.member!.weight} KG" ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText("Date of Birth",
                               _editProfileController.member!.member!.dOB ?? ""),
                           _buildText(
                               "Hobbies",
                               _editProfileController.member!.member!.hobbies ??
-                                  ""),
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -357,17 +357,17 @@ class _ProfileEditState extends State<ProfileEdit> {
                           _buildText(
                               "Phone Number",
                               _editProfileController.member!.member!.mobile ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Email Address",
                               _editProfileController
                                       .member!.member!.confirmEmail ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Instagram ID",
                               _editProfileController
                                       .member!.member!.instagramId ??
-                                  ""),
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -379,85 +379,85 @@ class _ProfileEditState extends State<ProfileEdit> {
                           _buildText(
                               "Nationality",
                               _editProfileController.member!.member!.country ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Residence Type",
                               _editProfileController.member!.member!.state ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Permanent House Type",
                               _editProfileController
                                       .member!.member!.permanentHouseType ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Permanent State",
                               _editProfileController
                                       .member!.member!.permanentState ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Permanent City",
                               _editProfileController
                                       .member!.member!.permanentCity ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Permanent Pin Code",
                               _editProfileController
                                       .member!.member!.permanentPincode ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Temporary State",
                               _editProfileController
                                       .member!.member!.tempState ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Temporary City",
                               _editProfileController.member!.member!.tempCity ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Temporary Pin Code",
                               _editProfileController
                                       .member!.member!.tempPincode ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 1 Relation",
                               _editProfileController
                                       .member!.member!.reference1Reletion ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 1 Name",
                               _editProfileController
                                       .member!.member!.reference1Name ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 1 Email",
                               _editProfileController
                                       .member!.member!.reference1Email ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 1 Mobile",
                               _editProfileController
                                       .member!.member!.reference1Mobile ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 2 Relation",
                               _editProfileController
                                       .member!.member!.reference2Reletion ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 2 Name",
                               _editProfileController
                                       .member!.member!.reference2Name ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 2 Email",
                               _editProfileController
                                       .member!.member!.reference2Email ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "References 2 Mobile",
                               _editProfileController
                                       .member!.member!.reference2Mobile ??
-                                  ""),
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -470,17 +470,17 @@ class _ProfileEditState extends State<ProfileEdit> {
                               "Highest Qualification",
                               _editProfileController
                                       .member!.member!.education ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Professional Qualification",
                               _editProfileController.member!.member!
                                       .professionalQualification ??
-                                  ""),
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Other Details",
                               _editProfileController
                                       .member!.member!.otherQualification ??
-                                  ""),
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -491,30 +491,40 @@ class _ProfileEditState extends State<ProfileEdit> {
                         children: [
                           _buildText(
                               "Profession Tittle",
-                              _editProfileController.professionTittle
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.occupation
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Employment",
-                              _editProfileController.empolyment.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.employedin
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Working State",
-                              _editProfileController.workingState.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.workState
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Working City",
-                              _editProfileController.workingCity.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.workCity
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Pincode",
-                              _editProfileController.workingpincode
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.workPincode
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Annual Salary Range",
-                              _editProfileController.annualSalary.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.annualincome
+                                      ??
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -525,22 +535,28 @@ class _ProfileEditState extends State<ProfileEdit> {
                         children: [
                           _buildText(
                               "About Devotional Life",
-                              _editProfileController.aboutDevotional
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.somethingAboutYourDevotionalLife
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Iskcon Knowledge",
-                              _editProfileController.iskonKnow.toString() ??
-                                  ""),
+                             _editProfileController
+                                      .member!.member!.iskonType
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "In Which Temple You Are Connected To",
-                              _editProfileController.whichTemple.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.withWhichTempleYourCounselorIsConnectedTo
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Devotional Habits",
-                              _editProfileController.devotionalHabit
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.devotionalHobbies
+                                      ??
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -551,27 +567,34 @@ class _ProfileEditState extends State<ProfileEdit> {
                         children: [
                           _buildText(
                               "Connected with Since",
-                              _editProfileController.connectedWithSince
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.connectedWithMyCounselerSince
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Connected Temple",
-                              _editProfileController.connectTemple.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.nameOfTemple
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Counselor State",
-                              _editProfileController.counselorState
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.counselorResidingInState
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Counselor City",
-                              _editProfileController.counselorCity.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.counselorResidingInCity
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "About Counselor:",
-                              _editProfileController.aboutCounselor
-                                      .toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.somethingAboutMoreCounselor
+                                      ??
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -581,17 +604,31 @@ class _ProfileEditState extends State<ProfileEdit> {
                       Column(
                         children: [
                           _buildText("Religion",
-                              _editProfileController.religion.toString() ?? ""),
+                             _editProfileController
+                                      .member!.member!.religion
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText("Caste",
-                              _editProfileController.caste.toString() ?? ""),
+                              _editProfileController
+                                      .member!.member!.caste
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText("Subcaste",
-                              _editProfileController.subcaste.toString() ?? ""),
+                              _editProfileController
+                                      .member!.member!.subcaste
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText("Gotra",
-                              _editProfileController.gotra.toString() ?? ""),
+                              _editProfileController
+                                      .member!.member!.gothram
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Language Known",
-                              _editProfileController.languageKnown.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.language
+                                      ??
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -601,19 +638,28 @@ class _ProfileEditState extends State<ProfileEdit> {
                       Column(
                         children: [
                           _buildText("Date of Birth",
-                              _editProfileController.dob.toString() ?? ""),
+                              _editProfileController
+                                      .member!.member!.dOB
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "Time of Birth",
-                              _editProfileController.timeBirth.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.timeOfBirth
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "State of Birth",
-                              _editProfileController.birthState.toString() ??
-                                  ""),
+                             _editProfileController
+                                      .member!.member!.stateOfBirth
+                                      ??
+                                  "(Not Mentioned)"),
                           _buildText(
                               "City of Birth",
-                              _editProfileController.birthCity.toString() ??
-                                  ""),
+                              _editProfileController
+                                      .member!.member!.cityOfBirth
+                                      ??
+                                  "(Not Mentioned)"),
                         ],
                       ),
                     ),
@@ -678,7 +724,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 onTap: () {
                   //  final data = {'goto': 'edit'};
                   // Get.toNamed('/prof', arguments: data);
-                  Get.toNamed(move);
+                //  Get.toNamed(move);
                 },
                 child: SvgPicture.asset("assets/images/icons/penicon.svg"),
               ),

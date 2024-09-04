@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/model/edit_profile_photo_model.dart';
 import 'package:flutter/material.dart';

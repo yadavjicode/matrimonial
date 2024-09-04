@@ -68,7 +68,7 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
             String mId = data.sentMatriID ?? "";
             String image = data.photo1 != null
                 ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+                : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
             return GestureDetector(
               onTap: () {

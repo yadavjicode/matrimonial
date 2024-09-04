@@ -117,7 +117,7 @@ class BasicDetailsGrid extends StatelessWidget {
           path: "assets/images/icons/location.svg",
           title: 'Lived In',
           value:
-              "${profileDetailsController.member?.data?.city ?? ""}${profileDetailsController.member?.data?.city == null || profileDetailsController.member?.data?.state == null ? "" : ", "}${profileDetailsController.member?.data?.state ?? ""} " ??
+              "${profileDetailsController.member?.data?.permanentCity ?? ""}${profileDetailsController.member?.data?.permanentCity == null || profileDetailsController.member?.data?.permanentState == null ? "" : ", "}${profileDetailsController.member?.data?.permanentState ?? ""} " ??
                   "",
         ),
         DetailRow(

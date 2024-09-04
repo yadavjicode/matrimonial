@@ -98,6 +98,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                               CustomTextField(
                                 controller: name,
                                 labelText: "Your Name",
+                                hintText: "Enter name",
                                 borderRadius: 5,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -115,6 +116,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                     child: CustomTextField(
                                       controller: phone,
                                       labelText: "Phone No.",
+                                      hintText: "Enter phone no.",
                                       maxlength: 10,
                                       keyboardType: TextInputType.phone,
                                       borderRadius: 5,
@@ -131,6 +133,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                     child: CustomTextField(
                                       controller: email,
                                       labelText: "Email ID",
+                                      hintText: "Enter email ID",
                                       borderRadius: 5,
                                       validator: (value) {
                                         return Validation.validateEmail(value);

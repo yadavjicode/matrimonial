@@ -63,16 +63,24 @@ class _MobilePageState extends State<MobilePage> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: screenHeight * 0.15,
-                    left: screenWidth * 0.4,
-                    child: Image.asset('assets/images/lock.png', scale: 1.5),
-                  ),
+                  // Positioned(
+                  //   top: screenHeight * 0.15,
+                  //   left: screenWidth * 0.4,
+                  //   child: Image.asset('assets/images/lock.png', scale: 1.2),
+                  // ),
                   Padding(
-                    padding: EdgeInsets.only(top: screenHeight * 0.3),
+                    padding: EdgeInsets.only(top:0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 80,bottom: 20),
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            "assets/images/lock.png",
+                            height: 124,
+                            width: 94,
+                          )),
                         Center(
                           child: Text(
                             'Enter Mobile Number or Email ID',
@@ -129,6 +137,7 @@ class _MobilePageState extends State<MobilePage> {
                             ),
                           ),
                         ),
+                       
                       ],
                     ),
                   ),

@@ -128,7 +128,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                   "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.maritalstatus == null ? "" : "${data.maritalstatus}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}";
               String image = data.photo1 != null
                   ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                  : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+                  : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
               return GestureDetector(
                 onTap: () {

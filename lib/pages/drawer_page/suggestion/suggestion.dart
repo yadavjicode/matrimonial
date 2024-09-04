@@ -67,6 +67,7 @@ class _SuggestionState extends State<Suggestion> {
                               CustomTextField(
                                 controller: email,
                                 labelText: "Your Email ID",
+                                hintText: "Enter email ID",
                                 borderRadius: 5,
                                 validator: (value) {
                                   return Validation.validateEmail(value);

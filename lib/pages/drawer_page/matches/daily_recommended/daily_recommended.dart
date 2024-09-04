@@ -109,7 +109,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
           String id = data.matriID ?? "";
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-              : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+              : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
           //String head = entry.value[1];
 
           return GestureDetector(

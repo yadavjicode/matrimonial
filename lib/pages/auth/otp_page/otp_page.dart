@@ -2,18 +2,14 @@ import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/otp_controller.dart';
-import 'package:devotee/controller/otp_controller.dart';
-import 'package:devotee/model/otp_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/sockets/src/socket_notifier.dart';
 import 'package:telephony/telephony.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 class OTPScreen extends StatefulWidget {
   final String mobileNumber;

@@ -148,13 +148,16 @@ class _HomeBodyState extends State<HomeBody> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
+                SizedBox(
+                  width: 8,
+                ),
                 Row(
                   children: list.map((data) {
                     String name = "${data.name ?? ""} ${data.surename ?? ""}";
                     String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
-                        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+                        :data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
                     return GestureDetector(
                       onTap: () {
@@ -174,9 +177,9 @@ class _HomeBodyState extends State<HomeBody> {
                         ]);
                       },
                       child: Container(
-                        width: 280,
+                      width: 270,
                         margin: EdgeInsets.only(
-                            top: 5, bottom: 10, left: 10, right: 10),
+                            top: 5, bottom: 10, left: 7, right: 7),
                         decoration: BoxDecoration(
                           color: AppColors.constColor,
                           border: Border.all(color: Colors.grey.shade200),
@@ -193,7 +196,7 @@ class _HomeBodyState extends State<HomeBody> {
                                 child: Stack(children: [
                                   Image.network(
                                     image,
-                                    width: 280,
+                                    width: 270,
                                     height: 300,
                                     filterQuality: FilterQuality.high,
                                     fit: BoxFit.cover,
@@ -203,7 +206,7 @@ class _HomeBodyState extends State<HomeBody> {
                                     height: 40,
                                     width: 40,
                                     margin:
-                                        EdgeInsets.only(top: 280, left: 230),
+                                        EdgeInsets.only(top: 280, left: 220),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: Colors.white),
@@ -310,6 +313,9 @@ class _HomeBodyState extends State<HomeBody> {
                     );
                   }).toList(),
                 ),
+                SizedBox(
+                  width: 8,
+                ),
               ],
             ),
           ),
@@ -354,7 +360,7 @@ class _HomeBodyState extends State<HomeBody> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
                 Row(
                   children: list.map((data) {
@@ -362,7 +368,7 @@ class _HomeBodyState extends State<HomeBody> {
                     String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
-                        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+                        : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
                     return GestureDetector(
                       onTap: () {},
@@ -655,7 +661,7 @@ class _HomeBodyState extends State<HomeBody> {
                   }).toList(),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
               ],
             ),
@@ -684,7 +690,7 @@ class _HomeBodyState extends State<HomeBody> {
             child: Row(
               children: [
                 SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
                 Row(
                   children: discover.asMap().entries.map((entry) {
@@ -753,7 +759,7 @@ class _HomeBodyState extends State<HomeBody> {
                   }).toList(),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
               ],
             ),
