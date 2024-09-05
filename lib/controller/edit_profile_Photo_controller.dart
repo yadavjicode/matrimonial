@@ -4,6 +4,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/model/edit_profile_photo_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,7 @@ class EditProfilePhotoController extends GetxController {
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
 
+  // Method to handle the complete profile update process
   Future<void> profileCompleteFill(BuildContext context) async {
     final profileModel = EditProfilePhotoModel();
     isLoading.value = true;
@@ -26,9 +28,12 @@ class EditProfilePhotoController extends GetxController {
           profileModel, selectedImage.value!);
       if (response["status"] == true) {
         print('Profile update successful: ${response['data']}');
-        editProfileController.userDetails(context).then((value) =>
-            APIs.updateUserImage(
-                "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.Photo1}"));
+        editProfileController.userDetails(context).then((value) {
+          final photoUrl = editProfileController.member?.member?.Photo1;
+          if (photoUrl != null && photoUrl.isNotEmpty) {
+            APIs.updateUserImage("http://devoteematrimony.aks.5g.in/$photoUrl");
+          }
+        });
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(
                 backgroundColor: AppColors.primaryColor,
@@ -39,7 +44,6 @@ class EditProfilePhotoController extends GetxController {
                 duration: Duration(seconds: 1)))
             .closed
             .then((_) {
-          // After the SnackBar is dismissed, navigate back
           Navigator.pop(context);
         });
       } else {
@@ -60,6 +64,7 @@ class EditProfilePhotoController extends GetxController {
     }
   }
 
+  // Method to pick an image from the gallery
   Future<void> pickImageFromGallery() async {
     final picker = ImagePicker();
     try {
@@ -71,45 +76,70 @@ class EditProfilePhotoController extends GetxController {
       );
 
       if (pickedFile != null) {
-        selectedImage.value = File(pickedFile.path);
+        await cropImage(File(pickedFile.path));
         Get.back(); // Close bottom sheet after selection
       } else {
         print('No image selected.');
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-            backgroundColor: AppColors.primaryColor,
-            content: Text('No image selected.'),
-            duration: Duration(seconds: 1)));
+        _showSnackBar('No image selected.');
       }
     } catch (e) {
       print('Error while selecting image: $e');
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-          backgroundColor: AppColors.primaryColor,
-          content: Text('Error while selecting image: $e'),
-          duration: Duration(seconds: 1)));
+      _showSnackBar('Error while selecting image: $e');
     }
   }
 
+  // Method to pick an image from the camera
   Future<void> pickImageFromCamera() async {
     final picker = ImagePicker();
     try {
       final XFile? pickedFile =
           await picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
-        selectedImage.value = File(pickedFile.path);
+        await cropImage(File(pickedFile.path));
         Get.back(); // Close bottom sheet after selection
       } else {
         print('No image selected.');
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-            backgroundColor: AppColors.primaryColor,
-            content: Text('No image selected.'),
-            duration: Duration(seconds: 1)));
+        _showSnackBar('No image selected.');
       }
     } catch (e) {
       print('Error while selecting image: $e');
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-          backgroundColor: AppColors.primaryColor,
-          content: Text('Error while selecting image: $e'),
-          duration: Duration(seconds: 1)));
+      _showSnackBar('Error while selecting image: $e');
     }
+  }
+
+  // Method to crop the selected image
+  Future<void> cropImage(File imageFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio:
+          CropAspectRatio(ratioX: 4, ratioY: 5), // Custom aspect ratio 4:5
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Image',
+          toolbarColor:
+              AppColors.primaryColor, // Replace with your primary color
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: true, // Lock to prevent changing aspect ratio
+        ),
+        IOSUiSettings(
+          title: 'Crop Image',
+          aspectRatioLockEnabled: true, // Lock to prevent changing aspect ratio
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      selectedImage.value = File(croppedFile.path);
+    }
+  }
+
+  // Helper method to show a snackbar
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+      backgroundColor: AppColors.primaryColor,
+      content: Text(message),
+      duration: Duration(seconds: 1),
+    ));
   }
 }

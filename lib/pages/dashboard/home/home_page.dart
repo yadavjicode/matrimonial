@@ -541,7 +541,7 @@ class _HomeState extends State<Home> {
                     GestureDetector(
                       onTap: () => {Get.toNamed("/recommended")},
                       child: buildoption("assets/images/icons/recomm.svg",
-                          "Recommended by Senoir Devotees", 22, 22),
+                          "Recommendation by Senior Devotees", 22, 22),
                     ),
                     GestureDetector(
                       onTap: () => {Get.toNamed("/membership")},

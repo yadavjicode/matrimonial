@@ -104,6 +104,8 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
   }
 
   Widget shortlistedContent() {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final member = shortlistedListController.member;
     if (member == null ||
         member.responseData == null ||
@@ -147,15 +149,12 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.grey),
+                               width: screenWidth*0.2,       
+                                    height: screenWidth*0.2, 
                               child: ClipOval(
                                   child: Image.network(
                                 image,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                               )),
                             ),
                           ),

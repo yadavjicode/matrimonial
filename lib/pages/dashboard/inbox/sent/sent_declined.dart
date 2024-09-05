@@ -45,6 +45,8 @@ class _SentDeclinedState extends State<SentDeclined> {
   }
 
   Widget declineContent() {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxSentController.member;
     if (member == null ||
         member.responseData == null ||
@@ -84,7 +86,7 @@ class _SentDeclinedState extends State<SentDeclined> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(left: 10,top: 8,bottom: 10,right: 2),
                           child: Container(
                             height: 70,
                             width: 70,
@@ -93,7 +95,7 @@ class _SentDeclinedState extends State<SentDeclined> {
                             child: ClipOval(
                                 child: Image.network(
                               image,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             )),
                           ),
                         ),

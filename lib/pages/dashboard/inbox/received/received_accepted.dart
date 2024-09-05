@@ -50,6 +50,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
   }
 
   Widget acceptContent() {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
     if (member == null ||
         member.responseData == null ||
@@ -68,7 +70,9 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
             String mId = data.sentMatriID ?? "";
             String image = data.photo1 != null
                 ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                : data.gender == "Male"
+                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
             return GestureDetector(
               onTap: () {
@@ -85,16 +89,16 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10,right: 2),
                           child: Container(
-                            height: 70,
-                            width: 70,
+                            width: screenWidth * 0.2,
+                            height: screenWidth * 0.2,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle, color: AppColors.grey),
                             child: ClipOval(
                                 child: Image.network(
                               image,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             )),
                           ),
                         ),

@@ -20,7 +20,7 @@ class _RecommendedDevoteesState extends State<RecommendedDevotees> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "Recommended by Senior Devotees",
+          "Recommendation by Senior Devotees",
           style: FontConstant.styleSemiBold(
               fontSize: 18, color: AppColors.constColor),
         ),

@@ -17,17 +17,22 @@ class Compatiblity extends StatefulWidget {
 class _CompatiblityState extends State<Compatiblity> {
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+
   final EditProfileController user = Get.put(EditProfileController());
 
   Widget buildAvatarColumn(String imagePath, String label) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        ClipOval(
-          child: Image.network(
-            imagePath,
-            width: 75,
-            height: 75,
-            fit: BoxFit.cover,
+        Container(
+          width: screenWidth * 0.2,
+          height: screenWidth * 0.2,
+          child: ClipOval(
+            child: Image.network(
+              imagePath,
+              fit: BoxFit.fill,
+            ),
           ),
         ),
         SizedBox(
@@ -121,10 +126,14 @@ class _CompatiblityState extends State<Compatiblity> {
   Widget build(BuildContext context) {
     String otherImage = profileDetailsController.member?.data?.photo1 != null
         ? "http://devoteematrimony.aks.5g.in/${profileDetailsController.member?.data?.photo1}"
-        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+        : profileDetailsController.member?.data?.gender == "Male"
+            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
     String myImage = user.member!.member!.Photo1 != null
         ? "http://devoteematrimony.aks.5g.in/${user.member!.member!.Photo1}"
-        : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+        : user.member!.member!.gender == "Male"
+            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
     return Container(
       width: double.infinity,
       color: Colors.white,

@@ -58,6 +58,8 @@ class _ReceivedPendingState extends State<ReceivedPending> {
   }
 
   Widget pendingContent() {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
     if (member == null ||
         member.responseData == null ||
@@ -93,10 +95,10 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                           padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10,right: 2),
                           child: Container(
-                            height: 70,
-                            width: 70,
+                           width: screenWidth * 0.2,
+                            height: screenWidth * 0.2,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColors.grey,
@@ -104,7 +106,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                             child: ClipOval(
                               child: Image.network(
                                 image,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                               ),
                             ),
                           ),

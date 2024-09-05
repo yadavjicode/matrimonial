@@ -153,7 +153,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                     autoPlay: false,
                     enlargeCenterPage: true,
                     padEnds: false,
-                    aspectRatio: 20 / 22,
+                    aspectRatio: 4 / 5,
                     viewportFraction: 1.0,
                     onPageChanged: (index, reason) {
                       setState(() {

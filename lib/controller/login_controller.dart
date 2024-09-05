@@ -2,7 +2,7 @@ import 'package:devotee/api_service/api_service.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/model/login_model.dart';
 import 'package:devotee/model/otp_model.dart';
-import 'package:devotee/pages/login/otp_page/otp_page.dart';
+import 'package:devotee/pages/auth/otp_page/otp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

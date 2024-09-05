@@ -50,7 +50,7 @@ class _SuggestionState extends State<Suggestion> {
                       children: [
                         Container(
                           width: double.infinity,
-                          child: Image.asset("assets/images/feedback.png",
+                          child: Image.asset("assets/images/suggestion.png",
                               fit: BoxFit.cover),
                         ),
                         Padding(

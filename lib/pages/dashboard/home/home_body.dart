@@ -36,6 +36,7 @@ class _HomeBodyState extends State<HomeBody> {
       Get.put(EditProfileController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
+  
 
   Future<void> _fetchUser(String userId) async {
     ChatUser? _chatUser;
@@ -116,6 +117,8 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Widget newMathches(List<DailyRecommendation> list) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Container(
@@ -157,7 +160,9 @@ class _HomeBodyState extends State<HomeBody> {
                     String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
-                        :data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                        : data.gender == "Male"
+                            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
                     return GestureDetector(
                       onTap: () {
@@ -177,7 +182,7 @@ class _HomeBodyState extends State<HomeBody> {
                         ]);
                       },
                       child: Container(
-                      width: 270,
+                        width: screenWidth*0.65,
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 7, right: 7),
                         decoration: BoxDecoration(
@@ -189,55 +194,21 @@ class _HomeBodyState extends State<HomeBody> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-                                child: Stack(children: [
-                                  Image.network(
+                              Container(
+                                width: screenWidth*0.65,
+                                height: screenWidth*0.65 * (5 / 4),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
+                                  child: Image.network(
                                     image,
-                                    width: 270,
-                                    height: 300,
+                                    width: screenWidth*0.65,
+                                    height: screenWidth*0.65 * (5 / 4),
                                     filterQuality: FilterQuality.high,
                                     fit: BoxFit.cover,
                                   ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 40,
-                                    width: 40,
-                                    margin:
-                                        EdgeInsets.only(top: 280, left: 220),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white),
-                                    child: GestureDetector(
-                                      onTap: () => {
-                                        setState(() {
-                                          shortlistController.shortlist(
-                                            context,
-                                            data.matriID!,
-                                            btnOkOnPress: () => {
-                                              WidgetsBinding.instance
-                                                  .addPostFrameCallback((_) {
-                                                dashboardController
-                                                    .dashboard(context);
-                                              })
-                                            },
-                                          );
-                                        }),
-                                      },
-                                      child: Icon(
-                                        data.shortlistStatus == 1
-                                            ? (Icons.favorite)
-                                            : Icons.favorite_border_rounded,
-                                        color: data.shortlistStatus == 1
-                                            ? Colors.red
-                                            : AppColors.primaryColor,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                ]),
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -307,7 +278,44 @@ class _HomeBodyState extends State<HomeBody> {
                                       )
                                     ],
                                   ),
-                                ))
+                                )),
+                          Positioned(
+                            top: (screenWidth*0.65 * (5 / 4) - 20),
+                            right:screenWidth*0.015,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: GestureDetector(
+                                onTap: () => {
+                                  setState(() {
+                                    shortlistController.shortlist(
+                                      context,
+                                      data.matriID!,
+                                      btnOkOnPress: () => {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          dashboardController
+                                              .dashboard(context);
+                                        })
+                                      },
+                                    );
+                                  }),
+                                },
+                                child: Icon(
+                                  data.shortlistStatus == 1
+                                      ? (Icons.favorite)
+                                      : Icons.favorite_border_rounded,
+                                  color: data.shortlistStatus == 1
+                                      ? Colors.red
+                                      : AppColors.primaryColor,
+                                  size: 30,
+                                ),
+                              ),
+                            ),
+                          )
                         ]),
                       ),
                     );
@@ -326,7 +334,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   Widget ridConatent(String leftTittle, String rightTitle, String key,
       String appBarTittle, List<DailyRecommendation> list) {
-    final double screenWidth = MediaQuery.of(context).size.width;
+  final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
@@ -368,7 +376,9 @@ class _HomeBodyState extends State<HomeBody> {
                     String occupation = data.occupation ?? "";
                     String image = data.Photo1 != null
                         ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
-                        : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                        : data.gender == "Male"
+                            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
                     return GestureDetector(
                       onTap: () {},
@@ -405,13 +415,15 @@ class _HomeBodyState extends State<HomeBody> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
-                                        width: 70,
-                                        height: 70,
+                                        width: screenWidth*0.2,
+                                        height: screenWidth*0.2,
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle),
                                         child: ClipOval(
                                           child: Image.network(
                                             "$image",
+                                            width: screenWidth*0.2,
+                                            height: screenWidth*0.2 * (5 / 4),
                                             filterQuality: FilterQuality.high,
                                             fit: BoxFit.fill,
                                           ),
@@ -419,7 +431,7 @@ class _HomeBodyState extends State<HomeBody> {
                                       ),
                                     ),
                                     Container(
-                                      width: 250,
+                                      width: screenWidth*0.6,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -483,11 +495,11 @@ class _HomeBodyState extends State<HomeBody> {
                               Container(
                                 padding: EdgeInsets.only(left: 10, right: 10),
                                 height: 1,
-                                width: 320,
+                               width:  screenWidth*0.8,
                                 color: Colors.grey.shade200,
                               ),
                               Container(
-                                width: 320,
+                                width:  screenWidth*0.8,
                                 padding: EdgeInsets.only(top: 10, bottom: 10),
                                 child: Row(
                                   mainAxisAlignment:
@@ -672,6 +684,8 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Widget discoverContent(List<List> discover) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         Container(
@@ -710,7 +724,7 @@ class _HomeBodyState extends State<HomeBody> {
                           padding: EdgeInsets.only(left: 5, right: 5),
                           margin: EdgeInsets.only(
                               top: 5, bottom: 10, left: 5, right: 5),
-                          width: 130,
+                          width: screenWidth*0.4,
                           decoration: BoxDecoration(
                             color: AppColors.constColor,
                             border: Border.all(color: Colors.grey.shade200),
@@ -718,6 +732,7 @@ class _HomeBodyState extends State<HomeBody> {
                           ),
                           child: Column(
                             children: [
+                              SizedBox(height: 5),
                               ClipRRect(
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(10),

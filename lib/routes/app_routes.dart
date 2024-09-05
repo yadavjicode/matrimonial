@@ -1,4 +1,5 @@
 import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/pages/auth/login_page/login_page.dart';
 import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
@@ -38,8 +39,7 @@ import 'package:devotee/pages/dashboard/dashboard_page/dashboard.dart';
 import 'package:devotee/pages/ragistration/devotion_details/devotion_details.dart';
 import 'package:devotee/pages/ragistration/horoscope_details/horoscope_details.dart';
 import 'package:devotee/pages/ragistration/location_details/location_details.dart';
-import 'package:devotee/pages/login/login_page/login_page.dart';
-import 'package:devotee/pages/login/mobile_page/mobile_page.dart';
+import 'package:devotee/pages/auth/mobile_page/mobile_page.dart';
 import 'package:devotee/pages/ragistration/partner_preferences/partner_preferences.dart';
 import 'package:devotee/pages/ragistration/professional_details_page/professional_details_page.dart';
 import 'package:devotee/pages/dashboard/profile/edit_profile/edit_profile.dart';

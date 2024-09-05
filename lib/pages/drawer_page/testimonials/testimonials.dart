@@ -2,10 +2,8 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/testimonial_controller.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Testimonial extends StatefulWidget {

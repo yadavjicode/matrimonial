@@ -49,6 +49,8 @@ class ApiConstants {
   static const String package_Url = "member/package-list";
  static const String buyPackage_Url = "member/checkout";
  static const String langaugeUrl = "get-languages";
+ 
 }
 
 late Size mq;
+
