@@ -4,10 +4,10 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/lists/location_list.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/spiritual_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class SpiritualDetails extends StatefulWidget {
   const SpiritualDetails({super.key});
@@ -25,11 +25,12 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
   final TextEditingController SomethingCounselor = TextEditingController();
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
+  final FlowController flowController = Get.put(FlowController());
   String? selectedState;
   String? selectedCity;
   int? counsellor;
 
-   String getCounsellor() {
+  String getCounsellor() {
     if (counsellor == 1) {
       return "Joint";
     } else if (counsellor == 2) {
@@ -37,6 +38,12 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
     } else {
       return "";
     }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  //  stateController.fetchStateList();
   }
 
   @override
@@ -157,15 +164,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                               const SizedBox(
                                 height: 15,
                               ),
-                              Obx(() {
-                                if (stateController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  );
-                                } else {
-                                  return buildDropdownWithSearch(
+                              buildDropdownWithSearch(
                                     'Counsellor residing in State',
                                     stateController.getStateList(),
                                     //  stateControllerPermanent.selectedItem,
@@ -178,9 +177,31 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                           value); // Call the controller method
                                     },
                                     hintText: 'Select State',
-                                  );
-                                }
-                              }),
+                                  ),
+                              // Obx(() {
+                              //   if (stateController.isLoading.value) {
+                              //     return Center(
+                              //       child: CircularProgressIndicator(
+                              //         color: AppColors.primaryColor,
+                              //       ),
+                              //     );
+                              //   } else {
+                              //     return buildDropdownWithSearch(
+                              //       'Counsellor residing in State',
+                              //       stateController.getStateList(),
+                              //       //  stateControllerPermanent.selectedItem,
+                              //       (value) {
+                              //         setState(() {
+                              //           selectedState =
+                              //               value; // Update the state
+                              //         });
+                              //         stateController.selectItem(
+                              //             value); // Call the controller method
+                              //       },
+                              //       hintText: 'Select State',
+                              //     );
+                              //   }
+                              // }),
                               const SizedBox(
                                 height: 15,
                               ),
@@ -242,7 +263,10 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   fontSize: 20, color: AppColors.constColor)),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/family')},
+                          onTap: () => {
+                            // Get.offAndToNamed('/family')
+                             flowController.Flow(context, 8)
+                            },
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             padding: EdgeInsets.all(5),

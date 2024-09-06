@@ -144,11 +144,16 @@ class _ProfileEditState extends State<ProfileEdit> {
                   Positioned(
                     right: 8,
                     bottom: 8,
-                    child: SvgPicture.asset(
-                      "assets/images/icons/penicon.svg",
-                      color: Colors.white,
-                      width: 25,
-                      height: 25,
+                    child: InkWell(
+                      onTap: () => {
+                        Get.toNamed("/profile")
+                      },
+                      child: SvgPicture.asset(
+                        "assets/images/icons/penicon.svg",
+                        color: Colors.white,
+                        width: 25,
+                        height: 25,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -463,7 +468,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Educational Details",
-                      "/family",
+                      "/profile",
                       Column(
                         children: [
                           _buildText(
@@ -696,9 +701,8 @@ class _ProfileEditState extends State<ProfileEdit> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  //  final data = {'goto': 'edit'};
-                  // Get.toNamed('/prof', arguments: data);
-                  //  Get.toNamed(move);
+                  
+                //   Get.toNamed(move);
                 },
                 child: SvgPicture.asset("assets/images/icons/penicon.svg"),
               ),

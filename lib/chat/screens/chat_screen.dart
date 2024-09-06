@@ -1,9 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/main.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -94,6 +91,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       //
       child: Scaffold(
+        
         //app bar
         appBar: AppBar(
           elevation: 0,
@@ -102,72 +100,80 @@ class _ChatScreenState extends State<ChatScreen> {
           flexibleSpace: _appBar(),
         ),
 
-        backgroundColor: const Color.fromARGB(255, 234, 248, 255),
+        backgroundColor: AppColors.background,
 
         //body
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: StreamBuilder(
-                  stream: APIs.getAllMessages(widget.user),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      //if data is loading
-                      case ConnectionState.waiting:
-                      case ConnectionState.none:
-                        return const SizedBox();
-
-                      // if some or all data is loaded then show it
-                      case ConnectionState.active:
-                      case ConnectionState.done:
-                        if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                          _list = snapshot.data!;
-
-                          return ListView.builder(
-                            reverse: true,
-                            itemCount: _list.length,
-                            padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height * .01),
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return MessageCard(message: _list[index]);
-                            },
-                          );
-                        } else {
-                          return const Center(
-                            child: Text('Say Hii! 👋',
-                                style: TextStyle(fontSize: 20)),
-                          );
-                        }
-                    }
-                  },
-                ),
-              ),
-
-              //progress indicator for showing uploading
-              if (_isUploading)
-                const Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                        child: CircularProgressIndicator(strokeWidth: 2))),
-
-              //chat input filed
-              _chatInput(),
-
-              //show emojis on keyboard emoji button click & vice versa
-              if (_showEmoji)
-                SizedBox(
-                  height: screenHeight * .35,
-                  child: EmojiPicker(
-                    textEditingController: _textController,
-                    config: const Config(),
+        body: Stack(
+          children: [
+             Container(
+                  width: double.infinity,
+                  alignment: Alignment.topRight,
+                  child: Image.asset("assets/images/background.png")),
+           SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: StreamBuilder(
+                    stream: APIs.getAllMessages(widget.user),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        //if data is loading
+                        case ConnectionState.waiting:
+                        case ConnectionState.none:
+                          return const SizedBox();
+        
+                        // if some or all data is loaded then show it
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            _list = snapshot.data!;
+        
+                            return ListView.builder(
+                              reverse: true,
+                              itemCount: _list.length,
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height * .01),
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return MessageCard(message: _list[index]);
+                              },
+                            );
+                          } else {
+                            return const Center(
+                              child: Text('Say Hii! 👋',
+                                  style: TextStyle(fontSize: 20)),
+                            );
+                          }
+                      }
+                    },
                   ),
-                )
-            ],
+                ),
+        
+                //progress indicator for showing uploading
+                if (_isUploading)
+                  const Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                          child: CircularProgressIndicator(strokeWidth: 2))),
+        
+                //chat input filed
+                _chatInput(),
+        
+                //show emojis on keyboard emoji button click & vice versa
+                if (_showEmoji)
+                  SizedBox(
+                    height: screenHeight * .35,
+                    child: EmojiPicker(
+                      textEditingController: _textController,
+                      config: const Config(),
+                    ),
+                  )
+              ],
+            ),
           ),
+          ]
         ),
       ),
       // ),
@@ -270,7 +276,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         setState(() => _showEmoji = !_showEmoji);
                       },
                       icon: const Icon(Icons.emoji_emotions,
-                          color: Colors.blueAccent, size: 25)),
+                          color: AppColors.primaryColor, size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -282,7 +288,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                     decoration: const InputDecoration(
                         hintText: 'Type Something...',
-                        hintStyle: TextStyle(color: Colors.blueAccent),
+                        hintStyle: TextStyle(color: AppColors.primaryColor),
                         border: InputBorder.none),
                   )),
 
@@ -304,7 +310,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: const Icon(Icons.image,
-                          color: Colors.blueAccent, size: 26)),
+                          color: AppColors.primaryColor, size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -324,7 +330,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: const Icon(Icons.camera_alt_rounded,
-                          color: Colors.blueAccent, size: 26)),
+                          color: AppColors.primaryColor, size: 26)),
 
                   //adding some space
                   SizedBox(width: screenWidth * .02),
@@ -353,7 +359,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding:
                 const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
             shape: const CircleBorder(),
-            color: Colors.green,
+            color: AppColors.primaryColor,
             child: const Icon(Icons.send, color: Colors.white, size: 28),
           )
         ],

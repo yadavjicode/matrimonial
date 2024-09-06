@@ -4,6 +4,7 @@ import 'package:devotee/constants/lists/language_list.dart';
 import 'package:devotee/constants/lists/mother_tongue_list.dart';
 import 'package:devotee/constants/lists/title_profession_list.dart';
 import 'package:devotee/controller/family_details_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/list_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   final MotherTongueController motherTongueController =
       Get.put(MotherTongueController());
   final LanguageController languageController = Get.put(LanguageController());
+  final FlowController flowController = Get.put(FlowController());
 
   List<String> selectedLanguagesList = []; // List to store selected languages
 
@@ -311,7 +313,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     "language===============${getLanguageKnown(selectedLanguage ?? [])}");
                               },
                               hintText: 'Select Languages Known',
-                            ),
+                            ), 
                             SizedBox(
                               height: 15,
                             ),
@@ -977,7 +979,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               child: CustomButton(
                                 text: 'Skip',
                                 onPressed: () {
-                                  Get.offAndToNamed('/horoscope');
+                                  // Get.offAndToNamed('/horoscope');
+                                  flowController.Flow(context, 8);
                                 },
                                 color: Colors.transparent,
                                 textStyle: FontConstant.styleRegular(

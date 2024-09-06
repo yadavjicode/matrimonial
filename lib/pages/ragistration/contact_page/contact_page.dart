@@ -1,5 +1,6 @@
 import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/controller/contact_details_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ class _ContactDetailsState extends State<ContactDetails> {
   final TextEditingController phonecontroller = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController instaController = TextEditingController();
+  final FlowController flowController=Get.put(FlowController());
 
   final ContactDetailsController _contactDetailController =
       Get.put(ContactDetailsController());
@@ -154,7 +156,8 @@ class _ContactDetailsState extends State<ContactDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.offAndToNamed('/location');
+          flowController.Flow(context, 3);
+          // Get.offAndToNamed('/location');
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

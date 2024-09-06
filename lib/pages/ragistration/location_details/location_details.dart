@@ -3,8 +3,6 @@ import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/permanent_type.dart';
 import 'package:devotee/constants/lists/relation_list.dart';
 import 'package:devotee/constants/lists/residence_type_list.dart';
-import 'package:devotee/constants/profile_constant.dart';
-import 'package:devotee/controller/list_controller.dart';
 import 'package:devotee/controller/location_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -104,6 +104,8 @@ class _SearchResultState extends State<SearchResult> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final String ageFrom = arguments['ageFrom'];
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
@@ -115,6 +117,7 @@ class _SearchResultState extends State<SearchResult> {
     final String state = arguments['state'];
     final String city = arguments['city'];
     final String education = arguments['education'];
+    
 
     int selectedIndex = -1;
     return Scaffold(
@@ -292,88 +295,83 @@ class _SearchResultState extends State<SearchResult> {
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             left: 8, bottom: 8, top: 8),
-                                        child: Stack(children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            child: Image.network(
-                                              "$image",
-                                              height: 196,
-                                              width: 137,
-                                              filterQuality: FilterQuality.high,
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 137,
-                                            alignment: Alignment.center,
-                                            margin: EdgeInsets.only(top: 170),
-                                            child: GestureDetector(
-                                              onTap: () async {
-                                                setState(() {
-                                                  data.interestStatus =
-                                                      data.interestStatus == 0
-                                                          ? 1
-                                                          : 1;
-                                                });
-                                                sentInvitationController
-                                                    .sentInvitation(
-                                                  context,
-                                                  id,
-                                                  // btnOkOnPress: () => {
+                                        child:Stack(children: [
+                              Container(
+                                height: (screenWidth * 0.4) * (5 / 4),
+                                width: screenWidth * 0.4,
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                  child: Image.network(
+                                    "$image",
+                                    height: (screenWidth * 0.4) * (5 / 4),
+                                    width: screenWidth * 0.4,
+                                    filterQuality: FilterQuality.high,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                  top: ((screenWidth * 0.4) * (5 / 4) -
+                                      screenWidth * 0.075),
+                                  left: 0,
+                                  right: 0,
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      setState(() {
+                                        data.interestStatus =
+                                            data.interestStatus == 0 ? 1 : 1;
+                                      });
 
-                                                  // },
-                                                );
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  data.interestStatus == 1
-                                                      ? Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          height: 22,
-                                                          width: 22,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: Colors
-                                                                      .green),
-                                                          child: SvgPicture.asset(
-                                                              "assets/images/icons/correct.svg"),
-                                                        )
-                                                      : Container(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          height: 22,
-                                                          width: 22,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: Colors
-                                                                      .white),
-                                                          child: SvgPicture.asset(
-                                                              "assets/images/icons/pinkcorrect.svg"),
-                                                        ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    "Send Interest",
-                                                    style: FontConstant
-                                                        .styleMedium(
-                                                            fontSize: 12,
-                                                            color: AppColors
-                                                                .constColor),
-                                                  ),
-                                                ],
+                                      sentInvitationController.sentInvitation(
+                                        context,
+                                        data.matriID!,
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        data.interestStatus == 1
+                                            ? Container(
+                                                alignment: Alignment.center,
+                                                height: screenWidth * 0.06,
+                                                width: screenWidth * 0.06,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.green),
+                                                child: SvgPicture.asset(
+                                                  "assets/images/icons/correct.svg",
+                                                  height: screenWidth * 0.028,
+                                                  width: screenWidth * 0.028,
+                                                ),
+                                              )
+                                            : Container(
+                                                alignment: Alignment.center,
+                                                height: screenWidth * 0.06,
+                                                width: screenWidth * 0.06,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.white),
+                                                child: SvgPicture.asset(
+                                                  "assets/images/icons/pinkcorrect.svg",
+                                                  height: screenWidth * 0.028,
+                                                  width: screenWidth * 0.028,
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        ]),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          "Send Interest",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: screenWidth * 0.03,
+                                              color: AppColors.constColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                            ]),
                                       ),
                                       Expanded(
                                         child: Padding(

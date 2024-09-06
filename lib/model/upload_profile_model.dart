@@ -24,7 +24,7 @@ class UploadProfileModel {
     );
 
     request.headers['Authorization'] = 'Bearer $token';
-    request.fields['step_12'] = '1';
+    request.fields['step_11'] = '1';
 
     // Map the files to specific fields in the request
     List<String> imageFields = ['Photo1', 'Photo2', 'Photo3', 'Photo4', 'Photo5'];

@@ -24,7 +24,7 @@ class EditProfilePhotoModel {
     );
 
     request.headers['Authorization'] = 'Bearer $token';
-    request.fields['step_12'] = '1';
+    request.fields['step_11'] = '1';
 
     // Attach the image to the 'Photo1' field
     request.files.add(await http.MultipartFile.fromPath('Photo1', imageFile.path));

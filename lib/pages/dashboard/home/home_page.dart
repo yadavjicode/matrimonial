@@ -31,9 +31,10 @@ class _HomeState extends State<Home> {
       Get.put(ShortlistController());
   final SentInvitationController sentInvitationController =
       Get.put(SentInvitationController());
-  final  ProfileDetailsController profileDetailsController =
+  final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-    final DirectChatController directChatController=Get.put(DirectChatController());
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
 
   @override
   void initState() {
@@ -46,6 +47,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
@@ -202,28 +205,30 @@ class _HomeState extends State<Home> {
                     ]),
                     if (dashboardController.isLoading.value == false &&
                         editProfileController.isLoading.value == false)
-                    Expanded(
-                      child: RefreshIndicator(
-                        color: AppColors.primaryColor,
-                        onRefresh: () async {
-                          dashboardController.dashboard(context);
-                        },
-                        child: Container(child: Obx(() {
-                          return Stack(children: [
-                            SingleChildScrollView(
-                              child: Stack(children: [HomeBody()]),
-                            ),
-                            if (shortlistController.isLoading.value ||
-                                sentInvitationController.isLoading.value||profileDetailsController.isLoading.value||directChatController.isLoading.value)
-                              Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                              )
-                          ]);
-                        })),
+                      Expanded(
+                        child: RefreshIndicator(
+                          color: AppColors.primaryColor,
+                          onRefresh: () async {
+                            dashboardController.dashboard(context);
+                          },
+                          child: Container(child: Obx(() {
+                            return Stack(children: [
+                              SingleChildScrollView(
+                                child: Stack(children: [HomeBody()]),
+                              ),
+                              if (shortlistController.isLoading.value ||
+                                  sentInvitationController.isLoading.value ||
+                                  profileDetailsController.isLoading.value ||
+                                  directChatController.isLoading.value)
+                                Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                )
+                            ]);
+                          })),
+                        ),
                       ),
-                    ),
                     if (dashboardController.isLoading.value ||
                         editProfileController.isLoading.value)
                       Expanded(
@@ -279,7 +284,7 @@ class _HomeState extends State<Home> {
                                           child: ClipOval(
                                               child: Image.network(
                                             "${editProfileController.member!.member!.photo1 != null ? "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.photo1}" : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"}",
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                           )),
                                         ),
                                   Container(

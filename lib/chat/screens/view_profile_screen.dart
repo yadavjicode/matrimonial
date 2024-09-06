@@ -25,6 +25,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
       // for hiding keyboard
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
+        backgroundColor: AppColors.background,
           //app bar
           appBar: AppBar(
               elevation: 0,
@@ -52,50 +53,58 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
           ),
 
           //body
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * .05),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  // for adding some space
-                  SizedBox(width: screenWidth, height: screenHeight * .03),
-
-                  //user profile picture
-                  ProfileImage(
-                    size: screenHeight * .2,
-                    url: widget.user.image,
-                  ),
-
-                  // for adding some space
-                  SizedBox(height: screenHeight * .03),
-
-                  // user email label
-                  Text(widget.user.email,
-                      style:
-                          const TextStyle(color: Colors.black87, fontSize: 16)),
-
-                  // for adding some space
-                  SizedBox(height: screenHeight * .02),
-
-                  //user about
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'About: ',
-                        style: TextStyle(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15),
-                      ),
-                      Text(widget.user.about,
-                          style: const TextStyle(
-                              color: Colors.black54, fontSize: 15)),
-                    ],
-                  ),
-                ],
+          body: Stack(
+            children: [
+              Container(
+                  width: double.infinity,
+                  alignment: Alignment.topRight,
+                  child: Image.asset("assets/images/background.png")),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * .05),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // for adding some space
+                    SizedBox(width: screenWidth, height: screenHeight * .03),
+          
+                    //user profile picture
+                    ProfileImage(
+                      size: screenHeight * .2,
+                      url: widget.user.image,
+                    ),
+          
+                    // for adding some space
+                    SizedBox(height: screenHeight * .03),
+          
+                    // user email label
+                    Text("${widget.user.name} (ID:${widget.user.id})",
+                        style:
+                            const TextStyle(color: Colors.black87, fontSize: 16)),
+          
+                    // for adding some space
+                    SizedBox(height: screenHeight * .02),
+          
+                    //user about
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'About: ',
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        ),
+                        Text(widget.user.about,
+                            style: const TextStyle(
+                                color: Colors.black54, fontSize: 15)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
+            ]
           )),
     );
   }

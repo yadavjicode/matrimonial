@@ -87,9 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
       //
       child: Scaffold(
+        backgroundColor: AppColors.background,
         //app bar
         appBar: AppBar(
           elevation: 0,
+          centerTitle: true,
           backgroundColor: AppColors.primaryColor,
           //view profile
           leading: IconButton(
@@ -100,19 +102,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(
                       builder: (_) => ProfileScreen(user: APIs.me)));
             },
-            icon: const ProfileImage(size: 32),
+            icon:  ProfileImage(size: 50,url: APIs.me.image,),
           ),
 
           //title
           title: _isSearching
               ? TextField(
+                
                   decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Name, Email, ...',
-                      
+                      hintText: 'Name......',
+                    
                       hintStyle: TextStyle(color: AppColors.constColor)),
                   autofocus: true,
-                  style: const TextStyle(fontSize: 17, letterSpacing: 0.5),
+                  style: const TextStyle(fontSize: 17, letterSpacing: 0.5,color: AppColors.constColor),
                   //when search text changes then updated search list
                   onChanged: (val) {
                     //search logic
@@ -129,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() => _searchList);
                   },
                 )
-              : const Text('We Chat'),
+              : const Text('My Chat'),
           actions: [
             //search user button
             IconButton(
@@ -140,11 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     : CupertinoIcons.search)),
 
             //add new user
-            IconButton(
-                tooltip: 'Add User',
-                padding: const EdgeInsets.only(right: 8),
-                onPressed: _addChatUserDialog,
-                icon: const Icon(CupertinoIcons.person_add, size: 25))
+            // IconButton(
+            //     tooltip: 'Add User',
+            //     padding: const EdgeInsets.only(right: 8),
+            //     onPressed: _addChatUserDialog,
+            //     icon: const Icon(CupertinoIcons.person_add, size: 25))
           ],
         ),
 
@@ -161,66 +164,75 @@ class _HomeScreenState extends State<HomeScreen> {
         // ),
 
         //body
-        body: StreamBuilder(
-          stream: APIs.getMyUsersId(),
+        body: Stack(
+          children: [
+            Container(
+                  width: double.infinity,
+                  alignment: Alignment.topRight,
+                  child: Image.asset("assets/images/background.png")),
+           StreamBuilder(
+            stream: APIs.getMyUsersId(),
+        
+            //get id of only known users
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                //if data is loading
+                case ConnectionState.waiting:
+                case ConnectionState.none:
+                  return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
+        
+                //if some or all data is loaded then show it
+                case ConnectionState.active:
+                case ConnectionState.done:
+                  return StreamBuilder(
+                    stream: APIs.getAllUsers(
+                        snapshot.data?.docs.map((e) => e.id).toList() ?? []),
+        
+                    //get only those user, who's ids are provided
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        //if data is loading
+                        case ConnectionState.waiting:
+                        case ConnectionState.none:
+                        // return const Center(
+                        //     child: CircularProgressIndicator());
+        
+                        //if some or all data is loaded then show it
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          final data = snapshot.data?.docs;
+                          _list = data
+                                  ?.map((e) => ChatUser.fromJson(e.data()))
+                                  .toList() ??
+                              [];
+        
+                          if (_list.isNotEmpty) {
+                            return ListView.builder(
+                                itemCount: _isSearching
+                                    ? _searchList.length
+                                    : _list.length,
+                                padding: EdgeInsets.only(top: 10),
+                                physics: const BouncingScrollPhysics(),
+                                itemBuilder: (context, index) {
+                                  return ChatUserCard(
+                                      user: _isSearching
+                                          ? _searchList[index]
+                                          : _list[index]);
+                                });
+                          } else {
+                            return const Center(
+                              child: Text('No user Found!',
+                                  style: TextStyle(fontSize: 20)),
+                            );
+                          }
+                      }
+                    },
+                  );
+              }
+            },
+          ),
 
-          //get id of only known users
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              //if data is loading
-              case ConnectionState.waiting:
-              case ConnectionState.none:
-                return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
-
-              //if some or all data is loaded then show it
-              case ConnectionState.active:
-              case ConnectionState.done:
-                return StreamBuilder(
-                  stream: APIs.getAllUsers(
-                      snapshot.data?.docs.map((e) => e.id).toList() ?? []),
-
-                  //get only those user, who's ids are provided
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      //if data is loading
-                      case ConnectionState.waiting:
-                      case ConnectionState.none:
-                      // return const Center(
-                      //     child: CircularProgressIndicator());
-
-                      //if some or all data is loaded then show it
-                      case ConnectionState.active:
-                      case ConnectionState.done:
-                        final data = snapshot.data?.docs;
-                        _list = data
-                                ?.map((e) => ChatUser.fromJson(e.data()))
-                                .toList() ??
-                            [];
-
-                        if (_list.isNotEmpty) {
-                          return ListView.builder(
-                              itemCount: _isSearching
-                                  ? _searchList.length
-                                  : _list.length,
-                              padding: EdgeInsets.only(top: 10),
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ChatUserCard(
-                                    user: _isSearching
-                                        ? _searchList[index]
-                                        : _list[index]);
-                              });
-                        } else {
-                          return const Center(
-                            child: Text('No user Found!',
-                                style: TextStyle(fontSize: 20)),
-                          );
-                        }
-                    }
-                  },
-                );
-            }
-          },
+          ]
         ),
       ),
       // ),

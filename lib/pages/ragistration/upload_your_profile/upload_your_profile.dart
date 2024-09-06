@@ -1,6 +1,7 @@
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/upload_profile_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +17,7 @@ class UploadYourProfile extends StatefulWidget {
 class _UploadYourProfileState extends State<UploadYourProfile> {
   UploadProfileController completeProfileController =
       Get.put(UploadProfileController());
+  final FlowController flowController = Get.put(FlowController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,7 +96,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                               Container(
                                 width: 200,
                                 child: CustomButton(
-                                    text: "Upload Photos",
+                                    text: "Add Photos",
                                     onPressed: () {
                                       _showBottomSheet(context);
                                     },
@@ -105,7 +107,10 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                               ),
                               GestureDetector(
                                 onTap: () =>
-                                    {Get.offAndToNamed('/aboutgroom')},
+                                    {
+                                     // Get.offAndToNamed('/aboutgroom')
+                                     flowController.Flow(context, 12)
+                                      },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
                                   alignment: Alignment.center,

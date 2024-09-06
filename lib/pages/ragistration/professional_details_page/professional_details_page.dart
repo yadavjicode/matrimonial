@@ -7,6 +7,7 @@ import 'package:devotee/constants/lists/empolyment_list.dart';
 import 'package:devotee/constants/lists/income_list.dart';
 import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/title_profession_list.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/professional_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,13 +27,9 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   EmpolymentController employmentController = Get.put(EmpolymentController());
   ProfessionalDetailsController professionalDeatilsController =
       Get.put(ProfessionalDetailsController());
-  // StateControllerPermanent stateControllerPermanent =
-  //     Get.put(StateControllerPermanent());
-  // CityControllerPermanent cityControllerPermanent =
-  //     Get.put(CityControllerPermanent());
-
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
+  final FlowController flowController=Get.put(FlowController());
 
   String? selectedProfession;
   String? selectedAnnualSalary;
@@ -51,6 +48,12 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
     }else{
       return "";
     }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  //  stateController.fetchStateList();
   }
 
   @override
@@ -173,31 +176,48 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
-                              child: Obx(() {
-                                if (stateController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
+                              child: buildDropdownWithSearch(
+                                      'Working State',
+                                     stateController.getStateList(),
+                                      //  stateControllerPermanent.selectedItem,
+                                      (value) {
+                                        setState(() {
+                                          selectedState =
+                                              value; // Update the state
+                                        });
+                                        stateController.selectItem(
+                                            value); // Call the controller method
+                                      },
+                                      hintText: 'Select State',
                                     ),
-                                  );
-                                } else {
-                                  return buildDropdownWithSearch(
-                                    'Working State',
-                                   stateController.getStateList(),
-                                    //  stateControllerPermanent.selectedItem,
-                                    (value) {
-                                      setState(() {
-                                        selectedState =
-                                            value; // Update the state
-                                      });
-                                      stateController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select State',
-                                  );
-                                }
-                              }),
                             ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 15),
+                            //   child: Obx(() {
+                            //     if (stateController.isLoading.value) {
+                            //       return Center(
+                            //         child: CircularProgressIndicator(
+                            //           color: AppColors.primaryColor,
+                            //         ),
+                            //       );
+                            //     } else {
+                            //       return buildDropdownWithSearch(
+                            //         'Working State',
+                            //        stateController.getStateList(),
+                            //         //  stateControllerPermanent.selectedItem,
+                            //         (value) {
+                            //           setState(() {
+                            //             selectedState =
+                            //                 value; // Update the state
+                            //           });
+                            //           stateController.selectItem(
+                            //               value); // Call the controller method
+                            //         },
+                            //         hintText: 'Select State',
+                            //       );
+                            //     }
+                            //   }),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
                               child: Obx(() {
@@ -274,7 +294,10 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 fontSize: 20, color: AppColors.constColor)),
                       ),
                       GestureDetector(
-                        onTap: () => {Get.offAndToNamed('/devotion')},
+                        onTap: () => {
+                          // Get.offAndToNamed('/devotion')
+                           flowController.Flow(context, 6)
+                          },
                         child: Container(
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.all(5),

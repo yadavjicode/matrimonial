@@ -1,15 +1,23 @@
 import 'dart:io';
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/upload_profile_model.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 
 class UploadProfileController extends GetxController {
   var isLoading = false.obs;
   var selectedImages = <File>[].obs;
-  final FlowController flowController=Get.put(FlowController());
+  final FlowController flowController = Get.put(FlowController());
+  final EditProfileController editProfileController =
+      Get.put(EditProfileController());
 
+  // Method to handle profile update
   Future<void> profileCompleteFill(BuildContext context) async {
     final profileModel = UploadProfileModel();
     isLoading.value = true;
@@ -19,31 +27,31 @@ class UploadProfileController extends GetxController {
           profileModel, selectedImages);
       if (response["status"] == true) {
         print('Profile update successful: ${response['data']}');
+        editProfileController.userDetails(context).then((value) {
+          final photoUrl = editProfileController.member?.member?.Photo1;
+          if (photoUrl != null && photoUrl.isNotEmpty) {
+            APIs.updateUserImage("http://devoteematrimony.aks.5g.in/$photoUrl");
+          }
+        });
         flowController.Flow(context, 12);
-        // Get.toNamed('/partner');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: Colors.grey.shade200,
-          content: Text(
-            'Profile update successful: ${response['data']}',
-            style: TextStyle(color: Colors.black),
-          ),
-        ));
+        Dialogs.showSnackbar(
+            context, "Profile update successful: ${response['data']}");
       } else {
         print('Profile update failed: ${response['message']}');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Profile update failed: ${response['message']}'),
-        ));
+
+        Dialogs.showSnackbar(
+            context, 'Profile update failed: ${response['message']}');
       }
     } catch (e) {
       print('Profile update failed: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Profile update failed: $e'),
-      ));
+
+      Dialogs.showSnackbar(context, 'Profile update failed: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
+  // Method to pick images from the gallery
   Future<void> pickImagesFromGallery() async {
     final picker = ImagePicker();
     try {
@@ -54,57 +62,83 @@ class UploadProfileController extends GetxController {
       );
 
       if (pickedFiles != null && pickedFiles.isNotEmpty) {
-        // Clear the previous selection if necessary
         selectedImages.clear();
 
-        Get.toNamed("/showImage");
-        
-        // Add new images
         if (pickedFiles.length <= 5) {
           for (var file in pickedFiles) {
-            selectedImages.add(File(file.path));
+            await cropAndAddImage(File(file.path));
           }
+          Get.toNamed("/showImage");
         } else {
           print('You can only select up to 5 images.');
-          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-            content: Text('You can only select up to 5 images.'),
-          ));
+
+          Dialogs.showSnackbar(
+              Get.context!, 'You can only select up to 5 images.');
         }
       } else {
         print('No images selected.');
-        ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-          content: Text('No images selected.'),
-        ));
+
+        Dialogs.showSnackbar(Get.context!, 'No images selected.');
       }
     } catch (e) {
       print('Error while selecting images: $e');
-      ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-        content: Text('Error while selecting images: $e'),
-      ));
+
+      Dialogs.showSnackbar(Get.context!, 'Error while selecting images: $e');
     }
   }
 
+  // Method to pick image from the camera
   Future<void> pickImageFromCamera() async {
     final picker = ImagePicker();
     try {
-      final pickedFile = await picker.pickImage(source: ImageSource.camera);
+      final XFile? pickedFile =
+          await picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         if (selectedImages.length < 5) {
-          selectedImages.add(File(pickedFile.path));
-           Get.toNamed("/showImage");
+          await cropAndAddImage(File(pickedFile.path));
+          Get.toNamed("/showImage");
         } else {
           print('You can only select up to 5 images.');
-          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-            content: Text('You can only select up to 5 images.'),
-          ));
+
+          Dialogs.showSnackbar(
+              Get.context!, 'You can only select up to 5 images.');
         }
       } else {
         print('No image selected.');
       }
     } catch (e) {
       print('Error while selecting image: $e');
+
+      Dialogs.showSnackbar(Get.context!, 'Error while selecting image: $e');
+    }
+  }
+
+  // Method to crop and add the image to the selectedImages list
+  Future<void> cropAndAddImage(File imageFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 5),
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Image',
+          toolbarColor: AppColors.primaryColor,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: true,
+        ),
+        IOSUiSettings(
+          title: 'Crop Image',
+          aspectRatioLockEnabled: true,
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      selectedImages.add(File(croppedFile.path));
+    } else {
+      print('Image cropping canceled.');
       ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-        content: Text('Error while selecting image: $e'),
+        content: Text('Image cropping canceled.'),
       ));
     }
   }

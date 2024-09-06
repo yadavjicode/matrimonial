@@ -3,6 +3,7 @@ import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/lists/highest_qualification_list.dart';
 import 'package:devotee/constants/lists/professional_qualification.dart';
 import 'package:devotee/controller/education_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';
@@ -22,6 +23,7 @@ class _EducationDetailsState extends State<EducationDetails> {
   bool isHighestQualifaction = false;
   final EducationDetailsController _educationController =
       Get.put(EducationDetailsController());
+  final FlowController flowController = Get.put(FlowController());
 
   final TextEditingController describeController = TextEditingController();
   @override
@@ -161,7 +163,8 @@ class _EducationDetailsState extends State<EducationDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.offAndToNamed('/prof');
+          flowController.Flow(context, 5);
+          // Get.offAndToNamed('/prof');
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

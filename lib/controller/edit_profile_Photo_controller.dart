@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/model/edit_profile_photo_model.dart';
@@ -34,31 +35,17 @@ class EditProfilePhotoController extends GetxController {
             APIs.updateUserImage("http://devoteematrimony.aks.5g.in/$photoUrl");
           }
         });
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(
-                backgroundColor: AppColors.primaryColor,
-                content: Text(
-                  'Profile update successful: ${response['data']}',
-                  style: TextStyle(color: AppColors.constColor),
-                ),
-                duration: Duration(seconds: 1)))
-            .closed
-            .then((_) {
-          Navigator.pop(context);
-        });
+        Dialogs.showSnackbarPop(
+            context, 'Profile update successful: ${response['data']}');
       } else {
         print('Profile update failed: ${response['message']}');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            backgroundColor: AppColors.primaryColor,
-            content: Text('Profile update failed: ${response['message']}'),
-            duration: Duration(seconds: 1)));
+
+        Dialogs.showSnackbar(
+            Get.context!, 'Profile update failed: ${response['message']}');
       }
     } catch (e) {
       print('Profile update failed: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: AppColors.primaryColor,
-          content: Text('Profile update failed: $e'),
-          duration: Duration(seconds: 1)));
+      Dialogs.showSnackbar(Get.context!, 'Profile update failed: $e');
     } finally {
       isLoading.value = false;
     }
@@ -136,10 +123,6 @@ class EditProfilePhotoController extends GetxController {
 
   // Helper method to show a snackbar
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
-      backgroundColor: AppColors.primaryColor,
-      content: Text(message),
-      duration: Duration(seconds: 1),
-    ));
+    Dialogs.showSnackbar(Get.context!, message);
   }
 }

@@ -51,7 +51,7 @@ class CustomTextField extends StatelessWidget {
           obscureText: obscureText ?? false,
           onTap: onTap,
           keyboardType: keyboardType ?? TextInputType.text,
-          maxLength: maxlength ?? 100,
+          maxLength: maxlength ?? 500,
           maxLines: maxline ?? 1,
           decoration: InputDecoration(
             filled: true,

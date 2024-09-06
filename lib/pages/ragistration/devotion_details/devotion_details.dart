@@ -1,6 +1,7 @@
 import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/controller/devotion_details_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';
@@ -65,6 +66,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
   final TextEditingController nameTemple = TextEditingController();
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
+  final FlowController flowController=Get.put(FlowController());
 
   final DevotionalDetailsController devotionalController =
       Get.put(DevotionalDetailsController());
@@ -292,7 +294,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
       child: CustomButton(
         text: 'Skip',
         onPressed: () {
-          Get.offAndToNamed('/spiritual');
+          // Get.offAndToNamed('/spiritual');
+          flowController.Flow(context, 7);
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

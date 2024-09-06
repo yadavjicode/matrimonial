@@ -1,3 +1,4 @@
+import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/main.dart';
 import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class ProfileDialog extends StatelessWidget {
                     padding: const EdgeInsets.all(0),
                     shape: const CircleBorder(),
                     child: const Icon(Icons.info_outline,
-                        color: Colors.blue, size: 30),
+                        color: AppColors.primaryColor, size: 30),
                   ))
             ],
           )),

@@ -1,4 +1,5 @@
 import 'package:devotee/controller/about_groombride_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,8 +16,9 @@ class AboutGroomBride extends StatefulWidget {
 }
 
 class _AboutGroomBrideState extends State<AboutGroomBride> {
-  AboutGroomBrideController aboutGroomBrideController =
+final  AboutGroomBrideController aboutGroomBrideController =
       Get.put(AboutGroomBrideController());
+       final FlowController flowController=Get.put(FlowController());
   // Define state variables for checkboxes
   Map<String, bool> characteristics = {
     // "Independent": false,
@@ -245,7 +247,10 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/partner')},
+                          onTap: () => {
+                            // Get.offAndToNamed('/partner')
+                             flowController.Flow(context, 10)
+                            },
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             padding: EdgeInsets.all(5),

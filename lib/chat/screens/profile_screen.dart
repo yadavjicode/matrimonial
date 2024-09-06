@@ -4,6 +4,7 @@ import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widgets/profile_image.dart';
@@ -11,7 +12,6 @@ import '../widgets/profile_image.dart';
 //profile screen -- to show signed in user info
 class ProfileScreen extends StatefulWidget {
   final ChatUser user;
-
   const ProfileScreen({super.key, required this.user});
 
   @override
@@ -30,7 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // for hiding keyboard
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-
+          backgroundColor: AppColors.background,
           //app bar
           appBar: AppBar(
               elevation: 0,
@@ -76,128 +76,143 @@ class _ProfileScreenState extends State<ProfileScreen> {
           //body
           body: Form(
             key: _formKey,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * .05),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    // for adding some space
-                    SizedBox(width: screenWidth, height: screenHeight * .03),
+            child: Stack(children: [
+              Container(
+                  width: double.infinity,
+                  alignment: Alignment.topRight,
+                  child: Image.asset("assets/images/background.png")),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * .05),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      // for adding some space
+                      SizedBox(width: screenWidth, height: screenHeight * .03),
 
-                    //user profile picture
-                    Stack(
-                      children: [
-                        //profile picture
-                        _image != null
-                            ?
+                      //user profile picture
+                      Stack(
+                        children: [
+                          //profile picture
+                          _image != null
+                              ?
 
-                            //local image
-                            ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(screenHeight * .1)),
-                                child: Image.file(File(_image!),
-                                    width: screenHeight * .2,
-                                    height: screenHeight * .2,
-                                    fit: BoxFit.cover))
-                            :
+                              //local image
+                              ClipRRect(
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(screenHeight * .1)),
+                                  child: Image.file(File(_image!),
+                                      width: screenHeight * .2,
+                                      height: screenHeight * .2,
+                                      fit: BoxFit.cover))
+                              :
 
-                            //image from server
-                            ProfileImage(
-                                size: screenHeight * .2,
-                                url: widget.user.image,
-                              ),
+                              //image from server
+                              ProfileImage(
+                                  size: screenHeight * .2,
+                                  url: widget.user.image,
+                                ),
 
-                        //edit image button
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: MaterialButton(
-                            elevation: 1,
-                            onPressed: () {
-                              _showBottomSheet();
-                            },
-                            shape: const CircleBorder(),
-                            color: Colors.white,
-                            child: const Icon(Icons.edit, color: Colors.blue),
-                          ),
-                        )
-                      ],
-                    ),
+                          //edit image button
+                          // Positioned(
+                          //   bottom: 0,
+                          //   right: 0,
+                          //   child: MaterialButton(
+                          //     elevation: 1,
+                          //     onPressed: () {
+                          //       _showBottomSheet();
+                          //     },
+                          //     shape: const CircleBorder(),
+                          //     color: Colors.white,
+                          //     child: const Icon(Icons.edit, color: Colors.blue),
+                          //   ),
+                          // )
+                        ],
+                      ),
 
-                    // for adding some space
-                    SizedBox(height: screenHeight * .03),
+                      // for adding some space
+                      SizedBox(height: screenHeight * .02),
 
-                    // user email label
-                    Text(widget.user.email,
-                        style: const TextStyle(
-                            color: Colors.black54, fontSize: 16)),
+                      // user email label
+                      Text("${widget.user.name} (ID:${widget.user.id})",
+                          style: const TextStyle(
+                              color: AppColors.black, fontSize: 16)),
 
-                    // for adding some space
-                    SizedBox(height: screenHeight * .05),
+                      // for adding some space
+                      SizedBox(height: screenHeight * .03),
 
-                    // name input field
-                    TextFormField(
-                      initialValue: widget.user.name,
-                      onSaved: (val) => APIs.me.name = val ?? '',
-                      validator: (val) => val != null && val.isNotEmpty
-                          ? null
-                          : 'Required Field',
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person, color: Colors.blue),
+                      // name input field
+                      // TextFormField(
+                      //   initialValue: widget.user.name,
+                      //   onSaved: (val) => APIs.me.name = val ?? '',
+                      //   validator: (val) => val != null && val.isNotEmpty
+                      //       ? null
+                      //       : 'Required Field',
+                      //   decoration: const InputDecoration(
+                      //       prefixIcon: Icon(Icons.person, color: Colors.blue),
+                      //       border: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.all(Radius.circular(12)),
+                      //       ),
+                      //       hintText: 'eg. Happy Singh',
+                      //       label: Text('Name')),
+                      // ),
+
+                      // for adding some space
+                      SizedBox(height: screenHeight * .02),
+
+                      // about input field
+                      TextFormField(
+                        initialValue: widget.user.about,
+                        onSaved: (val) => APIs.me.about = val ?? '',
+                        validator: (val) => val != null && val.isNotEmpty
+                            ? null
+                            : 'Required Field',
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.info_outline,
+                              color: AppColors.primaryColor),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
-                          hintText: 'eg. Happy Singh',
-                          label: Text('Name')),
-                    ),
-
-                    // for adding some space
-                    SizedBox(height: screenHeight * .02),
-
-                    // about input field
-                    TextFormField(
-                      initialValue: widget.user.about,
-                      onSaved: (val) => APIs.me.about = val ?? '',
-                      validator: (val) => val != null && val.isNotEmpty
-                          ? null
-                          : 'Required Field',
-                      decoration: const InputDecoration(
-                          prefixIcon:
-                              Icon(Icons.info_outline, color: Colors.blue),
-                          border: OutlineInputBorder(
+                          focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
+                            borderSide:
+                                const BorderSide(color: AppColors.primaryColor),
                           ),
                           hintText: 'eg. Feeling Happy',
-                          label: Text('About')),
-                    ),
+                          label: Text(
+                            'About',
+                            style: TextStyle(color: AppColors.darkgrey),
+                          ),
+                        ),
+                      ),
 
-                    // for adding some space
-                    SizedBox(height: screenHeight * .05),
+                      // for adding some space
+                      SizedBox(height: screenHeight * .05),
 
-                    // update profile button
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          shape: const StadiumBorder(),
-                          backgroundColor: AppColors.primaryColor,
-                          minimumSize:
-                              Size(screenWidth * .5, screenHeight * .06)),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          APIs.updateUserInfo().then((value) {
-                            Dialogs.showSnackbar(
-                                context, 'Profile Updated Successfully!');
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.edit, size: 28),
-                      label:
-                          const Text('UPDATE', style: TextStyle(fontSize: 16)),
-                    )
-                  ],
+                      // update profile button
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            shape: const StadiumBorder(),
+                            backgroundColor: AppColors.primaryColor,
+                            minimumSize:
+                                Size(screenWidth * .5, screenHeight * .06)),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            APIs.updateUserInfo().then((value) {
+                              Dialogs.showSnackbar(
+                                  context, 'Profile Updated Successfully!');
+                            });
+                          }
+                        },
+                        icon: const Icon(Icons.edit, size: 28),
+                        label: const Text('UPDATE',
+                            style: TextStyle(fontSize: 16)),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ]),
           )),
     );
   }

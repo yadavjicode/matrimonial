@@ -453,7 +453,7 @@ class ApiService {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
-        "step_10": "1",
+        "step_12": "1",
         "groom_bride": characteristics,
         'Hobbies': hobbies,
       }),
@@ -488,7 +488,7 @@ class ApiService {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
-        "step_11": "1",
+        "step_10": "1",
         "time_of_birth": timeHoroscope,
         'state_of_birth': stateHoroscope,
         "city_of_birth": cityHoroscope

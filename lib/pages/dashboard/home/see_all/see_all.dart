@@ -101,7 +101,7 @@ class _SeeAllState extends State<SeeAll> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: AllMatchesContent(keys),
+              child: allMatchesContent(keys),
             ),
             if (shortlistController.isLoading.value ||
                 sentInvitationController.isLoading.value ||
@@ -118,7 +118,7 @@ class _SeeAllState extends State<SeeAll> {
     );
   }
 
-  Widget AllMatchesContent(String keys) {
+  Widget allMatchesContent(String keys) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(

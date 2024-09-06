@@ -10,13 +10,13 @@ import 'package:devotee/constants/lists/drink_habit_list.dart';
 import 'package:devotee/constants/lists/heights_list.dart';
 import 'package:devotee/constants/lists/highest_qualification_list.dart';
 import 'package:devotee/constants/lists/income_list.dart';
+import 'package:devotee/constants/lists/language_list.dart';
 import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/marital_list.dart';
 import 'package:devotee/constants/lists/professional_qualification.dart';
 import 'package:devotee/constants/lists/smoke_habit_list.dart';
 import 'package:devotee/constants/lists/title_profession_list.dart';
 import 'package:devotee/constants/lists/weight_list.dart';
-import 'package:devotee/constants/profile_constant.dart';
 import 'package:devotee/controller/list_controller.dart';
 import 'package:devotee/controller/partner_preference_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,7 +51,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
   DietController dietController = Get.put(DietController());
   DrinkHabitController drinkHabitController = Get.put(DrinkHabitController());
   SmokeHabitController smokeHabitController = Get.put(SmokeHabitController());
-  final TextEditingController languageController = TextEditingController();
+  final LanguageController languageController = Get.put(LanguageController());
 
   bool selectBasicDetails = false;
   bool selectFamilyDetails = false;
@@ -89,6 +89,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
   String? selectDrinkHabit;
   String? selectSmokeHabit;
 
+  
   String getFamilyType() {
     if (familytype == 1) {
       return "Joint";
@@ -97,6 +98,12 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
     } else {
       return "";
     }
+  }
+
+List<String>? selectedLanguage;
+
+String getLanguageKnown(List<String> language) {
+    return language.join(', ');
   }
 
   String getFamilyValue() {
@@ -110,10 +117,13 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
       return "";
     }
   }
+  
+
 
   ProfessionsController professionController = Get.put(ProfessionsController());
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
@@ -302,11 +312,21 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  CustomTextField(
-                                    controller: languageController,
-                                    labelText: "Languages Known",
-                                    hintText: "e.g. Hindi, English",
-                                  ),
+                                     buildDropdownWithSearchMulti(
+                              'Languages Known',
+                              languageController.getlanguageList(),
+                              //  languageController.selectedItem.call,
+                              (value) {
+                                setState(() {
+                                  selectedLanguage = value; // Update the state
+                                });
+                                // motherTongueController.selectItem(
+                                //     value); // Call the controller method
+                                print(
+                                    "language===============${getLanguageKnown(selectedLanguage ?? [])}");
+                              },
+                              hintText: 'Select Languages Known',
+                            ),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -935,7 +955,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 selectWeightTo ?? "",
                                 selectHeightFrom ?? "",
                                 selectHeightTo ?? "",
-                                languageController.text.toString().trim(),
+                               getLanguageKnown(selectedLanguage ?? []),
                                 selectMaritalStatus ?? "",
                                 getFamilyType(),
                                 getFamilyValue(),

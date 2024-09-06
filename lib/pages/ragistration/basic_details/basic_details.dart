@@ -327,6 +327,7 @@ class _BasicDetailState extends State<BasicDetail> {
                               const SizedBox(height: 15),
                               CustomTextField(
                                 labelText: "About",
+                                
                                 maxline: 8,
                                 controller: aboutController,
                               )

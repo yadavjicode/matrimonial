@@ -23,7 +23,6 @@ class _EditYourProfileState extends State<EditYourProfile> {
 
   @override
   Widget build(BuildContext context) {
-    // Display the selected image if available; otherwise, show the existing profile picture
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -43,7 +42,9 @@ class _EditYourProfileState extends State<EditYourProfile> {
         ],
       ),
       body: Obx(() {
-        // Using Obx to listen for changes in selectedImage
+      final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
         String image = editProfilePhotoController.selectedImage.value != null
             ? editProfilePhotoController.selectedImage.value!.path
             : (editProfileController.member!.member!.photo1 != null
@@ -52,14 +53,15 @@ class _EditYourProfileState extends State<EditYourProfile> {
 
         return Column(
           children: [
-            Expanded(
-              child: Container(
-                color: AppColors.black,
-                child: editProfilePhotoController.selectedImage.value != null
-                    ? Image.file(editProfilePhotoController.selectedImage.value!,
-                        fit: BoxFit.fill)
-                    : Image.network(image, fit: BoxFit.fill),
-              ),
+            Container(
+              width: screenWidth*1,
+              height:(screenWidth*1)*(5/4) ,
+              color: AppColors.black,
+              child: editProfilePhotoController.selectedImage.value != null
+                  ? Image.file(editProfilePhotoController.selectedImage.value!,
+                      fit: BoxFit.fill)
+                  : Image.network(image, fit: BoxFit.cover,width: screenWidth*1,
+              height:(screenWidth*1)*(5/4) ,),
             ),
             GestureDetector(
               onTap: () {

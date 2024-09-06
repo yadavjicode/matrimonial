@@ -5,7 +5,7 @@ import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/controller/HoroscopeDetailsController.dart';
-import 'package:devotee/controller/list_controller.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +18,8 @@ class HoroscopeDetails extends StatefulWidget {
 
 class _HoroscopeDetailsState extends State<HoroscopeDetails> {
  final StateController stateController = Get.put(StateController());
-  final CityController cityController = Get.put(CityController());
+final CityController cityController = Get.put(CityController());
+final FlowController flowController = Get.put(FlowController());
 
  final HoroscopeDetailsController horoscopeDetailsController =
       Get.put(HoroscopeDetailsController());
@@ -40,6 +41,13 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
       });
     }
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   // stateController.fetchStateList();
+   
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +55,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
           elevation: 0,
+          
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Horoscope Details",
@@ -101,15 +110,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: Obx(() {
-                            if (stateController.isLoading.value) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                              );
-                            } else {
-                              return buildDropdownWithSearch(
+                          child:buildDropdownWithSearch(
                                 'State of Birth',
                                 stateController.getStateList(),
                                 (value) {
@@ -120,9 +121,30 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                       value); // Call the controller method
                                 },
                                 hintText: 'Select State',
-                              );
-                            }
-                          }),
+                              )
+                          //  Obx(() {
+                          //   if (stateController.isLoading.value) {
+                          //     return Center(
+                          //       child: CircularProgressIndicator(
+                          //         color: AppColors.primaryColor,
+                          //       ),
+                          //     );
+                          //   } 
+                          //  return  buildDropdownWithSearch(
+                          //       'State of Birth',
+                          //       stateController.getStateList(),
+                          //       (value) {
+                          //         setState(() {
+                          //           selectedState = value; // Update the state
+                          //         });
+                          //         stateController.selectItem(
+                          //             value); // Call the controller method
+                          //       },
+                          //       hintText: 'Select State',
+                          //     );
+                            
+                          // }
+                          // ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
@@ -166,7 +188,10 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                   fontSize: 20, color: AppColors.constColor)),
                         ),
                         GestureDetector(
-                          onTap: () => {Get.offAndToNamed('/profile')},
+                          onTap: () => {
+                            // Get.offAndToNamed('/profile')
+                            flowController.Flow(context, 11)
+                            },
                           child: Container(
                             margin: EdgeInsets.only(bottom: 25, top: 10),
                             padding: EdgeInsets.all(5),

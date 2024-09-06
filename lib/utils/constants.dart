@@ -47,10 +47,8 @@ class ApiConstants {
   static const String withdrawal_Url = "member/withdrawal-request";
   static const String coupons_Url ="member/coupon-list";
   static const String package_Url = "member/package-list";
- static const String buyPackage_Url = "member/checkout";
+  static const String buyPackage_Url = "member/checkout";
  static const String langaugeUrl = "get-languages";
- 
 }
-
 late Size mq;
 

@@ -25,46 +25,45 @@ class Flows with ChangeNotifier {
       if (steps[i] == 0) {
         print("Navigating to step ${i + 1}");
         Get.off(getStepPage(i + 1));
-
         // Get.off(() => getStepPage(i + 1));
         return;
       }
     }
 
     print("Navigating to Dashboard");
-    Get.off(() => Dashboard());
+    Get.off(() => const Dashboard());
   }
 
   static Widget getStepPage(int stepNumber) {
     switch (stepNumber) {
       case 1:
-        return Profile1Page();
+        return const Profile1Page();
       case 2:
-        return BasicDetail();
+        return const BasicDetail();
       case 3:
-        return ContactDetails();
+        return const ContactDetails();
       case 4:
-        return LocationDetails();
+        return const LocationDetails();
       case 5:
-        return EducationDetails();
+        return const EducationDetails();
       case 6:
-        return ProfessionalDetailsPage();
+        return const ProfessionalDetailsPage();
       case 7:
-        return DevotionDetails();
+        return const DevotionDetails();
       case 8:
-        return SpiritualDetails();
+        return const SpiritualDetails();
       case 9:
-        return FamilyDetails();
+        return const FamilyDetails();
       case 10:
-        return HoroscopeDetails();
+        return const HoroscopeDetails();
       case 11:
-        return UploadYourProfile();
+        return const UploadYourProfile();
       case 12:
-        return AboutGroomBride();
+        return const AboutGroomBride();
       case 13:
-        return PartnerPreferences();
+        return const PartnerPreferences();
       default:
-        return Dashboard(); // Default to dashboard if no step matches
+        return const Dashboard(); // Default to dashboard if no step matches
     }
   }
 }
