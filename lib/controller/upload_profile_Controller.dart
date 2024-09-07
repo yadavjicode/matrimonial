@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/upload_profile_model.dart';
@@ -71,18 +73,25 @@ class UploadProfileController extends GetxController {
           Get.toNamed("/showImage");
         } else {
           print('You can only select up to 5 images.');
-
+          // CustomDialog.show(
+          //   Get.context!,
+          //   'Error',
+          //   'You can only select up to 5 images.',
+          //   dialogType: DialogType.error,
+          // );
+          Navigator.of(Get.context!).pop();
           Dialogs.showSnackbar(
               Get.context!, 'You can only select up to 5 images.');
         }
       } else {
         print('No images selected.');
-
+       
+        Navigator.of(Get.context!).pop();
         Dialogs.showSnackbar(Get.context!, 'No images selected.');
       }
     } catch (e) {
       print('Error while selecting images: $e');
-
+      Navigator.of(Get.context!).pop();
       Dialogs.showSnackbar(Get.context!, 'Error while selecting images: $e');
     }
   }
@@ -100,15 +109,18 @@ class UploadProfileController extends GetxController {
         } else {
           print('You can only select up to 5 images.');
 
+          Navigator.of(Get.context!).pop();
           Dialogs.showSnackbar(
               Get.context!, 'You can only select up to 5 images.');
         }
       } else {
+        Navigator.of(Get.context!).pop();
+        Dialogs.showSnackbar(Get.context!, 'No image selected.');
         print('No image selected.');
       }
     } catch (e) {
       print('Error while selecting image: $e');
-
+      Navigator.of(Get.context!).pop();
       Dialogs.showSnackbar(Get.context!, 'Error while selecting image: $e');
     }
   }

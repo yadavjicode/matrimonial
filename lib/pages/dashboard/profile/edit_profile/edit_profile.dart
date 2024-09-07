@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
@@ -65,6 +64,7 @@ class _ProfileEditState extends State<ProfileEdit> {
             color: AppColors.constColor,
           ),
         ),
+        automaticallyImplyLeading: false, 
       ),
       body: Obx(() {
         return Stack(
@@ -146,7 +146,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                     bottom: 8,
                     child: InkWell(
                       onTap: () => {
-                        Get.toNamed("/profile")
+                        // Get.toNamed("/profile")
+                        Get.toNamed("/editAllPhoto")
                       },
                       child: SvgPicture.asset(
                         "assets/images/icons/penicon.svg",

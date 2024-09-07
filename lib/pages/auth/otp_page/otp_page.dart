@@ -1,6 +1,7 @@
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/controller/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:telephony/telephony.dart';
@@ -22,6 +23,7 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   final OtpController _memberController = Get.put(OtpController());
+ // final StateController stateController = Get.put(StateController());
   String otp = '';
   Telephony telephony = Telephony.instance;
   OtpFieldController otpbox = OtpFieldController();
@@ -32,6 +34,7 @@ class _OTPScreenState extends State<OTPScreen> {
   void initState() {
     super.initState();
     _requestSmsPermissions();
+   // stateController.getStateList();
   }
 
   Future<void> _requestSmsPermissions() async {

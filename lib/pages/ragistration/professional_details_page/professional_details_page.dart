@@ -53,7 +53,8 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  //  stateController.fetchStateList();
+  // stateController.fetchStateList();
+
   }
 
   @override
@@ -174,50 +175,51 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 hintText: 'Select Empolyment',
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: buildDropdownWithSearch(
-                                      'Working State',
-                                     stateController.getStateList(),
-                                      //  stateControllerPermanent.selectedItem,
-                                      (value) {
-                                        setState(() {
-                                          selectedState =
-                                              value; // Update the state
-                                        });
-                                        stateController.selectItem(
-                                            value); // Call the controller method
-                                      },
-                                      hintText: 'Select State',
-                                    ),
-                            ),
                             // Padding(
                             //   padding: const EdgeInsets.only(top: 15),
-                            //   child: Obx(() {
-                            //     if (stateController.isLoading.value) {
-                            //       return Center(
-                            //         child: CircularProgressIndicator(
-                            //           color: AppColors.primaryColor,
-                            //         ),
-                            //       );
-                            //     } else {
-                            //       return buildDropdownWithSearch(
-                            //         'Working State',
-                            //        stateController.getStateList(),
-                            //         //  stateControllerPermanent.selectedItem,
-                            //         (value) {
-                            //           setState(() {
-                            //             selectedState =
-                            //                 value; // Update the state
-                            //           });
-                            //           stateController.selectItem(
-                            //               value); // Call the controller method
-                            //         },
-                            //         hintText: 'Select State',
-                            //       );
-                            //     }
-                            //   }),
-                            // ),
+                            //   child:
+                            // //    buildDropdownWithSearch(
+                            // //           'Working State',
+                            // //          stateController.getStateList(),
+                            // //           //  stateControllerPermanent.selectedItem,
+                            // //           (value) {
+                            // //             setState(() {
+                            // //               selectedState =
+                            // //                   value; // Update the state
+                            // //             });
+                            // //             stateController.selectItem(
+                            // //                 value); // Call the controller method
+                            // //           },
+                            // //           hintText: 'Select State',
+                            // //         ),
+                            // // ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: Obx(() {
+                                if (stateController.isLoading.value) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  );
+                                } else {
+                                  return buildDropdownWithSearch(
+                                    'Working State',
+                                   stateController.getStateList(),
+                                    //  stateControllerPermanent.selectedItem,
+                                    (value) {
+                                      setState(() {
+                                        selectedState =
+                                            value; // Update the state
+                                      });
+                                      stateController.selectItem(
+                                          value); // Call the controller method
+                                    },
+                                    hintText: 'Select State',
+                                  );
+                                }
+                              }),
+                            ),
                             Padding(
                               padding: const EdgeInsets.only(top: 15),
                               child: Obx(() {

@@ -1,9 +1,7 @@
 import 'package:devotee/chat/helper/my_date_util.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
-import '../../main.dart';
 import '../widgets/profile_image.dart';
 
 //view profile screen -- to view profile of user

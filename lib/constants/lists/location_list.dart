@@ -585,7 +585,7 @@ class StateController extends GetxController {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
-          'countryarray': ["India"],
+          'countryarray': "India",
         }),
       );
 
@@ -596,6 +596,7 @@ class StateController extends GetxController {
               List<String>.from(data['data'].map((item) => item['state']));
           stateLists.assignAll(fetchedStates);
           print(fetchedStates);
+          print(data);
         } else {
           print('API response status is false');
         }

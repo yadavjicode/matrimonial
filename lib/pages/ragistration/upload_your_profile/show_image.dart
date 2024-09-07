@@ -62,8 +62,8 @@ class _ShowImageState extends State<ShowImage> {
                   Container(
                       width: screenWidth * 1,
                       height: (screenWidth * 1) * (5 / 4),
-                      //  color: AppColors.background,
-                      child: profileImage !=
+                       color: AppColors.constColor,
+                      child:completeProfileController.selectedImages.isNotEmpty? profileImage !=
                               null // Check if profileImage is not null
                           ? Image.file(
                               profileImage!,
@@ -71,11 +71,14 @@ class _ShowImageState extends State<ShowImage> {
                               width: screenWidth * 1,
                               fit: BoxFit.cover,
                             )
-                          : Image.file(
+                          :Image.file(
                               completeProfileController.selectedImages[0],
                               height: (screenWidth * 1) * (5 / 4),
                               width: screenWidth * 1,
-                            )),
+                            ):Center(child: Text("No Image",style: FontConstant.styleRegular(
+                            fontSize: 15, color: AppColors.black),),)
+                            ),
+                  
                   Container(
                     // height: screenHeight * 0.17,
                     width: screenWidth,
@@ -112,6 +115,10 @@ class _ShowImageState extends State<ShowImage> {
                                               completeProfileController
                                                   .selectedImages
                                                   .remove(image);
+                                                  setState(() {
+                                                    profileImage=null; 
+                                                  });
+                                              
                                             },
                                             child: Icon(Icons.remove_circle,
                                                 color: Colors.red),

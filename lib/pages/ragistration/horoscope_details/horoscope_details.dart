@@ -46,7 +46,7 @@ final FlowController flowController = Get.put(FlowController());
     // TODO: implement initState
     super.initState();
    // stateController.fetchStateList();
-   
+
   }
 
   @override
@@ -110,27 +110,8 @@ final FlowController flowController = Get.put(FlowController());
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child:buildDropdownWithSearch(
-                                'State of Birth',
-                                stateController.getStateList(),
-                                (value) {
-                                  setState(() {
-                                    selectedState = value; // Update the state
-                                  });
-                                  stateController.selectItem(
-                                      value); // Call the controller method
-                                },
-                                hintText: 'Select State',
-                              )
-                          //  Obx(() {
-                          //   if (stateController.isLoading.value) {
-                          //     return Center(
-                          //       child: CircularProgressIndicator(
-                          //         color: AppColors.primaryColor,
-                          //       ),
-                          //     );
-                          //   } 
-                          //  return  buildDropdownWithSearch(
+                          child:
+                          // buildDropdownWithSearch(
                           //       'State of Birth',
                           //       stateController.getStateList(),
                           //       (value) {
@@ -141,10 +122,30 @@ final FlowController flowController = Get.put(FlowController());
                           //             value); // Call the controller method
                           //       },
                           //       hintText: 'Select State',
-                          //     );
+                          //     )
+                           Obx(() {
+                            if (stateController.isLoading.value) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primaryColor,
+                                ),
+                              );
+                            } 
+                           return  buildDropdownWithSearch(
+                                'State of Birth',
+                                stateController.getStateList(),
+                                (value) {
+                                  setState(() {
+                                    selectedState = value; // Update the state
+                                  });
+                                  stateController.selectItem(
+                                      value); // Call the controller method
+                                },
+                                hintText: 'Select State',
+                              );
                             
-                          // }
-                          // ),
+                          }
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
@@ -169,7 +170,8 @@ final FlowController flowController = Get.put(FlowController());
                                 hintText: 'Select City',
                               );
                             }
-                          }),
+                          }
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 25, bottom: 15),

@@ -3,6 +3,7 @@ import 'package:devotee/model/search_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
+import 'package:flutter/cupertino.dart';
 
 // class SearchsController with ChangeNotifier {
 //   final ApiService apiService = ApiService();
@@ -87,9 +88,8 @@ import 'package:devotee/api_service/api_service.dart';
 // }
 
 
-import 'package:devotee/api_service/api_service.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
+
+
 
 
 class SearchsController extends GetxController {

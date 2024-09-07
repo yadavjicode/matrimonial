@@ -73,6 +73,8 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           style: FontConstant.styleMedium(
               fontSize: 18, color: AppColors.constColor),
         ),
+        automaticallyImplyLeading: false, 
+        
       ),
       body: Stack(children: [
         Container(

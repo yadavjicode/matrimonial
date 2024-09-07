@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/splash_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final SplashController splashController = Get.put(SplashController());
   final FlowController flowController = Get.put(FlowController());
-  final StateController stateController = Get.put(StateController());
+//  final StateController stateController = Get.put(StateController());
 
 
   Future<void> _loadTokenAndNavigate() async {
@@ -37,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-  stateController.fetchStateList();
+// stateController.fetchStateList();
     super.initState();
     Timer(
       const Duration(seconds: 2),

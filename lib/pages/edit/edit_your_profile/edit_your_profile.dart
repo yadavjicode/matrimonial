@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/edit_profile_Photo_controller.dart';
@@ -68,11 +67,8 @@ class _EditYourProfileState extends State<EditYourProfile> {
                 if (editProfilePhotoController.selectedImage.value != null) {
                   editProfilePhotoController.profileCompleteFill(context);
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('Please select an image before updating.'),
-                    backgroundColor: AppColors.primaryColor,
-                     duration: Duration(seconds: 1)
-                  ));
+                 
+                   Dialogs.showSnackbar(context, 'Please select an image before updating.');
                 }
               },
               child: Container(

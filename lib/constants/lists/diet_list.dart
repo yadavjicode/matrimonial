@@ -1,5 +1,4 @@
 import 'package:devotee/utils/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +12,7 @@ class DietController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchDietList();
+    fetchDietList();  
   }
 
   List<String> getDietList() {
@@ -38,7 +37,7 @@ class DietController extends GetxController {
           // 'Content-Type': 'application/json',
         },
       );
-
+  
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         if (data['status'] == true) {

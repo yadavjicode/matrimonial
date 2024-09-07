@@ -66,10 +66,12 @@ class EditProfilePhotoController extends GetxController {
         await cropImage(File(pickedFile.path));
         Get.back(); // Close bottom sheet after selection
       } else {
+        Navigator.of(Get.context!).pop();
         print('No image selected.');
         _showSnackBar('No image selected.');
       }
     } catch (e) {
+      Navigator.of(Get.context!).pop();
       print('Error while selecting image: $e');
       _showSnackBar('Error while selecting image: $e');
     }
@@ -85,10 +87,12 @@ class EditProfilePhotoController extends GetxController {
         await cropImage(File(pickedFile.path));
         Get.back(); // Close bottom sheet after selection
       } else {
+        Navigator.of(Get.context!).pop();
         print('No image selected.');
         _showSnackBar('No image selected.');
       }
     } catch (e) {
+      Navigator.of(Get.context!).pop();
       print('Error while selecting image: $e');
       _showSnackBar('Error while selecting image: $e');
     }

@@ -25,6 +25,7 @@ import 'package:devotee/pages/drawer_page/suggestion_from_our_side/suggestion_fr
 import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/pages/drawer_page/warning/warning.dart';
 import 'package:devotee/pages/drawer_page/who_are_you/who_are_you.dart';
+import 'package:devotee/pages/edit/edit_all_photo.dart/edit_all_photo.dart';
 import 'package:devotee/pages/edit/edit_basic_details/edit_basic_details.dart';
 import 'package:devotee/pages/edit/edit_contact_details/edit_contact_details.dart';
 import 'package:devotee/pages/edit/edit_education_details/edit_education_details.dart';
@@ -115,6 +116,7 @@ class AppRoutes {
   
 // Edit pages
    static const String profileEdit = '/profileEdit';
+   static const String editAllPhoto = '/editAllPhoto';
    static const String editBasicDetails = '/editBasicDetails';
    static const String editContactDetails = '/editContactDetails';
    static const String editLocationDetails = '/editLocationDetails';
@@ -468,6 +470,13 @@ class AppRoutes {
      GetPage(
       name: seeAll,
       page: () => const SeeAll(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+
+    GetPage(
+      name: editAllPhoto,
+      page: () => const EditAllPhoto(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

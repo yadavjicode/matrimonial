@@ -75,6 +75,7 @@ class _InboxState extends State<Inbox> {
           "Inbox",
           style: FontConstant.styleSemiBold(fontSize: 18, color: Colors.white),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: Stack(
         children: [

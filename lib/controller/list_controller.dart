@@ -734,7 +734,7 @@ class NumberController extends GetxController {
   var selectedItem = RxnString();
 
   static List<String> NumberList() {
-    return ["0", "1", "2", "3", "4", "5"];
+    return ["1", "2", "3", "4", "5"];
   }
 
   void selectItem(String? value) {

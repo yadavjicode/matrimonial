@@ -43,7 +43,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  //  stateController.fetchStateList();
+ // stateController.fetchStateList();
   }
 
   @override
@@ -164,29 +164,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                               const SizedBox(
                                 height: 15,
                               ),
-                              buildDropdownWithSearch(
-                                    'Counsellor residing in State',
-                                    stateController.getStateList(),
-                                    //  stateControllerPermanent.selectedItem,
-                                    (value) {
-                                      setState(() {
-                                        selectedState =
-                                            value; // Update the state
-                                      });
-                                      stateController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select State',
-                                  ),
-                              // Obx(() {
-                              //   if (stateController.isLoading.value) {
-                              //     return Center(
-                              //       child: CircularProgressIndicator(
-                              //         color: AppColors.primaryColor,
-                              //       ),
-                              //     );
-                              //   } else {
-                              //     return buildDropdownWithSearch(
+                              // buildDropdownWithSearch(
                               //       'Counsellor residing in State',
                               //       stateController.getStateList(),
                               //       //  stateControllerPermanent.selectedItem,
@@ -199,9 +177,31 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                               //             value); // Call the controller method
                               //       },
                               //       hintText: 'Select State',
-                              //     );
-                              //   }
-                              // }),
+                              //     ),
+                              Obx(() {
+                                if (stateController.isLoading.value) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  );
+                                } else {
+                                  return buildDropdownWithSearch(
+                                    'Counsellor residing in State',
+                                    stateController.getStateList(),
+                                    //  stateControllerPermanent.selectedItem,
+                                    (value) {
+                                      setState(() {
+                                        selectedState =
+                                            value; // Update the state
+                                      });
+                                      stateController.selectItem(
+                                          value); // Call the controller method
+                                    },
+                                    hintText: 'Select State',
+                                  );
+                                }
+                              }),
                               const SizedBox(
                                 height: 15,
                               ),
