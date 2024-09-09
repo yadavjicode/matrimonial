@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
 import '../models/chat_user.dart';
@@ -32,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-    
+
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
@@ -54,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
@@ -87,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       //
       child: Scaffold(
+        key: scaffoldKey,
         backgroundColor: AppColors.background,
         //app bar
         appBar: AppBar(
@@ -95,27 +99,23 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: AppColors.primaryColor,
           //view profile
           leading: IconButton(
-            tooltip: 'View Profile',
+            icon: SvgPicture.asset("assets/images/menu.svg"),
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => ProfileScreen(user: APIs.me)));
+              scaffoldKey.currentState?.openDrawer();
             },
-            icon:  ProfileImage(size: 50,url: APIs.me.image,),
           ),
-
           //title
           title: _isSearching
               ? TextField(
-                
                   decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Name......',
-                    
                       hintStyle: TextStyle(color: AppColors.constColor)),
                   autofocus: true,
-                  style: const TextStyle(fontSize: 17, letterSpacing: 0.5,color: AppColors.constColor),
+                  style: const TextStyle(
+                      fontSize: 17,
+                      letterSpacing: 0.5,
+                      color: AppColors.constColor),
                   //when search text changes then updated search list
                   onChanged: (val) {
                     //search logic
@@ -133,7 +133,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 )
               : const Text('My Chat'),
+
           actions: [
+            IconButton(
+              tooltip: 'View Profile',
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ProfileScreen(user: APIs.me)));
+              },
+              icon: ProfileImage(
+                size: 40,
+                url: APIs.me.image,
+              ),
+              padding: EdgeInsets.all(0),
+            ),
             //search user button
             IconButton(
                 tooltip: 'Search',
@@ -164,30 +179,32 @@ class _HomeScreenState extends State<HomeScreen> {
         // ),
 
         //body
-        body: Stack(
-          children: [
-            Container(
-                  width: double.infinity,
-                  alignment: Alignment.topRight,
-                  child: Image.asset("assets/images/background.png")),
-           StreamBuilder(
+        body: Stack(children: [
+          Container(
+              width: double.infinity,
+              alignment: Alignment.topRight,
+              child: Image.asset("assets/images/background.png")),
+          StreamBuilder(
             stream: APIs.getMyUsersId(),
-        
+
             //get id of only known users
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 //if data is loading
                 case ConnectionState.waiting:
                 case ConnectionState.none:
-                  return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
-        
+                  return const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ));
+
                 //if some or all data is loaded then show it
                 case ConnectionState.active:
                 case ConnectionState.done:
                   return StreamBuilder(
                     stream: APIs.getAllUsers(
                         snapshot.data?.docs.map((e) => e.id).toList() ?? []),
-        
+
                     //get only those user, who's ids are provided
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
@@ -196,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         case ConnectionState.none:
                         // return const Center(
                         //     child: CircularProgressIndicator());
-        
+
                         //if some or all data is loaded then show it
                         case ConnectionState.active:
                         case ConnectionState.done:
@@ -205,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ?.map((e) => ChatUser.fromJson(e.data()))
                                   .toList() ??
                               [];
-        
+
                           if (_list.isNotEmpty) {
                             return ListView.builder(
                                 itemCount: _isSearching
@@ -231,9 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
           ),
-
-          ]
-        ),
+        ]),
+        drawer: CustomDrawer(scaffoldKey: scaffoldKey),
       ),
       // ),
     );

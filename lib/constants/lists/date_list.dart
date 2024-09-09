@@ -6,7 +6,11 @@ class DayController extends GetxController {
   static List<String> DayList() {
     List<String> day = [];
     for (int i = 1; i <= 31; i++) {
-      day.add("$i");
+      if (i.toString().length == 1) {
+        day.add("0${i}");
+      } else {
+        day.add("${i}");
+      }
     }
     return day;
   }

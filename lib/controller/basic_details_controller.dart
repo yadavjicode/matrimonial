@@ -12,7 +12,7 @@ class BasicDetailsController with ChangeNotifier {
   String? _error;
   BasicDetailsModel? get member => _member;
   String? get error => _error;
- final FlowController flowController = Get.find<FlowController>();
+  final FlowController flowController = Get.find<FlowController>();
   String getMonth(String mon) {
     Map<String, String> monthMap = {
       "Jan": "01",
@@ -21,7 +21,7 @@ class BasicDetailsController with ChangeNotifier {
       "Apr": "04",
       "May": "05",
       "Jun": "06",
-      "Jul": "07", 
+      "Jul": "07",
       "Aug": "08",
       "Sep": "09",
       "Oct": "10",
@@ -30,7 +30,27 @@ class BasicDetailsController with ChangeNotifier {
     };
 
     // Convert the input to lowercase and get the corresponding month number
-    return monthMap[mon] ?? "Invalid month";
+    return monthMap[mon] ?? "";
+  }
+
+  String getMonthString(String mon) {
+    Map<String, String> monthMap = {
+      "01": "Jan",
+      "02": "Feb",
+      "03": "Mar",
+      "04": "Apr",
+      "05": "May",
+      "06": "Jun",
+      "07": "Jul",
+      "08": "Aug",
+      "09": "Sep",
+      "10": "Oct",
+      "11": "Nov",
+      "12": "Dec"
+    };
+
+    // Convert the input to lowercase and get the corresponding month number
+    return monthMap[mon] ?? "";
   }
 
   Future<void> basicDetails(
@@ -53,11 +73,9 @@ class BasicDetailsController with ChangeNotifier {
     try {
       _member = await apiService.basicDetails(tittle, name, surname, spiritual,
           maritalStatus, height, weight, dob, hobbies, diet, about);
-          print("vnrvnbrvn gooooooo");
+      print("vnrvnbrvn gooooooo");
 
-      
-      await flowController.Flow(context, 2); 
-     
+      await flowController.Flow(context, 2);
 
       // Get.toNamed('/contact');
     } catch (e) {

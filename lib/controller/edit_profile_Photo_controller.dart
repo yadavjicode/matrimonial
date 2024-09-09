@@ -16,7 +16,7 @@ class EditProfilePhotoController extends GetxController {
       Get.put(EditProfileController());
 
   // Method to handle the complete profile update process
-  Future<void> profileCompleteFill(BuildContext context) async {
+  Future<void> profileCompleteFill(BuildContext context,String value) async {
     final profileModel = EditProfilePhotoModel();
     isLoading.value = true;
 
@@ -26,7 +26,7 @@ class EditProfilePhotoController extends GetxController {
       }
 
       final response = await EditProfilePhotoModel.editProfile(
-          profileModel, selectedImage.value!);
+          profileModel, selectedImage.value!,value);
       if (response["status"] == true) {
         print('Profile update successful: ${response['data']}');
         editProfileController.userDetails(context).then((value) {
@@ -50,6 +50,7 @@ class EditProfilePhotoController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   // Method to pick an image from the gallery
   Future<void> pickImageFromGallery() async {

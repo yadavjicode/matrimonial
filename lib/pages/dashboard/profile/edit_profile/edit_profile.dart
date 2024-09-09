@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +23,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
+    
     });
   }
 
@@ -51,7 +53,9 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   @override
   Widget build(BuildContext context) {
+   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+     key: scaffoldKey,
       backgroundColor: AppColors.primaryLight,
       appBar: AppBar(
         centerTitle: true,
@@ -65,6 +69,14 @@ class _ProfileEditState extends State<ProfileEdit> {
           ),
         ),
         automaticallyImplyLeading: false, 
+         leading: IconButton(
+          icon: SvgPicture.asset("assets/images/menu.svg"),
+          onPressed: () {
+            
+            scaffoldKey.currentState?.openDrawer();
+            
+          },
+        ),
       ),
       body: Obx(() {
         return Stack(
@@ -80,8 +92,11 @@ class _ProfileEditState extends State<ProfileEdit> {
           ],
         );
       }),
+     drawer: CustomDrawer(scaffoldKey: scaffoldKey),
     );
   }
+
+
 
   Widget _buildProfileContent() {
     final List<String> imgList = getImageList();
@@ -113,6 +128,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     items: imgList
                         .map((item) => Container(
                               width: double.infinity,
+                          
                               child: ClipRRect(
                                 child: Image.network(
                                   "http://devoteematrimony.aks.5g.in/${item}",
@@ -207,61 +223,61 @@ class _ProfileEditState extends State<ProfileEdit> {
               //     ],
               //   ),
               // ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/images/phone.png"),
-                          Text(
-                            "Edit Mobile No.",
-                            style: FontConstant.styleRegular(
-                              fontSize: 16,
-                              color: AppColors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    width: 1,
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/images/message.png"),
-                          SizedBox(width: 10),
-                          Text(
-                            "Edit Email ID",
-                            style: FontConstant.styleRegular(
-                              fontSize: 16,
-                              color: AppColors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         alignment: Alignment.center,
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Image.asset("assets/images/phone.png"),
+              //             Text(
+              //               "Edit Mobile No.",
+              //               style: FontConstant.styleRegular(
+              //                 fontSize: 16,
+              //                 color: AppColors.black,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //     Container(
+              //       height: 50,
+              //       width: 1,
+              //       color: Colors.grey,
+              //     ),
+              //     Expanded(
+              //       child: Container(
+              //         padding: EdgeInsets.all(10),
+              //         alignment: Alignment.center,
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Image.asset("assets/images/message.png"),
+              //             SizedBox(width: 10),
+              //             Text(
+              //               "Edit Email ID",
+              //               style: FontConstant.styleRegular(
+              //                 fontSize: 16,
+              //                 color: AppColors.black,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Container(
                 width: double.infinity,
                 height: 1,
                 color: Colors.grey,
               ),
               Container(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 10),
                 alignment: Alignment.center,
                 child: Text(
                   "Your profile is ${_editProfileController.member!.profilePercentage ?? ""}% Complete",
@@ -703,7 +719,7 @@ class _ProfileEditState extends State<ProfileEdit> {
               GestureDetector(
                 onTap: () {
                   
-                //   Get.toNamed(move);
+               Get.toNamed(move);
                 },
                 child: SvgPicture.asset("assets/images/icons/penicon.svg"),
               ),

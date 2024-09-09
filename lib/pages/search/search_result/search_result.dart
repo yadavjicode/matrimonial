@@ -31,7 +31,7 @@ class _SearchResultState extends State<SearchResult> {
   final SentInvitationController sentInvitationController =
       Get.put(SentInvitationController());
   bool age = true;
-  bool height = true;
+  bool height = true;  
   final Map<String, dynamic> arguments = Get.arguments;
   final ScrollController _scrollController = ScrollController();
   final DashboardController dashboardController =

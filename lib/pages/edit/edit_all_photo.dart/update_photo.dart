@@ -7,27 +7,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class EditYourProfile extends StatefulWidget {
-  const EditYourProfile({super.key});
+class UpdatePhoto extends StatefulWidget {
+  const UpdatePhoto({super.key});
 
   @override
-  State<EditYourProfile> createState() => _EditYourProfileState();
+  State<UpdatePhoto> createState() => _UpdatePhotoState();
 }
 
-class _EditYourProfileState extends State<EditYourProfile> {
+class _UpdatePhotoState extends State<UpdatePhoto> {
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
   final EditProfilePhotoController editProfilePhotoController =
       Get.put(EditProfilePhotoController());
+    final Map<String, dynamic> arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    final String imageurl = arguments['imageUrl'];
+    final String values = arguments['value'];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
-        title: Text("Profile Edit"),
+        title: Text("Update Photo"),
         actions: [
           IconButton(
             icon: const Icon(
@@ -42,12 +45,12 @@ class _EditYourProfileState extends State<EditYourProfile> {
       ),
       body: Obx(() {
       final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+      final double screenHeight = MediaQuery.of(context).size.height;
 
         String image = editProfilePhotoController.selectedImage.value != null
             ? editProfilePhotoController.selectedImage.value!.path
             : (editProfileController.member!.member!.photo1 != null
-                ? "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.photo1}"
+                ? imageurl
                 : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg");
 
         return Column(
@@ -65,7 +68,7 @@ class _EditYourProfileState extends State<EditYourProfile> {
             GestureDetector(
               onTap: () {
                 if (editProfilePhotoController.selectedImage.value != null) {
-                  editProfilePhotoController.profileCompleteFill(context,"Photo1");
+                  editProfilePhotoController.profileCompleteFill(context,values);
                 } else {
                  
                    Dialogs.showSnackbar(context, 'Please select an image before updating.');
@@ -79,7 +82,7 @@ class _EditYourProfileState extends State<EditYourProfile> {
                 padding: EdgeInsets.all(10),
                 alignment: Alignment.center,
                 child: Text(
-                  "Update Profile",
+                  "Update Photo",
                   style: FontConstant.styleRegular(
                       fontSize: 15, color: AppColors.constColor),
                 ),

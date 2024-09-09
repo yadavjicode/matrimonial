@@ -196,7 +196,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                                
                               },
                               child: Text(
-                                "Delete Request",
+                                "Decline Request",
                                 style: FontConstant.styleMedium(
                                     fontSize: 12, color: Colors.red),
                               ),

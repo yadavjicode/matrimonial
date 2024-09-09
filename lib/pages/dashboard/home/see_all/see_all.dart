@@ -138,7 +138,21 @@ class _SeeAllState extends State<SeeAll> {
                       : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  profileDetailsController.profileDetails(context, id, keys, [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11"
+                  ]);
+                },
                 child: Container(
                   margin: EdgeInsets.only(
                       top: screenHeight * 0.01, bottom: screenHeight * 0.01),

@@ -3,7 +3,7 @@ import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/controller/shortlisted_list_controller.dart';
@@ -34,6 +34,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
   Future<void> _fetchUser(String userId) async {
     ChatUser? _chatUser;
     ChatUser? user = await directChatController.getUserById(userId);
+
     setState(() {
       _chatUser = user;
     });
@@ -59,10 +60,10 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: AppColors.primaryLight,
       appBar: AppBar(
         elevation: 0,
@@ -73,8 +74,13 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           style: FontConstant.styleMedium(
               fontSize: 18, color: AppColors.constColor),
         ),
-        automaticallyImplyLeading: false, 
-        
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: SvgPicture.asset("assets/images/menu.svg"),
+          onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+        ),
       ),
       body: Stack(children: [
         Container(
@@ -84,10 +90,11 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
         Obx(() {
           return Stack(
             children: [
-              if (!shortlistedListController.isLoading.value
-                  // &&
-                  // !shortlistController.isLoading.value
-                  )
+              // if (!shortlistedListController.isLoading.value
+              //     // &&
+              //     // !shortlistController.isLoading.value
+              //     )
+              
                 shortlistedContent(),
               if (shortlistedListController.isLoading.value ||
                   shortlistController.isLoading.value ||
@@ -102,6 +109,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           );
         })
       ]),
+      drawer: CustomDrawer(scaffoldKey: scaffoldKey),
     );
   }
 
@@ -132,7 +140,9 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                   "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.maritalstatus == null ? "" : "${data.maritalstatus}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}";
               String image = data.photo1 != null
                   ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                  : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                  : data.gender == "Male"
+                      ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                      : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
               return GestureDetector(
                 onTap: () {
@@ -151,8 +161,8 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                               width: screenWidth*0.2,       
-                                    height: screenWidth*0.2, 
+                              width: screenWidth * 0.2,
+                              height: screenWidth * 0.2,
                               child: ClipOval(
                                   child: Image.network(
                                 image,

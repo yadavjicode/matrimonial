@@ -1,10 +1,11 @@
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:devotee/pages/dashboard/inbox/received/received_tab.dart';
 import 'package:devotee/pages/dashboard/inbox/sent/sent_tab.dart';
-import 'package:devotee/pages/ragistration/profile1_page/profile1_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class Inbox extends StatefulWidget {
@@ -23,12 +24,12 @@ class _InboxState extends State<Inbox> {
   bool showSecondPage = false;
   InboxSentController inboxSentController = Get.put(InboxSentController());
 
-
   @override
   void initState() {
     super.initState();
-     WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       inboxSentController.inboxSent(context, "Pending");
+      
     });
     updateTextColors();
   }
@@ -65,7 +66,9 @@ class _InboxState extends State<Inbox> {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: AppColors.primaryLight,
       appBar: AppBar(
         elevation: 0,
@@ -76,6 +79,12 @@ class _InboxState extends State<Inbox> {
           style: FontConstant.styleSemiBold(fontSize: 18, color: Colors.white),
         ),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: SvgPicture.asset("assets/images/menu.svg"),
+          onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },
+        ),
       ),
       body: Stack(
         children: [
@@ -155,6 +164,7 @@ class _InboxState extends State<Inbox> {
           ),
         ],
       ),
+      drawer: CustomDrawer(scaffoldKey: scaffoldKey),
     );
   }
 }

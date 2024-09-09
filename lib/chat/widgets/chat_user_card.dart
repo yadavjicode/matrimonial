@@ -1,5 +1,3 @@
-import 'package:devotee/main.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
@@ -22,6 +20,7 @@ class ChatUserCard extends StatefulWidget {
 class _ChatUserCardState extends State<ChatUserCard> {
   //last message info (if null --> no message)
   Message? _message;
+   String? count;
 
   @override
   Widget build(BuildContext context) {

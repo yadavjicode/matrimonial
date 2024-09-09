@@ -17,17 +17,28 @@ class HoroscopeDetails extends StatefulWidget {
 }
 
 class _HoroscopeDetailsState extends State<HoroscopeDetails> {
- final StateController stateController = Get.put(StateController());
-final CityController cityController = Get.put(CityController());
-final FlowController flowController = Get.put(FlowController());
+  final StateController stateController = Get.put(StateController());
+  final CityController cityController = Get.put(CityController());
+  final FlowController flowController = Get.put(FlowController());
 
- final HoroscopeDetailsController horoscopeDetailsController =
+  final HoroscopeDetailsController horoscopeDetailsController =
       Get.put(HoroscopeDetailsController());
 
-  TextEditingController time = TextEditingController();
-
+  final TextEditingController time = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedState;
   String? selectedCity;
+
+  bool isState = false;
+  bool isCity = false;
+
+  bool validateDropDown() {
+    if (isState == true && isCity == true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -41,12 +52,11 @@ final FlowController flowController = Get.put(FlowController());
       });
     }
   }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-   // stateController.fetchStateList();
-
+    //stateController.fetchStateList();
   }
 
   @override
@@ -55,7 +65,6 @@ final FlowController flowController = Get.put(FlowController());
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
           elevation: 0,
-          
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Horoscope Details",
@@ -81,130 +90,142 @@ final FlowController flowController = Get.put(FlowController());
                   child: Padding(
                     padding:
                         const EdgeInsets.only(top: 35, left: 22, right: 22),
-                    child: Column(
-                      children: [
-                        Container(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              "assets/images/horoscope.png",
-                              height: 117,
-                              width: 109,
-                            )),
-                        Container(
-                          margin: EdgeInsets.only(top: 30, bottom: 5),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Time Of Birth",
-                            style: FontConstant.styleRegular(
-                                fontSize: 16, color: AppColors.black),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                "assets/images/horoscope.png",
+                                height: 117,
+                                width: 109,
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(top: 30, bottom: 5),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Time Of Birth",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 16, color: AppColors.black),
+                            ),
                           ),
-                        ),
-                        CustomTextField(
-                          suffixIcon: Icon(
-                            Icons.av_timer,
-                            color: AppColors.black,
+                          CustomTextField(
+                            suffixIcon: Icon(
+                              Icons.av_timer,
+                              color: AppColors.black,
+                            ),
+                            controller: time,
+                            hintText: "Select Time",
+                            onTap: () => _selectTime(context),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please Select Time of Birth';
+                              }
+                              return null;
+                            },
                           ),
-                          controller: time,
-                          hintText: "Select Time",
-                          onTap: () => _selectTime(context),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child:
-                          // buildDropdownWithSearch(
-                          //       'State of Birth',
-                          //       stateController.getStateList(),
-                          //       (value) {
-                          //         setState(() {
-                          //           selectedState = value; // Update the state
-                          //         });
-                          //         stateController.selectItem(
-                          //             value); // Call the controller method
-                          //       },
-                          //       hintText: 'Select State',
-                          //     )
-                           Obx(() {
-                            if (stateController.isLoading.value) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                              );
-                            } 
-                           return  buildDropdownWithSearch(
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: Obx(() {
+                              if (stateController.isLoading.value) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                );
+                              }
+                              return buildDropdownWithSearch(
                                 'State of Birth',
                                 stateController.getStateList(),
                                 (value) {
                                   setState(() {
-                                    selectedState = value; // Update the state
+                                    selectedState = value;
+                                    isState = true;
+                                    isCity =
+                                        false; // Reset city when state changes
+                                    selectedCity = null; // Update the state
                                   });
                                   stateController.selectItem(
                                       value); // Call the controller method
                                 },
+                                borderColor:
+                                    isState == false && selectedState == null
+                                        ? Colors.red
+                                        : Colors.black.withOpacity(0.5),
                                 hintText: 'Select State',
                               );
-                            
-                          }
+                            }),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Obx(() {
-                            if (cityController.isLoading.value) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
-                              );
-                            } else {
-                              return buildDropdownWithSearch(
-                                'City of Birth',
-                                cityController.cityLists,
-                                (value) {
-                                  setState(() {
-                                    selectedCity = value; // Update the state
-                                  });
-                                  cityController.selectItem(
-                                      value); // Call the controller method
-                                },
-                                hintText: 'Select City',
-                              );
-                            }
-                          }
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 25, bottom: 15),
-                          child: CustomButton(
-                              text: "CONTINUE",
-                              onPressed: () => {
-                                    horoscopeDetailsController.horoscopeDetails(
-                                        context,
-                                        time.text.toString().trim(),
-                                        selectedState ?? "",
-                                        selectedCity ?? "")
-                                    //    Get.toNamed('/profile')
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: Obx(() {
+                              if (cityController.isLoading.value) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                );
+                              } else {
+                                return buildDropdownWithSearch(
+                                  'City of Birth',
+                                  cityController.cityLists,
+                                  (value) {
+                                    setState(() {
+                                      selectedCity = value; // Update the state
+                                      isCity = true;
+                                    });
+                                    cityController.selectItem(
+                                        value); // Call the controller method
                                   },
-                              color: AppColors.primaryColor,
-                              textStyle: FontConstant.styleRegular(
-                                  fontSize: 20, color: AppColors.constColor)),
-                        ),
-                        GestureDetector(
-                          onTap: () => {
-                            // Get.offAndToNamed('/profile')
-                            flowController.Flow(context, 11)
-                            },
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 25, top: 10),
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              "SKIP",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 20, color: AppColors.black),
-                            ),
+                                  hintText: 'Select City',
+                                  borderColor:
+                                      isCity == false && selectedCity == null
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.5),
+                                );
+                              }
+                            }),
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25, bottom: 15),
+                            child: CustomButton(
+                                text: "CONTINUE",
+                                onPressed: () => {
+                                      if (_formKey.currentState!.validate() &&
+                                          validateDropDown())
+                                        {
+                                          horoscopeDetailsController
+                                              .horoscopeDetails(
+                                                  context,
+                                                  time.text.toString().trim(),
+                                                  selectedState ?? "",
+                                                  selectedCity ?? "")
+                                        }
+
+                                      //    Get.toNamed('/profile')
+                                    },
+                                color: AppColors.primaryColor,
+                                textStyle: FontConstant.styleRegular(
+                                    fontSize: 20, color: AppColors.constColor)),
+                          ),
+                          GestureDetector(
+                            onTap: () => {
+                              // Get.offAndToNamed('/profile')
+                              flowController.Flow(context, 11)
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom: 25, top: 10),
+                              padding: EdgeInsets.all(5),
+                              child: Text(
+                                "SKIP",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 20, color: AppColors.black),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )

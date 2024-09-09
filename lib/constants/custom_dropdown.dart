@@ -128,15 +128,13 @@ Widget buildDropdown3(
 }
 
 Widget buildDropdownWithSearch(
-  String? title,
-  List<String> items,
-  Function(String?) onChanged, {
-  String? hintText,
-  double? radiusdrop,
-  Color borderColor = AppColors.darkgrey,
-  String? selectedItem,
-  bool isMultiSelection = true,
-}) {
+    String? title, List<String> items, Function(String?) onChanged,
+    {String? hintText,
+    double? radiusdrop,
+    Color borderColor = AppColors.darkgrey,
+    String? selectedItem,
+    bool isMultiSelection = true,
+    bool search = true}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -149,8 +147,7 @@ Widget buildDropdownWithSearch(
         padding: const EdgeInsets.only(top: 8.0),
         child: DropdownSearch<String>(
           popupProps: PopupProps.menu(
-            showSearchBox: true,
-
+            showSearchBox: search,
             // Enable the search box
             searchFieldProps: TextFieldProps(
               decoration: InputDecoration(
@@ -180,6 +177,20 @@ Widget buildDropdownWithSearch(
           ),
           items: items,
           selectedItem: selectedItem,
+          dropdownBuilder: (context, selectedItem) {
+            return Container(
+              alignment: Alignment.centerLeft,
+              constraints:
+                  BoxConstraints(maxWidth: 200), // Adjust the width as needed
+              child: Text(
+                selectedItem ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis, // Ensure text does not wrap
+                style: FontConstant.styleRegular(
+                    fontSize: 16, color: Colors.black),
+              ),
+            );
+          },
           dropdownDecoratorProps: DropDownDecoratorProps(
             baseStyle:
                 FontConstant.styleRegular(fontSize: 16, color: Colors.black),
@@ -189,6 +200,10 @@ Widget buildDropdownWithSearch(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(radiusdrop ?? 23),
+                borderSide: BorderSide(color: borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
               ),
@@ -291,8 +306,6 @@ Widget buildDropdownWithSearchMulti(
     ],
   );
 }
-
-
 
 class CustomDropdowns extends StatelessWidget {
   final List<String> items;

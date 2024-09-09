@@ -26,6 +26,7 @@ import 'package:devotee/pages/drawer_page/testimonials/testimonials.dart';
 import 'package:devotee/pages/drawer_page/warning/warning.dart';
 import 'package:devotee/pages/drawer_page/who_are_you/who_are_you.dart';
 import 'package:devotee/pages/edit/edit_all_photo.dart/edit_all_photo.dart';
+import 'package:devotee/pages/edit/edit_all_photo.dart/update_photo.dart';
 import 'package:devotee/pages/edit/edit_basic_details/edit_basic_details.dart';
 import 'package:devotee/pages/edit/edit_contact_details/edit_contact_details.dart';
 import 'package:devotee/pages/edit/edit_education_details/edit_education_details.dart';
@@ -45,7 +46,6 @@ import 'package:devotee/pages/ragistration/partner_preferences/partner_preferenc
 import 'package:devotee/pages/ragistration/professional_details_page/professional_details_page.dart';
 import 'package:devotee/pages/dashboard/profile/edit_profile/edit_profile.dart';
 import 'package:devotee/pages/search/search_result/search_result.dart';
-import 'package:devotee/pages/extra/show_profile/show_profile.dart';
 import 'package:devotee/pages/ragistration/spiritual_counsellor_details/spiritual_counsellor_details.dart';
 import 'package:get/get.dart';
 import '../pages/splash_Screen/splash_screen.dart';
@@ -122,6 +122,7 @@ class AppRoutes {
    static const String editLocationDetails = '/editLocationDetails';
    static const String editEducationDetails = '/editEducationDetails';
    static const String editProfessionDetails = '/editProfessionDetails';
+   static const String updatePhoto = '/updatePhoto';
 
    static const String seeAll = '/seeAll';
 
@@ -203,12 +204,7 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-    GetPage(
-      name: profileshow,
-      page: () => const ShowProfile(),
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
+    
     GetPage(
       name: spiritual,
       page: () => const SpiritualDetails(),
@@ -477,6 +473,12 @@ class AppRoutes {
     GetPage(
       name: editAllPhoto,
       page: () => const EditAllPhoto(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: updatePhoto,
+      page: () => const UpdatePhoto(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

@@ -1,4 +1,3 @@
-import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
@@ -19,7 +18,6 @@ import 'package:devotee/constants/lists/title_profession_list.dart';
 import 'package:devotee/constants/lists/weight_list.dart';
 import 'package:devotee/controller/list_controller.dart';
 import 'package:devotee/controller/partner_preference_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -320,11 +318,12 @@ String getLanguageKnown(List<String> language) {
                                 setState(() {
                                   selectedLanguage = value; // Update the state
                                 });
+                                
                                 // motherTongueController.selectItem(
                                 //     value); // Call the controller method
                                 print(
                                     "language===============${getLanguageKnown(selectedLanguage ?? [])}");
-                              },
+                              },selectedItems: ["india"],
                               hintText: 'Select Languages Known',
                             ),
                                   SizedBox(

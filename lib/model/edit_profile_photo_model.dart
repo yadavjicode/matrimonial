@@ -14,7 +14,7 @@ class EditProfilePhotoModel {
   }
 
   static Future<Map<String, dynamic>> editProfile(
-      EditProfilePhotoModel profileModel, File imageFile) async {
+      EditProfilePhotoModel profileModel, File imageFile,String value) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -27,7 +27,7 @@ class EditProfilePhotoModel {
     request.fields['step_11'] = '1';
 
     // Attach the image to the 'Photo1' field
-    request.files.add(await http.MultipartFile.fromPath('Photo1', imageFile.path));
+    request.files.add(await http.MultipartFile.fromPath(value, imageFile.path));
 
     var response = await request.send();
 

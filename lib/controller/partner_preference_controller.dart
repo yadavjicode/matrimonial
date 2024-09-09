@@ -1,8 +1,6 @@
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/controller/flow_controller.dart';
-import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/partner_preference_model.dart';
-import 'package:devotee/model/professional_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
