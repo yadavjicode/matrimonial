@@ -44,12 +44,6 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
             "Education Qualification",
             style: FontConstant.styleMedium(fontSize: 19, color: Colors.white),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.offAndToNamed('/location');
-            },
-          ),
         ),
         body: Obx(() {
           return Stack(children: [
@@ -114,8 +108,6 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
                         ),
                         const SizedBox(height: 30),
                         _buildContinueButton(),
-                        const SizedBox(height: 15),
-                        _buildSkipButton(),
                       ],
                     ),
                   ),
@@ -151,20 +143,6 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
         },
         color: AppColors.primaryColor,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _buildSkipButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: CustomButton(
-        text: 'Skip',
-        onPressed: () {
-          Get.offAndToNamed('/dashboard');
-        },
-        color: Colors.transparent,
-        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
       ),
     );
   }

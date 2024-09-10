@@ -1,4 +1,5 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/contact_details_model.dart';
 import 'package:flutter/material.dart';
@@ -13,16 +14,24 @@ class ContactDetailsController with ChangeNotifier {
   ContactDetailsModel? get member => _member;
   String? get error => _error;
   final FlowController flowController=Get.put(FlowController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
 
   Future<void> contactDetails(BuildContext context, String mobileno,
-      String email, String instaid) async {
+      String email, String instaid, bool status) async {
     isLoading.value = true;
     _error = null;
-    notifyListeners();
+    notifyListeners();  
 
     try {
       _member = await apiService.contactDetails(mobileno, email, instaid);
-      flowController.Flow(context, 3);
+      if(status){
+        _editProfileController.userDetails(context);
+       Navigator.pop(context);
+      }else{
+        flowController.Flow(context, 3);
+      }
+      
       // Get.toNamed('/location');
     } catch (e) {
       _error = e.toString();

@@ -1,7 +1,6 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
-import 'package:devotee/model/basic_details_model.dart';
-import 'package:devotee/model/contact_details_model.dart';
 import 'package:devotee/model/location_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,8 +13,9 @@ class LocationDetailsController with ChangeNotifier {
   String? _error;
   LocationDetailsModel? get member => _member;
   String? get error => _error;
-  final FlowController flowController=Get.put(FlowController());
-
+  final FlowController flowController = Get.put(FlowController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   Future<void> locationDetails(
       BuildContext context,
       String country,
@@ -34,13 +34,14 @@ class LocationDetailsController with ChangeNotifier {
       String referBRelation,
       String referBName,
       String referBEmail,
-      String referBMobileno) async {
+      String referBMobileno,
+      bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-          _member = await apiService.LocationDetails(
+      _member = await apiService.LocationDetails(
           country,
           residence,
           permanentHouse,
@@ -59,15 +60,20 @@ class LocationDetailsController with ChangeNotifier {
           referBEmail,
           referBMobileno);
 
-          flowController.Flow(context, 4);
+      if (status) {
+        _editProfileController.userDetails(context);
+        Navigator.pop(context);
+      } else {
+        flowController.Flow(context, 4);
+      }
+
       // Get.toNamed('/education');
-  
     } catch (e) {
       _error = e.toString();
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     Dialogs.showSnackbar(context, '${_error}');
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

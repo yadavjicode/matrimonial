@@ -32,6 +32,28 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
   WeightController weightController = Get.put(WeightController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
+   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    String mon =
+        _basicDetailController.getMonthString(selectedMonth.toString());
+    aboutController.text = _editProfileController.member!.member!.about?? "";
+    selectHobbies(_editProfileController.member!.member!.hobbies ?? "");
+    String dob = _editProfileController.member!.member!.dOB ?? "";
+    List<String> dateParts = dob.split('-');
+
+    year = dateParts[0]; // "2005"
+    month = dateParts[1]; // "03"
+    day = dateParts[2]; // "01"
+    selectedHeight=_editProfileController.member!.member!.height?? "";
+    selectedWeight=_editProfileController.member!.member!.weight ?? "";
+    selectedMaritalStatus=_editProfileController.member!.member!.maritalstatus ?? "";
+    selectedDiet=_editProfileController.member!.member!.diet?? "";
+  }
+
 
   String? selectedTitle;
   String? selectedMaritalStatus;
@@ -91,31 +113,14 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
   }
 
   void selectHobbies(String selectedHobbies) {
-    List<String> selectedList = selectedHobbies.split(',');
+    List<String> selectedList = selectedHobbies.split(', ');
 
     hobbies.forEach((key, value) {
       hobbies[key] = selectedList.contains(key);
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
-    });
-    String mon =
-        _basicDetailController.getMonthString(selectedMonth.toString());
-    aboutController.text = _editProfileController.member!.member!.profile ?? "";
-    selectHobbies(_editProfileController.member!.member!.hobbies ?? "");
-    String dob = _editProfileController.member!.member!.dOB ?? "";
-    List<String> dateParts = dob.split('-');
-
-    year = dateParts[0]; // "2005"
-    month = dateParts[1]; // "03"
-    day = dateParts[2]; // "01"
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -199,9 +204,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                               maritalController.selectItem(
                                   value); // Call the controller method
                             },
-                            selectedItem: _editProfileController
-                                    .member!.member!.maritalstatus ??
-                                "",
+                            selectedItem:selectedMaritalStatus,
                             search: false,
                             hintText: 'Select Marital Status',
                           )),
@@ -224,9 +227,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                   ? Colors.red
                                   : Colors.black.withOpacity(0.5),
                               search: false,
-                              selectedItem: _editProfileController
-                                      .member!.member!.height ??
-                                  "",
+                              selectedItem:selectedHeight,
                               hintText: 'Select Height',
                             ),
                           ),
@@ -248,7 +249,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                   : Colors.black.withOpacity(0.5),
                               search: false,
                               selectedItem:
-                                  _editProfileController.member!.member!.weight,
+                                  selectedWeight,
                               hintText: 'Select Weight',
                             ),
                           ),
@@ -326,7 +327,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                       },
                           hintText: 'Select Diet',
                           selectedItem:
-                              _editProfileController.member!.member!.diet ?? "",
+                              selectedDiet,
                           search: false),
                       const SizedBox(height: 15),
                       CustomTextField(
@@ -342,7 +343,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                     child: CustomButton(
                       text: 'CONTINUE',
                       onPressed: () {
-                        if (_formKey.currentState!.validate() ||
+                        if (_formKey.currentState!.validate()||
                             validateDropDown()) {
                           String mon = _basicDetailController.getMonth(
                               selectedMonth.toString() );
@@ -370,7 +371,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                   _editProfileController
                                       .member!.member!.weight ??
                                   "",
-                              "${selectedYear ?? year ?? "0000"}-${mon.isEmpty?mon:month}-${selectedDay ?? day ?? "00"}",
+                              "${selectedYear ?? year ?? "0000"}-${mon.isEmpty?month:mon}-${selectedDay ?? day ?? "00"}",
                               getSelectedHobbies().isEmpty
                                   ? _editProfileController
                                           .member!.member!.hobbies ??
@@ -379,13 +380,13 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                               selectedDiet ??
                                   _editProfileController.member!.member!.diet ??
                                   "",
-                              aboutController.text.toString().trim().isEmpty?_editProfileController.member!.member!.profile:aboutController.text.toString().trim());
-                          // print(
-                          //     "hfiehfioefioef f======${mon==""?mons.toString():"00"}");
+                              aboutController.text.toString().trim(),
+                              true
+                                  );                       // print(
+                         
                           //   Get.toNamed('/contact');
                         }
-                        print(
-                            "hfiehfioefioef f======${getSelectedHobbies() == "" ? "india" : "jdhvd"}");
+                 
                       },
                       color: AppColors.primaryColor,
                       textStyle: FontConstant.styleRegular(

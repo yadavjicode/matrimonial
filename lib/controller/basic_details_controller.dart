@@ -1,4 +1,5 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/basic_details_model.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class BasicDetailsController with ChangeNotifier {
   BasicDetailsModel? get member => _member;
   String? get error => _error;
   final FlowController flowController = Get.find<FlowController>();
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   String getMonth(String mon) {
     Map<String, String> monthMap = {
       "Jan": "01",
@@ -65,7 +68,8 @@ class BasicDetailsController with ChangeNotifier {
       String dob,
       String hobbies,
       String diet,
-      String about) async {
+      String about,
+      bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -73,9 +77,13 @@ class BasicDetailsController with ChangeNotifier {
     try {
       _member = await apiService.basicDetails(tittle, name, surname, spiritual,
           maritalStatus, height, weight, dob, hobbies, diet, about);
-      print("vnrvnbrvn gooooooo");
 
-      await flowController.Flow(context, 2);
+      if (status) {
+        _editProfileController.userDetails(context);
+        Navigator.pop(context);
+      } else {
+        await flowController.Flow(context, 2);
+      }
 
       // Get.toNamed('/contact');
     } catch (e) {

@@ -67,13 +67,15 @@ class StateControllerPermanent extends GetxController {
   var selectedItem = RxnString();
   var stateLists = <String>[].obs;
   var isLoading = false.obs;
+  
+  static String? Country;
 
   @override
   void onInit() {
     super.onInit();
     // Listen for changes in the selected country and fetch state list accordingly
     ever(countryController.selectedItem, (_) {
-      fetchStateList();
+      fetchStateList( );
     });
   }
 

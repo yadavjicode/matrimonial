@@ -31,7 +31,7 @@ class Data {
   dynamic dOB;
   dynamic hobbies;
   dynamic diet;
-  dynamic profile;
+  dynamic about;
 
   Data(
       {this.step2,
@@ -45,7 +45,7 @@ class Data {
       this.dOB,
       this.hobbies,
       this.diet,
-      this.profile});
+      this.about});
 
   Data.fromJson(Map<String, dynamic> json) {
     step2 = json['step_2'];
@@ -59,7 +59,7 @@ class Data {
     dOB = json['DOB'];
     hobbies = json['Hobbies'];
     diet = json['Diet'];
-    profile = json['profile'];
+    about = json['about'];
   }
 
   Map<String, dynamic> toJson() {
@@ -75,7 +75,7 @@ class Data {
     data['DOB'] = this.dOB;
     data['Hobbies'] = this.hobbies;
     data['Diet'] = this.diet;
-    data['profile'] = this.profile;
+    data['about'] = this.about;
     return data;
   }
 }

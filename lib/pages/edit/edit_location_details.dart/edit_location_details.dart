@@ -3,6 +3,7 @@ import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/permanent_type.dart';
 import 'package:devotee/constants/lists/relation_list.dart';
 import 'package:devotee/constants/lists/residence_type_list.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/location_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,8 @@ class EditLocationDetails extends StatefulWidget {
 }
 
 class _EditLocationDetailsState extends State<EditLocationDetails> {
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   final LocationDetailsController _locationDetailsController =
       Get.put(LocationDetailsController());
   CountryController countryController = Get.put(CountryController());
@@ -37,15 +40,15 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
   RelationController relationController = Get.put(RelationController());
   String? selectedCountry;
   String? selectedPermanentState;
-  String? SelectedTemporaryState;
-  String? SelectedPermanentCity;
+  String? selectedTemporaryState;
+  String? selectedPermanentCity;
   String? selectedTemporaryCity;
   String? selectedResidence;
   String? selectedPermanentHouse;
   String? selectedRefeARelation;
   String? selectedRefeBRelation;
   final TextEditingController permanentPinCode = TextEditingController();
-  final TextEditingController TemporaryPinCode = TextEditingController();
+  final TextEditingController temporaryPinCode = TextEditingController();
   final TextEditingController refeAName = TextEditingController();
   final TextEditingController refeAEmail = TextEditingController();
   final TextEditingController refeAPhoneno = TextEditingController();
@@ -54,9 +57,56 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
   final TextEditingController refeBPhoneno = TextEditingController();
 
   @override
+  void initState() {
+    //TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    selectedCountry = _editProfileController.member!.member!.country ?? "";
+
+    selectedResidence =
+        _editProfileController.member!.member!.addressType ?? "";
+    selectedPermanentHouse =
+        _editProfileController.member!.member!.permanentHouseType ?? "";
+    selectedPermanentState =
+        _editProfileController.member!.member!.permanentState ?? "";
+    selectedPermanentCity =
+        _editProfileController.member!.member!.permanentCity ?? "";
+    selectedTemporaryState =
+        _editProfileController.member!.member!.tempState ?? "";
+    selectedTemporaryCity =
+        _editProfileController.member!.member!.tempCity ?? "";
+    selectedRefeARelation =
+        _editProfileController.member!.member!.reference1Reletion ?? "";
+    selectedRefeBRelation =
+        _editProfileController.member!.member!.reference2Reletion ?? "";
+    permanentPinCode.text =
+        _editProfileController.member!.member!.permanentPincode ?? "";
+    temporaryPinCode.text =
+        _editProfileController.member!.member!.tempPincode ?? "";
+    refeAName.text =
+        _editProfileController.member!.member!.reference1Name ?? "";
+    refeAEmail.text =
+        _editProfileController.member!.member!.reference1Email ?? "";
+    refeAPhoneno.text =
+        _editProfileController.member!.member!.reference1Mobile ?? "";
+    refeBName.text =
+        _editProfileController.member!.member!.reference2Name ?? "";
+    refeBEmail.text =
+        _editProfileController.member!.member!.reference2Email ?? "";
+    refeBPhoneno.text =
+        _editProfileController.member!.member!.reference2Mobile ?? "";
+    countryController
+        .selectItem(_editProfileController.member!.member!.country ?? "");
+    stateControllerPermanent.selectItem(
+        _editProfileController.member!.member!.permanentState ?? "");
+    stateControllerTemporary
+        .selectItem(_editProfileController.member!.member!.tempState ?? "");
+  }
+
+  @override
   Widget build(BuildContext context) {
-    ResidenceTypeController residenceTypeController =
-        Get.put(ResidenceTypeController());
     return Scaffold(
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
@@ -68,409 +118,530 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
             style: FontConstant.styleSemiBold(
                 fontSize: 18, color: AppColors.constColor),
           ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Get.offAndToNamed('/contact');
-            },
-          ),
         ),
         body: Obx(() {
           return Stack(children: [
-            Stack(
-              children: [
-                Container(
-                    width: double.infinity,
-                    alignment: Alignment.topRight,
-                    child: Image.asset("assets/images/bg3.png")),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 22, right: 22, bottom: 100, top: 35),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/location.png",
-                            height: 92,
-                            width: 92,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Obx(() {
-                          if (countryController.isLoading.value) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
-                            );
-                          } else {
-                            return buildDropdown(
-                              'Nationality',
-                              countryController.getCountryList(),
-                              (value) {
-                                setState(() {
-                                  selectedCountry = value; // Update the state
-                                });
-                                countryController.selectItem(
-                                    value); // Call the controller method
-                              },
-                              hintText: 'Select Nationality',
-                            );
-                          }
-                        }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        buildDropdown(
-                          'Residence Type',
-                          residenceTypeController.getResidenceList(),
-                          (value) {
-                            setState(() {
-                              selectedResidence = value; // Update the state
-                            });
-                            residenceTypeController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'Select Residence Type',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        buildDropdown(
-                          'Permanent House Type',
-                          permanentHouseTypeController.getPermanentList(),
-                          (value) {
-                            setState(() {
-                              selectedPermanentHouse =
-                                  value; // Update the state
-                            });
-                            permanentHouseTypeController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'Select Permanent House Type',
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          'Permanent Address Location',
-                          style: FontConstant.styleMedium(
-                              fontSize: 18, color: AppColors.primaryColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 1,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),   
-                        Obx(() {
-                          if (stateControllerPermanent.isLoading.value) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
-                            );
-                          } else {
-                            return buildDropdown(
-                              'State',
-                              stateControllerPermanent.stateLists,
-                              //  stateControllerPermanent.selectedItem,
-                              (value) {
-                                setState(() {
-                                  selectedPermanentState =
-                                      value; // Update the state
-                                });
-                                stateControllerPermanent.selectItem(
-                                    value); // Call the controller method
-                              },
-                              hintText: 'Select State',
-                            );
-                          }
-                        }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Obx(() {
-                          if (cityControllerPermanent.isLoading.value) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
-                            );
-                          } else {
-                            return buildDropdown(
-                              'City',
-                              cityControllerPermanent.cityLists,
-                              // cityControllerPermanent.selectedItem,
-                              (value) {
-                                setState(() {
-                                  SelectedPermanentCity =
-                                      value; // Update the state
-                                });
-                                cityControllerPermanent.selectItem(
-                                    value); // Call the controller method
-                              },
-                              hintText: 'Select City',
-                            );
-                          }
-                        }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: permanentPinCode,
-                          labelText: 'Pin Code',
-                          maxlength: 6,
-                          keyboardType: TextInputType.number,
-                        ),
-                        const SizedBox(height: 30),
-                        Text(
-                          'Temporary Address Location',
-                          style: FontConstant.styleMedium(
-                              fontSize: 18, color: AppColors.primaryColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 1,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Obx(() {
-                          if (stateControllerTemporary.isLoading.value) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
-                            );
-                          } else {
-                            return buildDropdown(
-                              'State',
-                              stateControllerTemporary.stateLists,
-                              // stateControllerTemporary.selectedItem,
-                              (value) {
-                                setState(() {
-                                  SelectedTemporaryState =
-                                      value; // Update the state
-                                });
-                                stateControllerTemporary.selectItem(
-                                    value); // Call the controller method
-                              },
-                              hintText: 'Select State',
-                            );
-                          }
-                        }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Obx(() {
-                          if (cityControllerTemporary.isLoading.value) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
-                            );
-                          } else {
-                            return buildDropdown(
-                              'City',
-                              cityControllerTemporary.cityLists,
-                              //  cityControllerTemporary.selectedItem,
-                              (value) {
-                                setState(() {
-                                  selectedTemporaryCity =
-                                      value; // Update the state
-                                });
-                                cityControllerTemporary.selectItem(
-                                    value); // Call the controller method
-                              },
-                              hintText: 'Select City',
-                            );
-                          }
-                        }),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: TemporaryPinCode,
-                          labelText: 'Pin Code',
-                          maxlength: 6,
-                          keyboardType: TextInputType.number,
-                        ),
-                        const SizedBox(height: 30),
-                        Text(
-                          'Reference 1',
-                          style: FontConstant.styleMedium(
-                              fontSize: 18, color: AppColors.primaryColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 1,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        buildDropdown(
-                          'Relation',
-                          relationController.getRelationList(),
-                          // residenceTypeController.selectItem,
-                          (value) {
-                            setState(() {
-                              selectedRefeARelation = value; // Update the state
-                            });
-                            relationController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'Select Relation',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: refeAName,
-                          labelText: 'Name',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: refeAEmail,
-                          labelText: 'Email',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: refeAPhoneno,
-                          labelText: 'Mobile',
-                          keyboardType: TextInputType.phone,
-                          maxlength: 10,
-                        ),
-                        const SizedBox(height: 30),
-                        Text(
-                          'Reference 2',
-                          style: FontConstant.styleMedium(
-                              fontSize: 18, color: AppColors.primaryColor),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 1,
-                          width: double.infinity,
-                          decoration: const BoxDecoration(color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        buildDropdown(
-                          'Relation',
-                          relationController.getRelationList(),
-                          // residenceTypeController.selectItem,
-                          (value) {
-                            setState(() {
-                              selectedRefeBRelation = value; // Update the state
-                            });
-                            relationController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'Select Relation',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: refeBName,
-                          labelText: 'Name',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: refeBEmail,
-                          labelText: 'Email',
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextField(
-                          maxline: 1,
-                          controller: refeBPhoneno,
-                          labelText: 'Mobile',
-                          keyboardType: TextInputType.phone,
-                          maxlength: 10,
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        CustomButton(
-                          text: 'CONTINUE',
-                          onPressed: () {
-                            _locationDetailsController.locationDetails(
-                                context,
-                                selectedCountry ?? "",
-                                selectedResidence ?? "",
-                                selectedPermanentHouse ?? "",
-                                selectedPermanentState ?? "",
-                                SelectedPermanentCity ?? "",
-                                permanentPinCode.text.toString().trim(),
-                                SelectedTemporaryState ?? "",
-                                selectedTemporaryCity ?? "",
-                                TemporaryPinCode.text.toString().trim(),
-                                selectedRefeARelation ?? "",
-                                refeAName.text.toLowerCase().trim(),
-                                refeAEmail.text.toString().trim(),
-                                refeAPhoneno.text.toString().trim(),
-                                selectedRefeBRelation ?? "",
-                                refeBName.text.toString().trim(),
-                                refeBEmail.text.toString().trim(),
-                                refeBPhoneno.text.toString().trim());
-                            //  Get.toNamed('/education');
-                            print(
-                                "${selectedCountry ?? ""}$selectedPermanentHouse");
-                          },
-                          color: AppColors.primaryColor,
-                          textStyle: FontConstant.styleRegular(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            if (_locationDetailsController.isLoading.value)
-              Center(
+            loactionContent(),
+            if (_locationDetailsController.isLoading.value ||
+                _editProfileController.isLoading.value ||
+                countryController.isLoading.value ||
+                stateControllerPermanent.isLoading.value ||
+                cityControllerPermanent.isLoading.value ||
+                stateControllerTemporary.isLoading.value ||
+                cityControllerTemporary.isLoading.value ||
+                relationController.isLoading.value ||
+                residenceTypeController.isLoading.value ||
+                permanentHouseTypeController.isLoading.value)
+              const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ))
           ]);
         }));
+  }
+
+  Widget loactionContent() {
+    return Stack(
+      children: [
+        Container(
+            width: double.infinity,
+            alignment: Alignment.topRight,
+            child: Image.asset("assets/images/bg3.png")),
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: 22, right: 22, bottom: 100, top: 35),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    "assets/images/location.png",
+                    height: 92,
+                    width: 92,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Obx(() {
+                  if (countryController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'State',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedCountry = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select State',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'Nationality',
+                      countryController.getCountryList(),
+                      (String? value) {
+                        setState(() {
+                          selectedCountry = value;
+                          selectedPermanentState = null;
+                          selectedPermanentCity = null;
+                          selectedTemporaryState = null;
+                          selectedTemporaryCity = null;
+                          // Update the state
+                        });
+                        countryController
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedCountry,
+                      hintText: 'Select Nationality',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                Obx(() {
+                  if (residenceTypeController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Residence Type',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedResidence = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Residence Type',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'Residence Type',
+                      residenceTypeController.getResidenceList(),
+                      (value) {
+                        setState(() {
+                          selectedResidence = value; // Update the state
+                        });
+                        residenceTypeController
+                            .selectItem(value); // Call the controller method
+                      },
+                      search: false,
+                      selectedItem: selectedResidence,
+                      hintText: 'Select Residence Type',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                Obx(() {
+                  if (residenceTypeController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Permanent House Type',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedPermanentHouse = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Permanent House Type',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'Permanent House Type',
+                      permanentHouseTypeController.getPermanentList(),
+                      (value) {
+                        setState(() {
+                          selectedPermanentHouse = value; // Update the state
+                        });
+                        permanentHouseTypeController
+                            .selectItem(value); // Call the controller method
+                      },
+                      search: false,
+                      selectedItem: selectedPermanentHouse,
+                      hintText: 'Select Permanent House Type',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Permanent Address Location',
+                  style: FontConstant.styleMedium(
+                      fontSize: 18, color: AppColors.primaryColor),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Obx(() {
+                  if (stateControllerPermanent.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'State',
+                      ['Loading...'], // Dummy dropdown options during loading
+                      (value) {
+                        // Prevent selection of dummy value while loading
+                        setState(() {
+                          selectedPermanentState =
+                              null; // Prevent updates while loading
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select State',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'State',
+                      stateControllerPermanent.stateLists,
+                      //  stateControllerPermanent.selectedItem,
+                      (value) {
+                        setState(() {
+                          selectedPermanentState = value; // Update the state
+                          selectedPermanentCity = null;
+                        });
+                        stateControllerPermanent
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedPermanentState,
+                      hintText: 'Select State',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                Obx(() {
+                  if (cityControllerPermanent.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'City',
+                      ['Loading...'], // Dummy dropdown options during loading
+                      (value) {
+                        // Prevent selection of dummy value while loading
+                        setState(() {
+                          selectedPermanentCity =
+                              null; // Prevent updates while loading
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select City',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'City',
+                      cityControllerPermanent.cityLists,
+                      // cityControllerPermanent.selectedItem,
+                      (value) {
+                        setState(() {
+                          selectedPermanentCity = value; // Update the state
+                        });
+                        cityControllerPermanent
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedPermanentCity,
+                      hintText: 'Select City',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: permanentPinCode,
+                  labelText: 'Pin Code',
+                  maxlength: 6,
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  'Temporary Address Location',
+                  style: FontConstant.styleMedium(
+                      fontSize: 18, color: AppColors.primaryColor),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Obx(() {
+                  if (stateControllerTemporary.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'State',
+                      ['Loading...'], // Dummy dropdown options during loading
+                      (value) {
+                        // Prevent selection of dummy value while loading
+                        setState(() {
+                          selectedTemporaryState =
+                              null; // Prevent updates while loading
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select State',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'State',
+                      stateControllerTemporary.stateLists,
+                      // stateControllerTemporary.selectedItem,
+                      (value) {
+                        setState(() {
+                          selectedTemporaryState = value;
+                          selectedTemporaryCity = null; // Update the state
+                        });
+                        stateControllerTemporary
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedTemporaryState,
+                      hintText: 'Select State',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                Obx(() {
+                  if (cityControllerTemporary.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'City',
+                      ['Loading...'], // Dummy dropdown options during loading
+                      (value) {
+                        // Prevent selection of dummy value while loading
+                        setState(() {
+                          selectedTemporaryCity =
+                              null; // Prevent updates while loading
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select City',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'City',
+                      cityControllerTemporary.cityLists,
+                      //  cityControllerTemporary.selectedItem,
+                      (value) {
+                        setState(() {
+                          selectedTemporaryCity = value; // Update the state
+                        });
+                        cityControllerTemporary
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedTemporaryCity,
+                      hintText: 'Select City',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: temporaryPinCode,
+                  labelText: 'Pin Code',
+                  maxlength: 6,
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  'Reference 1',
+                  style: FontConstant.styleMedium(
+                      fontSize: 18, color: AppColors.primaryColor),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Obx(() {
+                  if (residenceTypeController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Relation',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedRefeARelation = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Relation',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'Relation',
+                      relationController.getRelationList(),
+                      // residenceTypeController.selectItem,
+                      (value) {
+                        setState(() {
+                          selectedRefeARelation = value; // Update the state
+                        });
+                        relationController
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedRefeARelation,
+                      hintText: 'Select Relation',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: refeAName,
+                  labelText: 'Name',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: refeAEmail,
+                  labelText: 'Email',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: refeAPhoneno,
+                  labelText: 'Mobile',
+                  keyboardType: TextInputType.phone,
+                  maxlength: 10,
+                ),
+                const SizedBox(height: 30),
+                Text(
+                  'Reference 2',
+                  style: FontConstant.styleMedium(
+                      fontSize: 18, color: AppColors.primaryColor),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(color: Colors.grey),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Obx(() {
+                  if (residenceTypeController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Relation',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedRefeBRelation = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Relation',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'Relation',
+                      relationController.getRelationList(),
+                      // residenceTypeController.selectItem,
+                      (value) {
+                        setState(() {
+                          selectedRefeBRelation = value; // Update the state
+                        });
+                        relationController
+                            .selectItem(value); // Call the controller method
+                      },
+                      selectedItem: selectedRefeBRelation,
+                      hintText: 'Select Relation',
+                    );
+                  }
+                }),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: refeBName,
+                  labelText: 'Name',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: refeBEmail,
+                  labelText: 'Email',
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomTextField(
+                  maxline: 1,
+                  controller: refeBPhoneno,
+                  labelText: 'Mobile',
+                  keyboardType: TextInputType.phone,
+                  maxlength: 10,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                CustomButton(
+                  text: 'CONTINUE',
+                  onPressed: () {
+                    _locationDetailsController.locationDetails(
+                        context,
+                        selectedCountry ?? "",
+                        selectedResidence ?? "",
+                        selectedPermanentHouse ?? "",
+                        selectedPermanentState ?? "",
+                        selectedPermanentCity ?? "",
+                        permanentPinCode.text.toString().trim(),
+                        selectedTemporaryState ?? "",
+                        selectedTemporaryCity ?? "",
+                        temporaryPinCode.text.toString().trim(),
+                        selectedRefeARelation ?? "",
+                        refeAName.text.toLowerCase().trim(),
+                        refeAEmail.text.toString().trim(),
+                        refeAPhoneno.text.toString().trim(),
+                        selectedRefeBRelation ?? "",
+                        refeBName.text.toString().trim(),
+                        refeBEmail.text.toString().trim(),
+                        refeBPhoneno.text.toString().trim(),
+                        true);
+                    //  Get.toNamed('/education');
+                  },
+                  color: AppColors.primaryColor,
+                  textStyle: FontConstant.styleRegular(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
   }
 }

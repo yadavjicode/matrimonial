@@ -350,6 +350,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       .member!.member!.spiritualName ??
                                   "(Not Mentioned)"),
                           _buildText(
+                              "Gender",
+                              _editProfileController
+                                      .member!.member!.gender ??
+                                  "(Not Mentioned)"),
+                          _buildText(
                               "Marital Status",
                               _editProfileController
                                       .member!.member!.maritalstatus ??
@@ -367,6 +372,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                           _buildText(
                               "Hobbies",
                               _editProfileController.member!.member!.hobbies ??
+                                  "(Not Mentioned)"),
+                          _buildText(
+                              "About",
+                              _editProfileController.member!.member!.about ??
                                   "(Not Mentioned)"),
                         ],
                       ),
@@ -485,7 +494,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Educational Details",
-                      "/profile",
+                      "/editEducationDetails",
                       Column(
                         children: [
                           _buildText(

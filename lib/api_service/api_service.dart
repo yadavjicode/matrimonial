@@ -147,7 +147,7 @@ class ApiService {
         "DOB": dob,
         "Hobbies": hobbies,
         "Diet": diet,
-        "profile": null
+        "about": about
       }),
     );
 

@@ -130,7 +130,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "About ",
         "value":
-            "${profileDetailsController.member!.data!.profile ?? "(Not Mentioned)"}"
+            "${profileDetailsController.member!.data!.about ?? "(Not Mentioned)"}"
       }
     ];
 // End basicDetails ========================================================================================================================================================================

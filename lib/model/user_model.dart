@@ -89,7 +89,7 @@ class Member {
   dynamic motherlivingstatus;
   dynamic fathersoccupation;
   dynamic mothersoccupation;
-  dynamic profile;
+  dynamic about;
   dynamic parProfile;
   dynamic looking;
   dynamic familyDetails;
@@ -397,7 +397,7 @@ class Member {
       this.motherlivingstatus,
       this.fathersoccupation,
       this.mothersoccupation,
-      this.profile,
+      this.about,
       this.parProfile,
       this.looking,
       this.familyDetails,
@@ -705,7 +705,7 @@ class Member {
     motherlivingstatus = json['Motherlivingstatus'];
     fathersoccupation = json['Fathersoccupation'];
     mothersoccupation = json['Mothersoccupation'];
-    profile = json['Profile'];
+    about = json['about'];
     parProfile = json['par_profile'];
     looking = json['Looking'];
     familyDetails = json['FamilyDetails'];
@@ -1018,7 +1018,7 @@ class Member {
     data['Motherlivingstatus'] = this.motherlivingstatus;
     data['Fathersoccupation'] = this.fathersoccupation;
     data['Mothersoccupation'] = this.mothersoccupation;
-    data['Profile'] = this.profile;
+    data['about'] = this.about;
     data['par_profile'] = this.parProfile;
     data['Looking'] = this.looking;
     data['FamilyDetails'] = this.familyDetails;
