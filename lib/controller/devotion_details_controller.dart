@@ -1,4 +1,5 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/devotion_details_model.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,9 @@ class DevotionalDetailsController with ChangeNotifier {
   DevotionalDetailsModel? get member => _member;
   String? get error => _error;
   final FlowController flowController=Get.put(FlowController());
+   final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
+
 
   Future<void> devotionalDetails(
       BuildContext context,
@@ -20,7 +24,7 @@ class DevotionalDetailsController with ChangeNotifier {
       String iskontype,
       String templeName,
       String templeCity,
-      String devotionalHobbies) async {
+      String devotionalHobbies,bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -28,8 +32,16 @@ class DevotionalDetailsController with ChangeNotifier {
     try {
       _member = await apiService.devotionalDetails(
           somethingAbout, iskontype, templeName, templeCity, devotionalHobbies);
+    
+    if(status){
+       _editProfileController.userDetails(context);
+        Navigator.pop(context);
 
-    flowController.Flow(context, 7);
+    }else{
+      flowController.Flow(context, 7);
+    }
+
+    
       // Get.toNamed('/spiritual');
     } catch (e) {
       _error = e.toString();

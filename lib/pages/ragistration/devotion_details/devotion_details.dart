@@ -66,19 +66,10 @@ class _DevotionDetailsState extends State<DevotionDetails> {
   final TextEditingController nameTemple = TextEditingController();
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
-  final FlowController flowController=Get.put(FlowController());
+  final FlowController flowController = Get.put(FlowController());
 
   final DevotionalDetailsController devotionalController =
       Get.put(DevotionalDetailsController());
-
-  // Map<String, bool> activityValues = {
-  //   'Chanting': false,
-  //   'Hearing': false,
-  //   'Temple Visiting': false,
-  //   'Reading': false,
-  //   'Kirtan': false,
-  //   'Pilgrimage Visiting': false,
-  // };
 
   @override
   Widget build(BuildContext context) {
@@ -276,11 +267,9 @@ class _DevotionDetailsState extends State<DevotionDetails> {
               getiskon(),
               nameTemple.text.toString().trim(),
               cityTemple.text.toString().trim(),
-              getSelectedHobbies());
+              getSelectedHobbies(),
+              false);
           //  Get.toNamed('/spiritual');
-          // Use the collected data
-          //   print('Selected Hobbies: $selectedHobbies');
-          //  print('Selected ISKCON Option: $selectedIskonOption');
         },
         color: AppColors.primaryColor,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.white),

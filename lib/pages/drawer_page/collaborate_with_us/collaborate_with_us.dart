@@ -181,7 +181,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                                   selectedState == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
-                                              selectedItem: "india",
+                                             
                                           hintText: 'Select State',
                                         );
                                       }

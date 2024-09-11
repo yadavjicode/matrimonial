@@ -286,7 +286,7 @@ class ApiService {
         "step_5": "1",
         "Education": education,
         'professional_qualification': qualification,
-        "Profile": describe
+        "other_qualification": describe
       }),
     );
 

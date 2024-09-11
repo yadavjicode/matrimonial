@@ -29,9 +29,13 @@ import 'package:devotee/pages/edit/edit_all_photo.dart/edit_all_photo.dart';
 import 'package:devotee/pages/edit/edit_all_photo.dart/update_photo.dart';
 import 'package:devotee/pages/edit/edit_basic_details/edit_basic_details.dart';
 import 'package:devotee/pages/edit/edit_contact_details/edit_contact_details.dart';
+import 'package:devotee/pages/edit/edit_devotional_details/edit_devotional_details.dart';
 import 'package:devotee/pages/edit/edit_education_details/edit_education_details.dart';
+import 'package:devotee/pages/edit/edit_horoscope_details/edit_horoscope_details.dart';
 import 'package:devotee/pages/edit/edit_location_details.dart/edit_location_details.dart';
+import 'package:devotee/pages/edit/edit_partner_qualities/edit_partner_qualities.dart';
 import 'package:devotee/pages/edit/edit_profession_details/edit_profession_details.dart';
+import 'package:devotee/pages/edit/edit_spiritual_details/edit_spiritual_details.dart';
 import 'package:devotee/pages/edit/edit_your_profile/edit_your_profile.dart';
 import 'package:devotee/pages/ragistration/about_groom_bride/about_groom_bride.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/show_image.dart';
@@ -122,6 +126,10 @@ class AppRoutes {
    static const String editLocationDetails = '/editLocationDetails';
    static const String editEducationDetails = '/editEducationDetails';
    static const String editProfessionDetails = '/editProfessionDetails';
+   static const String editDevotionalDetails = '/editDevotionalDetails';
+   static const String editSpiritualDetails = '/editSpiritualDetails';
+   static const String editHoroscopeDetails = '/editHoroscopeDetails';
+   static const String editPartnerQualites = '/editPartnerQualites';
    static const String updatePhoto = '/updatePhoto';
 
    static const String seeAll = '/seeAll';
@@ -479,6 +487,30 @@ class AppRoutes {
     GetPage(
       name: updatePhoto,
       page: () => const UpdatePhoto(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: editDevotionalDetails,
+      page: () => const EditDevotionDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: editSpiritualDetails,
+      page: () => const EditSpiritualDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: editHoroscopeDetails,
+      page: () => const EditHoroscopeDetails(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: editPartnerQualites,
+      page: () => const EditPartnerQualites(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

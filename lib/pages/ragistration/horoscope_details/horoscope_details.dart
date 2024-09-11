@@ -200,7 +200,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                                   context,
                                                   time.text.toString().trim(),
                                                   selectedState ?? "",
-                                                  selectedCity ?? "")
+                                                  selectedCity ?? "",false)
                                         }
 
                                       //    Get.toNamed('/profile')

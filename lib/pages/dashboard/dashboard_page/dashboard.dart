@@ -31,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
       Get.put(InboxSentController());
   final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
-  final StateController stateController = Get.put(StateController());
+  // final StateController stateController = Get.put(StateController());
 
   void login() async {
     if (_editProfileController.member!.member!.matriID != null) {
@@ -53,7 +53,7 @@ class _DashboardState extends State<Dashboard> {
     _editProfileController.userDetails(context).then((value) => login());
     inboxSentController.inboxSent(context, "Pending");
     inboxReceivedController.inboxSent(context, "Pending");
-    stateController.fetchStateList();
+    // stateController.fetchStateList();
     //  login();
     super.initState();
   }

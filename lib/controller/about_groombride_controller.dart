@@ -1,4 +1,5 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/about_groombride_model.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,11 @@ class AboutGroomBrideController with ChangeNotifier {
   AboutGroomBrideModel? get member => _member;
   String? get error => _error;
   final FlowController flowController = Get.put(FlowController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
 
   Future<void> aboutGroomBride(
-      BuildContext context, String characteristics, String hobbies) async {
+      BuildContext context, String characteristics, String hobbies,bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -23,7 +26,13 @@ class AboutGroomBrideController with ChangeNotifier {
     try {
       _member = await apiService.aboutGroomBride(characteristics, hobbies);
       // ignore: use_build_context_synchronously
-      flowController.Flow(context, 10);
+      if(status){
+       _editProfileController.userDetails(context);
+        Navigator.pop(context);
+      }else{
+       flowController.Flow(context, 10);
+      }
+      
       // Get.toNamed('/horoscope');
     } catch (e) {
       _error = e.toString();

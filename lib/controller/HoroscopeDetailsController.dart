@@ -1,6 +1,6 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
-import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/horoscope_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,9 +14,11 @@ class HoroscopeDetailsController with ChangeNotifier {
   HoroscopeDetailsModel? get member => _member;
   String? get error => _error;
   final FlowController flowController = Get.put(FlowController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
 
   Future<void> horoscopeDetails(BuildContext context, String timeHoroscope,
-      String stateHoroscope, String cityHoroscope) async {
+      String stateHoroscope, String cityHoroscope, bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -24,14 +26,20 @@ class HoroscopeDetailsController with ChangeNotifier {
     try {
       _member = await apiService.horoscopeDetails(
           timeHoroscope, stateHoroscope, cityHoroscope);
-      flowController.Flow(context, 11);
+      if (status) {
+        _editProfileController.userDetails(context);
+        Navigator.pop(context);
+      } else {
+        flowController.Flow(context, 11);
+      }
+
       // Get.toNamed('/profile');
     } catch (e) {
       _error = e.toString();
       print(_error);
 
       // Show error message using ScaffoldMessenger
-    Dialogs.showSnackbar(context, '${_error}');
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

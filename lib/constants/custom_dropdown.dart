@@ -134,6 +134,8 @@ Widget buildDropdownWithSearch(
     Color borderColor = AppColors.darkgrey,
     String? selectedItem,
     bool isMultiSelection = true,
+    bool errorshow = false,
+    String? errorMessage,
     bool search = true}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,8 +209,20 @@ Widget buildDropdownWithSearch(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
               ),
-
+              // prefixIcon: selectedItem != null
+              //   ? GestureDetector(
+              //       onTap: () {
+              //         onChanged(null); // Clear the selected value
+              //       },
+              //       child: Icon(
+              //         Icons.clear,
+              //         color: AppColors.darkgrey,
+              //         size: 20, // Adjust size as needed
+              //       ),
+              //     )
+              //   : null,// No icon if there's no selected item
               suffixIconColor: AppColors.darkgrey,
+
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
@@ -220,6 +234,15 @@ Widget buildDropdownWithSearch(
           onChanged: onChanged,
         ),
       ),
+      if (errorshow)
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              errorMessage??"",
+              style:
+                  FontConstant.styleRegular(fontSize: 11, color: AppColors.red),
+            )),
     ],
   );
 }

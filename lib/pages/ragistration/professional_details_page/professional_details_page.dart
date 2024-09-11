@@ -287,7 +287,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                           pincodeController.text
                                               .toString()
                                               .trim(),
-                                          selectedAnnualSalary ?? ""),
+                                          selectedAnnualSalary ?? "",false),
 
                                   //   Get.toNamed('/devotion')
                                 },

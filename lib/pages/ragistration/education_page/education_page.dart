@@ -146,7 +146,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                 context,
                 selectedHighestQualifaction ?? "",
                 selectedProfessionalQualifaction ?? "",
-                describeController.text.toString().trim());
+                describeController.text.toString().trim(),false);
 
             //    Get.toNamed('/prof');
           }

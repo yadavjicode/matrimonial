@@ -21,16 +21,6 @@ final  AboutGroomBrideController aboutGroomBrideController =
        final FlowController flowController=Get.put(FlowController());
   // Define state variables for checkboxes
   Map<String, bool> characteristics = {
-    // "Independent": false,
-    // "Affectionate": false,
-    // "Curious": false,
-    // "Extrovert Kind": false,
-    // "Calm": false,
-    // "Friendly": false,
-    // "Imaginative": false,
-    // "Cheerful": false,
-    // "Brilliant": false,
-    // "Optimistic": false,
     "Independent": false,
     "Affectionate": false,
     "Curious": false,
@@ -235,7 +225,7 @@ final  AboutGroomBrideController aboutGroomBrideController =
                                   getSelectedCharacteristics();
                               String selectedHobbies = getSelectedHobbies();
                               aboutGroomBrideController.aboutGroomBride(context,
-                                  selectedCharacteristics, selectedHobbies);
+                                  selectedCharacteristics, selectedHobbies,false);
                               //   Get.toNamed('/horoscope');
                               print(
                                   "Selected Characteristics: $selectedCharacteristics");

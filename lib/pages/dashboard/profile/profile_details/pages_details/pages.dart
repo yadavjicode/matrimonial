@@ -26,8 +26,8 @@ class _CustomPageState extends State<CustomPage> {
           child: Column(
             children: widget.customContent.map((data) {
               return pageContent().dataContent(
-                data['title'] ?? '(Not Mentioned)', // Access the title from the map
-                data['value'] ?? '(Not Mentioned)',
+                data['title'] ?? 'Not Mentioned', // Access the title from the map
+                data['value'] ?? 'Not Mentioned',
               );
             }).toList(),
           ),

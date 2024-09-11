@@ -299,11 +299,13 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                             });
                                           },
                                         ),
-                                        Text(
-                                          key,
-                                          style: FontConstant.styleRegular(
-                                              fontSize: 15,
-                                              color: AppColors.black),
+                                        Expanded(
+                                          child: Text(
+                                            key,
+                                            style: FontConstant.styleRegular(
+                                                fontSize: 15,
+                                                color: AppColors.black),
+                                          ),
                                         )
                                       ],
                                     ))

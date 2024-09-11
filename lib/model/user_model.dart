@@ -337,6 +337,7 @@ class Member {
   dynamic employmentSummary;
   dynamic Photo1;
   dynamic accountType;
+  dynamic spiritualCounselerConnected;
   
 
   Member(
@@ -955,6 +956,7 @@ class Member {
     spiritualName = json['spiritual_name'];
     instagramId = json['instagram_id'];
     employmentSummary = json['employment_summary'];
+    spiritualCounselerConnected = json['spiritual_counseler_connected'];
     Photo1 = json['Photo1'];
    
   }
@@ -1270,6 +1272,7 @@ class Member {
     data['employment_summary'] = this.employmentSummary;
     data['Photo1'] = this.Photo1;
     data['account_type'] = this.accountType;
+    data['spiritual_counseler_connected'] = this.spiritualCounselerConnected;
     return data;
   }
 }

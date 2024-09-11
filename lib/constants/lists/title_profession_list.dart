@@ -1,5 +1,4 @@
 import 'package:devotee/utils/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,6 +42,7 @@ class ProfessionController extends GetxController {
         var data = jsonDecode(response.body);
         if (data['status'] == true) {
           List<String> fetchedprofessions = List<String>.from(data['data']);
+          
           professionLists.assignAll(fetchedprofessions);
           print(fetchedprofessions);
         } else {

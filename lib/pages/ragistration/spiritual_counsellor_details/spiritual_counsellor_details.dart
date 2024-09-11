@@ -255,7 +255,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                         selectedCity ?? "",
                                         SomethingCounselor.text
                                             .toString()
-                                            .trim())
+                                            .trim(),false)
                                     //   Get.toNamed('/family')
                                   },
                               color: AppColors.primaryColor,

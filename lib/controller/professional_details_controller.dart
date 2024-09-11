@@ -1,6 +1,6 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
-import 'package:devotee/model/education_details_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +14,8 @@ class ProfessionalDetailsController with ChangeNotifier {
   ProfessionalDetailsModel? get member => _member;
   String? get error => _error;
   final FlowController flowController=Get.put(FlowController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
 
   Future<void> professionalDetails(
       BuildContext context,
@@ -23,7 +25,7 @@ class ProfessionalDetailsController with ChangeNotifier {
       String workingState,
       String workingCity,
       String pincode,
-      String annualSalary) async {
+      String annualSalary,bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -31,8 +33,15 @@ class ProfessionalDetailsController with ChangeNotifier {
     try {
       _member = await apiService.professionalDetails(profesion, working,
           empolyment, workingState, workingCity, pincode, annualSalary);
-      flowController.Flow(context, 6);
-
+      
+      if(status){
+       _editProfileController.userDetails(context);
+        Navigator.pop(context);
+      }else{
+        flowController.Flow(context, 6);
+      }
+      
+    
       // Get.toNamed('/devotion');
     } catch (e) {
       _error = e.toString();
