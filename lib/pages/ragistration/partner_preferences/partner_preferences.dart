@@ -968,7 +968,7 @@ String getLanguageKnown(List<String> language) {
                                 selectCaste ?? "",
                                 selectDiet ?? "",
                                 selectDrinkHabit ?? "",
-                                selectSmokeHabit ?? "")
+                                selectSmokeHabit ?? "",false)
                             //  Get.toNamed("/dashboard")
                           },
                           color: AppColors.primaryColor,

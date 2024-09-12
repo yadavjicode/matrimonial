@@ -1,4 +1,5 @@
 import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/partner_preference_model.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,8 @@ class PartnerPreferenceController with ChangeNotifier {
   PartnerModel? get member => _member;
   String? get error => _error;
   final FlowController flowController=Get.put(FlowController());
-
+final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   Future<void> partnerPreference(
       BuildContext context,
       String ageFrom,
@@ -36,7 +38,9 @@ class PartnerPreferenceController with ChangeNotifier {
       String Caste,
       String diet,
       String drink,
-      String smoke) async {
+      String smoke,
+      bool status
+      ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -64,7 +68,13 @@ class PartnerPreferenceController with ChangeNotifier {
           diet,
           drink,
           smoke);
+        if(status){
+         _editProfileController.userDetails(context);
+        Navigator.pop(context);
+        }else{
           flowController.Flow(context, 13);
+        }
+          
       // Get.toNamed("/dashboard");
     } catch (e) {
       _error = e.toString();

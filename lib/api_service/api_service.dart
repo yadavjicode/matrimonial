@@ -551,7 +551,7 @@ class ApiService {
         "Subcaste": subcaste,
         "Gothram": gothram,
         "Language": language,
-        "PE_MotherTongue": motherTongue,
+        "mother_tongue": motherTongue,
         "Fatherlivingstatus": fatherlivingstatus,
         "Fathername": fathername,
         "Fathersoccupation": fathersoccupation,

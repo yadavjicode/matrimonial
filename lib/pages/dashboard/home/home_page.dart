@@ -481,7 +481,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => {Get.toNamed("/partner")},
+                      onTap: () => {Get.toNamed("/editPartnerPreference")},
                       child: buildoption("assets/images/icons/partner.svg",
                           "Partner Preferences", 22, 22),
                     ),

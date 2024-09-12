@@ -32,7 +32,7 @@ class _EditContactDetailsState extends State<EditContactDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    instaController.text = _editProfileController.member!.member!.instagramId;
+    instaController.text = _editProfileController.member!.member!.instagramId??"";
   }
 
   @override

@@ -6,7 +6,6 @@ import 'package:devotee/constants/lists/title_profession_list.dart';
 import 'package:devotee/controller/family_details_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/list_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/constants/CustomTextFeild.dart';
@@ -963,7 +962,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                       selectedNoBrother ?? "",
                                       getFamilyType(),
                                       getFamilyValue(),
-                                      getAffluenceLevel());
+                                      getAffluenceLevel(),false);
 
                                   //  Get.toNamed('/aboutgroom');
                                 },

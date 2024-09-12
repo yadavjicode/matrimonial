@@ -61,14 +61,16 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
     time.text = _editProfileController.member!.member!.timeOfBirth ?? "";
     selectedState = _editProfileController.member!.member!.stateOfBirth;
     selectedCity = _editProfileController.member!.member!.cityOfBirth;
-  }
+    stateController.selectItem(_editProfileController.member!.member!.stateOfBirth);
 
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
           elevation: 0,
+          centerTitle: true,
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Horoscope Details",

@@ -185,11 +185,11 @@ Widget buildDropdownWithSearch(
               constraints:
                   BoxConstraints(maxWidth: 200), // Adjust the width as needed
               child: Text(
-                selectedItem ?? '',
+                selectedItem ?? hintText ?? '',  
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis, // Ensure text does not wrap
                 style: FontConstant.styleRegular(
-                    fontSize: 16, color: Colors.black),
+                    fontSize: 16, color:selectedItem!=null? Colors.black:AppColors.darkgrey),
               ),
             );
           },
@@ -199,12 +199,14 @@ Widget buildDropdownWithSearch(
             dropdownSearchDecoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
+
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
               ),
+
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
@@ -236,10 +238,10 @@ Widget buildDropdownWithSearch(
       ),
       if (errorshow)
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: EdgeInsets.symmetric(horizontal: 8),
             alignment: Alignment.centerLeft,
             child: Text(
-              errorMessage??"",
+              errorMessage ?? "",
               style:
                   FontConstant.styleRegular(fontSize: 11, color: AppColors.red),
             )),
@@ -254,6 +256,8 @@ Widget buildDropdownWithSearchMulti(
   String? hintText,
   double? radiusdrop,
   Color borderColor = AppColors.darkgrey,
+  bool errorshow = false,
+  String? errorMessage,
   List<String>? selectedItems, // Change from String? to List<String>?
   bool isMultiSelection = false,
 
@@ -314,6 +318,10 @@ Widget buildDropdownWithSearchMulti(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
               ),
+              enabledBorder:OutlineInputBorder(
+                borderRadius: BorderRadius.circular(radiusdrop ?? 23),
+                borderSide: BorderSide(color: borderColor),
+              ) ,
               suffixIconColor: AppColors.darkgrey,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
@@ -326,6 +334,15 @@ Widget buildDropdownWithSearchMulti(
           onChanged: onChanged,
         ),
       ),
+      if (errorshow)
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              errorMessage ?? "",
+              style:
+                  FontConstant.styleRegular(fontSize: 11, color: AppColors.red),
+            )),
     ],
   );
 }

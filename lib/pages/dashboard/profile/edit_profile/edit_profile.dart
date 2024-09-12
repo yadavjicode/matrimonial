@@ -193,78 +193,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                   ),
                 ],
               ),
-              // Container(
-              //   alignment: Alignment.center,
-              //   height: 305,
-              //   width: double.infinity,
-              //   color: AppColors.constColor,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //       Image.asset(
-              //         "assets/images/noimage.png",
-              //         width: 179,
-              //         height: 172,
-              //       ),
-              //       Text(
-              //         "+ Add Image",
-              //         style: FontConstant.styleRegular(
-              //           fontSize: 23,
-              //           color: Color(0xff583689),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         alignment: Alignment.center,
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             Image.asset("assets/images/phone.png"),
-              //             Text(
-              //               "Edit Mobile No.",
-              //               style: FontConstant.styleRegular(
-              //                 fontSize: 16,
-              //                 color: AppColors.black,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //     Container(
-              //       height: 50,
-              //       width: 1,
-              //       color: Colors.grey,
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.all(10),
-              //         alignment: Alignment.center,
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             Image.asset("assets/images/message.png"),
-              //             SizedBox(width: 10),
-              //             Text(
-              //               "Edit Email ID",
-              //               style: FontConstant.styleRegular(
-              //                 fontSize: 16,
-              //                 color: AppColors.black,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
               Container(
                 width: double.infinity,
                 height: 1,
@@ -638,7 +566,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     _buildCont(
                       "Family & More Details",
-                      "/editBasicDetails",
+                      "/editFamilyDetails",
                       Column(
                         children: [
                           _buildText(
@@ -660,6 +588,103 @@ class _ProfileEditState extends State<ProfileEdit> {
                           _buildText(
                               "Language Known",
                               _editProfileController.member!.member!.language ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Mother Tongue",
+                              _editProfileController
+                                      .member!.member!.motherTongue ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Father Alive",
+                              _editProfileController
+                                      .member!.member!.fatherlivingstatus ??
+                                  "Not Mentioned"),
+                          if (_editProfileController
+                                  .member!.member!.fatherlivingstatus ==
+                              "Yes") ...[
+                            _buildText(
+                                "Father Name",
+                                _editProfileController
+                                        .member!.member!.fathername ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Father Occupation",
+                                _editProfileController
+                                        .member!.member!.fathersoccupation ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Father Business",
+                                _editProfileController
+                                        .member!.member!.fatherBussness ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Father Annual Income",
+                                _editProfileController
+                                        .member!.member!.fatherAnnualIncome ??
+                                    "Not Mentioned"),
+                          ],
+                          _buildText(
+                              "Mother Alive",
+                              _editProfileController
+                                      .member!.member!.motherlivingstatus ??
+                                  "Not Mentioned"),
+                          if (_editProfileController
+                                  .member!.member!.motherlivingstatus ==
+                              "Yes") ...[
+                            _buildText(
+                                "Mother Name",
+                                _editProfileController
+                                        .member!.member!.mothersname ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Mother Occupation",
+                                _editProfileController
+                                        .member!.member!.mothersoccupation ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Mother Annual Income",
+                                _editProfileController
+                                        .member!.member!.motherAnnualIncome ??
+                                    "Not Mentioned"),
+                          ],
+                          _buildText(
+                              "Sister",
+                              _editProfileController.member!.member!.sister ??
+                                  "Not Mentioned"),
+                          if (_editProfileController.member!.member!.sister ==
+                              "Yes") ...[
+                            _buildText(
+                                "Number of Sisters",
+                                _editProfileController
+                                        .member!.member!.noofsisters ??
+                                    "Not Mentioned"),
+                          ],
+                          _buildText(
+                              "Brother",
+                              _editProfileController.member!.member!.brother ??
+                                  "Not Mentioned"),
+                          if (_editProfileController.member!.member!.brother ==
+                              "Yes") ...[
+                            _buildText(
+                                "Number of Brother",
+                                _editProfileController
+                                        .member!.member!.noofbrothers ??
+                                    "Not Mentioned"),
+                          ],
+                          _buildText(
+                              "Family Type",
+                              _editProfileController
+                                      .member!.member!.familyType ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Family Value",
+                              _editProfileController
+                                      .member!.member!.familyvalues ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Affluence Level",
+                              _editProfileController
+                                      .member!.member!.familyStatus ??
                                   "Not Mentioned"),
                         ],
                       ),
@@ -687,7 +712,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         ],
                       ),
                     ),
-                     _buildCont(
+                    _buildCont(
                       "Partner's Desired Qualities",
                       "/editPartnerQualites",
                       Column(
@@ -699,10 +724,123 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   "Not Mentioned"),
                           _buildText(
                               "Hobbies or Likings",
-                              _editProfileController
-                                      .member!.member!.hobbies ??
+                              _editProfileController.member!.member!.hobbies ??
                                   "Not Mentioned"),
-                         
+                        ],
+                      ),
+                    ),
+                    _buildCont(
+                      "Partner Preferences",
+                      "/editPartnerPreference",
+                      Column(
+                        children: [
+                          _buildText(
+                              "Age Range From",
+                              _editProfileController
+                                          .member!.member!.pEFromAge !=
+                                      0
+                                  ? "${_editProfileController.member!.member!.pEFromAge} Yrs"
+                                  : "Not Mentioned"),
+                          _buildText(
+                              "Age Range To",
+                              _editProfileController.member!.member!.pEToAge !=
+                                      0
+                                  ? "${_editProfileController.member!.member!.pEToAge} Yrs"
+                                  : "Not Mentioned"),
+                          _buildText(
+                              "Body Weight From",
+                              _editProfileController
+                                          .member!.member!.pEFromWeight !=
+                                      0
+                                  ? "${_editProfileController.member!.member!.pEFromWeight} KG"
+                                  : "Not Mentioned"),
+                          _buildText(
+                              "Body Weight To",
+                              _editProfileController
+                                          .member!.member!.pEToWeight !=
+                                      0
+                                  ? "${_editProfileController.member!.member!.pEToWeight} KG"
+                                  : "Not Mentioned"),
+                          _buildText(
+                              "Height Range From",
+                              _editProfileController.member!.member!.pEHeight ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Height Range To",
+                              _editProfileController
+                                      .member!.member!.pEHeight2 ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Languages Known",
+                              _editProfileController
+                                      .member!.member!.pELanguage ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Marital Status",
+                              _editProfileController
+                                      .member!.member!.pEMaritalStatus ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Family Type",
+                              _editProfileController
+                                      .member!.member!.pEFamilyType ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Family Value",
+                              _editProfileController
+                                      .member!.member!.pEFamilyValue ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Nationality",
+                              _editProfileController
+                                      .member!.member!.pECountrylivingin ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "State",
+                              _editProfileController.member!.member!.pEState ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Highest Qualification",
+                              _editProfileController
+                                      .member!.member!.pEEducation ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Professional Qualification",
+                              _editProfileController
+                                      .member!.member!.pEProfessional ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Occupation",
+                              _editProfileController
+                                      .member!.member!.pEOccupation ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Annual Income Range",
+                              _editProfileController
+                                      .member!.member!.pEAnnualincome ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Religion",
+                              _editProfileController
+                                      .member!.member!.pEReligion ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Caste",
+                              _editProfileController.member!.member!.pECaste ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Diet Preference",
+                              _editProfileController.member!.member!.pEDiet ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Drinking Habit",
+                              _editProfileController.member!.member!.pEDrink ??
+                                  "Not Mentioned"),
+                          _buildText(
+                              "Smoking Habit",
+                              _editProfileController
+                                      .member!.member!.pESmoking ??
+                                  "Not Mentioned"),
                         ],
                       ),
                     ),

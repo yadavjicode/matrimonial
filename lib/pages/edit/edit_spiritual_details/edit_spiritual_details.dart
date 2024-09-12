@@ -92,6 +92,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
         _editProfileController.member!.member!.counselorResidingInState;
     selectedCity =
         _editProfileController.member!.member!.counselorResidingInCity;
+    stateController.selectItem(_editProfileController.member!.member!.counselorResidingInState);
   }
 
   @override
@@ -120,9 +121,8 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
               ],
             ),
             if (spiritualController.isLoading.value ||
-                _editProfileController.isLoading.value ||
-                stateController.isLoading.value ||
-                cityController.isLoading.value)
+                _editProfileController.isLoading.value
+                )
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -286,7 +286,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                           selectedItem: selectedState,
                         );
                       }
-                    }),
+                    }),  
                     const SizedBox(
                       height: 15,
                     ),

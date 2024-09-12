@@ -23,6 +23,8 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   // Define state variables for checkboxes
+
+
   Map<String, bool> characteristics = {
     "Independent": false,
     "Affectionate": false,
@@ -63,6 +65,8 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
         .map((entry) => entry.key)
         .join(", ");
   }
+
+  
 
   void selectHobbies(String selectedHobbies) {
     List<String> selectedList = selectedHobbies.split(', ');

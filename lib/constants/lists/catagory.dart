@@ -1,5 +1,5 @@
 import 'package:devotee/utils/constants.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,9 +20,7 @@ class SubCastController extends GetxController {
     ever(castController.selectedItemId, (_) {
       fetchSubCastList();
     });
-    ever(religionController.selectedItemId, (_) {
-      fetchSubCastList();
-    });
+    
   }
 
   List<String> getSubCastList() {
@@ -177,11 +175,15 @@ class ReligionsController extends GetxController {
   }
 
   void selectItem(String? value) {
-    selectedItem.value = value;
-    selectedItemId.value =
-        religionsLists.firstWhere((item) => item['name'] == value)['id'];
-  }
-
+  selectedItem.value = value;
+  
+  // Use orElse to handle the case where no matching item is found
+  selectedItemId.value = religionsLists
+      .firstWhere(
+        (item) => item['name'] == value, 
+        orElse: () => {'id': null}, // Provide a default value if no match is found
+      )['id'];
+}
   void fetchReligionList() async {
     isLoading.value = true;
     try {

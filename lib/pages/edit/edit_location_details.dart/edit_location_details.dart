@@ -123,15 +123,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
           return Stack(children: [
             loactionContent(),
             if (_locationDetailsController.isLoading.value ||
-                _editProfileController.isLoading.value ||
-                countryController.isLoading.value ||
-                stateControllerPermanent.isLoading.value ||
-                cityControllerPermanent.isLoading.value ||
-                stateControllerTemporary.isLoading.value ||
-                cityControllerTemporary.isLoading.value ||
-                relationController.isLoading.value ||
-                residenceTypeController.isLoading.value ||
-                permanentHouseTypeController.isLoading.value)
+                _editProfileController.isLoading.value )
               const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
@@ -168,7 +160,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                 Obx(() {
                   if (countryController.isLoading.value) {
                     return buildDropdownWithSearch(
-                      'State',
+                      'Nationality',
                       ['Loading...'],
                       (value) {
                         setState(() {
@@ -176,7 +168,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                         });
                       },
                       selectedItem: 'Loading...',
-                      hintText: 'Select State',
+                      hintText: 'Select Nationality',
                     );
                   } else {
                     return buildDropdownWithSearch(
