@@ -61,12 +61,20 @@ class _ReceivedPendingState extends State<ReceivedPending> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
-    if (member == null ||
+   if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
-      return Center(child: Text("No data available"));
+      return Center(
+          child: Text("No data available",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
     }
-
+    if (member.responseData!.data!.isEmpty) {
+      return Center(
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -242,5 +250,6 @@ class _ReceivedPendingState extends State<ReceivedPending> {
         ),
       ),
     );
+    }
   }
 }

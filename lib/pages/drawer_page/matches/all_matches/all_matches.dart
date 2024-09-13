@@ -3,7 +3,6 @@ import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -98,6 +97,14 @@ class _AllMatchesState extends State<AllMatches> {
   Widget allMatchesContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+
+    if (matchesController.isLoading.value == false &&
+        matchesController.matches.isEmpty) {
+      return Center(
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: Axis.vertical,
@@ -111,7 +118,20 @@ class _AllMatchesState extends State<AllMatches> {
 
           return GestureDetector(
             onTap: () {
-              // Get.toNamed('/profiledtls');
+              profileDetailsController.profileDetails(
+                                  context, id, "matches", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
@@ -458,5 +478,6 @@ class _AllMatchesState extends State<AllMatches> {
           ),
       ]),
     );
+    }
   }
 }

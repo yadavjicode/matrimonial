@@ -185,11 +185,14 @@ Widget buildDropdownWithSearch(
               constraints:
                   BoxConstraints(maxWidth: 200), // Adjust the width as needed
               child: Text(
-                selectedItem ?? hintText ?? '',  
+                selectedItem ?? hintText ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis, // Ensure text does not wrap
                 style: FontConstant.styleRegular(
-                    fontSize: 16, color:selectedItem!=null? Colors.black:AppColors.darkgrey),
+                    fontSize: 16,
+                    color: selectedItem != null
+                        ? Colors.black
+                        : AppColors.darkgrey),
               ),
             );
           },
@@ -318,10 +321,10 @@ Widget buildDropdownWithSearchMulti(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
               ),
-              enabledBorder:OutlineInputBorder(
+              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),
                 borderSide: BorderSide(color: borderColor),
-              ) ,
+              ),
               suffixIconColor: AppColors.darkgrey,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radiusdrop ?? 23),

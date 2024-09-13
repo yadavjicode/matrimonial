@@ -21,7 +21,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
       Get.put(EditProfilePhotoModel());
  
    
-  List<List<String>> getImageListValue() {
+  List<List<String>> getImageListValues() {
     List<List<String>> imgList = [];
 
     // Ensure member and member.member are not null
@@ -74,7 +74,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
           width: screenWidth,
           color: AppColors.constColor,
           child: Obx(() {
-            final imgList = getImageListValue();
+            final imgList = getImageListValues();
             return Stack(children: [
               Column(
                 children: imgList

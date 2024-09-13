@@ -3,7 +3,6 @@ import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -36,7 +35,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
   final DashboardController dashboardController =
       Get.put(DashboardController());
   final ScrollController _scrollController = ScrollController();
-   final DirectChatController directChatController =
+  final DirectChatController directChatController =
       Get.put(DirectChatController());
 
   Future<void> _fetchUser(String userId) async {
@@ -83,7 +82,8 @@ class _DesiredPartnerState extends State<DesiredPartner> {
           allMatchesContent(),
           if (shortlistController.isLoading.value ||
               sentInvitationController.isLoading.value ||
-              profileDetailsController.isLoading.value||directChatController.isLoading.value)
+              profileDetailsController.isLoading.value ||
+              directChatController.isLoading.value)
             Center(
               child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
@@ -97,6 +97,14 @@ class _DesiredPartnerState extends State<DesiredPartner> {
   Widget allMatchesContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+
+    if (matchesController.isLoading.value == false &&
+        matchesController.matches.isEmpty) {
+      return Center(
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
     return SingleChildScrollView(
       controller: _scrollController,
       scrollDirection: Axis.vertical,
@@ -106,12 +114,15 @@ class _DesiredPartnerState extends State<DesiredPartner> {
           String id = data.matriID ?? "";
           String image = data.photo1 != null
               ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-              : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+              : data.gender == "Male"
+                  ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                  : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
           //String head = entry.value[1];
 
           return GestureDetector(
             onTap: () {
-              // Get.toNamed('/profiledtls');
+              profileDetailsController.profileDetails(context, id, "matches",
+                  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]);
             },
             child: Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
@@ -129,82 +140,81 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
-                              Container(
+                          Container(
+                            height: (screenWidth * 0.4) * (5 / 4),
+                            width: screenWidth * 0.4,
+                            child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              child: Image.network(
+                                "$image",
                                 height: (screenWidth * 0.4) * (5 / 4),
                                 width: screenWidth * 0.4,
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  child: Image.network(
-                                    "$image",
-                                    height: (screenWidth * 0.4) * (5 / 4),
-                                    width: screenWidth * 0.4,
-                                    filterQuality: FilterQuality.high,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
+                                filterQuality: FilterQuality.high,
+                                fit: BoxFit.fill,
                               ),
-                              Positioned(
-                                  top: ((screenWidth * 0.4) * (5 / 4) -
-                                      screenWidth * 0.075),
-                                  left: 0,
-                                  right: 0,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        data.interestStatus =
-                                            data.interestStatus == 0 ? 1 : 1;
-                                      });
+                            ),
+                          ),
+                          Positioned(
+                              top: ((screenWidth * 0.4) * (5 / 4) -
+                                  screenWidth * 0.075),
+                              left: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
 
-                                      sentInvitationController.sentInvitation(
-                                        context,
-                                        data.matriID!,
-                                      );
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        data.interestStatus == 1
-                                            ? Container(
-                                                alignment: Alignment.center,
-                                                height: screenWidth * 0.06,
-                                                width: screenWidth * 0.06,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.green),
-                                                child: SvgPicture.asset(
-                                                  "assets/images/icons/correct.svg",
-                                                  height: screenWidth * 0.028,
-                                                  width: screenWidth * 0.028,
-                                                ),
-                                              )
-                                            : Container(
-                                                alignment: Alignment.center,
-                                                height: screenWidth * 0.06,
-                                                width: screenWidth * 0.06,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.white),
-                                                child: SvgPicture.asset(
-                                                  "assets/images/icons/pinkcorrect.svg",
-                                                  height: screenWidth * 0.028,
-                                                  width: screenWidth * 0.028,
-                                                ),
-                                              ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          "Send Interest",
-                                          style: FontConstant.styleMedium(
-                                              fontSize: screenWidth * 0.03,
-                                              color: AppColors.constColor),
-                                        ),
-                                      ],
+                                  sentInvitationController.sentInvitation(
+                                    context,
+                                    data.matriID!,
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    data.interestStatus == 1
+                                        ? Container(
+                                            alignment: Alignment.center,
+                                            height: screenWidth * 0.06,
+                                            width: screenWidth * 0.06,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.green),
+                                            child: SvgPicture.asset(
+                                              "assets/images/icons/correct.svg",
+                                              height: screenWidth * 0.028,
+                                              width: screenWidth * 0.028,
+                                            ),
+                                          )
+                                        : Container(
+                                            alignment: Alignment.center,
+                                            height: screenWidth * 0.06,
+                                            width: screenWidth * 0.06,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white),
+                                            child: SvgPicture.asset(
+                                              "assets/images/icons/pinkcorrect.svg",
+                                              height: screenWidth * 0.028,
+                                              width: screenWidth * 0.028,
+                                            ),
+                                          ),
+                                    SizedBox(
+                                      width: 5,
                                     ),
-                                  ))
-                            ]),
+                                    Text(
+                                      "Send Interest",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: screenWidth * 0.03,
+                                          color: AppColors.constColor),
+                                    ),
+                                  ],
+                                ),
+                              ))
+                        ]),
                       ),
                       Expanded(
                         child: Padding(
@@ -357,7 +367,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         ),
                         Expanded(
                           child: GestureDetector(
-                             onTap: () async {
+                            onTap: () async {
                               if (data.chatStatus == 1) {
                                 if (data.matriID!.trim().isNotEmpty &&
                                     data.matriID != null) {
@@ -458,5 +468,6 @@ class _DesiredPartnerState extends State<DesiredPartner> {
           ),
       ]),
     );
+    }
   }
 }

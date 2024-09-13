@@ -24,6 +24,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
+    
   }
 
   int _currentIndex = 0;
@@ -47,8 +48,9 @@ class _ProfileEditState extends State<ProfileEdit> {
     if (_editProfileController.member?.member?.photo5 != null) {
       imgList.add(_editProfileController.member!.member!.photo5!);
     }
+     print("Image List: $imgList"); // Debug print
     return imgList;
-  }
+  }   
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +78,11 @@ class _ProfileEditState extends State<ProfileEdit> {
         ),
       ),
       body: Obx(() {
+         final List<String> imgList = getImageList();
         return Stack(
           children: [
             if (_editProfileController.isLoading.value == false)
-              _buildProfileContent(),
+              _buildProfileContent(imgList),
             if (_editProfileController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
@@ -93,8 +96,8 @@ class _ProfileEditState extends State<ProfileEdit> {
     );
   }
 
-  Widget _buildProfileContent() {
-    final List<String> imgList = getImageList();
+  Widget _buildProfileContent(List<String> imgList) {
+   
     return Stack(
       children: [
         Container(
@@ -245,7 +248,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   children: [
                     _buildCont(
                       "Basic Details",
-                      "/editBasicDetails",
+                      '/devotion',
                       Column(
                         children: [
                           _buildText(

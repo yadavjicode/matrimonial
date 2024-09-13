@@ -29,32 +29,53 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
       Get.put(ProfessionalDetailsController());
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
-  final FlowController flowController=Get.put(FlowController());
+  final FlowController flowController = Get.put(FlowController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? selectedProfession;
   String? selectedAnnualSalary;
   String? selectedEmpolyment;
   String? selectedState;
   String? selectedCity;
+  bool show = false;
 
   int? selectedRadioValue; // Add this line
 
-  String working() {
+  String? working() {
     if (selectedRadioValue == 1) {
       return "Yes";
-    } else if(selectedRadioValue==2)
-    {
+    } else if (selectedRadioValue == 2) {
       return "No";
-    }else{
-      return "";
+    } else {
+      return null;
     }
   }
+
+  bool validation() {
+    if (working() != null && selectedProfession != null) {
+      if (working() == "Yes") {
+        if (_formKey.currentState!.validate() &&
+            selectedAnnualSalary != null &&
+            selectedEmpolyment != null &&
+            selectedState != null &&
+            selectedCity != null) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-  // stateController.fetchStateList();
-
+    // stateController.fetchStateList();
   }
 
   @override
@@ -91,226 +112,347 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 22, right: 22, top: 35, bottom: 100),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30),
-                        child: Image.asset("assets/images/occupation.png"),
-                      ),
-                      buildDropdownWithSearch(
-                        'Title of the Profession',
-                        professionController.getProfessionList(),
-                        (value) {
-                          setState(() {
-                            selectedProfession = value; // Update the state
-                          });
-                          professionController
-                              .selectItem(value); // Call the controller method
-                        },
-                        hintText: 'Select Profession',
-                        selectedItem: selectedProfession
-                      ),
-                      Container(
-                          margin: EdgeInsets.only(top: 10, bottom: 5),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Working anywhere? *",
-                            style: FontConstant.styleRegular(
-                                fontSize: 16, color: AppColors.black),
-                          )),
-                      Row(
-                        children: [
-                          Radio(
-                            activeColor: AppColors.primaryColor,
-                            value: 1,
-                            groupValue: selectedRadioValue,
-                            onChanged: (value) => {
-                              setState(() {
-                                selectedRadioValue = value!;
-                              })
-                            },
-                          ),
-                          Text(
-                            "Yes",
-                            style: FontConstant.styleRegular(
-                                fontSize: 16, color: AppColors.black),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Radio(
-                            activeColor: AppColors.primaryColor,
-                            value: 2,
-                            groupValue: selectedRadioValue,
-                            onChanged: (value) => {
-                              setState(() {
-                                selectedRadioValue = value!;
-                              })
-                            },
-                          ),
-                          Text(
-                            "No",
-                            style: FontConstant.styleRegular(
-                                fontSize: 16, color: AppColors.black),
-                          )
-                        ],
-                      ),
-                      if (selectedRadioValue== 1)
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: buildDropdownWithSearch(
-                                "Empolyment",
-                                employmentController.getEmpolymentList(),
-                                //  cityControllerTemporary.selectedItem,
-                                (value) {
-                                  setState(() {
-                                    selectedEmpolyment =
-                                        value; // Update the state
-                                  });
-                                  employmentController.selectItem(
-                                      value); // Call the controller method
-                                },
-                                hintText: 'Select Empolyment',
-                              ),
-                            ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(top: 15),
-                            //   child:
-                            // //    buildDropdownWithSearch(
-                            // //           'Working State',
-                            // //          stateController.getStateList(),
-                            // //           //  stateControllerPermanent.selectedItem,
-                            // //           (value) {
-                            // //             setState(() {
-                            // //               selectedState =
-                            // //                   value; // Update the state
-                            // //             });
-                            // //             stateController.selectItem(
-                            // //                 value); // Call the controller method
-                            // //           },
-                            // //           hintText: 'Select State',
-                            // //         ),
-                            // // ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: Obx(() {
-                                if (stateController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  );
-                                } else {
-                                  return buildDropdownWithSearch(
-                                    'Working State',
-                                   stateController.getStateList(),
-                                    //  stateControllerPermanent.selectedItem,
-                                    (value) {
-                                      setState(() {
-                                        selectedState =
-                                            value; // Update the state
-                                      });
-                                      stateController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select State',
-                                  );
-                                }
-                              }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: Obx(() {
-                                if (cityController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  );
-                                } else {
-                                  return buildDropdownWithSearch(
-                                    'Working City',
-                                       cityController.cityLists,
-                                    // cityControllerPermanent.selectedItem,
-                                    (value) {
-                                      setState(() {
-                                        selectedCity =
-                                            value; // Update the state
-                                      });
-                                      cityController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select City',
-                                  );
-                                }
-                              }),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: CustomTextField(
-                                controller: pincodeController,
-                                labelText: "Pin Code",
-                                keyboardType: TextInputType.number,
-                                maxlength: 6,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: buildDropdownWithSearch('Annual Income Range',
-                                  incomeController.getIncomeList(), (value) {
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 30),
+                          child: Image.asset("assets/images/occupation.png"),
+                        ),
+                        Obx(() {
+                          if (professionController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Title of the Profession *',
+                              ['Loading...'],
+                              (value) {
                                 setState(() {
-                                  selectedAnnualSalary =
+                                  selectedProfession = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'Select Profession',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                              'Title of the Profession *',
+                              professionController.getProfessionList(),
+                              (value) {
+                                setState(() {
+                                  selectedProfession =
                                       value; // Update the state
                                 });
-
-                                incomeController.selectItem(
+                                professionController.selectItem(
                                     value); // Call the controller method
-                              }, hintText: 'Select Annual Income Range'),
+                              },
+                              selectedItem: selectedProfession,
+                              hintText: 'Select Profession',
+                              errorMessage: "Please Select Profession",
+                              errorshow:show==true&&
+                                  selectedProfession == null ? true : false,
+                              borderColor:show==true&& selectedProfession == null
+                                  ? Colors.red
+                                  : Colors.black.withOpacity(0.5),
+                            );
+                          }
+                        }),
+                        Container(
+                            margin: EdgeInsets.only(top: 10, bottom: 5),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Working anywhere? *",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 16, color: AppColors.black),
+                            )),
+                        Row(
+                          children: [
+                            Radio(
+                              activeColor: AppColors.primaryColor,
+                              value: 1,
+                              groupValue: selectedRadioValue,
+                              onChanged: (value) => {
+                                setState(() {
+                                  selectedRadioValue = value!;
+                                })
+                              },
                             ),
+                            Text(
+                              "Yes",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 16, color: AppColors.black),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Radio(
+                              activeColor: AppColors.primaryColor,
+                              value: 2,
+                              groupValue: selectedRadioValue,
+                              onChanged: (value) => {
+                                setState(() {
+                                  selectedRadioValue = value!;
+                                })
+                              },
+                            ),
+                            Text(
+                              "No",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 16, color: AppColors.black),
+                            )
                           ],
                         ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 25, bottom: 15),
-                        child: CustomButton(
-                            text: "CONTINUE",
-                            onPressed: () => {
-                                  professionalDeatilsController
-                                      .professionalDetails(
-                                          context,
-                                          selectedProfession ?? "",
-                                          working(),
-                                          selectedEmpolyment ?? "",
-                                          selectedState ?? "",
-                                          selectedCity ?? "",
-                                          pincodeController.text
-                                              .toString()
-                                              .trim(),
-                                          selectedAnnualSalary ?? "",false),
+                        if (show==true&&working() == null)
+                          Container(
+                              margin: EdgeInsets.only(bottom: 5),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "are you Working anywhere",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 11, color: AppColors.red),
+                              )),
+                        if (working() == "Yes")
+                          Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Obx(() {
+                                  if (employmentController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Empolyment *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedEmpolyment = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select Empolyment',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                      "Empolyment *",
+                                      employmentController.getEmpolymentList(),
+                                      //  cityControllerTemporary.selectedItem,
+                                      (value) {
+                                        setState(() {
+                                          selectedEmpolyment =
+                                              value; // Update the state
+                                        });
+                                        employmentController.selectItem(
+                                            value); // Call the controller method
+                                      },
+                                      borderColor:show==true&& selectedEmpolyment == null
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.5),
+                                      selectedItem: selectedEmpolyment,
+                                      errorMessage: "Please Select Empolyment",
+                                      errorshow:show==true&& selectedEmpolyment == null
+                                          ? true
+                                          : false,
+                                      hintText: 'Select Empolyment',
+                                    );
+                                  }
+                                }),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Obx(() {
+                                  if (stateController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Working State *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedState = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select State',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                      'Working State *',
+                                      stateController.getStateList(),
+                                      //  stateControllerPermanent.selectedItem,
+                                      (value) {
+                                        setState(() {
+                                          selectedState = value;
+                                          selectedCity =
+                                              null; // Update the state
+                                        });
+                                        stateController.selectItem(
+                                            value); // Call the controller method
+                                      },
+                                      borderColor:show==true&& selectedState == null
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.5),
+                                      errorMessage:
+                                          "Please Select Working State",
+                                      errorshow:show==true&&
+                                          selectedState == null ? true : false,
+                                      selectedItem: selectedState,
+                                      hintText: 'Select State',
+                                    );
+                                  }
+                                }),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Obx(() {
+                                  if (cityController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Working City *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedCity = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select City',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                      'Working City *',
+                                      cityController.cityLists,
+                                      // cityControllerPermanent.selectedItem,
+                                      (value) {
+                                        setState(() {
+                                          selectedCity =
+                                              value; // Update the state
+                                        });
+                                        cityController.selectItem(
+                                            value); // Call the controller method
+                                      },
+                                      borderColor:show==true&& selectedCity == null
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.5),
+                                      errorMessage:
+                                          "Please Select Working City",
+                                      errorshow:show==true&&
+                                          selectedCity == null ? true : false,
+                                      selectedItem: selectedCity,
+                                      hintText: 'Select City',
+                                    );
+                                  }
+                                }),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: CustomTextField(
+                                  controller: pincodeController,
+                                  labelText: "Pin Code",
+                                  keyboardType: TextInputType.number,
+                                  maxlength: 6,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter Pin Code';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Obx(() {
+                                  if (incomeController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Annual Income Range *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedAnnualSalary = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select Annual Income Range',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                        'Annual Income Range *',
+                                        incomeController.getIncomeList(),
+                                        (value) {
+                                      setState(() {
+                                        selectedAnnualSalary =
+                                            value; // Update the state
+                                      });
 
-                                  //   Get.toNamed('/devotion')
-                                },
-                            color: AppColors.primaryColor,
-                            textStyle: FontConstant.styleRegular(
-                                fontSize: 20, color: AppColors.constColor)),
-                      ),
-                      GestureDetector(
-                        onTap: () => {
-                          // Get.offAndToNamed('/devotion')
-                           flowController.Flow(context, 6)
-                          },
-                        child: Container(
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            "SKIP",
-                            style: FontConstant.styleRegular(
-                                fontSize: 20, color: AppColors.black),
+                                      incomeController.selectItem(
+                                          value); // Call the controller method
+                                    },
+                                        borderColor:show==true&&
+                                            selectedAnnualSalary == null
+                                                ? Colors.red
+                                                : Colors.black.withOpacity(0.5),
+                                        selectedItem: selectedAnnualSalary,
+                                        errorMessage: "Please Annual Income",
+                                        errorshow:show==true&& selectedAnnualSalary == null
+                                            ? true
+                                            : false,
+                                        hintText: 'Select Annual Income Range');
+                                  }
+                                }),
+                              ),
+                            ],
                           ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25, bottom: 15),
+                          child: CustomButton(
+                              text: "CONTINUE",
+                              onPressed: ()  {
+                                    setState(() {
+                                      show = true;
+                                    });
+                                    if (validation())
+                                      {
+                                        professionalDeatilsController
+                                            .professionalDetails(
+                                                context,
+                                                selectedProfession ?? "",
+                                                working()!,
+                                                working() == "Yes"
+                                                    ? selectedEmpolyment ?? ""
+                                                    : "",
+                                                working() == "Yes"
+                                                    ? selectedState ?? ""
+                                                    : "",
+                                                working() == "Yes"
+                                                    ? selectedCity ?? ""
+                                                    : "",
+                                                working() == "Yes"
+                                                    ? pincodeController.text
+                                                        .toString()
+                                                        .trim()
+                                                    : "",
+                                                working() == "Yes"
+                                                    ? selectedAnnualSalary ?? ""
+                                                    : "",
+                                                true);
+                                      }
+
+                                    //   Get.toNamed('/devotion')
+                                  },
+                              color: AppColors.primaryColor,
+                              textStyle: FontConstant.styleRegular(
+                                  fontSize: 20, color: AppColors.constColor)),
                         ),
-                      )
-                    ],
+                        GestureDetector(
+                          onTap: () => {
+                            // Get.offAndToNamed('/devotion')
+                            flowController.Flow(context, 6)
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              "SKIP",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 20, color: AppColors.black),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

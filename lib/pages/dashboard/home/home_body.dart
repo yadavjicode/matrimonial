@@ -36,7 +36,6 @@ class _HomeBodyState extends State<HomeBody> {
       Get.put(EditProfileController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
-  
 
   Future<void> _fetchUser(String userId) async {
     ChatUser? _chatUser;
@@ -182,7 +181,7 @@ class _HomeBodyState extends State<HomeBody> {
                         ]);
                       },
                       child: Container(
-                        width: screenWidth*0.65,
+                        width: screenWidth * 0.65,
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 7, right: 7),
                         decoration: BoxDecoration(
@@ -195,16 +194,16 @@ class _HomeBodyState extends State<HomeBody> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: screenWidth*0.65,
-                                height: screenWidth*0.65 * (5 / 4),
+                                width: screenWidth * 0.65,
+                                height: screenWidth * 0.65 * (5 / 4),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       topRight: Radius.circular(10)),
                                   child: Image.network(
                                     image,
-                                    width: screenWidth*0.65,
-                                    height: screenWidth*0.65 * (5 / 4),
+                                    width: screenWidth * 0.65,
+                                    height: screenWidth * 0.65 * (5 / 4),
                                     filterQuality: FilterQuality.high,
                                     fit: BoxFit.cover,
                                   ),
@@ -280,8 +279,8 @@ class _HomeBodyState extends State<HomeBody> {
                                   ),
                                 )),
                           Positioned(
-                            top: (screenWidth*0.65 * (5 / 4) - 20),
-                            right:screenWidth*0.015,
+                            top: (screenWidth * 0.65 * (5 / 4) - 20),
+                            right: screenWidth * 0.015,
                             child: Container(
                               alignment: Alignment.center,
                               height: 40,
@@ -334,7 +333,7 @@ class _HomeBodyState extends State<HomeBody> {
 
   Widget ridConatent(String leftTittle, String rightTitle, String key,
       String appBarTittle, List<DailyRecommendation> list) {
-  final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
@@ -381,7 +380,22 @@ class _HomeBodyState extends State<HomeBody> {
                             : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
                     return GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        profileDetailsController.profileDetails(
+                            context, data.matriID!, "", [
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9",
+                          "10",
+                          "11"
+                        ]);
+                      },
                       child: Container(
                         margin: EdgeInsets.only(
                             top: 5, bottom: 10, left: 5, right: 5),
@@ -393,113 +407,95 @@ class _HomeBodyState extends State<HomeBody> {
                         child: Stack(children: [
                           Column(
                             children: [
-                              GestureDetector(
-                                onTap: () => {
-                                  profileDetailsController.profileDetails(
-                                      context, data.matriID!, "", [
-                                    "1",
-                                    "2",
-                                    "3",
-                                    "4",
-                                    "5",
-                                    "6",
-                                    "7",
-                                    "8",
-                                    "9",
-                                    "10",
-                                    "11"
-                                  ])
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        width: screenWidth*0.2,
-                                        height: screenWidth*0.2,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle),
-                                        child: ClipOval(
-                                          child: Image.network(
-                                            "$image",
-                                            width: screenWidth*0.2,
-                                            height: screenWidth*0.2 * (5 / 4),
-                                            filterQuality: FilterQuality.high,
-                                            fit: BoxFit.fill,
-                                          ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: screenWidth * 0.2,
+                                      height: screenWidth * 0.2,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle),
+                                      child: ClipOval(
+                                        child: Image.network(
+                                          "$image",
+                                          width: screenWidth * 0.2,
+                                          height: screenWidth * 0.2 * (5 / 4),
+                                          filterQuality: FilterQuality.high,
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      width: screenWidth*0.6,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  name,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: FontConstant
-                                                      .styleSemiBold(
-                                                          fontSize: 15,
-                                                          color: AppColors
-                                                              .primaryColor),
-                                                ),
-                                                Text(
-                                                  occupation,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style:
-                                                      FontConstant.styleMedium(
-                                                          fontSize: 12,
-                                                          color: AppColors
-                                                              .darkgrey),
-                                                ),
-                                                Text(
-                                                  "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style:
-                                                      FontConstant.styleMedium(
-                                                          fontSize: 12,
-                                                          color: AppColors
-                                                              .darkgrey),
-                                                ),
-                                                Text(
-                                                  "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style:
-                                                      FontConstant.styleMedium(
-                                                          fontSize: 12,
-                                                          color:
-                                                              AppColors.black),
-                                                )
-                                              ],
-                                            ),
+                                  ),
+                                  Container(
+                                    width: screenWidth * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                name,
+                                                overflow:
+                                                    TextOverflow.ellipsis,
+                                                style: FontConstant
+                                                    .styleSemiBold(
+                                                        fontSize: 15,
+                                                        color: AppColors
+                                                            .primaryColor),
+                                              ),
+                                              Text(
+                                                occupation,
+                                                overflow:
+                                                    TextOverflow.ellipsis,
+                                                style:
+                                                    FontConstant.styleMedium(
+                                                        fontSize: 12,
+                                                        color: AppColors
+                                                            .darkgrey),
+                                              ),
+                                              Text(
+                                                "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                                overflow:
+                                                    TextOverflow.ellipsis,
+                                                style:
+                                                    FontConstant.styleMedium(
+                                                        fontSize: 12,
+                                                        color: AppColors
+                                                            .darkgrey),
+                                              ),
+                                              Text(
+                                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                                overflow:
+                                                    TextOverflow.ellipsis,
+                                                style:
+                                                    FontConstant.styleMedium(
+                                                        fontSize: 12,
+                                                        color:
+                                                            AppColors.black),
+                                              )
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                               Container(
                                 padding: EdgeInsets.only(left: 10, right: 10),
                                 height: 1,
-                               width:  screenWidth*0.8,
+                                width: screenWidth * 0.8,
                                 color: Colors.grey.shade200,
                               ),
                               Container(
-                                width:  screenWidth*0.8,
+                                width: screenWidth * 0.8,
                                 padding: EdgeInsets.only(top: 10, bottom: 10),
                                 child: Row(
                                   mainAxisAlignment:
@@ -724,7 +720,7 @@ class _HomeBodyState extends State<HomeBody> {
                           padding: EdgeInsets.only(left: 5, right: 5),
                           margin: EdgeInsets.only(
                               top: 5, bottom: 10, left: 5, right: 5),
-                          width: screenWidth*0.4,
+                          width: screenWidth * 0.4,
                           decoration: BoxDecoration(
                             color: AppColors.constColor,
                             border: Border.all(color: Colors.grey.shade200),

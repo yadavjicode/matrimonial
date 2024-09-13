@@ -49,14 +49,23 @@ class _SentAcceptedState extends State<SentAccepted> {
   }
 
   Widget acceptedContent() {
-       final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxSentController.member;
-    if (member == null ||
+     if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
-      return Center(child: Text("No data available"));
+      return Center(
+          child: Text("No data available",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
     }
+    if (member.responseData!.data!.isEmpty) {
+      return Center(
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -68,11 +77,14 @@ class _SentAcceptedState extends State<SentAccepted> {
             String mId = data.receicedMatriID ?? "";
             String image = data.photo1 != null
                 ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                : data.gender == "Male"
+                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
             return GestureDetector(
               onTap: () {
-                // Get.toNamed('/profiledtls');
+                profileDetailsController.profileDetails(context, mId, "",
+                    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -85,7 +97,8 @@ class _SentAcceptedState extends State<SentAccepted> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                           padding: const EdgeInsets.only(left: 10,top: 8,bottom: 10,right: 2),
+                          padding: const EdgeInsets.only(
+                              left: 10, top: 8, bottom: 10, right: 2),
                           child: Container(
                             width: screenWidth * 0.2,
                             height: screenWidth * 0.2,
@@ -202,6 +215,6 @@ class _SentAcceptedState extends State<SentAccepted> {
           }).toList(),
         ),
       ),
-    );
+    );}
   }
 }

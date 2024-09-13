@@ -410,7 +410,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     alignment: Alignment.center,
                     child: Image.asset('assets/images/familyicon.png')),
                 Obx(() {
-
                   if (religionController.isLoading.value) {
                     return buildDropdownWithSearch(
                       'Religion *',

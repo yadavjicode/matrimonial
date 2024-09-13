@@ -78,21 +78,18 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    selectedProfession =
-        _editProfileController.member!.member!.occupation;
-    selectedEmpolyment =
-        _editProfileController.member!.member!.employedin;
+    selectedProfession = _editProfileController.member!.member!.occupation;
+    selectedEmpolyment = _editProfileController.member!.member!.employedin;
     selectedState = _editProfileController.member!.member!.workState;
     selectedCity = _editProfileController.member!.member!.workCity;
-    selectedAnnualSalary =
-        _editProfileController.member!.member!.annualincome;
+    selectedAnnualSalary = _editProfileController.member!.member!.annualincome;
     pincodeController.text =
-        _editProfileController.member!.member!.workPincode??"";
+        _editProfileController.member!.member!.workPincode ?? "";
     stateController
         .selectItem(_editProfileController.member!.member!.workState);
     if (_editProfileController.member!.member!.workingAnywhere == "Yes") {
       selectedRadioValue = 1;
-    }else if(_editProfileController.member!.member!.workingAnywhere == "No"){
+    } else if (_editProfileController.member!.member!.workingAnywhere == "No") {
       selectedRadioValue = 2;
     }
   }
@@ -424,11 +421,17 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                                   context,
                                   selectedProfession ?? "",
                                   working()!,
-                                 working()=="Yes"? selectedEmpolyment ?? "":"",
-                                 working()=="Yes"? selectedState ?? "":"",
-                                 working()=="Yes"? selectedCity ?? "":"",
-                                 working()=="Yes"? pincodeController.text.toString().trim():"",
-                                 working()=="Yes"? selectedAnnualSalary ?? "":"",
+                                  working() == "Yes"
+                                      ? selectedEmpolyment ?? ""
+                                      : "",
+                                  working() == "Yes" ? selectedState ?? "" : "",
+                                  working() == "Yes" ? selectedCity ?? "" : "",
+                                  working() == "Yes"
+                                      ? pincodeController.text.toString().trim()
+                                      : "",
+                                  working() == "Yes"
+                                      ? selectedAnnualSalary ?? ""
+                                      : "",
                                   true),
                             }
 

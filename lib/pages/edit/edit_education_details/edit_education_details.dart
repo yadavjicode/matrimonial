@@ -33,7 +33,6 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);

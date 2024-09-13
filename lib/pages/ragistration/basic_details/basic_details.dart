@@ -28,9 +28,7 @@ class _BasicDetailState extends State<BasicDetail> {
   final TextEditingController surnameController = TextEditingController();
   final TextEditingController initiatedNameController = TextEditingController();
   final TextEditingController aboutController = TextEditingController();
-  final FlowController flowController=Get.put(FlowController());
-
-
+  final FlowController flowController = Get.put(FlowController());
 
   final BasicDetailsController _basicDetailController =
       Get.put(BasicDetailsController());
@@ -38,6 +36,8 @@ class _BasicDetailState extends State<BasicDetail> {
   MaritalController maritalController = Get.put(MaritalController());
   HeightController heightController = Get.put(HeightController());
   WeightController weightController = Get.put(WeightController());
+
+  bool show = false;
 
   String? selectedTitle;
   String? selectedMaritalStatus;
@@ -56,27 +56,31 @@ class _BasicDetailState extends State<BasicDetail> {
   bool isYearValidated = false;
 
   bool validateDropDown() {
-    if (isDayValidated == true &&
-        isTitleValidated == true &&
-        isHeightValidated == true &&
-        isWeightValidated == true &&
-        isMonthValidated == true &&
-        isYearValidated == true) {
+    if (selectedTitle != null &&
+        selectedMaritalStatus != null &&
+        selectedHeight != null &&
+        selectedWeight != null &&
+        selectedDay != null &&
+        selectedMonth!=null&&
+        selectedYear!=null&&
+        getSelectedHobbies().isNotEmpty&&
+        selectedDiet != null
+        ) {
       return true;
     } else {
       return false;
     }
   }
-@override
+
+  @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     nameController.clear();
     surnameController.clear();
     initiatedNameController.clear();
     aboutController.clear();
   }
-  
+
   Map<String, bool> hobbies = {
     "Art / Handicraft": false,
     "Yoga": false,
@@ -163,20 +167,27 @@ class _BasicDetailState extends State<BasicDetail> {
                           Column(
                             children: [
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     width: 100,
-                                    child: buildDropdown(
+                                    child: buildDropdownWithSearch(
                                       'Title *',
                                       TittleController.TittleList(),
                                       (value) => {
                                         setState(() => selectedTitle = value),
                                         isTitleValidated = true
                                       },
-                                      borderColor: isTitleValidated == false &&
-                                              selectedTitle == null
+                                      borderColor: (selectedTitle == null &&
+                                              show == true)
                                           ? Colors.red
                                           : Colors.black.withOpacity(0.5),
+                                      search: false,
+                                      errorMessage: "Select Title",
+                                      errorshow:
+                                          show == true && selectedTitle == null
+                                              ? true
+                                              : false,
                                       hintText: 'Mr',
                                     ),
                                   ),
@@ -217,8 +228,22 @@ class _BasicDetailState extends State<BasicDetail> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 10),
-                                child:  buildDropdown(
-                                      'Marital Status',
+                                child: Obx(() {
+                                  if (maritalController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Marital Status *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedMaritalStatus = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select Marital Status',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                      'Marital Status *',
                                       maritalController.getMaritalList(),
                                       (value) {
                                         setState(() {
@@ -228,44 +253,101 @@ class _BasicDetailState extends State<BasicDetail> {
                                         maritalController.selectItem(
                                             value); // Call the controller method
                                       },
+                                      search: true,
+                                      borderColor: show == true &&
+                                              selectedMaritalStatus == null
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.5),
+                                      errorMessage: "Select Marital Status",
+                                      errorshow: show == true &&
+                                              selectedMaritalStatus == null
+                                          ? true
+                                          : false,
                                       hintText: 'Select Marital Status',
-                                    )
-                                
-                                
+                                    );
+                                  }
+                                }),
                               ),
                               const SizedBox(height: 15),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
-                                    child: buildDropdown(
-                                      'Height*',
-                                      heightController.getHeightList(),
-                                      (value) => {
-                                        setState(() => selectedHeight = value),
-                                        isHeightValidated = true
-                                      },
-                                      borderColor: isHeightValidated == false &&
-                                              selectedHeight == null
-                                          ? Colors.red
-                                          : Colors.black.withOpacity(0.5),
-                                      hintText: 'Choose',
-                                    ),
+                                    child: Obx(() {
+                                      if (heightController.isLoading.value) {
+                                        return buildDropdownWithSearch(
+                                          'Height *',
+                                          ['Loading...'],
+                                          (value) {
+                                            setState(() {
+                                              selectedHeight = null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText: 'Select',
+                                        );
+                                      } else {
+                                        return buildDropdownWithSearch(
+                                          'Height *',
+                                          heightController.getHeightList(),
+                                          (value) => {
+                                            setState(
+                                                () => selectedHeight = value),
+                                            isHeightValidated = true
+                                          },
+                                          search: true,
+                                          borderColor: show == true &&
+                                                  selectedHeight == null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
+                                          errorMessage: "Select Height",
+                                          errorshow: show == true &&
+                                                  selectedHeight == null
+                                              ? true
+                                              : false,
+                                          hintText: 'Select',
+                                        );
+                                      }
+                                    }),
                                   ),
                                   const SizedBox(width: 10),
                                   Expanded(
-                                    child: buildDropdown(
-                                      'Weight*',
-                                      weightController.getWeightList(),
-                                      (value) => {
-                                        setState(() => selectedWeight = value),
-                                        isWeightValidated = true
-                                      },
-                                      borderColor: isWeightValidated == false &&
-                                              selectedWeight == null
-                                          ? Colors.red
-                                          : Colors.black.withOpacity(0.5),
-                                      hintText: '50 Kg',
-                                    ),
+                                    child: Obx(() {
+                                      if (weightController.isLoading.value) {
+                                        return buildDropdownWithSearch(
+                                          'Weight *',
+                                          ['Loading...'],
+                                          (value) {
+                                            setState(() {
+                                              selectedWeight = null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText: 'Select',
+                                        );
+                                      } else {
+                                        return buildDropdownWithSearch(
+                                          'Weight *',
+                                          weightController.getWeightList(),
+                                          (value) => {
+                                            setState(
+                                                () => selectedWeight = value),
+                                            isWeightValidated = true
+                                          },
+                                          search: true,
+                                          borderColor: show == true &&
+                                                  selectedWeight == null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
+                                          errorMessage: "Select Weight",
+                                          errorshow: show == true &&
+                                                  selectedWeight == null
+                                              ? true
+                                              : false,
+                                          hintText: 'Select',
+                                        );
+                                      }
+                                    }),
                                   ),
                                 ],
                               ),
@@ -276,41 +358,88 @@ class _BasicDetailState extends State<BasicDetail> {
                           Padding(
                             padding: const EdgeInsets.only(top: 15),
                             child: Text(
-                              "Hobbies",
+                              "Hobbies *",
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: AppColors.black),
                             ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: hobbies.keys
-                                .take(hobbies.length)
-                                .map((key) => Row(
-                                      children: [
-                                        CustomCheckbox(
-                                          value: hobbies[key]!,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              hobbies[key] = value;
-                                            });
-                                          },
-                                        ),
-                                        Text(
-                                          key,
-                                          style: FontConstant.styleRegular(
-                                              fontSize: 15,
-                                              color: AppColors.black),
-                                        )
-                                      ],
-                                    ))
-                                .toList(),
+                          if (show == true && getSelectedHobbies().isEmpty)
+                            Text(
+                              "Select Hobbies",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 11, color: AppColors.red),
+                            ),
+                          Container(
+                            height: 250,
+                            child: ScrollbarTheme(
+                              data: ScrollbarThemeData(
+                                  thumbColor: MaterialStateProperty.all(AppColors
+                                      .primaryColor), // Change thumb color here
+                                  trackColor: MaterialStateProperty.all(AppColors
+                                      .primaryLight), // Change track color here
+                                  trackBorderColor: MaterialStateProperty.all(
+                                      AppColors.primaryLight),
+                                  radius: Radius.circular(
+                                      10) // Change track border color here
+                                  ),
+                              child: Scrollbar(
+                                isAlwaysShown: true,
+                                trackVisibility: true,
+                                interactive: true,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: hobbies.keys
+                                        .take(hobbies.length)
+                                        .map((key) => Row(
+                                              children: [
+                                                CustomCheckbox(
+                                                  value: hobbies[key]!,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      hobbies[key] = value;
+                                                    });
+                                                  },
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    key,
+                                                    style: FontConstant
+                                                        .styleRegular(
+                                                            fontSize: 15,
+                                                            color: AppColors
+                                                                .black),
+                                                  ),
+                                                )
+                                              ],
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               buildDropdown(
-                                    'Diet',
+                              Obx(() {
+                                if (dietController.isLoading.value) {
+                                  return buildDropdownWithSearch(
+                                    'Diet *',
+                                    ['Loading...'],
+                                    (value) {
+                                      setState(() {
+                                        selectedDiet = null;
+                                      });
+                                    },
+                                    selectedItem: 'Loading...',
+                                    hintText: 'Select Diet',
+                                  );
+                                } else {
+                                  return buildDropdownWithSearch(
+                                    'Diet *',
                                     dietController.getDietList(),
                                     (value) {
                                       setState(() {
@@ -320,16 +449,31 @@ class _BasicDetailState extends State<BasicDetail> {
                                       dietController.selectItem(
                                           value); // Call the controller method
                                     },
+                                    search: true,
+                                    borderColor:
+                                        show == true && selectedDiet == null
+                                            ? Colors.red
+                                            : Colors.black.withOpacity(0.5),
+                                    errorMessage: "Select Diet",
+                                    errorshow:
+                                        show == true && selectedDiet == null
+                                            ? true
+                                            : false,
                                     hintText: 'Select Diet',
-                                  )
-                                
-                              ,
+                                  );
+                                }
+                              }),
                               const SizedBox(height: 15),
                               CustomTextField(
-                                labelText: "About",
-                                
+                                labelText: "About *",
                                 maxline: 8,
                                 controller: aboutController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter About';
+                                  }
+                                  return null;
+                                },
                               )
                             ],
                           ),
@@ -339,6 +483,9 @@ class _BasicDetailState extends State<BasicDetail> {
                             child: CustomButton(
                               text: 'CONTINUE',
                               onPressed: () {
+                                setState(() {
+                                  show = true;
+                                });
                                 if (_formKey.currentState!.validate() &&
                                     validateDropDown()) {
                                   String mon = _basicDetailController
@@ -355,10 +502,11 @@ class _BasicDetailState extends State<BasicDetail> {
                                       selectedHeight ?? "",
                                       selectedWeight ?? "",
                                       "$selectedYear-$mon-$selectedDay",
-                                      getSelectedHobbies() ?? "",
+                                      getSelectedHobbies(),
                                       selectedDiet ?? "",
-                                      aboutController.text.toString().trim(),false);
-                                  
+                                      aboutController.text.toString().trim(),
+                                      false);
+
                                   //   Get.toNamed('/contact');
                                 }
                               },
@@ -369,7 +517,7 @@ class _BasicDetailState extends State<BasicDetail> {
                               ),
                             ),
                           ),
-                       //   const SizedBox(height: 15),
+                          //   const SizedBox(height: 15),
                           // _buildSkipButton()
                         ],
                       ),
@@ -378,7 +526,8 @@ class _BasicDetailState extends State<BasicDetail> {
                 ],
               ),
             ),
-            if (_basicDetailController.isLoading.value||flowController.isLoading.value)
+            if (_basicDetailController.isLoading.value ||
+                flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -393,52 +542,62 @@ class _BasicDetailState extends State<BasicDetail> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Date Of Birth*',
+          'Date Of Birth *',
           style: FontConstant.styleRegular(fontSize: 16, color: Colors.black),
         ),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: buildDropdown(
+              child: buildDropdownWithSearch(
                 '',
                 DayController.DayList(),
                 (value) => {
                   setState(() => selectedDay = value),
                   isDayValidated = true
                 },
-                borderColor: isDayValidated == false && selectedDay == null
+                search: true,
+                borderColor: show == true && selectedDay == null
                     ? Colors.red
                     : Colors.black.withOpacity(0.5),
+                errorMessage: "Select Day",
+                errorshow: show == true && selectedDay == null ? true : false,
                 hintText: 'Day',
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: buildDropdown(
+              child: buildDropdownWithSearch(
                 '',
                 MonthController.MonthList(),
                 (value) => {
                   setState(() => selectedMonth = value),
                   isMonthValidated = true
                 },
-                borderColor: isMonthValidated == false && selectedMonth == null
+                search: true,
+                borderColor: show == true && selectedMonth == null
                     ? Colors.red
                     : Colors.black.withOpacity(0.5),
+                errorMessage: "Select Monthy",
+                errorshow: show == true && selectedMonth == null ? true : false,
                 hintText: 'Month',
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: buildDropdown(
+              child: buildDropdownWithSearch(
                 '',
                 YearController.yearList(),
                 (value) => {
                   setState(() => selectedYear = value),
                   isYearValidated = true
                 },
-                borderColor: isYearValidated == false && selectedYear == null
+                search: true,
+                borderColor: show == true && selectedYear == null
                     ? Colors.red
                     : Colors.black.withOpacity(0.5),
+                errorMessage: "Select Year",
+                errorshow: show == true && selectedYear == null ? true : false,
                 hintText: 'Year',
               ),
             ),

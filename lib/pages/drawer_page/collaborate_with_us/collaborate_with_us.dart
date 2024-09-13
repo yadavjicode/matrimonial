@@ -146,18 +146,22 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                 height: 10,
                               ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Expanded(
                                     child: Obx(() {
                                       if (stateController.isLoading.value) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 20),
-                                          child: Center(
-                                            child: CircularProgressIndicator(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          ),
+                                        return buildDropdownWithSearch(
+                                          'State',
+                                          ['Loading...'],
+                                          radiusdrop: 6,
+                                          (value) {
+                                            setState(() {
+                                              selectedState = null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText: 'Select State',
                                         );
                                       } else {
                                         return buildDropdownWithSearch(
@@ -181,7 +185,8 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                                   selectedState == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
-                                             
+                                          errorMessage: "Please select city",
+                                          errorshow: selectedState == null ? true : false,
                                           hintText: 'Select State',
                                         );
                                       }
@@ -193,14 +198,17 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                   Expanded(
                                     child: Obx(() {
                                       if (cityController.isLoading.value) {
-                                        return Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 20),
-                                          child: Center(
-                                            child: CircularProgressIndicator(
-                                              color: AppColors.primaryColor,
-                                            ),
-                                          ),
+                                        return buildDropdownWithSearch(
+                                          'City',
+                                          ['Loading...'],
+                                          radiusdrop: 6,
+                                          (value) {
+                                            setState(() {
+                                              selectedCity = null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText: 'Select City',
                                         );
                                       } else {
                                         return buildDropdownWithSearch(
@@ -221,6 +229,8 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                                   selectedCity == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
+                                          errorMessage: "Please select city",
+                                          errorshow: selectedCity == null ? true : false,
                                           hintText: 'Select City',
                                         );
                                       }

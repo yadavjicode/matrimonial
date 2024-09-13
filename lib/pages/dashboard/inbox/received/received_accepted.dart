@@ -1,6 +1,5 @@
 import 'package:devotee/controller/inbox_received_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -53,11 +52,20 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
-    if (member == null ||
+   if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
-      return Center(child: Text("No data available"));
+      return Center(
+          child: Text("No data available",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
     }
+    if (member.responseData!.data!.isEmpty) {
+      return Center(
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -76,7 +84,20 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
 
             return GestureDetector(
               onTap: () {
-                // Get.toNamed('/profiledtls');
+                  profileDetailsController.profileDetails(
+                            context, mId, "", [
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9",
+                          "10",
+                          "11"
+                        ]);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -206,5 +227,6 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
         ),
       ),
     );
+    }
   }
 }

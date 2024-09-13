@@ -110,79 +110,79 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTextField(
-                        labelText: "Search Keywords",
-                        hintText: "e.g. by name, by ID etc.",
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        'Looking For',
-                        style: FontConstant.styleRegular(
-                            fontSize: 16, color: Colors.black),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        height: 50,
-                        width: double.infinity,
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 1,
-                            childAspectRatio: 3.5,
-                          ),
-                          itemCount: looking.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedIndex = index;
-                                });
-                              },
-                              child: Card(
-                                color: _selectedIndex == index
-                                    ? AppColors.constColor
-                                    : AppColors.background,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: _selectedIndex == index
-                                        ? Border.all(
-                                            color: AppColors.primaryColor,
-                                            width: 2)
-                                        : null,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        radius: 20,
-                                        child: looking[index].image,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        looking[index].gender,
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 14,
-                                            color: AppColors.primaryColor),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                      // CustomTextField(
+                      //   labelText: "Search Keywords",
+                      //   hintText: "e.g. by name, by ID etc.",
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Text(
+                      //   'Looking For',
+                      //   style: FontConstant.styleRegular(
+                      //       fontSize: 16, color: Colors.black),
+                      // ),
+                      // const SizedBox(height: 10),
+                      // SizedBox(
+                      //   height: 50,
+                      //   width: double.infinity,
+                      //   child: GridView.builder(
+                      //     physics: const NeverScrollableScrollPhysics(),
+                      //     scrollDirection: Axis.vertical,
+                      //     gridDelegate:
+                      //         const SliverGridDelegateWithFixedCrossAxisCount(
+                      //       crossAxisCount: 2,
+                      //       crossAxisSpacing: 10,
+                      //       mainAxisSpacing: 1,
+                      //       childAspectRatio: 3.5,
+                      //     ),
+                      //     itemCount: looking.length,
+                      //     itemBuilder: (context, index) {
+                      //       return GestureDetector(
+                      //         onTap: () {
+                      //           setState(() {
+                      //             _selectedIndex = index;
+                      //           });
+                      //         },
+                      //         child: Card(
+                      //           color: _selectedIndex == index
+                      //               ? AppColors.constColor
+                      //               : AppColors.background,
+                      //           child: Container(
+                      //             decoration: BoxDecoration(
+                      //               borderRadius: BorderRadius.circular(10),
+                      //               border: _selectedIndex == index
+                      //                   ? Border.all(
+                      //                       color: AppColors.primaryColor,
+                      //                       width: 2)
+                      //                   : null,
+                      //             ),
+                      //             child: Row(
+                      //               mainAxisAlignment: MainAxisAlignment.center,
+                      //               children: [
+                      //                 CircleAvatar(
+                      //                   backgroundColor: Colors.transparent,
+                      //                   radius: 20,
+                      //                   child: looking[index].image,
+                      //                 ),
+                      //                 const SizedBox(height: 8),
+                      //                 Text(
+                      //                   looking[index].gender,
+                      //                   style: FontConstant.styleMedium(
+                      //                       fontSize: 14,
+                      //                       color: AppColors.primaryColor),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 10,
+                      // ),
                       Text(
                         "Age",
                         style: FontConstant.styleRegular(

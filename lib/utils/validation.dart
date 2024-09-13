@@ -11,6 +11,19 @@ class Validation {
     return null;
   }
 
+   static String? validateEmailEmpty(String? value) {
+    final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+
+    if (!emailRegExp.hasMatch(value!)) {
+      return 'Please enter a valid email address';
+    }else{
+      return null;
+    }
+
+  }
+
+  
+
   static String? validatePhoneno(String? value) {
     final phoneRegExp = RegExp(r'^\+?1?\d{10,10}$');
 

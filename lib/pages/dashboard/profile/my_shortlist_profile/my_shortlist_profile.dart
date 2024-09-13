@@ -94,8 +94,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
               //     // &&
               //     // !shortlistController.isLoading.value
               //     )
-              
-                shortlistedContent(),
+              shortlistedContent(),
               if (shortlistedListController.isLoading.value ||
                   shortlistController.isLoading.value ||
                   profileDetailsController.isLoading.value ||
@@ -122,277 +121,307 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
         member.responseData!.data == null) {
       return Center(child: Text("No data available"));
     }
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
-      child: Container(
-        padding: EdgeInsets.only(bottom: 20),
-        height: double.infinity,
-        color: AppColors.constColor,
-        child: SingleChildScrollView(
-          child: Column(
-            children: shortlistedListController.member!.responseData!.data!
-                .map((data) {
-              String name = "${data.name ?? ""} ${data.surename ?? ""}";
-              String id = data.matId;
-              String date = DateFormat('dd-MM-yyyy')
-                  .format(DateTime.parse(data.createdAt));
-              String information =
-                  "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.maritalstatus == null ? "" : "${data.maritalstatus}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}";
-              String image = data.photo1 != null
-                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                  : data.gender == "Male"
-                      ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                      : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+    if (shortlistedListController.member!.responseData!.data!.isEmpty) {
+      return Container(
+          margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
+          color: AppColors.constColor,
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
+      return Padding(
+        padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
+        child: Container(
+          padding: EdgeInsets.only(bottom: 20),
+          height: double.infinity,
+          color: AppColors.constColor,
+          child: SingleChildScrollView(
+            child: Column(
+              children: shortlistedListController.member!.responseData!.data!
+                  .map((data) {
+                String name = "${data.name ?? ""} ${data.surename ?? ""}";
+                String id = data.matId;
+                String date = DateFormat('dd-MM-yyyy')
+                    .format(DateTime.parse(data.createdAt));
+                String information =
+                    "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.maritalstatus == null ? "" : "${data.maritalstatus}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}";
+                String image = data.photo1 != null
+                    ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                    : data.gender == "Male"
+                        ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                        : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-              return GestureDetector(
-                onTap: () {
-                  // Get.toNamed('/profiledtls');
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.constColor,
-                    border: Border.all(color: Colors.grey.shade200),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: screenWidth * 0.2,
-                              height: screenWidth * 0.2,
-                              child: ClipOval(
-                                  child: Image.network(
-                                image,
-                                fit: BoxFit.fill,
-                              )),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
+                return GestureDetector(
+                  onTap: () {
+                    profileDetailsController.profileDetails(
+                        context, data.matId!, "", [
+                      "1",
+                      "2",
+                      "3",
+                      "4",
+                      "5",
+                      "6",
+                      "7",
+                      "8",
+                      "9",
+                      "10",
+                      "11"
+                    ]);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.constColor,
+                      border: Border.all(color: Colors.grey.shade200),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("ID: ${id}",
-                                          style: FontConstant.styleMedium(
-                                              fontSize: 12,
-                                              color: AppColors.darkgrey)),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          child: Text(
-                                            textAlign: TextAlign.right,
-                                            "Shortlist On: ${date}",
-                                            style: FontConstant.styleMedium(
-                                                fontSize: 12,
-                                                color: AppColors.darkgrey),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Flexible(
-                                        child: Text(
-                                          name,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FontConstant.styleSemiBold(
-                                              fontSize: 13,
-                                              color: AppColors.primaryColor),
-                                        ),
-                                      ),
-                                      SizedBox(width: 20),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    child: Text(
-                                      information,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12,
-                                          color: AppColors.darkgrey),
-                                    ),
-                                  ),
-                                ],
+                              child: Container(
+                                width: screenWidth * 0.2,
+                                height: screenWidth * 0.2,
+                                child: ClipOval(
+                                    child: Image.network(
+                                  image,
+                                  fit: BoxFit.fill,
+                                )),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.all(3),
-                        margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                        decoration: BoxDecoration(
-                            color: AppColors.primaryLight,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "To contact her directly,",
-                              style: FontConstant.styleMedium(
-                                  fontSize: 12, color: AppColors.black),
-                            ),
-                            Text(
-                              " Upgrade Now",
-                              style: FontConstant.styleSemiBold(
-                                  fontSize: 12, color: AppColors.primaryColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 12, right: 12, bottom: 12),
-                        child: Row(
-                          children: [
                             Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  shortlistController.shortlist(
-                                    context,
-                                    data.matId!,
-                                    btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        shortlistedListController
-                                            .shortlisted(context);
-                                      })
-                                    },
-                                  );
-                                },
-                                child: Row(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    SvgPicture.asset(
-                                        "assets/images/icons/remove.svg"),
-                                    SizedBox(
-                                      width: 5,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("ID: ${id}",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 12,
+                                                color: AppColors.darkgrey)),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            child: Text(
+                                              textAlign: TextAlign.right,
+                                              "Shortlist On: ${date}",
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 12,
+                                                  color: AppColors.darkgrey),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Expanded(
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            name,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FontConstant.styleSemiBold(
+                                                fontSize: 13,
+                                                color: AppColors.primaryColor),
+                                          ),
+                                        ),
+                                        SizedBox(width: 20),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 2),
                                       child: Text(
-                                        "Remove",
+                                        information,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
                                         style: FontConstant.styleMedium(
                                             fontSize: 12,
-                                            color: AppColors.black),
+                                            color: AppColors.darkgrey),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/chat_d.svg",
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        if (data.chat_status == 1) {
-                                          if (data.matId!.trim().isNotEmpty &&
-                                              data.matId != null) {
-                                            await APIs.addChatUser(data.matId!)
-                                                .then((value) {
-                                              if (!value) {
-                                                Dialogs.showSnackbar(context,
-                                                    'User does not Exists!');
-                                              } else {
-                                                _fetchUser(
-                                                  data.matId.toString().trim(),
-                                                );
-                                              }
-                                            });
-                                          }
-                                        } else {
-                                          Dialogs.showSnackbar(context,
-                                              'User does not accepted list!');
-                                        }
-                                      },
-                                      //hide alert dialog
-
-                                      child: Text(
-                                        "Chat Now",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/pink_search.svg",
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () => {
-                                        profileDetailsController.profileDetails(
-                                            context, data.matId!, "", [
-                                          "1",
-                                          "2",
-                                          "3",
-                                          "4",
-                                          "5",
-                                          "6",
-                                          "7",
-                                          "8",
-                                          "9",
-                                          "10",
-                                          "11"
-                                        ])
-                                      },
-                                      child: Text(
-                                        "View Profile",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
                           ],
                         ),
-                      )
-                    ],
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(3),
+                          margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                          decoration: BoxDecoration(
+                              color: AppColors.primaryLight,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "To contact her directly,",
+                                style: FontConstant.styleMedium(
+                                    fontSize: 12, color: AppColors.black),
+                              ),
+                              Text(
+                                " Upgrade Now",
+                                style: FontConstant.styleSemiBold(
+                                    fontSize: 12,
+                                    color: AppColors.primaryColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 12, right: 12, bottom: 12),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    shortlistController.shortlist(
+                                      context,
+                                      data.matId!,
+                                      btnOkOnPress: () => {
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          shortlistedListController
+                                              .shortlisted(context);
+                                        })
+                                      },
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          "assets/images/icons/remove.svg"),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          "Remove",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12,
+                                              color: AppColors.black),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/images/chat_d.svg",
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          if (data.chat_status == 1) {
+                                            if (data.matId!.trim().isNotEmpty &&
+                                                data.matId != null) {
+                                              await APIs.addChatUser(
+                                                      data.matId!)
+                                                  .then((value) {
+                                                if (!value) {
+                                                  Dialogs.showSnackbar(context,
+                                                      'User does not Exists!');
+                                                } else {
+                                                  _fetchUser(
+                                                    data.matId
+                                                        .toString()
+                                                        .trim(),
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          } else {
+                                            Dialogs.showSnackbar(context,
+                                                'User does not accepted list!');
+                                          }
+                                        },
+                                        //hide alert dialog
+
+                                        child: Text(
+                                          "Chat Now",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12,
+                                              color: AppColors.black),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/images/pink_search.svg",
+                                      height: 20,
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () => {
+                                          profileDetailsController
+                                              .profileDetails(
+                                                  context, data.matId!, "", [
+                                            "1",
+                                            "2",
+                                            "3",
+                                            "4",
+                                            "5",
+                                            "6",
+                                            "7",
+                                            "8",
+                                            "9",
+                                            "10",
+                                            "11"
+                                          ])
+                                        },
+                                        child: Text(
+                                          "View Profile",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12,
+                                              color: AppColors.black),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

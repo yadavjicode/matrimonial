@@ -24,8 +24,9 @@ class _EducationDetailsState extends State<EducationDetails> {
   final EducationDetailsController _educationController =
       Get.put(EducationDetailsController());
   final FlowController flowController = Get.put(FlowController());
-
   final TextEditingController describeController = TextEditingController();
+  bool show=false;
+
   @override
   Widget build(BuildContext context) {
     HighestQualController highestQualController =
@@ -84,30 +85,71 @@ class _EducationDetailsState extends State<EducationDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 8),
-                        buildDropdown(
-                            'Highest Qualification*',
-                            highestQualController.getHighestList(),
-                            //   qualificationController.selectedItem.call,
-                            (value) => {
-                                  setState(() =>
-                                      selectedHighestQualifaction = value),
-                                  isHighestQualifaction = true
-                                },
-                            borderColor: isHighestQualifaction == false &&
-                                    selectedHighestQualifaction == null
-                                ? Colors.red
-                                : Colors.black.withOpacity(0.5),
-                            hintText: 'Select Highest Qualification'),
+                        Obx(() {
+                          if (highestQualController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Highest Qualification*',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectedHighestQualifaction = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'Select Highest Qualification',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                              // Add 'return' here
+                              'Highest Qualification*',
+                              highestQualController.getHighestList(),
+                              (value) => {
+                                setState(
+                                    () => selectedHighestQualifaction = value),
+                                isHighestQualifaction = true
+                              },
+                              borderColor:show==true&& selectedHighestQualifaction == null
+                                  ? Colors.red
+                                  : Colors.black.withOpacity(0.5),
+                              errorMessage:
+                                  "Please Select Highest Qualification",
+                              errorshow:show==true&& selectedHighestQualifaction == null
+                                  ? true
+                                  : false,
+                              selectedItem: selectedHighestQualifaction,
+                              hintText: 'Select Highest Qualification',
+                            );
+                          }
+                        }),
                         const SizedBox(height: 15),
-                        buildDropdownWithSearch(
-                            'Professional Qualification',
-                            professionQualController.getProfessionQualList(),
-                            // qualificationController.selectedItem.call,
-                            (value) => {
-                                  setState(() =>
-                                      selectedProfessionalQualifaction = value),
-                                },
-                            hintText: 'Select Professional Qualification'),
+                        Obx(() {
+                          if (professionQualController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Professional Qualification',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectedProfessionalQualifaction = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'Select Professional Qualification',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                                'Professional Qualification',
+                                professionQualController
+                                    .getProfessionQualList(),
+                                // qualificationController.selectedItem.call,
+                                (value) => {
+                                      setState(() =>
+                                          selectedProfessionalQualifaction =
+                                              value),
+                                    },
+                                selectedItem: selectedProfessionalQualifaction,
+                                hintText: 'Select Professional Qualification');
+                          }
+                        }),
                         const SizedBox(height: 15),
                         CustomTextField(
                           controller: describeController,
@@ -140,13 +182,16 @@ class _EducationDetailsState extends State<EducationDetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-          if (isHighestQualifaction != false &&
-              selectedHighestQualifaction != null) {
+          setState(() {
+            show=true;
+          });
+         if (selectedHighestQualifaction != null) {
             _educationController.educationDetails(
                 context,
                 selectedHighestQualifaction ?? "",
                 selectedProfessionalQualifaction ?? "",
-                describeController.text.toString().trim(),false);
+                describeController.text.toString().trim(),
+                false);
 
             //    Get.toNamed('/prof');
           }

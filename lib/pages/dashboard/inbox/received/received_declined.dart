@@ -1,10 +1,8 @@
 import 'package:devotee/controller/accepted_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -29,8 +27,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
 
   @override
   Widget build(BuildContext context) {
-    String selectedText = "";
-    int selectedIndex = -1;
+
 
     return Scaffold(
         backgroundColor: AppColors.constColor,
@@ -56,11 +53,20 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
      final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
-    if (member == null ||
+   if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
-      return Center(child: Text("No data available"));
+      return Center(
+          child: Text("No data available",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
     }
+    if (member.responseData!.data!.isEmpty) {
+      return Center(
+          child: Text("No users found!",
+              style: FontConstant.styleMedium(
+                  fontSize: 15, color: AppColors.darkgrey)));
+    } else {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -225,5 +231,6 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
         ),
       ),
     );
+    }
   }
 }

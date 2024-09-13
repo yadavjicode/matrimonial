@@ -1,7 +1,7 @@
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/constants/lists/location_list.dart';
+
 import 'package:devotee/controller/otp_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:telephony/telephony.dart';
@@ -10,7 +10,6 @@ import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
-
 
 class OTPScreen extends StatefulWidget {
   final String mobileNumber;
@@ -23,7 +22,7 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   final OtpController _memberController = Get.put(OtpController());
- // final StateController stateController = Get.put(StateController());
+  // final StateController stateController = Get.put(StateController());
   String otp = '';
   Telephony telephony = Telephony.instance;
   OtpFieldController otpbox = OtpFieldController();
@@ -34,7 +33,7 @@ class _OTPScreenState extends State<OTPScreen> {
   void initState() {
     super.initState();
     _requestSmsPermissions();
-   // stateController.getStateList();
+    // stateController.getStateList();
   }
 
   Future<void> _requestSmsPermissions() async {
@@ -113,7 +112,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         padding: const EdgeInsets.only(top: 50, bottom: 20),
                         child: Center(
                           child: Text(
-                            'Code is sent to +${widget.mobileNumber.substring(0, 2)}********${widget.mobileNumber.substring(8, 10)}',
+                            'Code is sent to ${widget.mobileNumber.substring(0, 2)}********${widget.mobileNumber.substring(8, 10)}',
                             style: FontConstant.styleRegular(
                               fontSize: 16,
                               color: Colors.black,
@@ -125,11 +124,16 @@ class _OTPScreenState extends State<OTPScreen> {
                         padding: const EdgeInsets.only(
                             bottom: 10, left: 30, right: 30),
                         child: OTPTextField(
+                          
                           otpFieldStyle: OtpFieldStyle(
+                            focusBorderColor: AppColors.primaryColor,
+                           // enabledBorderColor: AppColors.primaryColor,
+                            
                               backgroundColor: AppColors.constColor),
                           outlineBorderRadius: 10,
                           controller: otpbox,
                           length: 4,
+                          
                           width: MediaQuery.of(context).size.width,
                           fieldWidth: 50,
                           style: TextStyle(fontSize: 17),
@@ -180,8 +184,8 @@ class _OTPScreenState extends State<OTPScreen> {
                             if (otp.length == 4) {
                               // _otpControllers.otpfill(context,
                               //     otpbox.toString(), widget.mobileNumber);
-                              _memberController.otp(widget.mobileNumber,
-                                  otpbox.toString(), context);
+                              _memberController.otp(
+                                  widget.mobileNumber, otp.toString(), context);
 
                               //   Get.toNamed('/profile1');
                             } else {
