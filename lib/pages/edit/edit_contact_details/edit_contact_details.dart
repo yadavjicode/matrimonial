@@ -101,6 +101,7 @@ class _EditContactDetailsState extends State<EditContactDetails> {
                   CustomTextField(
                     labelText: "Instagram ID",
                     controller: instaController,
+                    hintText: "Enter Instagram ID",
                   ),
                   const SizedBox(height: 30),
                   Padding(

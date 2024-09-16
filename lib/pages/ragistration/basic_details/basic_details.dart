@@ -196,9 +196,10 @@ class _BasicDetailState extends State<BasicDetail> {
                                     child: CustomTextField(
                                       labelText: "Name *",
                                       controller: nameController,
+                                      hintText: "Enter Name",
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return 'Please enter name';
+                                          return 'Please Enter Name';
                                         }
                                         return null;
                                       },
@@ -210,10 +211,11 @@ class _BasicDetailState extends State<BasicDetail> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   labelText: "Surname *",
+                                  hintText: "Enter Surname",
                                   controller: surnameController,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter surname';
+                                      return 'Please Enter Surname';
                                     }
                                     return null;
                                   },
@@ -467,6 +469,7 @@ class _BasicDetailState extends State<BasicDetail> {
                               CustomTextField(
                                 labelText: "About *",
                                 maxline: 8,
+                                hintText: "Enter About",
                                 controller: aboutController,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
@@ -609,16 +612,4 @@ class _BasicDetailState extends State<BasicDetail> {
 }
 
 
-// Widget _buildSkipButton() {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-//     child: CustomButton(
-//       text: 'Skip',
-//       onPressed: () {
-//         Get.offAndToNamed('/dashboard');
-//       },
-//       color: Colors.transparent,
-//       textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
-//     ),
-//   );
-// }
+    

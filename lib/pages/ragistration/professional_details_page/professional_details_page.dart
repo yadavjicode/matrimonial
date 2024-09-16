@@ -457,7 +457,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                 ),
               ),
             ]),
-            if (professionalDeatilsController.isLoading.value)
+            if (professionalDeatilsController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

@@ -248,7 +248,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   children: [
                     _buildCont(
                       "Basic Details",
-                      '/devotion',
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -741,13 +741,13 @@ class _ProfileEditState extends State<ProfileEdit> {
                               "Age Range From",
                               _editProfileController
                                           .member!.member!.pEFromAge !=
-                                      0
+                                      null
                                   ? "${_editProfileController.member!.member!.pEFromAge} Yrs"
                                   : "Not Mentioned"),
                           _buildText(
                               "Age Range To",
                               _editProfileController.member!.member!.pEToAge !=
-                                      0
+                                      null
                                   ? "${_editProfileController.member!.member!.pEToAge} Yrs"
                                   : "Not Mentioned"),
                           _buildText(

@@ -3,6 +3,7 @@ import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/permanent_type.dart';
 import 'package:devotee/constants/lists/relation_list.dart';
 import 'package:devotee/constants/lists/residence_type_list.dart';
+import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/controller/location_details_controller.dart';
 import 'package:devotee/utils/validation.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class _LocationDetailsState extends State<LocationDetails> {
       Get.put(ResidenceTypeController());
   PermanentTypeController permanentHouseTypeController =
       Get.put(PermanentTypeController());
+  final FlowController flowController = Get.put(FlowController());
   RelationController relationController = Get.put(RelationController());
   final TextEditingController permanentPinCode = TextEditingController();
   final TextEditingController temporaryPinCode = TextEditingController();
@@ -58,6 +60,7 @@ class _LocationDetailsState extends State<LocationDetails> {
   bool show = false;
 
   bool validation() {
+    
     if (_formKey.currentState!.validate() &&
         selectedCountry != null &&
         selectedResidence != null &&
@@ -693,6 +696,22 @@ class _LocationDetailsState extends State<LocationDetails> {
                               color: Colors.white,
                             ),
                           ),
+                          GestureDetector(
+                            onTap: () => {
+                              
+                              flowController.Flow(context, 4)
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(bottom: 25, top: 10),
+                              padding: EdgeInsets.all(5),
+                              child: Text(   
+                                "SKIP",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 20, color: AppColors.black),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -700,7 +719,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                 )
               ],
             ),
-            if (_locationDetailsController.isLoading.value)
+            if (_locationDetailsController.isLoading.value||flowController.isLoading.value)
               Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,

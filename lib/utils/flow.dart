@@ -43,7 +43,7 @@ class Flows with ChangeNotifier {
       case 3:
         return const ContactDetails();
       case 4:
-        return const LocationDetails();
+        return const LocationDetails(); 
       case 5:
         return const EducationDetails();
       case 6:

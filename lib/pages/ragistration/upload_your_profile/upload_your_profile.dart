@@ -109,7 +109,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                                 onTap: () =>
                                     {
                                      // Get.offAndToNamed('/aboutgroom')
-                                     flowController.Flow(context, 12)
+                                     flowController.Flow(context, 11)
                                       },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
@@ -135,7 +135,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                 ),
               ],
             ),
-            if (completeProfileController.isLoading.value)
+            if (completeProfileController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

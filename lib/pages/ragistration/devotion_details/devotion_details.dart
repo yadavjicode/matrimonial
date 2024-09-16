@@ -16,8 +16,17 @@ class DevotionDetails extends StatefulWidget {
 }
 
 class _DevotionDetailsState extends State<DevotionDetails> {
+  final TextEditingController nameTemple = TextEditingController();
+  final TextEditingController cityTemple = TextEditingController();
+  final TextEditingController somethingAbout = TextEditingController();
+  final FlowController flowController = Get.put(FlowController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final DevotionalDetailsController devotionalController =
+      Get.put(DevotionalDetailsController());
   int? selectedValue = -1;
   int? iskon_type;
+
   List<String> activities = [
     'Chanting',
     'Hearing',
@@ -63,13 +72,6 @@ class _DevotionDetailsState extends State<DevotionDetails> {
 
   String? selectedIskonOption;
   bool showTempleFields = false;
-  final TextEditingController nameTemple = TextEditingController();
-  final TextEditingController cityTemple = TextEditingController();
-  final TextEditingController somethingAbout = TextEditingController();
-  final FlowController flowController = Get.put(FlowController());
-
-  final DevotionalDetailsController devotionalController =
-      Get.put(DevotionalDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -120,132 +122,171 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                         left: 22,
                         right: 22,
                         bottom: 100),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        CustomTextField(
-                          controller: somethingAbout,
-                          labelText: "Something about your Devotional life",
-                          maxline: 5,
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title:
-                                  const Text('Already Connected with ISKCON'),
-                              activeColor: AppColors.primaryColor,
-                              value: 1,
-                              groupValue: iskon_type,
-                              onChanged: (int? value) {
-                                setState(
-                                  () {
-                                    iskon_type = value;
-                                  },
-                                );
-                              },
-                            ),
-                            RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title:
-                                  const Text('Only a Basic idea about ISKCON'),
-                              activeColor: AppColors.primaryColor,
-                              value: 2,
-                              groupValue: iskon_type,
-                              onChanged: (int? value) {
-                                setState(() {
-                                  iskon_type = value;
-                                });
-                              },
-                            ),
-                            RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title: const Text('No idea about ISKCON'),
-                              activeColor: AppColors.primaryColor,
-                              value: 3,
-                              groupValue: iskon_type,
-                              onChanged: (int? value) {
-                                setState(() {
-                                  iskon_type = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          children: [
-                            CustomTextField(
-                              labelText:
-                                  "With which temple you are connected to?",
-                              controller: nameTemple,
-                              hintText: "Name of the Temple",
-                            ),
-                            const SizedBox(height: 10),
-                            CustomTextField(
-                              controller: cityTemple,
-                              hintText: "City of the Temple",
-                            ),
-                            const SizedBox(height: 10),
-                            CustomTextField(
-                              labelText: "Which Sampradaya you belong to?",
-                              //   controller: nameTemple,
-                              hintText: "",
-                            ),
-                            const SizedBox(height: 1),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text(
-                            "Devotional Hobbies",
-                            style: FontConstant.styleRegular(
-                                fontSize: 16, color: AppColors.black),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          CustomTextField(
+                            controller: somethingAbout,
+                            labelText: "Something about your Devotional life *",
+                            maxline: 5,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter Something about your Devotional life';
+                              }
+                              return null;
+                            },
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: hobbies.keys
-                              .take(hobbies.length)
-                              .map((key) => Row(
-                                    children: [
-                                      CustomCheckbox(
-                                        value: hobbies[key]!,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            hobbies[key] = value;
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        key,
-                                        style: FontConstant.styleRegular(
-                                            fontSize: 15,
-                                            color: AppColors.black),
-                                      )
-                                    ],
-                                  ))
-                              .toList(),
-                        ),
-                        const SizedBox(height: 20),
-                        _buildContinueButton(),
-                        const SizedBox(height: 15),
-                        _buildSkipButton(),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title:
+                                    const Text('Already Connected with ISKCON'),
+                                activeColor: AppColors.primaryColor,
+                                value: 1,
+                                groupValue: iskon_type,
+                                onChanged: (int? value) {
+                                  setState(
+                                    () {
+                                      iskon_type = value;
+                                    },
+                                  );
+                                },
+                              ),
+                              RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title: const Text(
+                                    'Only a Basic idea about ISKCON'),
+                                activeColor: AppColors.primaryColor,
+                                value: 2,
+                                groupValue: iskon_type,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    iskon_type = value;
+                                  });
+                                },
+                              ),
+                              RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title: const Text('No idea about ISKCON'),
+                                activeColor: AppColors.primaryColor,
+                                value: 3,
+                                groupValue: iskon_type,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    iskon_type = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Column(
+                            children: [
+                              CustomTextField(
+                                labelText:
+                                    "With which temple you are connected to?",
+                                controller: nameTemple,
+                                hintText: "Name of the Temple",
+                              ),
+                              const SizedBox(height: 10),
+                              CustomTextField(
+                                controller: cityTemple,
+                                hintText: "City of the Temple",
+                              ),
+                              const SizedBox(height: 10),
+                              CustomTextField(
+                                labelText: "Which Sampradaya you belong to?",
+                                //   controller: nameTemple,
+                                hintText: "",
+                              ),
+                              const SizedBox(height: 1),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: Text(
+                              "Devotional Hobbies",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 16, color: AppColors.black),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 250,
+                            child: ScrollbarTheme(
+                              data: ScrollbarThemeData(
+                                  thumbColor: MaterialStateProperty.all(AppColors
+                                      .primaryColor), // Change thumb color here
+                                  trackColor: MaterialStateProperty.all(AppColors
+                                      .primaryLight), // Change track color here
+                                  trackBorderColor: MaterialStateProperty.all(
+                                      AppColors.primaryLight),
+                                  radius: Radius.circular(
+                                      10) // Change track border color here
+                                  ),
+                              child: Scrollbar(
+                                isAlwaysShown: true,
+                                trackVisibility: true,
+                                interactive: true,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: hobbies.keys
+                                        .take(hobbies.length)
+                                        .map((key) => Row(
+                                              children: [
+                                                CustomCheckbox(
+                                                  value: hobbies[key]!,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      hobbies[key] = value;
+                                                    });
+                                                  },
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    key,
+                                                    style: FontConstant
+                                                        .styleRegular(
+                                                            fontSize: 15,
+                                                            color: AppColors
+                                                                .black),
+                                                  ),
+                                                )
+                                              ],
+                                            ))
+                                        .toList(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          _buildContinueButton(),
+                          const SizedBox(height: 15),
+                          _buildSkipButton(),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            if (devotionalController.isLoading.value)
+            if (devotionalController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -261,14 +302,17 @@ class _DevotionDetailsState extends State<DevotionDetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-          devotionalController.devotionalDetails(
-              context,
-              somethingAbout.text.toString().trim(),
-              getiskon(),
-              nameTemple.text.toString().trim(),
-              cityTemple.text.toString().trim(),
-              getSelectedHobbies(),
-              false);
+            if (_formKey.currentState!.validate()) {
+            devotionalController.devotionalDetails(
+                context,
+                somethingAbout.text.toString().trim(),
+                getiskon(),
+                nameTemple.text.toString().trim(),
+                cityTemple.text.toString().trim(),
+                getSelectedHobbies(),
+                false);
+          }
+
           //  Get.toNamed('/spiritual');
         },
         color: AppColors.primaryColor,

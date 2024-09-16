@@ -82,25 +82,13 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
   String? selectedNoYoungerBrother;
   String? selectedNoMarriedBrother;
   String? selectedHowManyMember;
+  bool show=false;
 
   String getLanguageKnown(List<String> language) {
     return language.join(', ');
   }
 
   TextEditingController time = TextEditingController();
-
-  // Future<void> _selectTime(BuildContext context) async {
-  //   final TimeOfDay? picked = await showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.now(),
-  //   );
-  //   if (picked != null) {
-  //     final String formattedTime = picked.format(context);
-  //     setState(() {
-  //       time.text = formattedTime;
-  //     });
-  //   }
-  // }
 
   String? getFatherAlive() {
     if (fatherAlive == 1) {
@@ -180,8 +168,9 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
 
   bool fatherValidation() {
     if (getFatherAlive() == "Yes") {
-      if ( _formKeyFather.currentState!.validate()&&selectedFatherOccupation != null &&
-          selectedFatherAnnualIncomeRange != null ) {
+      if (_formKeyFather.currentState!.validate() &&
+          selectedFatherOccupation != null &&
+          selectedFatherAnnualIncomeRange != null) {
         return true;
       } else {
         return false;
@@ -193,8 +182,9 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
 
   bool motherValidation() {
     if (getMotherAlive() == "Yes") {
-      if ( _formKeyMother.currentState!.validate()&&selectedMotherOccupation != null &&
-          selectedMotherAnnualIncomeRange != null ) {
+      if (_formKeyMother.currentState!.validate() &&
+          selectedMotherOccupation != null &&
+          selectedMotherAnnualIncomeRange != null) {
         return true;
       } else {
         return false;
@@ -283,10 +273,8 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
         _editProfileController.member!.member!.mothersoccupation;
     selectedMotherAnnualIncomeRange =
         _editProfileController.member!.member!.motherAnnualIncome;
-    selectedNoSister =
-        _editProfileController.member!.member!.noofsisters;
-    selectedNoBrother =
-        _editProfileController.member!.member!.noofbrothers;
+    selectedNoSister = _editProfileController.member!.member!.noofsisters;
+    selectedNoBrother = _editProfileController.member!.member!.noofbrothers;
 
     if (_editProfileController.member!.member!.fatherlivingstatus == "Yes") {
       fatherAlive = 1;
@@ -378,8 +366,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
               ],
             ),
             if (_familyDetailsController.isLoading.value ||
-                _editProfileController.isLoading.value 
-                )
+                _editProfileController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -425,7 +412,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       hintText: 'Select Religion',
                     );
                   } else {
-                   
                     return buildDropdownWithSearch(
                       'Religion *',
                       religionController.getReligionNames(),
@@ -442,11 +428,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         //  religionController.selectItem(value);
                       },
                       selectedItem: selectedReligionName,
-                      borderColor: selectedReligionName == null
+                      borderColor:show==true&& selectedReligionName == null
                           ? Colors.red
                           : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please select religion",
-                      errorshow: selectedReligionName == null ? true : false,
+                      errorMessage: "Please Select Religion",
+                      errorshow:show==true&&  selectedReligionName == null ? true : false,
                       hintText: 'Select Religion',
                     );
                   }
@@ -466,7 +452,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       hintText: 'Select Cast',
                     );
                   } else {
-                     
                     return buildDropdownWithSearch(
                       'Caste *',
                       castController.getCastNames(),
@@ -480,11 +465,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         castController.selectItem(value);
                       },
                       selectedItem: selectedCastName,
-                      borderColor: selectedCastName == null
+                      borderColor:show==true&&  selectedCastName == null
                           ? Colors.red
                           : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please select Cast",
-                      errorshow: selectedCastName == null ? true : false,
+                      errorMessage: "Please Select Cast",
+                      errorshow:show==true&&  selectedCastName == null ? true : false,
                       hintText: 'Select Cast',
                     );
                   }
@@ -521,7 +506,8 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                 }),
                 const SizedBox(height: 15),
                 CustomTextField(
-                    controller: gotraController, labelText: 'Gotra'),
+                
+                    controller: gotraController, labelText: 'Gotra',hintText: "Enter Gotra",),
                 SizedBox(
                   height: 15,
                 ),
@@ -548,12 +534,12 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                           selectedLanguage = value; // Update the state
                         });
                       },
-                      borderColor:
+                      borderColor:show==true&& 
                           getLanguageKnown(selectedLanguage ?? []) == ""
                               ? Colors.red
                               : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please select languages",
-                      errorshow: getLanguageKnown(selectedLanguage ?? []) == ""
+                      errorMessage: "Please Select Languages",
+                      errorshow:show==true&&  getLanguageKnown(selectedLanguage ?? []) == ""
                           ? true
                           : false,
                       selectedItems: selectedLanguage,
@@ -590,11 +576,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             .selectItem(value); // Call the controller method
                       },
                       selectedItem: selectedMothertongue,
-                      borderColor: selectedMothertongue == null
+                      borderColor:show==true&&  selectedMothertongue == null
                           ? Colors.red
                           : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please select mother tongue",
-                      errorshow: selectedMothertongue == null ? true : false,
+                      errorMessage: "Please Select Mother Tongue",
+                      errorshow:show==true&&  selectedMothertongue == null ? true : false,
                       hintText: 'Select Mother tongue',
                     );
                   }
@@ -652,7 +638,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     )
                   ],
                 ),
-                if (getFatherAlive() == null)
+                if (show==true&& getFatherAlive() == null)
                   Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.centerLeft,
@@ -672,6 +658,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         CustomTextField(
                           controller: fathernameController,
                           labelText: 'Full Name of Father *',
+                          hintText: "Enter Name of Father",
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter name of father';
@@ -708,11 +695,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                                     value); // Call the controller method
                               },
                               selectedItem: selectedFatherOccupation,
-                              borderColor: selectedFatherOccupation == null
+                              borderColor:show==true&& selectedFatherOccupation == null
                                   ? Colors.red
                                   : Colors.black.withOpacity(0.5),
-                              errorMessage: "Please select occupation",
-                              errorshow: selectedFatherOccupation == null
+                              errorMessage: "Please Select Occupation",
+                              errorshow:show==true&& selectedFatherOccupation == null
                                   ? true
                                   : false,
                               hintText: 'Select Occupation',
@@ -725,6 +712,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         CustomTextField(
                           controller: fatherbusinessController,
                           labelText: 'What kind of business *',
+                          hintText: "Enter kind of business",
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter kind of business';
@@ -761,13 +749,13 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                                     value); // Call the controller method
                               },
                               selectedItem: selectedFatherAnnualIncomeRange,
-                              hintText: 'Select Annual income range',
-                              borderColor:
+                              hintText: 'Select Annual Income Range',
+                              borderColor:show==true&&
                                   selectedFatherAnnualIncomeRange == null
                                       ? Colors.red
                                       : Colors.black.withOpacity(0.5),
                               errorMessage: "Please select income range",
-                              errorshow: selectedFatherAnnualIncomeRange == null
+                              errorshow:show==true&& selectedFatherAnnualIncomeRange == null
                                   ? true
                                   : false,
                             );
@@ -829,7 +817,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     )
                   ],
                 ),
-                if (getMotherAlive() == null)
+                if (show==true&& getMotherAlive() == null)
                   Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.centerLeft,
@@ -849,6 +837,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         CustomTextField(
                           controller: mothernameController,
                           labelText: 'Full Name of Mother *',
+                          hintText: "Enter Full Name of Mother",
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter name of mother';
@@ -886,11 +875,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                               },
                               selectedItem: selectedMotherOccupation,
                               hintText: 'Select Occupation',
-                              borderColor: selectedMotherOccupation == null
+                              borderColor:show==true&& selectedMotherOccupation == null
                                   ? Colors.red
                                   : Colors.black.withOpacity(0.5),
-                              errorMessage: "Please select Occupation",
-                              errorshow: selectedMotherOccupation == null
+                              errorMessage: "Please Select Occupation",
+                              errorshow:show==true&& selectedMotherOccupation == null
                                   ? true
                                   : false,
                             );
@@ -925,13 +914,13 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                                     value); // Call the controller method
                               },
                               selectedItem: selectedMotherAnnualIncomeRange,
-                              hintText: 'Select Annual income range',
-                              borderColor:
+                              hintText: 'Select Annual Income Range',
+                              borderColor:show==true&& 
                                   selectedMotherAnnualIncomeRange == null
                                       ? Colors.red
                                       : Colors.black.withOpacity(0.5),
                               errorMessage: "Please select Annual income",
-                              errorshow: selectedMotherAnnualIncomeRange == null
+                              errorshow:show==true&&  selectedMotherAnnualIncomeRange == null
                                   ? true
                                   : false,
                             );
@@ -993,7 +982,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     )
                   ],
                 ),
-                if (getSister() == null)
+                if (show==true&&getSister() == null)
                   Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.centerLeft,
@@ -1019,6 +1008,14 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedNoSister,
+                         borderColor:show==true&& 
+                                  selectedNoSister == null
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
+                              errorMessage: "Select No of Sister",
+                              errorshow:show==true&&  selectedNoSister == null
+                                  ? true
+                                  : false,
                         hintText: '0',
                       ),
                     ],
@@ -1076,7 +1073,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     )
                   ],
                 ),
-                if (getBrother() == null)
+                if (show==true&&getBrother() == null)
                   Container(
                       margin: EdgeInsets.only(bottom: 5),
                       alignment: Alignment.centerLeft,
@@ -1101,6 +1098,14 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                           numberController
                               .selectItem(value); // Call the controller method
                         },
+                        borderColor:show==true&& 
+                                  selectedNoBrother == null
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
+                              errorMessage: "Select No of Brother",
+                              errorshow:show==true&&  selectedNoBrother == null
+                                  ? true
+                                  : false,
                         selectedItem: selectedNoBrother,
                         hintText: '0',
                       ),
@@ -1313,6 +1318,10 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   child: CustomButton(
                     text: 'CONTINUE',
                     onPressed: () {
+                      setState(() {
+                        
+                        show=true;
+                      });
                       if (validation()) {
                         String gotra = gotraController.text.toString().trim();
                         String fathername =
@@ -1354,9 +1363,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             getBrother() == "Yes"
                                 ? selectedNoBrother ?? ""
                                 : "",
-                            getFamilyType()!,
-                            getFamilyValue()!,
-                            getAffluenceLevel()!,
+                            getFamilyType() != null ? getFamilyType()! : "",
+                            getFamilyValue() != null ? getFamilyValue()! : "",
+                            getAffluenceLevel() != null
+                                ? getAffluenceLevel()!
+                                : "",
                             true);
                       }
 

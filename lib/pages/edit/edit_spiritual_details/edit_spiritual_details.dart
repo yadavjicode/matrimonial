@@ -23,7 +23,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
   final TextEditingController nameCounselor = TextEditingController();
   final TextEditingController connectCounselor = TextEditingController();
   final TextEditingController templeCounselor = TextEditingController();
-  final TextEditingController SomethingCounselor = TextEditingController();
+  final TextEditingController somethingCounselor = TextEditingController();
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
@@ -33,6 +33,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
   String? selectedState;
   String? selectedCity;
   int? counsellor;
+  bool show=false;
 
   String? getCounsellor() {
     if (counsellor == 1) {
@@ -85,7 +86,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
     templeCounselor.text = _editProfileController
             .member!.member!.withWhichTempleYourCounselorIsConnectedTo ??
         "";
-    SomethingCounselor.text =
+    somethingCounselor.text =
         _editProfileController.member!.member!.somethingAboutMoreCounselor ??
             "";
     selectedState =
@@ -193,7 +194,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                   )
                 ],
               ),
-              if (getCounsellor() == null)
+              if (show==true&&getCounsellor() == null)
                 Container(
                     margin: EdgeInsets.only(bottom: 5),
                     alignment: Alignment.centerLeft,
@@ -211,6 +212,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                         labelText:
                             "Name of the Counsellor for my Spiritual Path *",
                         controller: nameCounselor,
+                        hintText: "Enter Name of the Counsellor for my Spiritual Path",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter name of the Counsellor';
@@ -226,6 +228,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                         controller: connectCounselor,
                         keyboardType: TextInputType.number,
                         maxlength: 4,
+                        hintText: "Enter Connected with my Counsellor Since",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter connected with Counsellor Since';
@@ -240,6 +243,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                         labelText:
                             "With which temple your Counsellor is connected to? *",
                         controller: templeCounselor,
+                        hintText: "Enter With which temple your Counsellor is connected to",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter temple your Counsellor';
@@ -278,11 +282,11 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                                 value); // Call the controller method
                           },
                           hintText: 'Select State',
-                          borderColor: selectedCity == null
+                          borderColor:show==true&& selectedCity == null
                               ? Colors.red
                               : Colors.black.withOpacity(0.5),
-                          errorMessage: "Please select state",
-                          errorshow: selectedState == null ? true : false,
+                          errorMessage: "Please Select State",
+                          errorshow:show==true&&  selectedState == null ? true : false,
                           selectedItem: selectedState,
                         );
                       }
@@ -316,11 +320,11 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                                 value); // Call the controller method
                           },
                           hintText: 'Select City',
-                          borderColor: selectedCity == null
+                          borderColor:show==true&&  selectedCity == null
                               ? Colors.red
                               : Colors.black.withOpacity(0.5),
-                          errorMessage: "Please select City",
-                          errorshow: selectedCity == null ? true : false,
+                          errorMessage: "Please Select City",
+                          errorshow:show==true&&  selectedCity == null ? true : false,
                           selectedItem: selectedCity,
                         );
                       }
@@ -330,7 +334,8 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                       child: CustomTextField(
                         labelText: "Something more about the Counsellor *",
                         maxline: 5,
-                        controller: SomethingCounselor,
+                        hintText: "Enter Something more about the Counsellor",
+                        controller: somethingCounselor,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter about the Counsellor';
@@ -345,7 +350,10 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: CustomButton(
                     text: "CONTINUE",
-                    onPressed: () => {
+                    onPressed: () {
+                           setState(() {
+                             show=true;
+                           });
                           if (validation())
                             {
                               spiritualController.spiritualDetails(
@@ -356,8 +364,8 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                                  getCounsellor()=="Yes"?  templeCounselor.text.toString().trim():"",
                                  getCounsellor()=="Yes"?  selectedState ?? "":"",
                                  getCounsellor()=="Yes"?  selectedCity ?? "":"",
-                                 getCounsellor()=="Yes"?  SomethingCounselor.text.toString().trim():"",
-                                  true)
+                                 getCounsellor()=="Yes"?  somethingCounselor.text.toString().trim():"",
+                                  true);
                             }
 
                           //   Get.toNamed('/family')

@@ -40,6 +40,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
   String? selectedCity;
 
   int? selectedRadioValue; // Add this line
+  bool show=false;
 
   String? working() {
     if (selectedRadioValue == 1) {
@@ -175,8 +176,8 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                     selectedItem: selectedProfession,
                     hintText: 'Select Profession',
                     errorMessage: "Please Select Profession",
-                    errorshow: selectedProfession == null ? true : false,
-                    borderColor: selectedProfession == null
+                    errorshow:show==true&& selectedProfession == null ? true : false,
+                    borderColor:show==true&& selectedProfession == null
                         ? Colors.red
                         : Colors.black.withOpacity(0.5),
                   );
@@ -228,7 +229,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                   Spacer(),
                 ],
               ),
-              if (working() == null)
+              if (show==true&&working() == null)
                 Container(
                     margin: EdgeInsets.only(bottom: 5),
                     alignment: Alignment.centerLeft,
@@ -267,12 +268,12 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                               employmentController.selectItem(
                                   value); // Call the controller method
                             },
-                            borderColor: selectedEmpolyment == null
+                            borderColor:show==true&& selectedEmpolyment == null
                                 ? Colors.red
                                 : Colors.black.withOpacity(0.5),
                             selectedItem: selectedEmpolyment,
                             errorMessage: "Please Select Empolyment",
-                            errorshow:
+                            errorshow:show==true&&
                                 selectedEmpolyment == null ? true : false,
                             hintText: 'Select Empolyment',
                           );
@@ -307,11 +308,11 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                               stateController.selectItem(
                                   value); // Call the controller method
                             },
-                            borderColor: selectedState == null
+                            borderColor:show==true&& selectedState == null
                                 ? Colors.red
                                 : Colors.black.withOpacity(0.5),
                             errorMessage: "Please Select Working State",
-                            errorshow: selectedState == null ? true : false,
+                            errorshow:show==true&& selectedState == null ? true : false,
                             selectedItem: selectedState,
                             hintText: 'Select State',
                           );
@@ -345,11 +346,11 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                               cityController.selectItem(
                                   value); // Call the controller method
                             },
-                            borderColor: selectedCity == null
+                            borderColor:show==true&& selectedCity == null
                                 ? Colors.red
                                 : Colors.black.withOpacity(0.5),
                             errorMessage: "Please Select Working City",
-                            errorshow: selectedCity == null ? true : false,
+                            errorshow:show==true&& selectedCity == null ? true : false,
                             selectedItem: selectedCity,
                             hintText: 'Select City',
                           );
@@ -363,9 +364,10 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                         labelText: "Pin Code *",
                         keyboardType: TextInputType.number,
                         maxlength: 6,
+                        hintText: "Enter Pin Code",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter Pin Code';
+                            return 'Please Enter Pin Code';
                           }
                           return null;
                         },
@@ -397,12 +399,12 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                             incomeController.selectItem(
                                 value); // Call the controller method
                           },
-                              borderColor: selectedAnnualSalary == null
+                              borderColor:show==true&& selectedAnnualSalary == null
                                   ? Colors.red
                                   : Colors.black.withOpacity(0.5),
                               selectedItem: selectedAnnualSalary,
                               errorMessage: "Please Annual Income",
-                              errorshow:
+                              errorshow:show==true&&
                                   selectedAnnualSalary == null ? true : false,
                               hintText: 'Select Annual Income Range');
                         }
@@ -414,7 +416,10 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: CustomButton(
                     text: "CONTINUE",
-                    onPressed: () => {
+                    onPressed: () {
+                      setState(() {
+                        show=true;
+                      });
                           if (validation())
                             {
                               professionalDeatilsController.professionalDetails(
@@ -432,7 +437,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                                   working() == "Yes"
                                       ? selectedAnnualSalary ?? ""
                                       : "",
-                                  true),
+                                  true);
                             }
 
                           //   Get.toNamed('/devotion')

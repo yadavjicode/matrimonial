@@ -30,6 +30,7 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
       Get.put(HighestQualController());
   final ProfessionQualController professionQualController =
       Get.put(ProfessionQualController());
+  bool show=false;
 
   @override
   void initState() {
@@ -38,9 +39,9 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
       _editProfileController.userDetails(context);
     });
     selectedHighestQualifaction =
-        _editProfileController.member!.member!.education ?? "";
+        _editProfileController.member!.member!.education ;
     selectedProfessionalQualifaction =
-        _editProfileController.member!.member!.professionalQualification ?? "";
+        _editProfileController.member!.member!.professionalQualification ;
     describeController.text =
         _editProfileController.member!.member!.otherQualification ?? "";
   }
@@ -128,11 +129,11 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
                         setState(() => selectedHighestQualifaction = value),
                         isHighestQualifaction = true
                       },
-                      borderColor: selectedHighestQualifaction == null
+                      borderColor:show==true&& selectedHighestQualifaction == null
                           ? Colors.red
                           : Colors.black.withOpacity(0.5),
                       errorMessage: "Please Select Highest Qualification",
-                      errorshow: selectedHighestQualifaction==null?true:false,
+                      errorshow:show==true&& selectedHighestQualifaction==null?true:false,
                       selectedItem: selectedHighestQualifaction,
                       hintText: 'Select Highest Qualification',
                     );
@@ -170,6 +171,7 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
                   controller: describeController,
                   labelText: "Describe other qualifications (if any)",
                   maxline: 7,
+                  hintText: "Enter Other Qualifications",
                 ),
                 const SizedBox(height: 30),
                 _buildContinueButton(),
@@ -187,6 +189,9 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
+          setState(() {
+            show=true;
+          });
           if (selectedHighestQualifaction != null) {
             _educationController.educationDetails(
                 context,

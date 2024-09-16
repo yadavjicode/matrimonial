@@ -239,7 +239,7 @@ final  AboutGroomBrideController aboutGroomBrideController =
                         GestureDetector(
                           onTap: () => {
                             // Get.offAndToNamed('/partner')
-                             flowController.Flow(context, 10)
+                             flowController.Flow(context, 12)
                             },
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
@@ -257,7 +257,7 @@ final  AboutGroomBrideController aboutGroomBrideController =
                 )
               ],
             ),
-            if (aboutGroomBrideController.isLoading.value)
+            if (aboutGroomBrideController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

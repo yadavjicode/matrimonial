@@ -58,6 +58,8 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
   final TextEditingController refeBPhoneno = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool show =false;
+
   bool validation() {
     if (_formKey.currentState!.validate() &&
         selectedCountry != null &&
@@ -80,24 +82,24 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
       _editProfileController.userDetails(context);
     });
 
-    selectedCountry = _editProfileController.member!.member!.country ?? "";
+    selectedCountry = _editProfileController.member!.member!.country;
 
     selectedResidence =
-        _editProfileController.member!.member!.addressType ?? "";
+        _editProfileController.member!.member!.addressType;
     selectedPermanentHouse =
-        _editProfileController.member!.member!.permanentHouseType ?? "";
+        _editProfileController.member!.member!.permanentHouseType;
     selectedPermanentState =
-        _editProfileController.member!.member!.permanentState ?? "";
+        _editProfileController.member!.member!.permanentState ;
     selectedPermanentCity =
-        _editProfileController.member!.member!.permanentCity ?? "";
+        _editProfileController.member!.member!.permanentCity ;
     selectedTemporaryState =
-        _editProfileController.member!.member!.tempState ?? "";
+        _editProfileController.member!.member!.tempState ;
     selectedTemporaryCity =
-        _editProfileController.member!.member!.tempCity ?? "";
+        _editProfileController.member!.member!.tempCity;
     selectedRefeARelation =
-        _editProfileController.member!.member!.reference1Reletion ?? "";
+        _editProfileController.member!.member!.reference1Reletion;
     selectedRefeBRelation =
-        _editProfileController.member!.member!.reference2Reletion ?? "";
+        _editProfileController.member!.member!.reference2Reletion ;
     permanentPinCode.text =
         _editProfileController.member!.member!.permanentPincode ?? "";
     temporaryPinCode.text =
@@ -206,11 +208,11 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedCountry,
-                        borderColor: selectedCountry == null
+                        borderColor:show==true && selectedCountry == null
                             ? Colors.red
                             : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please select nationality",
-                        errorshow: selectedCountry == null ? true : false,
+                        errorMessage: "Please Select Nationality",
+                        errorshow:show==true &&  selectedCountry == null ? true : false,
                         hintText: 'Select Nationality',
                       );
                     }
@@ -244,11 +246,11 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                         },
                         search: false,
                         selectedItem: selectedResidence,
-                        borderColor: selectedResidence == null
+                        borderColor:show==true &&  selectedResidence == null
                             ? Colors.red
                             : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please select residence type",
-                        errorshow: selectedResidence == null ? true : false,
+                        errorMessage: "Please Select Residence Type",
+                        errorshow:show==true &&  selectedResidence == null ? true : false,
                         hintText: 'Select Residence Type',
                       );
                     }
@@ -334,11 +336,11 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedPermanentState,
-                        borderColor: selectedPermanentState == null
+                        borderColor:show==true &&  selectedPermanentState == null
                             ? Colors.red
                             : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please select state",
-                        errorshow:
+                        errorMessage: "Please Select State",
+                        errorshow:show==true && 
                             selectedPermanentState == null ? true : false,
                         hintText: 'Select State',
                       );
@@ -375,11 +377,11 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedPermanentCity,
-                        borderColor: selectedPermanentCity == null
+                        borderColor:show==true &&  selectedPermanentCity == null
                             ? Colors.red
                             : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please select city",
-                        errorshow: selectedPermanentCity == null ? true : false,
+                        errorMessage: "Please Select City",
+                        errorshow:show==true &&  selectedPermanentCity == null ? true : false,
                         hintText: 'Select City',
                       );
                     }
@@ -393,9 +395,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     labelText: 'Pin Code *',
                     maxlength: 6,
                     keyboardType: TextInputType.number,
+                    hintText: "Enter Pin Code",
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length > 6) {
-                        return 'Please enter Pin Code';
+                        return 'Please Enter Pin Code';
                       }
                       return null;
                     },
@@ -492,6 +495,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: temporaryPinCode,
                     labelText: 'Pin Code',
+                    hintText: "Enter Pin Code",
                     maxlength: 6,
                     keyboardType: TextInputType.number,
                   ),
@@ -538,11 +542,11 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedRefeARelation,
-                        borderColor: selectedRefeARelation == null
+                        borderColor:show==true &&  selectedRefeARelation == null
                             ? Colors.red
                             : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please select relation",
-                        errorshow: selectedRefeARelation == null ? true : false,
+                        errorMessage: "Please Select Relation",
+                        errorshow:show==true &&  selectedRefeARelation == null ? true : false,
                         hintText: 'Select Relation',
                       );
                     }
@@ -554,9 +558,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: refeAName,
                     labelText: 'Name *',
+                    hintText: "Enter Name",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter name';
+                        return 'Please Enter Name';
                       }
                       return null;
                     },
@@ -568,6 +573,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: refeAEmail,
                     labelText: 'Email',
+                    hintText: "Enter Email",
                      validator: (value) {
                       if(value!.isEmpty){
                         return null;
@@ -582,6 +588,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: refeAPhoneno,
                     labelText: 'Mobile *',
+                    hintText: "Enter Mobile No",
                     keyboardType: TextInputType.phone,
                     maxlength: 10,
                     validator: (value) {
@@ -631,11 +638,11 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedRefeBRelation,
-                        borderColor: selectedRefeBRelation == null
+                        borderColor:show==true &&  selectedRefeBRelation == null
                             ? Colors.red
                             : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please select relation",
-                        errorshow: selectedRefeBRelation == null ? true : false,
+                        errorMessage: "Please Select Relation",
+                        errorshow:show==true &&  selectedRefeBRelation == null ? true : false,
                         hintText: 'Select Relation',
                       );
                     }
@@ -647,9 +654,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: refeBName,
                     labelText: 'Name *',
+                    hintText: "Enter Name",
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter name';
+                        return 'Please Enter Name';
                       }
                       return null;
                     },
@@ -661,6 +669,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: refeBEmail,
                     labelText: 'Email',
+                    hintText: "Enter Email",
                     validator: (value) {
                       if(value!.isEmpty){
                         return null;
@@ -675,6 +684,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxline: 1,
                     controller: refeBPhoneno,
                     labelText: 'Mobile *',
+                    hintText: "Enter Mobile No",
                     keyboardType: TextInputType.phone,
                     maxlength: 10,
                     validator: (value) {
@@ -687,6 +697,9 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                   CustomButton(
                     text: 'CONTINUE',
                     onPressed: () {
+                      setState(() {
+                        show=true;
+                      });
                       if(validation()){
                           _locationDetailsController.locationDetails(
                           context,

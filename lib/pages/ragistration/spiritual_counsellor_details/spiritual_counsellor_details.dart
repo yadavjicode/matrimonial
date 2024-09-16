@@ -22,28 +22,49 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
   final TextEditingController nameCounselor = TextEditingController();
   final TextEditingController connectCounselor = TextEditingController();
   final TextEditingController templeCounselor = TextEditingController();
-  final TextEditingController SomethingCounselor = TextEditingController();
+  final TextEditingController somethingCounselor = TextEditingController();
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedState;
   String? selectedCity;
   int? counsellor;
+  bool show = false;
 
-  String getCounsellor() {
+  String? getCounsellor() {
     if (counsellor == 1) {
-      return "Joint";
+      return "Yes";
     } else if (counsellor == 2) {
-      return "Nuclear";
+      return "No";
     } else {
-      return "";
+      return null;
     }
   }
+
+  bool validation() {
+    if (getCounsellor() != null) {
+      if (getCounsellor() == "Yes") {
+        if (_formKey.currentState!.validate() &&
+            selectedState != null &&
+            selectedCity != null) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
- // stateController.fetchStateList();
+    // stateController.fetchStateList();
   }
 
   @override
@@ -78,212 +99,292 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 35, left: 22, right: 22, bottom: 100),
-                    child: Column(
-                      children: [
-                        Container(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              "assets/images/spiritual.png",
-                              height: 92,
-                              width: 92,
-                            )),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          "I am connected with any Spirtual Counsellor",
-                          style: FontConstant.styleRegular(
-                              fontSize: 16, color: AppColors.black),
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                              activeColor: AppColors.primaryColor,
-                              value: 1,
-                              groupValue: counsellor,
-                              onChanged: (value) => {
-                                setState(() {
-                                  counsellor = value!;
-                                })
-                              },
-                            ),
-                            Text(
-                              "Yes",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: AppColors.black),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Radio(
-                              activeColor: AppColors.primaryColor,
-                              value: 2,
-                              groupValue: counsellor,
-                              onChanged: (value) => {
-                                setState(() {
-                                  counsellor = value!;
-                                })
-                              },
-                            ),
-                            Text(
-                              "No",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: AppColors.black),
-                            )
-                          ],
-                        ),
-                        if (counsellor == 1)
-                          Column(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Container(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                "assets/images/spiritual.png",
+                                height: 92,
+                                width: 92,
+                              )),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                            "I am connected with any Spirtual Counsellor *",
+                            style: FontConstant.styleRegular(
+                                fontSize: 16, color: AppColors.black),
+                          ),
+                          Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: CustomTextField(
-                                  labelText:
-                                      "Name of the Counsellor for my Spiritual Path",
-                                  controller: nameCounselor,
-                                ),
+                              Radio(
+                                activeColor: AppColors.primaryColor,
+                                value: 1,
+                                groupValue: counsellor,
+                                onChanged: (value) => {
+                                  setState(() {
+                                    counsellor = value!;
+                                  })
+                                },
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: CustomTextField(
-                                  labelText:
-                                      "Connected with my Counsellor Since (Year)",
-                                  controller: connectCounselor,
-                                  keyboardType: TextInputType.number,
-                                  maxlength: 4,
-                                ),
+                              Text(
+                                "Yes",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 16, color: AppColors.black),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: CustomTextField(
-                                  labelText:
-                                      "With which temple your Counsellor is connected to?",
-                                  controller: templeCounselor,
-                                ),
+                              SizedBox(
+                                width: 10,
                               ),
-                              const SizedBox(
-                                height: 15,
+                              Radio(
+                                activeColor: AppColors.primaryColor,
+                                value: 2,
+                                groupValue: counsellor,
+                                onChanged: (value) => {
+                                  setState(() {
+                                    counsellor = value!;
+                                  })
+                                },
                               ),
-                              // buildDropdownWithSearch(
-                              //       'Counsellor residing in State',
-                              //       stateController.getStateList(),
-                              //       //  stateControllerPermanent.selectedItem,
-                              //       (value) {
-                              //         setState(() {
-                              //           selectedState =
-                              //               value; // Update the state
-                              //         });
-                              //         stateController.selectItem(
-                              //             value); // Call the controller method
-                              //       },
-                              //       hintText: 'Select State',
-                              //     ),
-                              Obx(() {
-                                if (stateController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  );
-                                } else {
-                                  return buildDropdownWithSearch(
-                                    'Counsellor residing in State',
-                                    stateController.getStateList(),
-                                    //  stateControllerPermanent.selectedItem,
-                                    (value) {
-                                      setState(() {
-                                        selectedState =
-                                            value; // Update the state
-                                      });
-                                      stateController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select State',
-                                  );
-                                }
-                              }),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Obx(() {
-                                if (cityController.isLoading.value) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: AppColors.primaryColor,
-                                    ),
-                                  );
-                                } else {
-                                  return buildDropdownWithSearch(
-                                    'Counsellor residing in City',
-                                    cityController.cityLists,
-                                    // cityControllerPermanent.selectedItem,
-                                    (value) {
-                                      setState(() {
-                                        selectedCity =
-                                            value; // Update the state
-                                      });
-                                      cityController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select City',
-                                  );
-                                }
-                              }),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: CustomTextField(
-                                  labelText:
-                                      "Something more about the Counsellor",
-                                  maxline: 5,
-                                  controller: SomethingCounselor,
-                                ),
-                              ),
+                              Text(
+                                "No",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 16, color: AppColors.black),
+                              )
                             ],
                           ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 25, bottom: 15),
-                          child: CustomButton(
-                              text: "CONTINUE",
-                              onPressed: () => {
+                          if (show == true && getCounsellor() == null)
+                            Container(
+                                margin: EdgeInsets.only(bottom: 5),
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "are you connected with any Spiritual Counsellor",
+                                  style: FontConstant.styleRegular(
+                                      fontSize: 11, color: AppColors.red),
+                                )),
+                          if (counsellor == 1)
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: CustomTextField(
+                                    labelText:
+                                        "Name of the Counsellor for my Spiritual Path",
+                                    controller: nameCounselor,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter name of the Counsellor';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: CustomTextField(
+                                    labelText:
+                                        "Connected with my Counsellor Since (Year)",
+                                    controller: connectCounselor,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter connected with Counsellor Since';
+                                      }
+                                      return null;
+                                    },
+                                    maxlength: 4,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: CustomTextField(
+                                    labelText:
+                                        "With which temple your Counsellor is connected to?",
+                                    controller: templeCounselor,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter temple your Counsellor';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Obx(() {
+                                  if (stateController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Counsellor residing in State *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedState = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select State',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                      'Counsellor residing in State *',
+                                      stateController.getStateList(),
+                                      //  stateControllerPermanent.selectedItem,
+                                      (value) {
+                                        setState(() {
+                                          selectedState = value;
+                                          selectedCity =
+                                              null; // Update the state
+                                        });
+                                        stateController.selectItem(
+                                            value); // Call the controller method
+                                      },
+                                      hintText: 'Select State',
+                                      borderColor:
+                                          show == true && selectedCity == null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
+                                      errorMessage: "Please select state",
+                                      errorshow:
+                                          show == true && selectedState == null
+                                              ? true
+                                              : false,
+                                      selectedItem: selectedState,
+                                    );
+                                  }
+                                }),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Obx(() {
+                                  if (cityController.isLoading.value) {
+                                    return buildDropdownWithSearch(
+                                      'Counsellor residing in City *',
+                                      ['Loading...'],
+                                      (value) {
+                                        setState(() {
+                                          selectedCity = null;
+                                        });
+                                      },
+                                      selectedItem: 'Loading...',
+                                      hintText: 'Select City',
+                                    );
+                                  } else {
+                                    return buildDropdownWithSearch(
+                                      'Counsellor residing in City *',
+                                      cityController.cityLists,
+                                      // cityControllerPermanent.selectedItem,
+                                      (value) {
+                                        setState(() {
+                                          selectedCity =
+                                              value; // Update the state
+                                        });
+                                        cityController.selectItem(
+                                            value); // Call the controller method
+                                      },
+                                      hintText: 'Select City',
+                                      borderColor:
+                                          show == true && selectedCity == null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
+                                      errorMessage: "Please select City",
+                                      errorshow:
+                                          show == true && selectedCity == null
+                                              ? true
+                                              : false,
+                                      selectedItem: selectedCity,
+                                    );
+                                  }
+                                }),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: CustomTextField(
+                                    labelText:
+                                        "Something more about the Counsellor",
+                                    maxline: 5,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter about the Counsellor';
+                                      }
+                                      return null;
+                                    },
+                                    controller: somethingCounselor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 25, bottom: 15),
+                            child: CustomButton(
+                                text: "CONTINUE",
+                                onPressed: () {
+                                  setState(() {
+                                    show = true;
+                                  });
+                                  if (validation()) {
                                     spiritualController.spiritualDetails(
                                         context,
-                                        getCounsellor(),
-                                        nameCounselor.text.toString().trim(),
-                                        connectCounselor.text.toString().trim(),
-                                        templeCounselor.text.toString().trim(),
-                                        selectedState ?? "",
-                                        selectedCity ?? "",
-                                        SomethingCounselor.text
-                                            .toString()
-                                            .trim(),false)
-                                    //   Get.toNamed('/family')
-                                  },
-                              color: AppColors.primaryColor,
-                              textStyle: FontConstant.styleRegular(
-                                  fontSize: 20, color: AppColors.constColor)),
-                        ),
-                        GestureDetector(
-                          onTap: () => {
-                            // Get.offAndToNamed('/family')
-                             flowController.Flow(context, 8)
-                            },
-                          child: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              "SKIP",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 20, color: AppColors.black),
-                            ),
+                                        getCounsellor()!,
+                                        getCounsellor() == "Yes"
+                                            ? nameCounselor.text
+                                                .toString()
+                                                .trim()
+                                            : "",
+                                        getCounsellor() == "Yes"
+                                            ? connectCounselor.text
+                                                .toString()
+                                                .trim()
+                                            : "",
+                                        getCounsellor() == "Yes"
+                                            ? templeCounselor.text
+                                                .toString()
+                                                .trim()
+                                            : "",
+                                        getCounsellor() == "Yes"
+                                            ? selectedState ?? ""
+                                            : "",
+                                        getCounsellor() == "Yes"
+                                            ? selectedCity ?? ""
+                                            : "",
+                                        getCounsellor() == "Yes"
+                                            ? somethingCounselor.text
+                                                .toString()
+                                                .trim()
+                                            : "",
+                                        false);
+                                  }
+
+                                  //   Get.toNamed('/family')
+                                },
+                                color: AppColors.primaryColor,
+                                textStyle: FontConstant.styleRegular(
+                                    fontSize: 20, color: AppColors.constColor)),
                           ),
-                        )
-                      ],
+                          GestureDetector(
+                            onTap: () => {
+                              // Get.offAndToNamed('/family')
+                              flowController.Flow(context, 8)
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10),
+                              padding: EdgeInsets.all(5),
+                              child: Text(
+                                "SKIP",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 20, color: AppColors.black),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )
               ],
             ),
-            if (spiritualController.isLoading.value)
+            if (spiritualController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

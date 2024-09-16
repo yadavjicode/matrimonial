@@ -150,7 +150,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                   ),
                   devotionalContent()
                 ],
-              ),
+              ),    
             ),
             if (devotionalController.isLoading.value ||
                 _editProfileController.isLoading.value)
@@ -202,8 +202,9 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
             const SizedBox(height: 8),
             CustomTextField(
               controller: somethingAbout,
-              labelText: "Something about your Devotional life",
+              labelText: "Something about your Devotional life *",
               maxline: 5,
+              hintText: "Enter Something about your Devotional life",
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter Something about your Devotional life';
@@ -274,7 +275,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                 CustomTextField(
                   labelText: "Which Sampradaya you belong to?",
                   //   controller: nameTemple,
-                  hintText: "",
+                  hintText: "Enter Which Sampradaya you belong to",
                 ),
                 const SizedBox(height: 1),
               ],

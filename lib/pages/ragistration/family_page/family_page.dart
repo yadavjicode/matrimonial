@@ -31,7 +31,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   final NumberController numberController = Get.put(NumberController());
   final CastController castController = Get.put(CastController());
   final SubCastController subCastController = Get.put(SubCastController());
-
   final TextEditingController gotraController = TextEditingController();
   final TextEditingController fathernameController = TextEditingController();
   final TextEditingController fatherbusinessController =
@@ -41,6 +40,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
       Get.put(MotherTongueController());
   final LanguageController languageController = Get.put(LanguageController());
   final FlowController flowController = Get.put(FlowController());
+  final GlobalKey<FormState> _formKeyFather = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyMother = GlobalKey<FormState>();
 
   List<String> selectedLanguagesList = []; // List to store selected languages
 
@@ -80,75 +81,63 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   String? selectedNoMarriedBrother;
   String? selectedHowManyMember;
 
+  bool show = false;
+
   String getLanguageKnown(List<String> language) {
     return language.join(', ');
   }
 
-  TextEditingController time = TextEditingController();
-  Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (picked != null) {
-      final String formattedTime = picked.format(context);
-      setState(() {
-        time.text = formattedTime;
-      });
-    }
-  }
-
-  String getFatherAlive() {
+  String? getFatherAlive() {
     if (fatherAlive == 1) {
       return "Yes";
     } else if (fatherAlive == 2) {
-      return "NO";
+      return "No";
     } else {
-      return "";
+      return null;
     }
   }
 
-  String getMotherAlive() {
+  String? getMotherAlive() {
     if (motherAlive == 1) {
       return "Yes";
     } else if (motherAlive == 2) {
-      return "NO";
+      return "No";
     } else {
-      return "";
+      return null;
     }
   }
 
-  String getSister() {
+  String? getSister() {
     if (sister == 1) {
       return "Yes";
     } else if (sister == 2) {
-      return "NO";
+      return "No";
     } else {
-      return "";
+      return null;
     }
   }
 
-  String getBrother() {
+  String? getBrother() {
     if (brother == 1) {
       return "Yes";
     } else if (brother == 2) {
-      return "NO";
+      return "No";
     } else {
-      return "";
+      return null;
     }
   }
 
-  String getFamilyType() {
+  String? getFamilyType() {
     if (familytype == 1) {
       return "Joint";
     } else if (familytype == 2) {
       return "Nuclear";
     } else {
-      return "";
+      return null;
     }
   }
 
-  String getFamilyValue() {
+  String? getFamilyValue() {
     if (familyValue == 1) {
       return "Traditional";
     } else if (familyValue == 2) {
@@ -156,11 +145,11 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (familyValue == 3) {
       return "Liberal";
     } else {
-      return "";
+      return null;
     }
   }
 
-  String getAffluenceLevel() {
+  String? getAffluenceLevel() {
     if (affluenceLevel == 1) {
       return "Affluent";
     } else if (affluenceLevel == 2) {
@@ -170,7 +159,81 @@ class _FamilyDetailsState extends State<FamilyDetails> {
     } else if (affluenceLevel == 4) {
       return "Upper class";
     } else {
-      return "l";
+      return null;
+    }
+  }
+
+  bool fatherValidation() {
+    if (getFatherAlive() == "Yes") {
+      if (_formKeyFather.currentState!.validate() &&
+          selectedFatherOccupation != null &&
+          selectedFatherAnnualIncomeRange != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  bool motherValidation() {
+    if (getMotherAlive() == "Yes") {
+      if (_formKeyMother.currentState!.validate() &&
+          selectedMotherOccupation != null &&
+          selectedMotherAnnualIncomeRange != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  bool brotherValidation() {
+    if (getBrother() == "Yes") {
+      if (selectedNoBrother != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  bool sisterValidation() {
+    if (getSister() == "Yes") {
+      if (selectedNoSister != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
+
+  bool validation() {
+    if (selectedReligionName != null &&
+        selectedCastName != null &&
+        getLanguageKnown(selectedLanguage ?? []) != "" &&
+        selectedMothertongue != null &&
+        getFatherAlive() != null &&
+        getMotherAlive() != null &&
+        getSister() != null &&
+        getBrother() != null) {
+      if (fatherValidation() &&
+          motherValidation() &&
+          sisterValidation() &&
+          brotherValidation()) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
     }
   }
 
@@ -224,34 +287,71 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 alignment: Alignment.center,
                                 child: Image.asset(
                                     'assets/images/familyicon.png')),
-                            buildDropdownWithSearch(
-                              'Religion',
-                              religionController.getReligionNames(),
-                              (value) {
-                                setState(() {
-                                  selectedReligion = religionController
-                                      .religionsLists
-                                      .firstWhere((religion) =>
-                                          religion['name'] == value)['id'];
-                                  selectedReligionName = value;
-                                });
-
-                                religionController.selectItem(value);
-                              },
-                              hintText: 'Select Religion',
-                            ),
-
-                            const SizedBox(height: 15),
                             Obx(() {
-                              if (castController.isLoading.value) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.primaryColor,
-                                  ),
+                              if (religionController.isLoading.value) {
+                                return buildDropdownWithSearch(
+                                  'Religion *',
+                                  ['Loading...'],
+                                  (value) {
+                                    setState(() {
+                                      selectedReligionName = null;
+                                    });
+
+                                    religionController
+                                        .selectItem(selectedReligionName);
+                                  },
+                                  selectedItem: 'Loading...',
+                                  hintText: 'Select Religion',
                                 );
                               } else {
                                 return buildDropdownWithSearch(
-                                  'Caste',
+                                  'Religion *',
+                                  religionController.getReligionNames(),
+                                  (value) {
+                                    setState(() {
+                                      selectedReligion = religionController
+                                          .religionsLists
+                                          .firstWhere((religion) =>
+                                              religion['name'] == value)['id'];
+                                      selectedReligionName = value;
+                                      selectedCastName = null;
+                                      selectedSubCastName = null;
+                                    });
+
+                                    religionController.selectItem(value);
+                                    //  religionController.selectItem(value);
+                                  },
+                                  
+                                  borderColor: show == true &&
+                                          selectedReligionName == null
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
+                                  errorMessage: "Please Select Religion",
+                                  errorshow: show == true &&
+                                          selectedReligionName == null
+                                      ? true
+                                      : false,
+                                  hintText: 'Select Religion',
+                                );
+                              }
+                            }),
+                            const SizedBox(height: 15),
+                            Obx(() {
+                              if (castController.isLoading.value) {
+                                return buildDropdownWithSearch(
+                                  'Caste *',
+                                  ['Loading...'],
+                                  (value) {
+                                    setState(() {
+                                      selectedCastName = null;
+                                    });
+                                  },
+                                  selectedItem: 'Loading...',
+                                  hintText: 'Select Cast',
+                                );
+                              } else {
+                                return buildDropdownWithSearch(
+                                  'Caste *',
                                   castController.getCastNames(),
                                   (value) {
                                     setState(() {
@@ -259,9 +359,17 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                           .firstWhere((cast) =>
                                               cast['name'] == value)['id'];
                                       selectedCastName = value;
+                                      selectedSubCastName = null;
                                     });
                                     castController.selectItem(value);
                                   },
+                                  
+                                  borderColor:show == true && selectedCastName == null
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
+                                  errorMessage: "Please Select Cast",
+                                  errorshow:show == true &&
+                                      selectedCastName == null ? true : false,
                                   hintText: 'Select Cast',
                                 );
                               }
@@ -269,10 +377,16 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                             const SizedBox(height: 15),
                             Obx(() {
                               if (subCastController.isLoading.value) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.primaryColor,
-                                  ),
+                                return buildDropdownWithSearch(
+                                  'Subcaste',
+                                  ['Loading...'],
+                                  (value) {
+                                    setState(() {
+                                      selectedSubCastName = null;
+                                    });
+                                  },
+                                  selectedItem: 'Loading...',
+                                  hintText: 'Select SubCast',
                                 );
                               } else {
                                 return buildDropdownWithSearch(
@@ -285,53 +399,99 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     });
                                     subCastController.selectItem(value);
                                   },
+                                  
                                   hintText: 'Select SubCast',
                                 );
                               }
                             }),
-
                             const SizedBox(height: 15),
                             CustomTextField(
                                 controller: gotraController,
                                 labelText: 'Gotra'),
-                            
                             SizedBox(
                               height: 15,
                             ),
-                            buildDropdownWithSearchMulti(
-                              'Languages Known',
-                              languageController.getlanguageList(),
-                              //  languageController.selectedItem.call,
-                              (value) {
-                                setState(() {
-                                  selectedLanguage = value; // Update the state
-                                });
-                                // motherTongueController.selectItem(
-                                //     value); // Call the controller method
-                                print(
-                                    "language===============${getLanguageKnown(selectedLanguage ?? [])}");
-                              },
-                              hintText: 'Select Languages Known',
-                            ), 
+                            Obx(() {
+                              if (languageController.isLoading.value) {
+                                return buildDropdownWithSearchMulti(
+                                  'Languages Known *',
+                                  ['Loading...'],
+                                  (value) {
+                                    setState(() {
+                                      selectedLanguage = null;
+                                    });
+                                  },
+                                  selectedItems: ["Loading"],
+                                  hintText: 'Select Languages Known',
+                                );
+                              } else {
+                                return buildDropdownWithSearchMulti(
+                                  'Languages Known *',
+                                  languageController.getlanguageList(),
+                                  //  languageController.selectedItem.call,
+                                  (value) {
+                                    setState(() {
+                                      selectedLanguage =
+                                          value; // Update the state
+                                    });
+                                  },
+                                  borderColor:show == true && getLanguageKnown(
+                                              selectedLanguage ?? []) ==
+                                          ""
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
+                                  errorMessage: "Please Select Languages",
+                                  errorshow:show == true && getLanguageKnown(
+                                              selectedLanguage ?? []) ==
+                                          ""
+                                      ? true
+                                      : false,
+                           
+                                  hintText: 'Select Languages Known',
+                                );
+                              }
+                            }),
                             SizedBox(
                               height: 15,
                             ),
-                            buildDropdownWithSearch(
-                              'Mother tongue',
-                              motherTongueController.getMotherTongueList(),
-                              //  languageController.selectedItem.call,
-                              (value) {
-                                setState(() {
-                                  selectedMothertongue =
-                                      value; // Update the state
-                                });
-                                motherTongueController.selectItem(
-                                    value); // Call the controller method
-                                    print(
-                                    "selectedMothertongue===============$selectedMothertongue");
-                              },
-                              hintText: 'Select Mother tongue',
-                            ),
+                            Obx(() {
+                              if (motherTongueController.isLoading.value) {
+                                return buildDropdownWithSearch(
+                                  'Mother tongue *',
+                                  ['Loading...'],
+                                  (value) {
+                                    setState(() {
+                                      selectedMothertongue = null;
+                                    });
+                                  },
+                                  selectedItem: 'Loading...',
+                                  hintText: 'Select Mother tongue',
+                                );
+                              } else {
+                                return buildDropdownWithSearch(
+                                  'Mother tongue *',
+                                  motherTongueController.getMotherTongueList(),
+                                  //  languageController.selectedItem.call,
+                                  (value) {
+                                    setState(() {
+                                      selectedMothertongue =
+                                          value; // Update the state
+                                    });
+                                    motherTongueController.selectItem(
+                                        value); // Call the controller method
+                                  },
+                                  selectedItem: selectedMothertongue,
+                                  borderColor:show == true && selectedMothertongue == null
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
+                                  errorMessage: "Please select mother tongue",
+                                  errorshow:show == true && selectedMothertongue == null
+                                      ? true
+                                      : false,
+                                  hintText: 'Select Mother tongue',
+                                );
+                              }
+                            }),
                             SizedBox(
                               height: 30,
                             ),
@@ -345,11 +505,10 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               height: 30,
                             ),
                             Text(
-                              'Father alive',
+                              'Father alive *',
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: Colors.black),
                             ),
-
                             Row(
                               children: [
                                 Radio(
@@ -387,70 +546,146 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
+                            if (show == true &&getFatherAlive() == null)
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Select father alive",
+                                    style: FontConstant.styleRegular(
+                                        fontSize: 11, color: AppColors.red),
+                                  )),
                             if (getFatherAlive() == "Yes")
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  CustomTextField(
-                                    controller: fathernameController,
-                                    labelText: 'Full Name of Father',
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Obx(() {
-                                    if (professionController.isLoading.value) {
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      );
-                                    } else {
-                                      return buildDropdownWithSearch(
-                                        'Occupation',
-                                        professionController
-                                            .getProfessionList(),
-                                        (value) {
-                                          setState(() {
-                                            selectedFatherOccupation =
-                                                value; // Update the state
-                                          });
-                                          professionController.selectItem(
-                                              value); // Call the controller method
-                                        },
-                                        hintText: 'Select Occupation',
-                                      );
-                                    }
-                                  }),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  CustomTextField(
-                                    controller: fatherbusinessController,
-                                    labelText: 'What kind of business',
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  buildDropdownWithSearch(
-                                    'Annual income range',
-                                    incomeController.getIncomeList(),
-                                    (value) {
-                                      setState(() {
-                                        selectedFatherAnnualIncomeRange =
-                                            value; // Update the state
-                                      });
-                                      incomeController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    // incomeController.selectedItem.call,
-                                    hintText: 'Select Annual income range',
-                                  ),
-                                ],
+                              Form(
+                                key: _formKeyFather,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    CustomTextField(
+                                      controller: fathernameController,
+                                      labelText: 'Full Name of Father *',
+                                      hintText: "Enter Full Name of Father",
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter name of father';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Obx(() {
+                                      if (professionController
+                                          .isLoading.value) {
+                                        return buildDropdownWithSearch(
+                                          'Occupation *',
+                                          ['Loading...'],
+                                          (value) {
+                                            setState(() {
+                                              selectedFatherOccupation = null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText: 'Select Occupation',
+                                        );
+                                      } else {
+                                        return buildDropdownWithSearch(
+                                          'Occupation *',
+                                          professionController
+                                              .getProfessionList(),
+                                          (value) {
+                                            setState(() {
+                                              selectedFatherOccupation =
+                                                  value; // Update the state
+                                            });
+                                            professionController.selectItem(
+                                                value); // Call the controller method
+                                          },
+                                         
+                                          borderColor:show == true &&
+                                              selectedFatherOccupation == null
+                                                  ? Colors.red
+                                                  : Colors.black
+                                                      .withOpacity(0.5),
+                                          errorMessage:
+                                              "Please select occupation",
+                                          errorshow:show == true &&
+                                              selectedFatherOccupation == null
+                                                  ? true
+                                                  : false,
+                                          hintText: 'Select Occupation',
+                                        );
+                                      }
+                                    }),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    CustomTextField(
+                                      controller: fatherbusinessController,
+                                      labelText: 'What kind of business *',
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter kind of business';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Obx(() {
+                                      if (incomeController.isLoading.value) {
+                                        return buildDropdownWithSearch(
+                                          'Annual income range *',
+                                          ['Loading...'],
+                                          (value) {
+                                            setState(() {
+                                              selectedFatherAnnualIncomeRange =
+                                                  null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText:
+                                              'Select Annual income range',
+                                        );
+                                      } else {
+                                        return buildDropdownWithSearch(
+                                          'Annual income range *',
+                                          incomeController.getIncomeList(),
+                                          (value) {
+                                            setState(() {
+                                              selectedFatherAnnualIncomeRange =
+                                                  value; // Update the state
+                                            });
+                                            incomeController.selectItem(
+                                                value); // Call the controller method
+                                          },
+                                          selectedItem:
+                                              selectedFatherAnnualIncomeRange,
+                                          hintText:
+                                              'Select Annual income range',
+                                          borderColor:show == true &&
+                                              selectedFatherAnnualIncomeRange ==
+                                                      null
+                                                  ? Colors.red
+                                                  : Colors.black
+                                                      .withOpacity(0.5),
+                                          errorMessage:
+                                              "Please select income range",
+                                          errorshow:show == true &&
+                                              selectedFatherAnnualIncomeRange ==
+                                                      null
+                                                  ? true
+                                                  : false,
+                                        );
+                                      }
+                                    }),
+                                  ],
+                                ),
                               ),
-
                             SizedBox(
                               height: 30,
                             ),
@@ -464,11 +699,10 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               height: 30,
                             ),
                             Text(
-                              'Mother alive',
+                              'Mother alive *',
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: Colors.black),
                             ),
-
                             Row(
                               children: [
                                 Radio(
@@ -506,62 +740,133 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
+                            if (show == true &&getMotherAlive() == null)
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Select mother alive",
+                                    style: FontConstant.styleRegular(
+                                        fontSize: 11, color: AppColors.red),
+                                  )),
                             if (getMotherAlive() == "Yes")
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  CustomTextField(
-                                    controller: mothernameController,
-                                    labelText: 'Full Name of Mother',
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Obx(() {
-                                    if (professionController.isLoading.value) {
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      );
-                                    } else {
-                                      return buildDropdownWithSearch(
-                                        'Occupation',
-                                        professionController
-                                            .getProfessionList(),
-                                        (value) {
-                                          setState(() {
-                                            selectedMotherOccupation =
-                                                value; // Update the state
-                                          });
-                                          professionController.selectItem(
-                                              value); // Call the controller method
-                                        },
-                                        hintText: 'Select Occupation',
-                                      );
-                                    }
-                                  }),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  buildDropdownWithSearch(
-                                    'Annual income range',
-                                    incomeController.getIncomeList(),
-                                    (value) {
-                                      setState(() {
-                                        selectedMotherAnnualIncomeRange =
-                                            value; // Update the state
-                                      });
-                                      incomeController.selectItem(
-                                          value); // Call the controller method
-                                    },
-                                    hintText: 'Select Annual income range',
-                                  ),
-                                ],
+                              Form(
+                                key: _formKeyMother,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    CustomTextField(
+                                      controller: mothernameController,
+                                      labelText: 'Full Name of Mother *',
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter name of mother';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Obx(() {
+                                      if (professionController
+                                          .isLoading.value) {
+                                        return buildDropdownWithSearch(
+                                          'Occupation *',
+                                          ['Loading...'],
+                                          (value) {
+                                            setState(() {
+                                              selectedMotherOccupation = null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText: 'Select Occupation',
+                                        );
+                                      } else {
+                                        return buildDropdownWithSearch(
+                                          'Occupation *',
+                                          professionController
+                                              .getProfessionList(),
+                                          (value) {
+                                            setState(() {
+                                              selectedMotherOccupation =
+                                                  value; // Update the state
+                                            });
+                                            professionController.selectItem(
+                                                value); // Call the controller method
+                                          },
+                                          selectedItem:
+                                              selectedMotherOccupation,
+                                          hintText: 'Select Occupation',
+                                          borderColor:show == true &&
+                                              selectedMotherOccupation == null
+                                                  ? Colors.red
+                                                  : Colors.black
+                                                      .withOpacity(0.5),
+                                          errorMessage:
+                                              "Please select Occupation",
+                                          errorshow:show == true &&
+                                              selectedMotherOccupation == null
+                                                  ? true
+                                                  : false,
+                                        );
+                                      }
+                                    }),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Obx(() {
+                                      if (incomeController.isLoading.value) {
+                                        return buildDropdownWithSearch(
+                                          'Annual income range *',
+                                          ['Loading...'],
+                                          (value) {
+                                            setState(() {
+                                              selectedMotherAnnualIncomeRange =
+                                                  null;
+                                            });
+                                          },
+                                          selectedItem: 'Loading...',
+                                          hintText:
+                                              'Select Annual income range',
+                                        );
+                                      } else {
+                                        return buildDropdownWithSearch(
+                                          'Annual income range *',
+                                          incomeController.getIncomeList(),
+                                          (value) {
+                                            setState(() {
+                                              selectedMotherAnnualIncomeRange =
+                                                  value; // Update the state
+                                            });
+                                            incomeController.selectItem(
+                                                value); // Call the controller method
+                                          },
+                                          selectedItem:
+                                              selectedMotherAnnualIncomeRange,
+                                          hintText:
+                                              'Select Annual income range',
+                                          borderColor:show == true &&
+                                              selectedMotherAnnualIncomeRange ==
+                                                      null
+                                                  ? Colors.red
+                                                  : Colors.black
+                                                      .withOpacity(0.5),
+                                          errorMessage:
+                                              "Please select Annual income",
+                                          errorshow:show == true &&
+                                              selectedMotherAnnualIncomeRange ==
+                                                      null
+                                                  ? true
+                                                  : false,
+                                        );
+                                      }
+                                    }),
+                                  ],
+                                ),
                               ),
-
                             SizedBox(
                               height: 30,
                             ),
@@ -575,11 +880,10 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               height: 30,
                             ),
                             Text(
-                              'Sister',
+                              'Sister *',
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: Colors.black),
                             ),
-
                             Row(
                               children: [
                                 Radio(
@@ -617,6 +921,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
+                            if (show == true &&getSister() == null)
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Select sister",
+                                    style: FontConstant.styleRegular(
+                                        fontSize: 11, color: AppColors.red),
+                                  )),
                             if (getSister() == "Yes")
                               Column(
                                 children: [
@@ -624,7 +937,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     height: 15,
                                   ),
                                   buildDropdownWithSearch(
-                                    'Number of Sisters',
+                                    'Number of Sisters *',
                                     NumberController.NumberList(),
                                     (value) {
                                       setState(() {
@@ -634,11 +947,17 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                       numberController.selectItem(
                                           value); // Call the controller method
                                     },
+                                    borderColor:show == true && selectedNoSister == null
+                                        ? Colors.red
+                                        : Colors.black.withOpacity(0.5),
+                                    errorMessage: "Please select Annual income",
+                                    errorshow:show == true &&
+                                        selectedNoSister == null ? true : false,
+                                    selectedItem: selectedNoSister,
                                     hintText: '0',
                                   ),
                                 ],
                               ),
-
                             SizedBox(
                               height: 30,
                             ),
@@ -652,11 +971,10 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               height: 30,
                             ),
                             Text(
-                              'Brother',
+                              'Brother *',
                               style: FontConstant.styleRegular(
                                   fontSize: 16, color: Colors.black),
                             ),
-
                             Row(
                               children: [
                                 Radio(
@@ -694,7 +1012,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
-
+                            if (show == true &&getBrother() == null)
+                              Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Select brother",
+                                    style: FontConstant.styleRegular(
+                                        fontSize: 11, color: AppColors.red),
+                                  )),
                             if (getBrother() == "Yes")
                               Column(
                                 children: [
@@ -702,7 +1028,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     height: 15,
                                   ),
                                   buildDropdownWithSearch(
-                                    'Number of Brothers',
+                                    'Number of Brothers *',
                                     NumberController.NumberList(),
                                     (value) {
                                       setState(() {
@@ -712,11 +1038,18 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                       numberController.selectItem(
                                           value); // Call the controller method
                                     },
+                                    selectedItem: selectedNoBrother,
+                                    borderColor:show == true && selectedNoBrother == null
+                                        ? Colors.red
+                                        : Colors.black.withOpacity(0.5),
+                                    errorMessage: "Please select Annual income",
+                                    errorshow:show == true && selectedNoBrother == null
+                                        ? true
+                                        : false,
                                     hintText: '0',
                                   ),
                                 ],
                               ),
-
                             SizedBox(
                               height: 30,
                             ),
@@ -770,7 +1103,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 ),
                               ],
                             ),
-
                             SizedBox(
                               height: 15,
                             ),
@@ -926,43 +1258,72 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                               child: CustomButton(
                                 text: 'CONTINUE',
                                 onPressed: () {
-                                  String gotra =
-                                      gotraController.text.toString().trim();
-                                  String fathername = fathernameController.text
-                                      .toString()
-                                      .trim();
-                                  String fatherbusines =
-                                      fatherbusinessController.text
-                                          .toString()
-                                          .trim();
-                                  String mothername = mothernameController.text
-                                      .toString()
-                                      .trim();
-                                  _familyDetailsController.familyDetails(
-                                      context,
-                                      selectedReligionName ?? "",
-                                      selectedCastName ?? "",
-                                      selectedSubCastName ?? "",
-                                      gotra,
-                                      getLanguageKnown(selectedLanguage ?? [])
-                                          .toString(),
-                                      selectedMothertongue ?? "",
-                                      getFatherAlive(),
-                                      fathername,
-                                      selectedFatherOccupation ?? "",
-                                      fatherbusines,
-                                      selectedFatherAnnualIncomeRange ?? "",
-                                      getMotherAlive(),
-                                      mothername,
-                                      selectedMotherOccupation ?? "",
-                                      selectedMotherAnnualIncomeRange ?? "",
-                                      getSister(),
-                                      selectedNoSister ?? "",
-                                      getBrother(),
-                                      selectedNoBrother ?? "",
-                                      getFamilyType(),
-                                      getFamilyValue(),
-                                      getAffluenceLevel(),false);
+                                  setState(() {
+                                    show = true;
+                                      });
+                                  if (validation()) {
+                                    String gotra =
+                                        gotraController.text.toString().trim();
+                                    String fathername = fathernameController
+                                        .text
+                                        .toString()
+                                        .trim();
+                                    String fatherbusines =
+                                        fatherbusinessController.text
+                                            .toString()
+                                            .trim();
+                                    String mothername = mothernameController
+                                        .text
+                                        .toString()
+                                        .trim();
+
+                                    _familyDetailsController.familyDetails(
+                                        context,
+                                        selectedReligionName ?? "",
+                                        selectedCastName ?? "",
+                                        selectedSubCastName ?? "",
+                                        gotra,
+                                        getLanguageKnown(
+                                            selectedLanguage ?? []),
+                                        selectedMothertongue!,
+                                        getFatherAlive()!,
+                                        getFatherAlive() == "Yes"
+                                            ? fathername
+                                            : "",
+                                        getFatherAlive() == "Yes"
+                                            ? selectedFatherOccupation ?? ""
+                                            : "",
+                                        getFatherAlive() == "Yes"
+                                            ? fatherbusines
+                                            : "",
+                                        getFatherAlive() == "Yes"
+                                            ? selectedFatherAnnualIncomeRange ??
+                                                ""
+                                            : "",
+                                        getMotherAlive()!,
+                                        getMotherAlive() == "Yes"
+                                            ? mothername
+                                            : "",
+                                        getMotherAlive() == "Yes"
+                                            ? selectedMotherOccupation ?? ""
+                                            : "",
+                                        getMotherAlive() == "Yes"
+                                            ? selectedMotherAnnualIncomeRange ??
+                                                ""
+                                            : "",
+                                        getSister()!,
+                                        getSister() == "Yes"
+                                            ? selectedNoSister ?? ""
+                                            : "",
+                                        getBrother()!,
+                                        getBrother() == "Yes"
+                                            ? selectedNoBrother ?? ""
+                                            : "",
+                                        getFamilyType()!=null?getFamilyType()!:"",
+                                        getFamilyValue()!=null?getFamilyValue()!:"",
+                                        getAffluenceLevel()!=null? getAffluenceLevel()!:"",
+                                        false);
+                                  }
 
                                   //  Get.toNamed('/aboutgroom');
                                 },
@@ -971,21 +1332,24 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     fontSize: 18, color: Colors.white),
                               ),
                             ),
-                            const SizedBox(height: 15),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: CustomButton(
-                                text: 'Skip',
-                                onPressed: () {
-                                  // Get.offAndToNamed('/horoscope');
-                                  flowController.Flow(context, 8);
-                                },
-                                color: Colors.transparent,
-                                textStyle: FontConstant.styleRegular(
-                                    fontSize: 20, color: Colors.black),
+                            
+                            GestureDetector(
+                            onTap: () => {
+                              
+                              flowController.Flow(context, 9)
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(bottom: 25, top: 10),
+                              padding: EdgeInsets.all(5),
+                              child: Text(   
+                                "SKIP",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 20, color: AppColors.black),
                               ),
                             ),
+                          ),
+                          const SizedBox(height: 15),
                           ],
                         ),
                       ),
@@ -994,7 +1358,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                 ),
               ],
             ),
-            if (_familyDetailsController.isLoading.value)
+            if (_familyDetailsController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

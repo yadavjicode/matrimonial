@@ -1,9 +1,7 @@
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/screens/home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
@@ -95,7 +93,7 @@ class _DashboardState extends State<Dashboard> {
         ),
         items: [
           BottomBarItem(
-            icon: Image.asset("assets/images/email.png"),
+            icon: Image.asset("assets/images/email.png",height: 28,width: 28,),
             title: Text(
               'inbox',
               style:
@@ -105,7 +103,7 @@ class _DashboardState extends State<Dashboard> {
             //  selectedIcon: Icon(Icons.chat)
           ),
           BottomBarItem(
-            icon: Image.asset("assets/images/users.png"),
+            icon: Image.asset("assets/images/users.png",height: 28,width: 24,),
             title: Text(
               'Profile',
               style:
@@ -115,7 +113,7 @@ class _DashboardState extends State<Dashboard> {
             //  selectedIcon: Icon(Icons.person)
           ),
           BottomBarItem(
-            icon: Image.asset("assets/images/love.png"),
+            icon: Image.asset("assets/images/love.png",height: 28,width: 28,),
             title: Text(
               'Liked',
               style:
@@ -125,7 +123,7 @@ class _DashboardState extends State<Dashboard> {
             // selectedIcon: Icon(Icons.favorite)
           ),
           BottomBarItem(
-            icon: Image.asset("assets/images/chat.png"),
+            icon: Image.asset("assets/images/chat.png",height: 28,width: 30,),
             title: Text(
               'Search',
               style:

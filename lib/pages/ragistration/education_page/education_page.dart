@@ -166,7 +166,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                 ],
               ),
             ),
-            if (_educationController.isLoading.value)
+            if (_educationController.isLoading.value||flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

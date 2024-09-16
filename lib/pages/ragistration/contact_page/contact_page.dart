@@ -9,7 +9,8 @@ import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
 
 class ContactDetails extends StatefulWidget {
-  const ContactDetails({Key? key}) : super(key: key); // Fix: Added key parameter
+  const ContactDetails({Key? key})
+      : super(key: key); // Fix: Added key parameter
 
   @override
   State<ContactDetails> createState() => _ContactDetailsState();
@@ -20,16 +21,15 @@ class _ContactDetailsState extends State<ContactDetails> {
   final TextEditingController phonecontroller = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController instaController = TextEditingController();
-  final FlowController flowController=Get.put(FlowController());
+  final FlowController flowController = Get.put(FlowController());
 
   final ContactDetailsController _contactDetailController =
       Get.put(ContactDetailsController());
 
   @override
   void initState() {
-  super.initState();
+    super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +119,8 @@ class _ContactDetailsState extends State<ContactDetails> {
                                       context,
                                       phonecontroller.text.toString().trim(),
                                       emailController.text.toString().trim(),
-                                      instaController.text.toString().trim(),false);
+                                      instaController.text.toString().trim(),
+                                      false);
 
                                   //  Get.toNamed('/location');
                                 }
@@ -132,7 +133,6 @@ class _ContactDetailsState extends State<ContactDetails> {
                             ),
                           ),
                           const SizedBox(height: 15),
-                          _buildSkipButton(),
                         ],
                       ),
                     ),
@@ -148,20 +148,5 @@ class _ContactDetailsState extends State<ContactDetails> {
               ),
           ]);
         }));
-  }
-
-  Widget _buildSkipButton() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: CustomButton(
-        text: 'Skip',
-        onPressed: () {
-          flowController.Flow(context, 3);
-          // Get.offAndToNamed('/location');
-        },
-        color: Colors.transparent,
-        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
-      ),
-    );
   }
 }
