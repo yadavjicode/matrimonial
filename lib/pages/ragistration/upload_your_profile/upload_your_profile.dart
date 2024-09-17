@@ -24,6 +24,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
         backgroundColor: AppColors.background,
         appBar: AppBar(
           elevation: 0,
+          centerTitle: true,
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Complete Your Profile",

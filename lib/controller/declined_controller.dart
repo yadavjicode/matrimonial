@@ -32,7 +32,7 @@ class DeclinedController with ChangeNotifier {
         context,
         'Declined',
         '${member!.status}',
-        dialogType: DialogType.success,
+        dialogType: DialogType.error,
         btnOkOnPress: btnOkOnPress ?? () {},
       );
     } catch (e) {

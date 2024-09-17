@@ -30,7 +30,7 @@ class AboutGroomBrideController with ChangeNotifier {
        _editProfileController.userDetails(context);
         Navigator.pop(context);
       }else{
-       flowController.Flow(context, 10);
+       flowController.Flow(context, 12);
       }
       
       // Get.toNamed('/horoscope');

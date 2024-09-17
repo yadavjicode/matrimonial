@@ -88,6 +88,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                         children: [
                           CustomTextField(
                             labelText: "Phone number*",
+                            hintText: "Enter Phone Number",
                             controller: phonecontroller,
                             keyboardType: TextInputType.phone,
                             maxlength: 10,
@@ -98,6 +99,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                           const SizedBox(height: 15),
                           CustomTextField(
                             labelText: "Email address*",
+                            hintText: "Enter Email address",
                             controller: emailController,
                             validator: (value) {
                               return Validation.validateEmail(value);
@@ -106,6 +108,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                           const SizedBox(height: 15),
                           CustomTextField(
                             labelText: "Instagram ID",
+                            hintText: "Enter Instagram ID",
                             controller: instaController,
                           ),
                           const SizedBox(height: 30),

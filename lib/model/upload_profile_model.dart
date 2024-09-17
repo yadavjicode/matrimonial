@@ -9,7 +9,7 @@ class UploadProfileModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "step_12": "1",
+      "step_11": "1",
     };
   }
 

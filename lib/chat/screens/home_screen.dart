@@ -22,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  
   // for storing all users
   List<ChatUser> _list = [];
 
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-
+  
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
@@ -219,10 +220,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         case ConnectionState.done:
                           final data = snapshot.data?.docs;
                           _list = data
-                                  ?.map((e) => ChatUser.fromJson(e.data()))
+                                  ?.map((e) => ChatUser.fromJson(e.data()))   
                                   .toList() ??
                               [];
-
+                           
                           if (_list.isNotEmpty) {
                             return ListView.builder(
                                 itemCount: _isSearching

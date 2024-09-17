@@ -225,6 +225,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   labelText: "Initiated Name (Spiritual Name)",
+                                  hintText: "Enter Initiated Name",
                                   controller: initiatedNameController,
                                 ),
                               ),

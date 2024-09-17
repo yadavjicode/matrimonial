@@ -352,6 +352,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: permanentPinCode,
                             labelText: 'Pin Code *',
+                            hintText: "Enter Pin Code",
                             maxlength: 6,
                             keyboardType: TextInputType.number,
                             validator: (value) {
@@ -461,6 +462,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: temporaryPinCode,
                             labelText: 'Pin Code',
+                            hintText: "Enter Pin Code",
                             maxlength: 6,
                             keyboardType: TextInputType.number,
                           ),
@@ -526,6 +528,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: refeAName,
                             labelText: 'Name *',
+                            hintText: "Enter Name",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter name';
@@ -540,6 +543,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: refeAEmail,
                             labelText: 'Email',
+                            hintText: "Enter Email",
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return null;
@@ -554,6 +558,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: refeAPhoneno,
                             labelText: 'Mobile *',
+                            hintText: "Enter Mobile No",
                             keyboardType: TextInputType.phone,
                             maxlength: 10,
                             validator: (value) {
@@ -622,6 +627,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: refeBName,
                             labelText: 'Name *',
+                            hintText: "Enter Name",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter name';
@@ -636,6 +642,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: refeBEmail,
                             labelText: 'Email',
+                            hintText: "Enter Email",
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return null;
@@ -650,6 +657,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             maxline: 1,
                             controller: refeBPhoneno,
                             labelText: 'Mobile *',
+                            hintText: "Enter Mobile No",
                             keyboardType: TextInputType.phone,
                             maxlength: 10,
                             validator: (value) {

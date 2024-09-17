@@ -29,7 +29,7 @@ class WithdrawalController with ChangeNotifier {
         context,
         'Withdrawal',
         '${member!.message}',
-        dialogType: DialogType.success,
+        dialogType: DialogType.error,
         btnOkOnPress: btnOkOnPress ??
             () {
               // Navigator.of(context).pop(); // Default action if none is provided

@@ -116,7 +116,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                               errorshow:show==true&& selectedHighestQualifaction == null
                                   ? true
                                   : false,
-                              selectedItem: selectedHighestQualifaction,
+                        
                               hintText: 'Select Highest Qualification',
                             );
                           }
@@ -146,7 +146,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                                           selectedProfessionalQualifaction =
                                               value),
                                     },
-                                selectedItem: selectedProfessionalQualifaction,
+                             
                                 hintText: 'Select Professional Qualification');
                           }
                         }),
@@ -154,6 +154,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                         CustomTextField(
                           controller: describeController,
                           labelText: "Describe other qualifications (if any)",
+                          hintText: "Enter other qualifications",
                           maxline: 7,
                         ),
                         const SizedBox(height: 30),

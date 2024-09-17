@@ -65,9 +65,11 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
           elevation: 0,
+          centerTitle: true,
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Horoscope Details",
+            
             style: FontConstant.styleSemiBold(
                 fontSize: 18, color: AppColors.constColor),
           ),

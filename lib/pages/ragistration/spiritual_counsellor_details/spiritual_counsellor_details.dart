@@ -172,6 +172,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   child: CustomTextField(
                                     labelText:
                                         "Name of the Counsellor for my Spiritual Path",
+                                        hintText: "Enter Name of the Counsellor for my Spiritual Path",
                                     controller: nameCounselor,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -188,6 +189,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                         "Connected with my Counsellor Since (Year)",
                                     controller: connectCounselor,
                                     keyboardType: TextInputType.number,
+                                    hintText: "Enter Connected with my Counsellor Since (Year)",
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter connected with Counsellor Since';
@@ -203,6 +205,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                     labelText:
                                         "With which temple your Counsellor is connected to?",
                                     controller: templeCounselor,
+                                    hintText: "Enter With which temple your Counsellor is connected to?",
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter temple your Counsellor';
@@ -251,7 +254,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                           show == true && selectedState == null
                                               ? true
                                               : false,
-                                      selectedItem: selectedState,
+                                     
                                     );
                                   }
                                 }),
@@ -294,13 +297,14 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                           show == true && selectedCity == null
                                               ? true
                                               : false,
-                                      selectedItem: selectedCity,
+                                     
                                     );
                                   }
                                 }),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 15),
                                   child: CustomTextField(
+                                    hintText: "Enter Something more about the Counsellor",
                                     labelText:
                                         "Something more about the Counsellor",
                                     maxline: 5,

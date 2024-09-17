@@ -132,6 +132,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                             controller: somethingAbout,
                             labelText: "Something about your Devotional life *",
                             maxline: 5,
+                            hintText:
+                                "Enter Something about your Devotional life",
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter Something about your Devotional life';
@@ -204,7 +206,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                               CustomTextField(
                                 labelText: "Which Sampradaya you belong to?",
                                 //   controller: nameTemple,
-                                hintText: "",
+                                hintText:
+                                    "Enter Which Sampradaya you belong to",
                               ),
                               const SizedBox(height: 1),
                             ],
@@ -286,7 +289,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                 ],
               ),
             ),
-            if (devotionalController.isLoading.value||flowController.isLoading.value)
+            if (devotionalController.isLoading.value ||
+                flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -302,7 +306,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-            if (_formKey.currentState!.validate()) {
+          if (_formKey.currentState!.validate()) {
             devotionalController.devotionalDetails(
                 context,
                 somethingAbout.text.toString().trim(),

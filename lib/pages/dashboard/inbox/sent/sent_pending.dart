@@ -241,19 +241,19 @@ class _SentPendingState extends State<SentPending> {
                                 ],
                               ),
                             ),
-                            Row(
-                              children: [
-                                Image.asset("assets/images/whatsapp.png"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Whatsapp",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 12, color: Colors.green),
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   children: [
+                            //     Image.asset("assets/images/whatsapp.png"),
+                            //     SizedBox(
+                            //       width: 5,
+                            //     ),
+                            //     Text(
+                            //       "Whatsapp",
+                            //       style: FontConstant.styleMedium(
+                            //           fontSize: 12, color: Colors.green),
+                            //     ),
+                            //   ],
+                            // ),
                             Row(
                               children: [
                                 Image.asset("assets/images/call.png"),

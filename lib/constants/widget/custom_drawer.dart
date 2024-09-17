@@ -166,7 +166,11 @@ class CustomDrawer extends StatelessWidget {
                                         ))
                                   ]),
                                 ),
-                                SvgPicture.asset("assets/images/edit_icon.svg")
+                                GestureDetector(
+                                  onTap: () => {
+                                    Get.toNamed("/myProfile")
+                                  },
+                                  child: SvgPicture.asset("assets/images/edit_icon.svg"))
                               ],
                             ),
                           ),
@@ -191,11 +195,12 @@ class CustomDrawer extends StatelessWidget {
                   GestureDetector(
                     onTap: () => {
                       scaffoldKey.currentState?.closeDrawer()},
+
                     child: buildoption("assets/images/icons/dashboard.svg",
                         "Dashboard", 22, 22),
                   ),
                   GestureDetector(
-                    onTap: () => {Get.toNamed("/editProfile")},
+                    onTap: () => {Get.toNamed("/myProfile")},
                     child: buildoption(
                         "assets/images/profile_icon.svg", "My Profile", 22, 22),
                   ),
@@ -216,7 +221,7 @@ class CustomDrawer extends StatelessWidget {
                         "assets/images/icons/matches.svg", "Matches", 22, 22),
                   ),
                   GestureDetector(
-                      onTap: () => {Get.toNamed("/inbox")},
+                      onTap: () => {Get.toNamed("/inboxDrawer")},
                       child: buildoption(
                           "assets/images/icons/inbox.svg", "Inbox", 18, 18)),
                   GestureDetector(

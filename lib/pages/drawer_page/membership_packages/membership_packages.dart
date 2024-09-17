@@ -1,8 +1,10 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/coupons_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -120,8 +122,9 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           ],
                         ),
                       ),
-                      _buildPack(editProfileController.isLoading.value==false?
-                          editProfileController.member!.member!.accountType:editProfileController.member!.member!.accountType),
+                      _buildPack(editProfileController.isLoading.value == false
+                          ? editProfileController.member!.member!.accountType
+                          : editProfileController.member!.member!.accountType),
                       Text(
                         "\nIf we compare this application with other commercial matrimonial application, then it is more than 85% cheaper than such commercial applications. We are not having multiple kind of packages to confuse the public, we have only 2 versions. One is Free Version and Other one is Premium Version.\n",
                         textAlign: TextAlign.center,
@@ -461,22 +464,30 @@ Widget _buildDiscount(BuildContext context, List<Data> list) {
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10))),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      data.couponName,
-                      style: FontConstant.styleBold(
-                          fontSize: 13, color: AppColors.constColor),
-                    ),
-                    SvgPicture.asset("assets/images/icons/copy.svg"),
-                    Text(
-                      "COPY",
-                      style: FontConstant.styleMedium(
-                          fontSize: 12, color: AppColors.constColor),
-                    )
-                  ]),
+              child: GestureDetector(
+                onTap: () => {
+                  Clipboard.setData(ClipboardData(text: data.couponName))
+                      .then((_) {
+                    Dialogs.showSnackbar(context, 'copied ${data.couponName}');
+                  })
+                },
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        data.couponName,
+                        style: FontConstant.styleBold(
+                            fontSize: 13, color: AppColors.constColor),
+                      ),
+                      SvgPicture.asset("assets/images/icons/copy.svg"),
+                      Text(
+                        "COPY",
+                        style: FontConstant.styleMedium(
+                            fontSize: 12, color: AppColors.constColor),
+                      )
+                    ]),
+              ),
             ),
           ],
         ),

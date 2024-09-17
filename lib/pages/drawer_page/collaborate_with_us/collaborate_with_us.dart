@@ -35,6 +35,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
   String? selectedCity;
   bool isState = false;
   bool isCity = false;
+  bool show=false;
 
   bool validateDropDown() {
     if (isState == true && isCity == true) {
@@ -181,12 +182,12 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                             stateController.selectItem(
                                                 value); // Call the controller method
                                           },
-                                          borderColor: isState == false &&
+                                          borderColor:show==true&& isState == false &&
                                                   selectedState == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
                                           errorMessage: "Please select city",
-                                          errorshow: selectedState == null ? true : false,
+                                          errorshow:show==true&& selectedState == null ? true : false,
                                           hintText: 'Select State',
                                         );
                                       }
@@ -225,12 +226,12 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                             cityController.selectItem(
                                                 value); // Call the controller method
                                           },
-                                          borderColor: isCity == false &&
+                                          borderColor:show==true&& isCity == false &&
                                                   selectedCity == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
                                           errorMessage: "Please select city",
-                                          errorshow: selectedCity == null ? true : false,
+                                          errorshow:show==true&& selectedCity == null ? true : false,
                                           hintText: 'Select City',
                                         );
                                       }
@@ -246,7 +247,12 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                   child: CustomDrawerButton(
                                     color: AppColors.primaryColor,
                                     text: "SUBMIT",
-                                    onPressed: () => {
+                                    onPressed: ()  {
+                                        setState(() {
+                                          show=true;
+                                        });     
+
+
                                       if (_formKey.currentState!.validate() &&
                                           validateDropDown())
                                         {
@@ -256,7 +262,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                               phone.text.toString().trim(),
                                               email.text.toString().trim(),
                                               selectedCity.toString(),
-                                              selectedState.toString())
+                                              selectedState.toString());
                                         }
                                     },
                                     textStyle: FontConstant.styleRegular(

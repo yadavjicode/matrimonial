@@ -407,6 +407,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                             const SizedBox(height: 15),
                             CustomTextField(
                                 controller: gotraController,
+                                hintText: "Enter Gotra",
                                 labelText: 'Gotra'),
                             SizedBox(
                               height: 15,
@@ -626,6 +627,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     CustomTextField(
                                       controller: fatherbusinessController,
                                       labelText: 'What kind of business *',
+                                      hintText: "Enter kind of business",
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Please enter kind of business';
@@ -760,6 +762,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     CustomTextField(
                                       controller: mothernameController,
                                       labelText: 'Full Name of Mother *',
+                                      hintText: "Enter Full Name of Mother",
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Please enter name of mother';

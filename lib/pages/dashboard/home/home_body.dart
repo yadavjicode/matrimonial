@@ -808,7 +808,7 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
           GestureDetector(
-            onTap: () => {Get.toNamed("/profileedit")},
+            onTap: () => {Get.toNamed("/myProfile")},
             child: Container(
               padding: EdgeInsets.all(5),
               child: Text(

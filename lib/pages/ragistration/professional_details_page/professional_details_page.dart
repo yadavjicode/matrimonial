@@ -244,7 +244,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                       borderColor:show==true&& selectedEmpolyment == null
                                           ? Colors.red
                                           : Colors.black.withOpacity(0.5),
-                                      selectedItem: selectedEmpolyment,
+                                     
                                       errorMessage: "Please Select Empolyment",
                                       errorshow:show==true&& selectedEmpolyment == null
                                           ? true
@@ -290,7 +290,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                           "Please Select Working State",
                                       errorshow:show==true&&
                                           selectedState == null ? true : false,
-                                      selectedItem: selectedState,
+                                
                                       hintText: 'Select State',
                                     );
                                   }
@@ -331,7 +331,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                           "Please Select Working City",
                                       errorshow:show==true&&
                                           selectedCity == null ? true : false,
-                                      selectedItem: selectedCity,
+                                     
                                       hintText: 'Select City',
                                     );
                                   }
@@ -343,6 +343,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                   controller: pincodeController,
                                   labelText: "Pin Code",
                                   keyboardType: TextInputType.number,
+                                  hintText: "Enter Pin Code",
                                   maxlength: 6,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -384,7 +385,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                             selectedAnnualSalary == null
                                                 ? Colors.red
                                                 : Colors.black.withOpacity(0.5),
-                                        selectedItem: selectedAnnualSalary,
+                                       
                                         errorMessage: "Please Annual Income",
                                         errorshow:show==true&& selectedAnnualSalary == null
                                             ? true

@@ -1,20 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({super.key});
+class MyProfile extends StatefulWidget {
+  const MyProfile({super.key});
 
   @override
-  State<ProfileEdit> createState() => _ProfileEditState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _ProfileEditState extends State<ProfileEdit> {
+class _MyProfileState extends State<MyProfile> {
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
 
@@ -24,7 +23,6 @@ class _ProfileEditState extends State<ProfileEdit> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    
   }
 
   int _currentIndex = 0;
@@ -48,16 +46,13 @@ class _ProfileEditState extends State<ProfileEdit> {
     if (_editProfileController.member?.member?.photo5 != null) {
       imgList.add(_editProfileController.member!.member!.photo5!);
     }
-     print("Image List: $imgList"); // Debug print
+    print("Image List: $imgList"); // Debug print
     return imgList;
-  }   
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  }
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: AppColors.primaryLight,
       appBar: AppBar(
         centerTitle: true,
@@ -70,16 +65,9 @@ class _ProfileEditState extends State<ProfileEdit> {
             color: AppColors.constColor,
           ),
         ),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: SvgPicture.asset("assets/images/menu.svg"),
-          onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
-          },
-        ),
       ),
       body: Obx(() {
-         final List<String> imgList = getImageList();
+        final List<String> imgList = getImageList();
         return Stack(
           children: [
             if (_editProfileController.isLoading.value == false)
@@ -93,12 +81,10 @@ class _ProfileEditState extends State<ProfileEdit> {
           ],
         );
       }),
-      drawer: CustomDrawer(scaffoldKey: scaffoldKey),
     );
   }
 
   Widget _buildProfileContent(List<String> imgList) {
-   
     return Stack(
       children: [
         Container(
@@ -114,7 +100,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                   Container(
                     color: AppColors.constColor,
                     child: CarouselSlider(
-                      
                       options: CarouselOptions(
                         autoPlay: false,
                         enlargeCenterPage: true,

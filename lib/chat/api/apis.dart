@@ -14,6 +14,9 @@ import '../models/chat_user.dart';
 import '../models/message.dart';
 
 
+
+
+
 class APIs with ChangeNotifier {
   static final EditProfileController _editProfileController =
       Get.put(EditProfileController());
@@ -52,7 +55,6 @@ class APIs with ChangeNotifier {
 
   // to return current user
   // static User get user => auth.currentUser!;
-
   //start find another user deatils to user id =====================================================================
   Future<ChatUser?> getUserById(String userId) async {
     try {
@@ -72,6 +74,21 @@ class APIs with ChangeNotifier {
     }
   }
 //End find another user deatils to user id =====================================================================
+
+ // Test =================================================================================
+ 
+  static Future<int> getUnreadMessagesCount(String userId) async {
+    final snapshot = await firestore
+        .collection('chats')
+        .doc('${APIs.myid}_$userId')
+        .collection('messages')
+        .where('read', isEqualTo: '')
+        .where('fromId', isNotEqualTo: APIs.myid)
+        .get();
+    return snapshot.size;
+  }
+
+// Test =================================================================================
 
 //Start Update image ===========================================================================================
 static Future<bool> updateUserImage(String imageurl) async {
@@ -117,7 +134,6 @@ static Future<bool> updateUserImage(String imageurl) async {
       }
     });
   }
-
   // for sending push notification (Updated Codes)
   static Future<void> sendPushNotification(
       ChatUser chatUser, String msg) async {
@@ -244,6 +260,7 @@ static Future<bool> updateUserImage(String imageurl) async {
         .collection('my_users')
         .snapshots();
   }
+ 
 
   // for getting all users from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(

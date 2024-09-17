@@ -357,23 +357,23 @@ class ProfileHeaderState extends State<ProfileHeader> {
                             ],
                           )),
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.constColor)),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              "assets/images/icons/whatsaap.svg",
-                              width: 25,
-                              height: 25,
-                            ),
-                          ),
-                        ),
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
+                        // Container(
+                        //   height: 50,
+                        //   width: 50,
+                        //   decoration: BoxDecoration(
+                        //       shape: BoxShape.circle,
+                        //       border: Border.all(color: AppColors.constColor)),
+                        //   child: Center(
+                        //     child: SvgPicture.asset(
+                        //       "assets/images/icons/whatsaap.svg",
+                        //       width: 25,
+                        //       height: 25,
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 5,
                         ),

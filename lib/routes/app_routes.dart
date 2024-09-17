@@ -7,9 +7,11 @@ import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_u
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
 import 'package:devotee/pages/drawer_page/disclaimer/disclaimer.dart';
 import 'package:devotee/pages/drawer_page/feedback/feedback.dart';
+import 'package:devotee/pages/drawer_page/inbox/inbox_drawer.dart';
 import 'package:devotee/pages/drawer_page/matches/based_matches/based_matches.dart';
 import 'package:devotee/pages/drawer_page/matches/matches.dart';
 import 'package:devotee/pages/drawer_page/membership_packages/membership_packages.dart';
+import 'package:devotee/pages/drawer_page/my_profile/my_profile.dart';
 import 'package:devotee/pages/drawer_page/offering_your_gratitude/offering_gratitude.dart';
 import 'package:devotee/pages/drawer_page/our_mission/our_mission.dart';
 import 'package:devotee/pages/drawer_page/our_social_handles/Our_social_handles.dart';
@@ -135,6 +137,9 @@ class AppRoutes {
    static const String editFamilyDetails = '/editFamilyDetails';
    static const String editPartnerPreference = '/editPartnerPreference';
    static const String updatePhoto = '/updatePhoto';
+
+   static const String inboxDrawer = '/inboxDrawer';
+   static const String myProfile = '/myProfile';
 
    static const String seeAll = '/seeAll';
 
@@ -527,6 +532,19 @@ class AppRoutes {
      GetPage(
       name: editPartnerPreference,
       page: () => const EditPartnerPreferences(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: inboxDrawer,
+      page: () => const InboxDrawer(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+  
+     GetPage(
+      name: myProfile,
+      page: () => const MyProfile(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

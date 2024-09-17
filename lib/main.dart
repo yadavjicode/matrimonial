@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:devotee/chat/firebase_options.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/pages/splash_Screen/splash_screen.dart';

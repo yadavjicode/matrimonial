@@ -30,7 +30,7 @@ class HoroscopeDetailsController with ChangeNotifier {
         _editProfileController.userDetails(context);
         Navigator.pop(context);
       } else {
-        flowController.Flow(context, 11);
+        flowController.Flow(context, 10);
       }
 
       // Get.toNamed('/profile');
