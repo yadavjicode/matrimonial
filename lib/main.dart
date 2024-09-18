@@ -37,19 +37,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// class MyBindings extends Bindings {
-//   @override
-//   void dependencies() {
-//     Get.lazyPut<StateController>(() => StateController());
-
-//     // // Bind CityController
-//     Get.lazyPut<CityController>(() => CityController());
-//   }
-// }
-
 Future<void> _initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
   var result = await FlutterNotificationChannel.registerNotificationChannel(
       description: 'For Showing Message Notification',
       id: 'chats',

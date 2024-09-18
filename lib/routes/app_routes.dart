@@ -3,6 +3,12 @@ import 'package:devotee/pages/auth/login_page/login_page.dart';
 import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
+import 'package:devotee/pages/drawer_page/account_setting/account_setting.dart';
+import 'package:devotee/pages/drawer_page/account_setting/contact_privacy/contact_privacy_email.dart';
+import 'package:devotee/pages/drawer_page/account_setting/contact_privacy/contact_privacy_phone.dart';
+import 'package:devotee/pages/drawer_page/account_setting/more_info_privacy/more_info_privacy.dart';
+import 'package:devotee/pages/drawer_page/account_setting/profile_privacy/profile_privacy.dart';
+import 'package:devotee/pages/drawer_page/account_setting/profile_privacy/profile_setting.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
 import 'package:devotee/pages/drawer_page/disclaimer/disclaimer.dart';
@@ -114,9 +120,18 @@ class AppRoutes {
   static const String privacy = '/privacy';
   static const String testimonials = '/testimonials';
   static const String collaborate = '/collaborate';
+  static const String inboxDrawer = '/inboxDrawer';
+  static const String myProfile = '/myProfile';
 
   static const String membership = '/membership';
   static const String package = '/package';
+
+  static const String accountSetting = '/accountSetting';
+  static const String contactPrivacyPhone = '/contactPrivacyPhone';
+  static const String contactPrivacyEmail = '/contactPrivacyEmail';
+  static const String profilePrivacy = '/profilePrivacy';
+  static const String profileSetting = '/profileSetting';
+  static const String moreInfoPrivacy = '/moreInfoPrivacy';
 
   static const String matches = '/matches';
   static const String basedMatches = '/basedMatches';
@@ -138,8 +153,7 @@ class AppRoutes {
    static const String editPartnerPreference = '/editPartnerPreference';
    static const String updatePhoto = '/updatePhoto';
 
-   static const String inboxDrawer = '/inboxDrawer';
-   static const String myProfile = '/myProfile';
+  
 
    static const String seeAll = '/seeAll';
 
@@ -545,6 +559,43 @@ class AppRoutes {
      GetPage(
       name: myProfile,
       page: () => const MyProfile(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+
+     GetPage(
+      name: accountSetting,
+      page: () => const AccountSetting(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: contactPrivacyPhone,
+      page: () => const ContactPrivacyPhone(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: contactPrivacyEmail,
+      page: () => const ContactPrivacyEmail(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: profilePrivacy,
+      page: () => const ProfilePrivacy(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: profileSetting,
+      page: () => const ProfileSetting(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+      GetPage(
+      name: moreInfoPrivacy,
+      page: () => const MoreInfoPrivacy(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
