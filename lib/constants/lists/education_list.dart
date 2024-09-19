@@ -1,5 +1,4 @@
 import 'package:devotee/utils/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +29,7 @@ class EducationController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       String apiUrl =
-          '${ApiConstants.baseUrl}${ApiConstants.education_list_Url}';
+          '${ApiConstants.baseUrl}${ApiConstants.educationlistUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

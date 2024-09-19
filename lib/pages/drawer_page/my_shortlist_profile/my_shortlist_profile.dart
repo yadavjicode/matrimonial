@@ -4,7 +4,6 @@ import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
-import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
@@ -16,14 +15,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class MyShorlistProfile extends StatefulWidget {
-  const MyShorlistProfile({super.key});
+class MyShorlistProfileD extends StatefulWidget {
+  const MyShorlistProfileD({super.key});
 
   @override
-  State<MyShorlistProfile> createState() => _MyShorlistProfileState();
+  State<MyShorlistProfileD> createState() => _MyShorlistProfileDState();
 }
 
-class _MyShorlistProfileState extends State<MyShorlistProfile> {
+class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
   final ShortlistedListController shortlistedListController =
@@ -64,10 +63,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: AppColors.primaryLight,
       appBar: AppBar(
         elevation: 0,
@@ -77,13 +73,6 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           "My Shortlisted Profiles",
           style: FontConstant.styleMedium(
               fontSize: 18, color: AppColors.constColor),
-        ),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: SvgPicture.asset("assets/images/menu.svg"),
-          onPressed: () {
-            scaffoldKey.currentState?.openDrawer();
-          },
         ),
       ),
       body: Stack(children: [
@@ -112,7 +101,6 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           );
         })
       ]),
-      drawer: CustomDrawer(scaffoldKey: scaffoldKey),
     );
   }
 
@@ -258,12 +246,11 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                       if (userProfileController.member!.member!.accountType !=
                           1)
                         GestureDetector(
-                          onTap: () => {Get.toNamed("/membership")},
+                           onTap: () => {Get.toNamed("/membership")},
                           child: Container(
                             alignment: Alignment.center,
                             padding: EdgeInsets.all(3),
-                            margin:
-                                EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                            margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                             decoration: BoxDecoration(
                                 color: AppColors.primaryLight,
                                 borderRadius:

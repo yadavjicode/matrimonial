@@ -23,13 +23,13 @@ class _InboxState extends State<Inbox> {
   bool showFirstPage = true;
   bool showSecondPage = false;
   InboxSentController inboxSentController = Get.put(InboxSentController());
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       inboxSentController.inboxSent(context, "Pending");
-      
     });
     updateTextColors();
   }
@@ -66,7 +66,6 @@ class _InboxState extends State<Inbox> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppColors.primaryLight,

@@ -1,28 +1,29 @@
 import 'dart:developer';
 
+import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/models/chat_user.dart';
+import 'package:devotee/chat/screens/profile_screen.dart';
+import 'package:devotee/chat/widgets/chat_user_card.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import '../api/apis.dart';
-import '../helper/dialogs.dart';
-import '../models/chat_user.dart';
-import '../widgets/chat_user_card.dart';
-import '../../constants/widget/profile_image.dart';
-import 'profile_screen.dart';
+
 
 //home screen -- where all available contacts are shown
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ChatHomeDScreen extends StatefulWidget {
+  const ChatHomeDScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ChatHomeDScreen> createState() => _ChatHomeDScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class _ChatHomeDScreenState extends State<ChatHomeDScreen> {
+  
   
   // for storing all users
   List<ChatUser> _list = [];
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       //
       child: Scaffold(
-        key: scaffoldKey,
+       
         backgroundColor: AppColors.background,
         //app bar
         appBar: AppBar(
@@ -99,12 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           backgroundColor: AppColors.primaryColor,
           //view profile
-          leading: IconButton(
-            icon: SvgPicture.asset("assets/images/menu.svg"),
-            onPressed: () {
-              scaffoldKey.currentState?.openDrawer();
-            },
-          ),
+         
           //title
           title: _isSearching
               ? TextField(
@@ -158,27 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? CupertinoIcons.clear_circled_solid
                     : CupertinoIcons.search)),
 
-            //add new user
-            // IconButton(
-            //     tooltip: 'Add User',
-            //     padding: const EdgeInsets.only(right: 8),
-            //     onPressed: _addChatUserDialog,
-            //     icon: const Icon(CupertinoIcons.person_add, size: 25))
           ],
         ),
 
-        //floating button to add AI Screen
-        // floatingActionButton: Padding(
-        //   padding: const EdgeInsets.only(bottom: 10),
-        //   child: FloatingActionButton(
-        //       backgroundColor: Colors.white,
-        //       onPressed: () {
-        //         Navigator.push(context,
-        //             MaterialPageRoute(builder: (_) => const AiScreen()));
-        //       },
-        //       child: Lottie.asset('assets/lottie/ai.json', width: 40)),
-        // ),
-
+       
         //body
         body: Stack(children: [
           Container(
@@ -250,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ]),
-        drawer: CustomDrawer(scaffoldKey: scaffoldKey),
+       
       ),
       // ),
     );

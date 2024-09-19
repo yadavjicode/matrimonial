@@ -1,3 +1,4 @@
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +53,7 @@ class _SentAcceptedState extends State<SentAccepted> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxSentController.member;
-     if (member == null ||
+    if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
       return Center(
@@ -66,27 +67,23 @@ class _SentAcceptedState extends State<SentAccepted> {
               style: FontConstant.styleMedium(
                   fontSize: 15, color: AppColors.darkgrey)));
     } else {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
-          children: inboxSentController.member!.responseData!.data!.map((data) {
-            String name = "${data.name ?? ""} ${data.surename ?? ""}";
-            String date =
-                DateFormat('dd-MM-yyyy').format(DateTime.parse(data.updatedAt));
-            String mId = data.receicedMatriID ?? "";
-            String image = data.photo1 != null
-                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : data.gender == "Male"
-                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            children:
+                inboxSentController.member!.responseData!.data!.map((data) {
+              String name = "${data.name ?? ""} ${data.surename ?? ""}";
+              String date = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(data.updatedAt));
+              String mId = data.receicedMatriID ?? "";
+              String image = data.photo1 != null
+                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                  : data.gender == "Male"
+                      ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                      : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-            return GestureDetector(
-              onTap: () {
-                profileDetailsController.profileDetails(context, mId, "",
-                    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]);
-              },
-              child: Container(
+              return Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey.shade200),
@@ -99,16 +96,27 @@ class _SentAcceptedState extends State<SentAccepted> {
                         Padding(
                           padding: const EdgeInsets.only(
                               left: 10, top: 8, bottom: 10, right: 2),
-                          child: Container(
-                            width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: AppColors.grey),
-                            child: ClipOval(
-                                child: Image.network(
-                              image,
-                              fit: BoxFit.fill,
-                            )),
+                          child: GestureDetector(
+                            onTap: () {
+                              profileDetailsController.profileDetails(
+                                  context, mId, "", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
+                            },
+                            child: ProfileImage(
+                              size: screenWidth * 0.2,
+                              url: image,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -118,7 +126,8 @@ class _SentAcceptedState extends State<SentAccepted> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -210,11 +219,11 @@ class _SentAcceptedState extends State<SentAccepted> {
                     ),
                   ],
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
-      ),
-    );}
+      );
+    }
   }
 }

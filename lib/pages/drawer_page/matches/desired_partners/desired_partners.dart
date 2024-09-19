@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../constants/widget/profile_image.dart';
+
 class DesiredPartner extends StatefulWidget {
   const DesiredPartner({super.key});
 
@@ -105,26 +107,20 @@ class _DesiredPartnerState extends State<DesiredPartner> {
               style: FontConstant.styleMedium(
                   fontSize: 15, color: AppColors.darkgrey)));
     } else {
-    return SingleChildScrollView(
-      controller: _scrollController,
-      scrollDirection: Axis.vertical,
-      child: Column(children: [
-        ...matchesController.matches.map((data) {
-          String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID ?? "";
-          String image = data.photo1 != null
-              ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-              : data.gender == "Male"
-                  ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                  : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
-          //String head = entry.value[1];
+      return SingleChildScrollView(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        child: Column(children: [
+          ...matchesController.matches.map((data) {
+            String name = "${data.name ?? ""} ${data.surename ?? ""}";
+            String id = data.matriID ?? "";
+            String image = data.photo1 != null
+                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                : data.gender == "Male"
+                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-          return GestureDetector(
-            onTap: () {
-              profileDetailsController.profileDetails(context, id, "matches",
-                  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]);
-            },
-            child: Container(
+            return Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
               decoration: BoxDecoration(
                 color: AppColors.constColor,
@@ -140,19 +136,26 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
-                          Container(
-                            height: (screenWidth * 0.4) * (5 / 4),
-                            width: screenWidth * 0.4,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              child: Image.network(
-                                "$image",
-                                height: (screenWidth * 0.4) * (5 / 4),
-                                width: screenWidth * 0.4,
-                                filterQuality: FilterQuality.high,
-                                fit: BoxFit.fill,
-                              ),
+                          GestureDetector(
+                            onTap: () {
+                              profileDetailsController.profileDetails(
+                                  context, id, "matches", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
+                            },
+                            child: ProfileImageSquare(
+                              size: screenWidth * 0.4,
+                              url: image,
                             ),
                           ),
                           Positioned(
@@ -385,7 +388,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 }
                               } else {
                                 Dialogs.showSnackbar(
-                                    context, 'User does not accepted list!');
+                                    context, 'The user is not added in your list!');
                               }
                             },
                             child: Row(
@@ -453,21 +456,20 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                   )
                 ],
               ),
-            ),
-          );
-        }).toList(),
-        if (matchesController
-            .isLoading.value) // Progress indicator at the bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+            );
+          }).toList(),
+          if (matchesController
+              .isLoading.value) // Progress indicator at the bottom
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
-          ),
-      ]),
-    );
+        ]),
+      );
     }
   }
 }

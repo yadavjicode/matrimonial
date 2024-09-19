@@ -28,7 +28,7 @@ class DietController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.diet_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.dietUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

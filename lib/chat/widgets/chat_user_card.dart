@@ -5,7 +5,7 @@ import '../models/chat_user.dart';
 import '../models/message.dart';
 import '../screens/chat_screen.dart';
 import 'dialogs/profile_dialog.dart';
-import 'profile_image.dart';
+import '../../constants/widget/profile_image.dart';
 
 //card to represent a single user in home screen
 class ChatUserCard extends StatefulWidget {

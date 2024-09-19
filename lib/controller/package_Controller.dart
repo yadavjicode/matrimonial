@@ -1,6 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
-import 'package:devotee/model/coupons_model.dart';
 import 'package:devotee/model/package_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,6 @@ class PackageController with ChangeNotifier {
 
   Future<void> package(
     BuildContext context
-    
   ) async {
     isLoading.value = true;
     _error = null;

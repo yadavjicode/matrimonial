@@ -7,7 +7,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../widgets/profile_image.dart';
+import '../../constants/widget/profile_image.dart';
 
 //profile screen -- to show signed in user info
 class ProfileScreen extends StatefulWidget {
@@ -133,9 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(height: screenHeight * .02),
 
                       // user email label
-                      Text("${widget.user.name} (ID:${widget.user.id})",
-                          style: const TextStyle(
-                              color: AppColors.black, fontSize: 16)),
+                      Text("${widget.user.name}",
+                          style: FontConstant.styleSemiBold(fontSize: 16, color: AppColors.black)),
 
                       // for adding some space
                       SizedBox(height: screenHeight * .03),
@@ -194,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             shape: const StadiumBorder(),
                             backgroundColor: AppColors.primaryColor,
                             minimumSize:
-                                Size(screenWidth * .5, screenHeight * .06)),
+                                Size(screenWidth * .5, screenHeight * .05)),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
@@ -204,9 +203,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             });
                           }
                         },
-                        icon: const Icon(Icons.edit, size: 28),
-                        label: const Text('UPDATE',
-                            style: TextStyle(fontSize: 16)),
+                        icon: const Icon(Icons.edit, size: 24),
+                        label:  Text('UPDATE',
+                            style: FontConstant.styleRegular(fontSize:16 , color: AppColors.constColor)),
                       )
                     ],
                   ),

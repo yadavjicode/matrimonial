@@ -16,7 +16,7 @@ class EditProfilePhotoController extends GetxController {
       Get.put(EditProfileController());
 
   // Method to handle the complete profile update process
-  Future<void> profileCompleteFill(BuildContext context,String value) async {
+  Future<void> profileCompleteFill(BuildContext context, String value) async {
     final profileModel = EditProfilePhotoModel();
     isLoading.value = true;
 
@@ -26,31 +26,28 @@ class EditProfilePhotoController extends GetxController {
       }
 
       final response = await EditProfilePhotoModel.editProfile(
-          profileModel, selectedImage.value!,value);
+          profileModel, selectedImage.value!, value);
       if (response["status"] == true) {
-        print('Profile update successful: ${response['data']}');
+        print('Photo update successful: ${response['data']}');
         editProfileController.userDetails(context).then((value) {
           final photoUrl = editProfileController.member?.member?.Photo1;
           if (photoUrl != null && photoUrl.isNotEmpty) {
             APIs.updateUserImage("http://devoteematrimony.aks.5g.in/$photoUrl");
           }
         });
-        Dialogs.showSnackbarPop(
-            context, 'Profile update successful: ${response['data']}');
+        Dialogs.showSnackbarPop(context, 'Photo Updated successfully');
       } else {
-        print('Profile update failed: ${response['message']}');
+        print('Photo update failed: ${response['message']}');
 
-        Dialogs.showSnackbar(
-            Get.context!, 'Profile update failed: ${response['message']}');
+        Dialogs.showSnackbar(Get.context!, 'Photo Update failed');
       }
     } catch (e) {
-      print('Profile update failed: $e');
-      Dialogs.showSnackbar(Get.context!, 'Profile update failed: $e');
+      print('Photo update failed: $e');
+      Dialogs.showSnackbar(Get.context!, 'Photo update failed: $e');
     } finally {
       isLoading.value = false;
     }
   }
-
 
   // Method to pick an image from the gallery
   Future<void> pickImageFromGallery() async {

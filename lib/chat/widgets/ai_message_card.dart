@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 
 import '../models/message.dart';
-import 'profile_image.dart';
+import '../../constants/widget/profile_image.dart';
 
 class AiMessageCard extends StatelessWidget {
   final AiMessage message;

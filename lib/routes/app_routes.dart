@@ -9,6 +9,7 @@ import 'package:devotee/pages/drawer_page/account_setting/contact_privacy/contac
 import 'package:devotee/pages/drawer_page/account_setting/more_info_privacy/more_info_privacy.dart';
 import 'package:devotee/pages/drawer_page/account_setting/profile_privacy/profile_privacy.dart';
 import 'package:devotee/pages/drawer_page/account_setting/profile_privacy/profile_setting.dart';
+import 'package:devotee/pages/drawer_page/chat/chat.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
 import 'package:devotee/pages/drawer_page/disclaimer/disclaimer.dart';
@@ -18,6 +19,7 @@ import 'package:devotee/pages/drawer_page/matches/based_matches/based_matches.da
 import 'package:devotee/pages/drawer_page/matches/matches.dart';
 import 'package:devotee/pages/drawer_page/membership_packages/membership_packages.dart';
 import 'package:devotee/pages/drawer_page/my_profile/my_profile.dart';
+import 'package:devotee/pages/drawer_page/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/drawer_page/offering_your_gratitude/offering_gratitude.dart';
 import 'package:devotee/pages/drawer_page/our_mission/our_mission.dart';
 import 'package:devotee/pages/drawer_page/our_social_handles/Our_social_handles.dart';
@@ -122,6 +124,8 @@ class AppRoutes {
   static const String collaborate = '/collaborate';
   static const String inboxDrawer = '/inboxDrawer';
   static const String myProfile = '/myProfile';
+  static const String chatDrawer = '/chatDrawer';
+  static const String shortlistProfileDrawer = '/shortlistProfileDrawer';
 
   static const String membership = '/membership';
   static const String package = '/package';
@@ -596,6 +600,18 @@ class AppRoutes {
       GetPage(
       name: moreInfoPrivacy,
       page: () => const MoreInfoPrivacy(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: chatDrawer,
+      page: () => const ChatHomeDScreen(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: shortlistProfileDrawer,
+      page: () => const MyShorlistProfileD(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

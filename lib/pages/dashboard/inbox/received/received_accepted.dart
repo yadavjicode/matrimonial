@@ -1,3 +1,4 @@
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
-   if (member == null ||
+    if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
       return Center(
@@ -66,40 +67,23 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
               style: FontConstant.styleMedium(
                   fontSize: 15, color: AppColors.darkgrey)));
     } else {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
-          children:
-              inboxReceivedController.member!.responseData!.data!.map((data) {
-            String name = "${data.name ?? ""} ${data.surename ?? ""}";
-            String date =
-                DateFormat('dd-MM-yyyy').format(DateTime.parse(data.updatedAt));
-            String mId = data.sentMatriID ?? "";
-            String image = data.photo1 != null
-                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : data.gender == "Male"
-                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            children:
+                inboxReceivedController.member!.responseData!.data!.map((data) {
+              String name = "${data.name ?? ""} ${data.surename ?? ""}";
+              String date = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(data.updatedAt));
+              String mId = data.sentMatriID ?? "";
+              String image = data.photo1 != null
+                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                  : data.gender == "Male"
+                      ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                      : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-            return GestureDetector(
-              onTap: () {
-                  profileDetailsController.profileDetails(
-                            context, mId, "", [
-                          "1",
-                          "2",
-                          "3",
-                          "4",
-                          "5",
-                          "6",
-                          "7",
-                          "8",
-                          "9",
-                          "10",
-                          "11"
-                        ]);
-              },
-              child: Container(
+              return Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: Colors.grey.shade200),
@@ -110,17 +94,29 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10,right: 2),
-                          child: Container(
-                            width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: AppColors.grey),
-                            child: ClipOval(
-                                child: Image.network(
-                              image,
-                              fit: BoxFit.fill,
-                            )),
+                          padding: const EdgeInsets.only(
+                              left: 10, top: 10, bottom: 10, right: 2),
+                          child: GestureDetector(
+                            onTap: () {
+                              profileDetailsController.profileDetails(
+                                  context, mId, "", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
+                            },
+                            child: ProfileImage(
+                              size: screenWidth * 0.2,
+                              url: image,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -130,7 +126,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -221,12 +218,11 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                     ),
                   ],
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
-      ),
-    );
+      );
     }
   }
 }

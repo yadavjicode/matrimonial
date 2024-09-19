@@ -20,7 +20,7 @@ class EditProfilePhotoModel {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
     );
 
     request.headers['Authorization'] = 'Bearer $token';

@@ -6,6 +6,7 @@ import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -105,29 +106,21 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
               style: FontConstant.styleMedium(
                   fontSize: 15, color: AppColors.darkgrey)));
     } else {
-    return SingleChildScrollView(
-      controller: _scrollController,
-      scrollDirection: Axis.vertical,
-      child: Column(children: [
-        ...matchesController.matches.map((data) {
-          String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID ?? "";
-          String image = data.photo1 != null
-              ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-              : data.gender == "Male"
-                  ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                  : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
-          //String head = entry.value[1];
+      return SingleChildScrollView(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        child: Column(children: [
+          ...matchesController.matches.map((data) {
+            String name = "${data.name ?? ""} ${data.surename ?? ""}";
+            String id = data.matriID ?? "";
+            String image = data.photo1 != null
+                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                : data.gender == "Male"
+                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+            //String head = entry.value[1];
 
-          return GestureDetector(
-            onTap: () {
-              profileDetailsController.profileDetails(
-                  context,
-                  id,
-                  "daily_recommendation",
-                  ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]);
-            },
-            child: Container(
+            return Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
               decoration: BoxDecoration(
                 color: AppColors.constColor,
@@ -143,19 +136,26 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
-                          Container(
-                            height: (screenWidth * 0.4) * (5 / 4),
-                            width: screenWidth * 0.4,
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              child: Image.network(
-                                "$image",
-                                height: (screenWidth * 0.4) * (5 / 4),
-                                width: screenWidth * 0.4,
-                                filterQuality: FilterQuality.high,
-                                fit: BoxFit.fill,
-                              ),
+                          GestureDetector(
+                            onTap: () {
+                              profileDetailsController.profileDetails(
+                                  context, id, "daily_recommendation", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
+                            },
+                            child: ProfileImageSquare(
+                              size: screenWidth * 0.4,
+                              url: image,
                             ),
                           ),
                           Positioned(
@@ -388,7 +388,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                 }
                               } else {
                                 Dialogs.showSnackbar(
-                                    context, 'User does not accepted list!');
+                                    context, 'The user is not added in your list!');
                               }
                             },
                             child: Row(
@@ -456,21 +456,20 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                   )
                 ],
               ),
-            ),
-          );
-        }).toList(),
-        if (matchesController
-            .isLoading.value) // Progress indicator at the bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+            );
+          }).toList(),
+          if (matchesController
+              .isLoading.value) // Progress indicator at the bottom
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
-          ),
-      ]),
-    );
+        ]),
+      );
     }
   }
 }

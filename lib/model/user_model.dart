@@ -337,8 +337,14 @@ class Member {
   dynamic employmentSummary;
   dynamic Photo1;
   dynamic accountType;
+  dynamic hideLastActiveStatus;
+  dynamic hideOnlineStatus;
+  dynamic hideProfileStatus;
+  dynamic hidePhoneStatus;
+  dynamic hideEmailStatus;
+  dynamic hideAstroStatus;
+
   dynamic spiritualCounselerConnected;
-  
 
   Member(
       {this.id,
@@ -645,8 +651,13 @@ class Member {
       this.instagramId,
       this.employmentSummary,
       this.Photo1,
-      this.accountType
-      });
+      this.hideLastActiveStatus,
+      this.hideOnlineStatus,
+      this.hidePhoneStatus,
+      this.hideEmailStatus,
+      this.hideProfileStatus,
+      this.hideAstroStatus,
+      this.accountType});
 
   Member.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -952,13 +963,18 @@ class Member {
     step11 = json['step_11'];
     step12 = json['step_12'];
     step13 = json['step_13'];
-     accountType = json['account_type'];
+    accountType = json['account_type'];
     spiritualName = json['spiritual_name'];
     instagramId = json['instagram_id'];
     employmentSummary = json['employment_summary'];
     spiritualCounselerConnected = json['spiritual_counseler_connected'];
     Photo1 = json['Photo1'];
-   
+    hideLastActiveStatus=json['hide_last_active'];
+    hideOnlineStatus=json['hide_online_status'];
+    hidePhoneStatus=json['hide_phone_status'];
+    hideEmailStatus=json['hide_email_status'];
+    hideProfileStatus=json['hide_profile_temp'];
+    hideAstroStatus=json['hide_astrological_info'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1273,6 +1289,12 @@ class Member {
     data['Photo1'] = this.Photo1;
     data['account_type'] = this.accountType;
     data['spiritual_counseler_connected'] = this.spiritualCounselerConnected;
+    data['hide_last_active'] = this.hideLastActiveStatus;
+    data['hide_online_status'] = this.hideOnlineStatus;
+    data['hide_phone_status'] = this.hidePhoneStatus;
+    data['hide_email_status'] = this.hideEmailStatus;
+    data['hide_profile_temp'] = this.hideProfileStatus;
+    data['hide_astrological_info'] = this.hideAstroStatus;
     return data;
   }
 }

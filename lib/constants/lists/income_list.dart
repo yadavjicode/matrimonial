@@ -28,7 +28,7 @@ class IncomeController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.income_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.incomeUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

@@ -1,10 +1,8 @@
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/main.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../../models/chat_user.dart';
 import '../../screens/view_profile_screen.dart';
-import '../profile_image.dart';
+import '../../../constants/widget/profile_image.dart';
 
 class ProfileDialog extends StatelessWidget {
   const ProfileDialog({super.key, required this.user});

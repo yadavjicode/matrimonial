@@ -35,9 +35,6 @@ class _HomeState extends State<Home> {
       Get.put(ProfileDetailsController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
- 
-
- 
 
   @override
   void initState() {
@@ -45,12 +42,8 @@ class _HomeState extends State<Home> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       editProfileController.userDetails(context);
       dashboardController.dashboard(context);
-      
     });
-    
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +54,6 @@ class _HomeState extends State<Home> {
       key: _scaffoldKey,
       backgroundColor: AppColors.primaryLight,
       body: Obx(() {
-      
         return Stack(
           children: [
             Stack(children: [
@@ -146,7 +138,12 @@ class _HomeState extends State<Home> {
                                 if (dashboardController.isLoading.value ==
                                     false)
                                   Text(
-                                    "${dashboardController.member!.responseData!.receivedInvitation}",
+                                    dashboardController.member != null &&
+                                            dashboardController
+                                                    .member!.responseData !=
+                                                null
+                                        ? "${dashboardController.member!.responseData!.receivedInvitation}"
+                                        : "0",
                                     style: FontConstant.styleRegular(
                                         fontSize: 22,
                                         color: AppColors.primaryColor),
@@ -174,7 +171,7 @@ class _HomeState extends State<Home> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                 "0",
+                                  "0",
                                   style: FontConstant.styleRegular(
                                       fontSize: 22,
                                       color: AppColors.primaryColor),

@@ -29,7 +29,7 @@ class MaritalController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.marital_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.maritalUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

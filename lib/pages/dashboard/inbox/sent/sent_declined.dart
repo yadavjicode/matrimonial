@@ -1,3 +1,4 @@
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
@@ -81,14 +82,9 @@ class _SentDeclinedState extends State<SentDeclined> {
                   // Get.toNamed('/profiledtls');
                 },
                 child: Container(
-                  //  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   decoration: BoxDecoration(
-                    // color: selectedIndex == index
-                    //     ? Colors.grey.shade300
-                    //     : Colors.white,
                     color: Colors.white,
                     border: Border.all(color: Colors.grey.shade200),
-                    //  borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     children: [
@@ -98,17 +94,9 @@ class _SentDeclinedState extends State<SentDeclined> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, top: 8, bottom: 10, right: 2),
-                            child: Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.grey),
-                              child: ClipOval(
-                                  child: Image.network(
-                                image,
-                                fit: BoxFit.fill,
-                              )),
+                            child: ProfileImage(
+                              size: screenWidth * 0.2,
+                              url: image,
                             ),
                           ),
                           Expanded(

@@ -1,5 +1,6 @@
 import 'package:devotee/model/about_groombride_model.dart';
 import 'package:devotee/model/accepted_model.dart';
+import 'package:devotee/model/account_setting_model.dart';
 import 'package:devotee/model/basic_details_model.dart';
 import 'package:devotee/model/buy_package_model.dart';
 import 'package:devotee/model/collaborate_model.dart';
@@ -21,6 +22,7 @@ import 'package:devotee/model/matches_model.dart';
 import 'package:devotee/model/otp_model.dart';
 import 'package:devotee/model/package_model.dart';
 import 'package:devotee/model/partner_preference_model.dart';
+import 'package:devotee/model/photo_delete_model.dart';
 import 'package:devotee/model/professional_details_model.dart';
 import 'package:devotee/model/profile_a_model.dart';
 import 'package:devotee/model/profile_details_model.dart';
@@ -42,7 +44,7 @@ class ApiService {
 //== Start Api Login ====================================================================================================
   Future<LoginModel> login(String mobileNo) async {
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.login_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.loginUrl}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'Mobile': mobileNo, 'step_0': "1"}),
     );
@@ -62,7 +64,7 @@ class ApiService {
 
   Future<OtpModel> otp(String mobileNo, String otp) async {
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.login_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.loginUrl}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'Mobile': mobileNo, 'otp': otp, 'step_0': "1"}),
     );
@@ -89,7 +91,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -130,7 +132,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -174,7 +176,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -226,7 +228,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -277,7 +279,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -319,7 +321,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -363,7 +365,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -407,7 +409,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -447,7 +449,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -482,7 +484,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -539,7 +541,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragis_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -594,7 +596,7 @@ class ApiService {
     }
 
     final response = await http.get(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.user_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.userUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -645,8 +647,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.partner_preference_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.partnerpreferenceUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -727,7 +728,7 @@ class ApiService {
 
     final response = await http.post(
         Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.search_Url}?page=$page'),
+            '${ApiConstants.baseUrl}${ApiConstants.searchUrl}?page=$page'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -758,7 +759,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.proileDetails_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.proileDetailsUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -792,7 +793,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.sentInvitation_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.sentInvitationUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -826,7 +827,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.inboxSent_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.inboxSentUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -860,7 +861,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.inboxReceived_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.inboxReceivedUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -894,7 +895,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.accepted_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.acceptedUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -928,7 +929,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.declined_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.declinedUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -962,7 +963,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.feedback_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.feedbackUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -995,7 +996,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.complaint_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.complaintUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1030,7 +1031,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.dashboard_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.dashboardUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1059,7 +1060,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.testimonial_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.testimonialUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1088,16 +1089,15 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.suggestion_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.suggestionUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
-        "email":email,
+        "email": email,
         "suggestion": suggestion,
-        
-        }),
+      }),
     );
 
     if (response.statusCode == 200) {
@@ -1123,7 +1123,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.collaborate_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.collaborateUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1159,8 +1159,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse(
-          '${ApiConstants.baseUrl}${ApiConstants.matches_Url}?page=$page'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.matchesUrl}?page=$page'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1194,7 +1193,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.shortlist_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.shortlistUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1226,7 +1225,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.shortlisted_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.shortlistedUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1257,7 +1256,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.withdrawal_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.withdrawalUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1289,7 +1288,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.coupons_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.couponsUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1318,7 +1317,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.package_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.packageUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1347,7 +1346,7 @@ class ApiService {
     }
 
     final response = await http.post(
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.buyPackage_Url}'),
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.buyPackageUrl}'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -1364,4 +1363,75 @@ class ApiService {
     }
   }
 //==== End Api Buy Package==========================================================================================
+
+//==== Start Api AccountSetting==========================================================================================
+
+  Future<AccountSettingModel> accountSetting(
+   String key, int value
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.accountSettingUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        key: value,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return AccountSettingModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api AccountSetting==========================================================================================
+
+//==== Start Api Photo Delete==========================================================================================
+
+  Future<PhotoDeleteModel> photoDelete(
+   String key, int value
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.deletePhotoUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        key: value,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return PhotoDeleteModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Photo Delete==========================================================================================
+
+
+
 }

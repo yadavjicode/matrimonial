@@ -1,3 +1,4 @@
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/accepted_controller.dart';
 import 'package:devotee/controller/declined_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
@@ -104,20 +105,10 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                       children: [
                         Padding(
                            padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10,right: 2),
-                          child: Container(
-                           width: screenWidth * 0.2,
-                            height: screenWidth * 0.2,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.grey,
+                          child:  ProfileImage(
+                              size: screenWidth * 0.2,
+                              url: image,
                             ),
-                            child: ClipOval(
-                              child: Image.network(
-                                image,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
                         ),
                         Expanded(
                           child: Padding(

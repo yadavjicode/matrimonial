@@ -357,7 +357,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
     if (profileDetailsController.member!.data!.spiritualConnected == "Yes") {
       spiritualDetails.addAll([
         {
-          "title": "I am connected with any Spirtual Counsellor",
+          "title": "connected with any Spirtual Counsellor",
           "value":
               "${profileDetailsController.member!.data!.spiritualConnected ?? "Not Mentioned"}"
         },
@@ -395,7 +395,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
     } else {
       spiritualDetails.addAll([
         {
-          "title": "I am connected with any Spirtual Counsellor",
+          "title": "connected with any Spirtual Counsellor",
           "value":
               "${profileDetailsController.member!.data!.spiritualConnected ?? "Not Mentioned"}"
         },

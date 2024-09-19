@@ -30,7 +30,7 @@ class MotherTongueController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       String apiUrl =
-          '${ApiConstants.baseUrl}${ApiConstants.mother_tongue_Url}';
+          '${ApiConstants.baseUrl}${ApiConstants.mothertongueUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

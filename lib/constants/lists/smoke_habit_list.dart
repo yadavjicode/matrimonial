@@ -29,7 +29,7 @@ class SmokeHabitController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.smoke_habits_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.smokehabitsUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

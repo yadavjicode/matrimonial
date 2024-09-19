@@ -28,7 +28,7 @@ class WeightController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.weight_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.weightUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

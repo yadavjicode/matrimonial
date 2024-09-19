@@ -28,7 +28,7 @@ class HeightController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.height_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.heightUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

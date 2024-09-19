@@ -10,7 +10,7 @@ import '../helper/my_date_util.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
 import '../widgets/message_card.dart';
-import '../widgets/profile_image.dart';
+import '../../constants/widget/profile_image.dart';
 import 'view_profile_screen.dart';
 
 class ChatScreen extends StatefulWidget {

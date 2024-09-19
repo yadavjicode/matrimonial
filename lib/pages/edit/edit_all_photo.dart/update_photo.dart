@@ -26,7 +26,9 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
     final String imageurl = arguments['imageUrl'];
     final String values = arguments['value'];
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
+        
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
@@ -58,7 +60,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
             Container(
               width: screenWidth*1,
               height:(screenWidth*1)*(5/4) ,
-              color: AppColors.black,
+              color: AppColors.constColor,
               child: editProfilePhotoController.selectedImage.value != null
                   ? Image.file(editProfilePhotoController.selectedImage.value!,
                       fit: BoxFit.fill)

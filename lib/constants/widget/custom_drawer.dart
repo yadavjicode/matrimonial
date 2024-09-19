@@ -1,3 +1,4 @@
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
@@ -5,6 +6,7 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/logout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 class CustomDrawer extends StatelessWidget {
   GlobalKey<ScaffoldState> scaffoldKey;
@@ -42,17 +44,17 @@ class CustomDrawer extends StatelessWidget {
                               Stack(children: [
                                 editProfileController.member == null
                                     ? SizedBox()
-                                    : Container(
-                                        height: 70,
-                                        width: 70,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors.grey),
-                                        child: ClipOval(
-                                            child: Image.network(
-                                          "${editProfileController.member!.member!.photo1 != null ? "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.photo1}" : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"}",
-                                          fit: BoxFit.fill,
-                                        )),
+                                    : ProfileImage(
+                                        size: 71,
+                                        url: editProfileController
+                                                    .member!.member!.photo1 !=
+                                                null
+                                            ? "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.photo1}"
+                                            : editProfileController.member!
+                                                        .member!.gender ==
+                                                    "Male"
+                                                ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                                                : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg",
                                       ),
                                 Container(
                                   width: 70.0,
@@ -86,30 +88,46 @@ class CustomDrawer extends StatelessWidget {
                                           ),
                                     Row(
                                       children: [
-                                        Image.asset(
-                                            "assets/images/Protect.png"),
-                                        Text(
-                                          "Verified",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FontConstant.styleMedium(
-                                              fontSize: 12,
-                                              color: AppColors.constColor),
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                                "assets/images/Protect.png"),
+                                            Text(
+                                              "Verified",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: FontConstant.styleMedium(
+                                                  fontSize: 12,
+                                                  color: AppColors.constColor),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              left: 4, right: 4),
-                                          height: 15,
-                                          width: 1,
-                                          color: AppColors.grey,
-                                        ),
-                                        Image.asset("assets/images/Crown.png"),
-                                        Text(
-                                          "Platanium",
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FontConstant.styleMedium(
-                                              fontSize: 12,
-                                              color: AppColors.constColor),
-                                        ),
+                                        if (editProfileController
+                                                .member?.member?.accountType ==
+                                            1)
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                left: 4, right: 4),
+                                            height: 15,
+                                            width: 1,
+                                            color: AppColors.grey,
+                                          ),
+                                        if (editProfileController
+                                                .member?.member?.accountType ==
+                                            1)
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                  "assets/images/Crown.png"),
+                                              Text(
+                                                "Premium",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color:
+                                                        AppColors.constColor),
+                                              ),
+                                            ],
+                                          )
                                       ],
                                     ),
                                   ],
@@ -144,9 +162,7 @@ class CustomDrawer extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(
                                             4.0), // Adjust the radius as needed
                                         child: LinearProgressIndicator(
-                                          value: (editProfileController
-                                                  .member!.profilePercentage) /
-                                              100,
+                                          value: (editProfileController.member?.profilePercentage ?? 0) / 100,
                                           backgroundColor: Colors.grey.shade100,
                                           color: AppColors.primaryColor,
                                         ),
@@ -158,7 +174,7 @@ class CustomDrawer extends StatelessWidget {
                                             EdgeInsets.only(left: 15, right: 5),
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          "Profile Status - ${editProfileController.member!.profilePercentage ?? ""}%",
+                                          "Profile Status - ${editProfileController.member?.profilePercentage ?? ""}%",
                                           style: FontConstant.styleRegular(
                                               fontSize: 10,
                                               color:
@@ -167,10 +183,9 @@ class CustomDrawer extends StatelessWidget {
                                   ]),
                                 ),
                                 GestureDetector(
-                                  onTap: () => {
-                                    Get.toNamed("/myProfile")
-                                  },
-                                  child: SvgPicture.asset("assets/images/edit_icon.svg"))
+                                    onTap: () => {Get.toNamed("/myProfile")},
+                                    child: SvgPicture.asset(
+                                        "assets/images/edit_icon.svg"))
                               ],
                             ),
                           ),
@@ -193,9 +208,7 @@ class CustomDrawer extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => {
-                      scaffoldKey.currentState?.closeDrawer()},
-
+                    onTap: () => {scaffoldKey.currentState?.closeDrawer()},
                     child: buildoption("assets/images/icons/dashboard.svg",
                         "Dashboard", 22, 22),
                   ),
@@ -225,12 +238,12 @@ class CustomDrawer extends StatelessWidget {
                       child: buildoption(
                           "assets/images/icons/inbox.svg", "Inbox", 18, 18)),
                   GestureDetector(
-                    onTap: () => {Get.toNamed("/chatHome")},
+                    onTap: () => {Get.toNamed("/chatDrawer")},
                     child: buildoption(
                         "assets/images/icons/chats.svg", "Chat", 18, 18),
                   ),
                   GestureDetector(
-                    onTap: () => {Get.toNamed("/shortlistProfile")},
+                    onTap: () => {Get.toNamed("/shortlistProfileDrawer")},
                     child: buildoption("assets/images/icons/shortlist.svg",
                         "My Shortlist Profiles", 22, 22),
                   ),
@@ -393,10 +406,16 @@ class CustomDrawer extends StatelessWidget {
                     child: buildoption("assets/images/icons/testimonial.svg",
                         "Testimonial", 22, 22),
                   ),
-                  buildoption("assets/images/icons/share.svg",
-                      "Share Application to others", 22, 22),
                   GestureDetector(
-                     onTap: () => {Get.toNamed("/accountSetting")},
+                    onTap: () {
+                      String url = 'https://www.figma.com';
+                      Share.share(url, subject: 'Check out this link');
+                    },
+                    child: buildoption("assets/images/icons/share.svg",
+                        "Share Application to others", 22, 22),
+                  ),
+                  GestureDetector(
+                    // onTap: () => {Get.toNamed("/accountSetting")},
                     child: buildoption("assets/images/icons/setting.svg",
                         "Account Setting", 22, 22),
                   ),

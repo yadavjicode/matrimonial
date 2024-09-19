@@ -71,6 +71,7 @@ class _ProfileEditState extends State<ProfileEdit> {
           ),
         ),
         automaticallyImplyLeading: false,
+        
         leading: IconButton(
           icon: SvgPicture.asset("assets/images/menu.svg"),
           onPressed: () {
@@ -210,7 +211,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 padding: EdgeInsets.only(top: 10),
                 alignment: Alignment.center,
                 child: Text(
-                  "Your profile is ${_editProfileController.member!.profilePercentage ?? ""}% Complete",
+                  "Your profile is ${_editProfileController.member?.profilePercentage ?? ""}% Complete",
                   style: FontConstant.styleRegular(
                     fontSize: 16,
                     color: AppColors.black,
@@ -224,8 +225,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: LinearProgressIndicator(
-                    value: (_editProfileController.member!.profilePercentage) /
-                        100,
+                    value:  (_editProfileController.member?.profilePercentage ?? 0) / 100,
                     backgroundColor: Colors.grey.shade100,
                     color: Color(0xff583689),
                   ),
@@ -259,45 +259,55 @@ class _ProfileEditState extends State<ProfileEdit> {
                           _buildText(
                               "Posted by",
                               _editProfileController
-                                      .member!.member!.profileFor ??
+                                      .member?.member?.profileFor ??
                                   "Not Mentioned"),
                           _buildText(
                               "Title",
                               _editProfileController
-                                      .member!.member!.nameTitle ??
+                                      .member?.member?.nameTitle ??
                                   "Not Mentioned"),
                           _buildText(
                               "Name",
-                              _editProfileController.member!.member!.name ??
+                              _editProfileController
+                                      .member?.member?.name ??
                                   "Not Mentioned"),
                           _buildText(
                               "Surname",
-                              _editProfileController.member!.member!.surename ??
+                             _editProfileController
+                                      .member?.member?.surename ??
                                   "Not Mentioned"),
                           _buildText(
                               "Spiritual Name",
                               _editProfileController
-                                      .member!.member!.spiritualName ??
+                                      .member?.member?.spiritualName ??
                                   "Not Mentioned"),
                           _buildText(
                               "Gender",
-                              _editProfileController.member!.member!.gender ??
+                              _editProfileController
+                                      .member?.member?.gender ??
                                   "Not Mentioned"),
                           _buildText(
                               "Marital Status",
                               _editProfileController
-                                      .member!.member!.maritalstatus ??
+                                      .member?.member?.maritalstatus ??
                                   "Not Mentioned"),
                           _buildText(
                               "Height",
-                              _editProfileController.member!.member!.height ??
+                             _editProfileController
+                                      .member?.member?.height ??
                                   "Not Mentioned"),
                           _buildText(
                               "Weight",
-                              "${_editProfileController.member!.member!.weight} KG" ??
+                              "${_editProfileController
+                                      .member?.member?.weight} KG" ??
                                   "Not Mentioned"),
                           _buildText("Date of Birth",
-                              _editProfileController.member!.member!.dOB ?? ""),
+                              _editProfileController
+                                      .member?.member?.dOB ?? ""),
+                          _buildText(
+                              "Diet",
+                              _editProfileController.member!.member!.diet ??
+                                  "Not Mentioned"),
                           _buildText(
                               "Hobbies",
                               _editProfileController.member!.member!.hobbies ??
@@ -342,7 +352,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   "Not Mentioned"),
                           _buildText(
                               "Residence Type",
-                              _editProfileController.member!.member!.state ??
+                              _editProfileController.member!.member!.addressType ??
                                   "Not Mentioned"),
                           _buildText(
                               "Permanent House Type",

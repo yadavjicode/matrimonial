@@ -2,6 +2,7 @@ import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -140,353 +141,351 @@ class _BasedMatchesState extends State<BasedMatches> {
                     ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
                     : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-            return GestureDetector(
-              onTap: () {
-                profileDetailsController.profileDetails(context, id, keys,
-                    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]);
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 5, bottom: 10),
-                decoration: BoxDecoration(
-                  color: AppColors.constColor,
-                  border: Border.all(color: Colors.grey.shade200),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 8, bottom: 8, top: 8),
-                          child: Stack(children: [
-                            Container(
-                              height: (screenWidth * 0.4) * (5 / 4),
-                              width: screenWidth * 0.4,
-                              child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                child: Image.network(
-                                  "$image",
-                                  height: (screenWidth * 0.4) * (5 / 4),
-                                  width: screenWidth * 0.4,
-                                  filterQuality: FilterQuality.high,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
+            return Container(
+              margin: EdgeInsets.only(top: 5, bottom: 10),
+              decoration: BoxDecoration(
+                color: AppColors.constColor,
+                border: Border.all(color: Colors.grey.shade200),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 8, bottom: 8, top: 8),
+                        child: Stack(children: [
+                          GestureDetector(
+                            onTap: () {
+                              profileDetailsController.profileDetails(
+                                  context, id, keys, [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
+                            },
+                            child: ProfileImageSquare(
+                              size: screenWidth * 0.4,
+                              url: image,
                             ),
-                            Positioned(
-                                top: ((screenWidth * 0.4) * (5 / 4) -
-                                    screenWidth * 0.075),
-                                left: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    setState(() {
-                                      data.interestStatus =
-                                          data.interestStatus == 0 ? 1 : 1;
-                                    });
+                          ),
+                          Positioned(
+                              top: ((screenWidth * 0.4) * (5 / 4) -
+                                  screenWidth * 0.075),
+                              left: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
 
-                                    sentInvitationController.sentInvitation(
-                                      context,
-                                      data.matriID!,
-                                    );
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      data.interestStatus == 1
-                                          ? Container(
-                                              alignment: Alignment.center,
-                                              height: screenWidth * 0.06,
-                                              width: screenWidth * 0.06,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.green),
-                                              child: SvgPicture.asset(
-                                                "assets/images/icons/correct.svg",
-                                                height: screenWidth * 0.028,
-                                                width: screenWidth * 0.028,
-                                              ),
-                                            )
-                                          : Container(
-                                              alignment: Alignment.center,
-                                              height: screenWidth * 0.06,
-                                              width: screenWidth * 0.06,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.white),
-                                              child: SvgPicture.asset(
-                                                "assets/images/icons/pinkcorrect.svg",
-                                                height: screenWidth * 0.028,
-                                                width: screenWidth * 0.028,
-                                              ),
-                                            ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Send Interest",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: screenWidth * 0.03,
-                                            color: AppColors.constColor),
-                                      ),
-                                    ],
-                                  ),
-                                ))
-                          ]),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  name,
-                                  style: FontConstant.styleSemiBold(
-                                      fontSize: 15,
-                                      color: AppColors.primaryColor),
-                                ),
-                                Row(
+                                  sentInvitationController.sentInvitation(
+                                    context,
+                                    data.matriID!,
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Expanded(
-                                      child: Text(
-                                        "ID: ${data.matriID}",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 13,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                    if (data.accountType == 1)
-                                      Container(
-                                        margin:
-                                            EdgeInsets.symmetric(horizontal: 5),
-                                        width: 1,
-                                        height: 12,
-                                        color: AppColors.grey,
-                                      ),
-                                    if (data.accountType == 1)
-                                      Expanded(
-                                        child: Container(
-                                          child: Row(
-                                            children: [
-                                              Image.asset(
-                                                "assets/images/Crown.png",
-                                                height: 15,
-                                                width: 15,
-                                              ),
-                                              SizedBox(
-                                                width: 3,
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  "Premium",
-                                                  style:
-                                                      FontConstant.styleMedium(
-                                                          fontSize: 12,
-                                                          color: Color(
-                                                              0xFFF69506)),
-                                                ),
-                                              )
-                                            ],
+                                    data.interestStatus == 1
+                                        ? Container(
+                                            alignment: Alignment.center,
+                                            height: screenWidth * 0.06,
+                                            width: screenWidth * 0.06,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.green),
+                                            child: SvgPicture.asset(
+                                              "assets/images/icons/correct.svg",
+                                              height: screenWidth * 0.028,
+                                              width: screenWidth * 0.028,
+                                            ),
+                                          )
+                                        : Container(
+                                            alignment: Alignment.center,
+                                            height: screenWidth * 0.06,
+                                            width: screenWidth * 0.06,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white),
+                                            child: SvgPicture.asset(
+                                              "assets/images/icons/pinkcorrect.svg",
+                                              height: screenWidth * 0.028,
+                                              width: screenWidth * 0.028,
+                                            ),
                                           ),
-                                        ),
-                                      )
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Send Interest",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: screenWidth * 0.03,
+                                          color: AppColors.constColor),
+                                    ),
                                   ],
                                 ),
-                                UserStatusWidget(userId: id),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 0, bottom: 5),
-                                  child: Container(
-                                    height: 1,
-                                    color: Colors.grey.shade200,
-                                  ),
-                                ),
-                                Text(
-                                  "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 13, color: AppColors.darkgrey),
-                                ),
-                                Text(
-                                  "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
-                                  overflow: TextOverflow.ellipsis,
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 13, color: AppColors.darkgrey),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 5),
-                                  child: Text("Created By: Myself",
+                              ))
+                        ]),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                name,
+                                style: FontConstant.styleSemiBold(
+                                    fontSize: 15,
+                                    color: AppColors.primaryColor),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "ID: ${data.matriID}",
                                       style: FontConstant.styleMedium(
-                                          fontSize: 13,
-                                          color: AppColors.darkgrey)),
+                                          fontSize: 13, color: AppColors.black),
+                                    ),
+                                  ),
+                                  if (data.accountType == 1)
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      width: 1,
+                                      height: 12,
+                                      color: AppColors.grey,
+                                    ),
+                                  if (data.accountType == 1)
+                                    Expanded(
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/Crown.png",
+                                              height: 15,
+                                              width: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Premium",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: Color(0xFFF69506)),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                ],
+                              ),
+                              UserStatusWidget(userId: id),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 5),
+                                child: Container(
+                                  height: 1,
+                                  color: Colors.grey.shade200,
                                 ),
-                                Text(
-                                  "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 13, color: AppColors.black),
+                              ),
+                              Text(
+                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: FontConstant.styleMedium(
+                                    fontSize: 13, color: AppColors.darkgrey),
+                              ),
+                              Text(
+                                "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                overflow: TextOverflow.ellipsis,
+                                style: FontConstant.styleMedium(
+                                    fontSize: 13, color: AppColors.darkgrey),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Text("Created By: Myself",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 13,
+                                        color: AppColors.darkgrey)),
+                              ),
+                              Text(
+                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: FontConstant.styleMedium(
+                                    fontSize: 13, color: AppColors.black),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10, right: 10),
+                    height: 1,
+                    width: double.infinity,
+                    color: Colors.grey.shade200,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                data.shortlistStatus =
+                                    data.shortlistStatus == 1 ? 0 : 1;
+                              });
+                              shortlistController.shortlist(
+                                context,
+                                id,
+                                btnOkOnPress: () =>
+                                    {dashboardController.dashboard(context)},
+                              );
+                              // // Handle result if needed
+                              // if (shortlistController.member!.message=="Shortlisted") {
+                              //   // Optionally show an error message or revert the UI update
+                              //   setState(() {
+                              //     data.shortlistStatus = data.shortlistStatus == 1 ? 0 : 1; // Revert if needed
+                              //   });
+                              // } else {
+                              //   // Optionally refresh data if needed
+                              // //  matchesController.fetchMatches(context, widget.keys);
+                              // }
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  data.shortlistStatus == 1
+                                      ? (Icons.favorite)
+                                      : Icons.favorite_border_rounded,
+                                  color: data.shortlistStatus == 1
+                                      ? Colors.red
+                                      : AppColors.primaryColor,
+                                  size: 20,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Shortlist",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 11, color: AppColors.black),
+                                  ),
                                 )
                               ],
                             ),
                           ),
                         ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () async {
+                              if (data.chatStatus == 1) {
+                                if (data.matriID!.trim().isNotEmpty &&
+                                    data.matriID != null) {
+                                  await APIs.addChatUser(data.matriID!)
+                                      .then((value) {
+                                    if (!value) {
+                                      Dialogs.showSnackbar(
+                                          context, 'User does not Exists!');
+                                    } else {
+                                      _fetchUser(
+                                        data.matriID.toString().trim(),
+                                      );
+                                    }
+                                  });
+                                }
+                              } else {
+                                Dialogs.showSnackbar(
+                                    context, 'The user is not added in your list!');
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/images/chat_d.svg",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Chat Now",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 11, color: AppColors.black),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => {
+                              profileDetailsController.profileDetails(
+                                  context, id, keys, [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]),
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/images/pink_search.svg",
+                                  height: 20,
+                                  width: 20,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "View Profile",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 11, color: AppColors.black),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: 10, right: 10),
-                      height: 1,
-                      width: double.infinity,
-                      color: Colors.grey.shade200,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          left: 10, right: 10, top: 10, bottom: 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () async {
-                                setState(() {
-                                  data.shortlistStatus =
-                                      data.shortlistStatus == 1 ? 0 : 1;
-                                });
-                                shortlistController.shortlist(
-                                  context,
-                                  id,
-                                  btnOkOnPress: () =>
-                                      {dashboardController.dashboard(context)},
-                                );
-                                // // Handle result if needed
-                                // if (shortlistController.member!.message=="Shortlisted") {
-                                //   // Optionally show an error message or revert the UI update
-                                //   setState(() {
-                                //     data.shortlistStatus = data.shortlistStatus == 1 ? 0 : 1; // Revert if needed
-                                //   });
-                                // } else {
-                                //   // Optionally refresh data if needed
-                                // //  matchesController.fetchMatches(context, widget.keys);
-                                // }
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    data.shortlistStatus == 1
-                                        ? (Icons.favorite)
-                                        : Icons.favorite_border_rounded,
-                                    color: data.shortlistStatus == 1
-                                        ? Colors.red
-                                        : AppColors.primaryColor,
-                                    size: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Shortlist",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 11, color: AppColors.black),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () async {
-                                if (data.chatStatus == 1) {
-                                  if (data.matriID!.trim().isNotEmpty &&
-                                      data.matriID != null) {
-                                    await APIs.addChatUser(data.matriID!)
-                                        .then((value) {
-                                      if (!value) {
-                                        Dialogs.showSnackbar(
-                                            context, 'User does not Exists!');
-                                      } else {
-                                        _fetchUser(
-                                          data.matriID.toString().trim(),
-                                        );
-                                      }
-                                    });
-                                  }
-                                } else {
-                                  Dialogs.showSnackbar(
-                                      context, 'User does not accepted list!');
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/chat_d.svg",
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "Chat Now",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 11, color: AppColors.black),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => {
-                                profileDetailsController.profileDetails(
-                                    context, id, keys, [
-                                  "1",
-                                  "2",
-                                  "3",
-                                  "4",
-                                  "5",
-                                  "6",
-                                  "7",
-                                  "8",
-                                  "9",
-                                  "10",
-                                  "11"
-                                ]),
-                              },
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/pink_search.svg",
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "View Profile",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 11, color: AppColors.black),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             );
           }).toList(),

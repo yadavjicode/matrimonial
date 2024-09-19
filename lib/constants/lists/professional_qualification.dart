@@ -30,7 +30,7 @@ class ProfessionQualController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       String apiUrl =
-          '${ApiConstants.baseUrl}${ApiConstants.professional_Qual_Url}';
+          '${ApiConstants.baseUrl}${ApiConstants.professionalQualUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

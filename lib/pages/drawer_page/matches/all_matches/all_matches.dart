@@ -6,6 +6,7 @@ import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
@@ -105,35 +106,20 @@ class _AllMatchesState extends State<AllMatches> {
               style: FontConstant.styleMedium(
                   fontSize: 15, color: AppColors.darkgrey)));
     } else {
-    return SingleChildScrollView(
-      controller: _scrollController,
-      scrollDirection: Axis.vertical,
-      child: Column(children: [
-        ...matchesController.matches.map((data) {
-          String name = "${data.name ?? ""} ${data.surename ?? ""}";
-          String id = data.matriID ?? "";
-          String image = data.photo1 != null
-              ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-              : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+      return SingleChildScrollView(
+        controller: _scrollController,
+        scrollDirection: Axis.vertical,
+        child: Column(children: [
+          ...matchesController.matches.map((data) {
+            String name = "${data.name ?? ""} ${data.surename ?? ""}";
+            String id = data.matriID ?? "";
+            String image = data.photo1 != null
+                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                : data.gender == "Male"
+                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-          return GestureDetector(
-            onTap: () {
-              profileDetailsController.profileDetails(
-                                  context, id, "matches", [
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
-                                "11"
-                              ]);
-            },
-            child: Container(
+            return Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
               decoration: BoxDecoration(
                 color: AppColors.constColor,
@@ -149,82 +135,88 @@ class _AllMatchesState extends State<AllMatches> {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 8, top: 8),
                         child: Stack(children: [
-                              Container(
-                                height: (screenWidth * 0.4) * (5 / 4),
-                                width: screenWidth * 0.4,
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  child: Image.network(
-                                    "$image",
-                                    height: (screenWidth * 0.4) * (5 / 4),
-                                    width: screenWidth * 0.4,
-                                    filterQuality: FilterQuality.high,
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                  top: ((screenWidth * 0.4) * (5 / 4) -
-                                      screenWidth * 0.075),
-                                  left: 0,
-                                  right: 0,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        data.interestStatus =
-                                            data.interestStatus == 0 ? 1 : 1;
-                                      });
+                          GestureDetector(
+                            onTap: () {
+                              profileDetailsController.profileDetails(
+                                  context, id, "matches", [
+                                "1",
+                                "2",
+                                "3",
+                                "4",
+                                "5",
+                                "6",
+                                "7",
+                                "8",
+                                "9",
+                                "10",
+                                "11"
+                              ]);
+                            },
+                            child: ProfileImageSquare(
+                              size: screenWidth * 0.4,
+                              url: image,
+                            ),
+                          ),
+                          Positioned(
+                              top: ((screenWidth * 0.4) * (5 / 4) -
+                                  screenWidth * 0.075),
+                              left: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    data.interestStatus =
+                                        data.interestStatus == 0 ? 1 : 1;
+                                  });
 
-                                      sentInvitationController.sentInvitation(
-                                        context,
-                                        data.matriID!,
-                                      );
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        data.interestStatus == 1
-                                            ? Container(
-                                                alignment: Alignment.center,
-                                                height: screenWidth * 0.06,
-                                                width: screenWidth * 0.06,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.green),
-                                                child: SvgPicture.asset(
-                                                  "assets/images/icons/correct.svg",
-                                                  height: screenWidth * 0.028,
-                                                  width: screenWidth * 0.028,
-                                                ),
-                                              )
-                                            : Container(
-                                                alignment: Alignment.center,
-                                                height: screenWidth * 0.06,
-                                                width: screenWidth * 0.06,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.white),
-                                                child: SvgPicture.asset(
-                                                  "assets/images/icons/pinkcorrect.svg",
-                                                  height: screenWidth * 0.028,
-                                                  width: screenWidth * 0.028,
-                                                ),
-                                              ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          "Send Interest",
-                                          style: FontConstant.styleMedium(
-                                              fontSize: screenWidth * 0.03,
-                                              color: AppColors.constColor),
-                                        ),
-                                      ],
+                                  sentInvitationController.sentInvitation(
+                                    context,
+                                    data.matriID!,
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    data.interestStatus == 1
+                                        ? Container(
+                                            alignment: Alignment.center,
+                                            height: screenWidth * 0.06,
+                                            width: screenWidth * 0.06,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.green),
+                                            child: SvgPicture.asset(
+                                              "assets/images/icons/correct.svg",
+                                              height: screenWidth * 0.028,
+                                              width: screenWidth * 0.028,
+                                            ),
+                                          )
+                                        : Container(
+                                            alignment: Alignment.center,
+                                            height: screenWidth * 0.06,
+                                            width: screenWidth * 0.06,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white),
+                                            child: SvgPicture.asset(
+                                              "assets/images/icons/pinkcorrect.svg",
+                                              height: screenWidth * 0.028,
+                                              width: screenWidth * 0.028,
+                                            ),
+                                          ),
+                                    SizedBox(
+                                      width: 5,
                                     ),
-                                  ))
-                            ]),
+                                    Text(
+                                      "Send Interest",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: screenWidth * 0.03,
+                                          color: AppColors.constColor),
+                                    ),
+                                  ],
+                                ),
+                              ))
+                        ]),
                       ),
                       Expanded(
                         child: Padding(
@@ -245,7 +237,8 @@ class _AllMatchesState extends State<AllMatches> {
                                     child: Text(
                                       "ID: ${id}",
                                       style: FontConstant.styleMedium(
-                                          fontSize: 13, color: AppColors.black),
+                                          fontSize: 13,
+                                          color: AppColors.black),
                                     ),
                                   ),
                                   if (data.accountType == 1)
@@ -272,9 +265,11 @@ class _AllMatchesState extends State<AllMatches> {
                                             Expanded(
                                               child: Text(
                                                 "Premium",
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 12,
-                                                    color: Color(0xFFF69506)),
+                                                style:
+                                                    FontConstant.styleMedium(
+                                                        fontSize: 12,
+                                                        color: Color(
+                                                            0xFFF69506)),
                                               ),
                                             )
                                           ],
@@ -395,7 +390,7 @@ class _AllMatchesState extends State<AllMatches> {
                                 }
                               } else {
                                 Dialogs.showSnackbar(
-                                    context, 'User does not accepted list!');
+                                    context, 'The user is not added in your list!');
                               }
                             },
                             child: Row(
@@ -463,21 +458,20 @@ class _AllMatchesState extends State<AllMatches> {
                   )
                 ],
               ),
-            ),
-          );
-        }).toList(),
-        if (matchesController
-            .isLoading.value) // Progress indicator at the bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+            );
+          }).toList(),
+          if (matchesController
+              .isLoading.value) // Progress indicator at the bottom
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
               ),
             ),
-          ),
-      ]),
-    );
+        ]),
+      );
     }
   }
 }

@@ -30,7 +30,7 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedState;
   String? selectedCity;
-  bool show=false;
+  bool show = false;
 
   bool validateDropDown() {
     if (selectedState != null && selectedCity != null) {
@@ -62,9 +62,10 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
     time.text = _editProfileController.member!.member!.timeOfBirth ?? "";
     selectedState = _editProfileController.member!.member!.stateOfBirth;
     selectedCity = _editProfileController.member!.member!.cityOfBirth;
-    stateController.selectItem(_editProfileController.member!.member!.stateOfBirth);
-
+    stateController
+        .selectItem(_editProfileController.member!.member!.stateOfBirth);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +90,7 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                     child: Image.asset("assets/images/background.png")),
                 horoscopeContent()
               ],
-            ),   
+            ),
             if (horoscopeDetailsController.isLoading.value ||
                 _editProfileController.isLoading.value)
               Center(
@@ -121,7 +122,6 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Time Of Birth",
-                  
                   style: FontConstant.styleRegular(
                       fontSize: 16, color: AppColors.black),
                 ),
@@ -170,11 +170,12 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                       stateController
                           .selectItem(value); // Call the controller method
                     },
-                    borderColor:show==true&& selectedState == null
+                    borderColor: show == true && selectedState == null
                         ? Colors.red
                         : Colors.black.withOpacity(0.5),
                     errorMessage: "Please Select State of Birth",
-                    errorshow:show==true&& selectedState == null ? true : false,
+                    errorshow:
+                        show == true && selectedState == null ? true : false,
                     selectedItem: selectedState,
                     hintText: 'Select State',
                   );
@@ -205,13 +206,17 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                         });
                         cityController
                             .selectItem(value); // Call the controller method
+                        int selectedIndex =
+                            cityController.cityLists.indexOf(value);
+                        print("index================${selectedIndex}");
                       },
                       hintText: 'Select City',
-                      borderColor:show==true&&  selectedCity == null
+                      borderColor: show == true && selectedCity == null
                           ? Colors.red
                           : Colors.black.withOpacity(0.5),
                       errorMessage: "Please Select City of Birth",
-                      errorshow:show==true&&  selectedCity == null ? true : false,
+                      errorshow:
+                          show == true && selectedCity == null ? true : false,
                       selectedItem: selectedCity,
                     );
                   }
@@ -221,23 +226,22 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                 padding: const EdgeInsets.only(top: 25, bottom: 15),
                 child: CustomButton(
                     text: "CONTINUE",
-                    onPressed: (){
+                    onPressed: () {
                       setState(() {
-                        show=true;
+                        show = true;
                       });
-                          if (_formKey.currentState!.validate() &&
-                              validateDropDown())
-                            {
-                              horoscopeDetailsController.horoscopeDetails(
-                                  context,
-                                  time.text.toString().trim(),
-                                  selectedState ?? "",
-                                  selectedCity ?? "",
-                                  true);
-                            }
+                      if (_formKey.currentState!.validate() &&
+                          validateDropDown()) {
+                        horoscopeDetailsController.horoscopeDetails(
+                            context,
+                            time.text.toString().trim(),
+                            selectedState ?? "",
+                            selectedCity ?? "",
+                            true);
+                      }
 
-                          //    Get.toNamed('/profile')
-                        },
+                      //    Get.toNamed('/profile')
+                    },
                     color: AppColors.primaryColor,
                     textStyle: FontConstant.styleRegular(
                         fontSize: 20, color: AppColors.constColor)),

@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/upload_profile_model.dart';
@@ -28,7 +26,7 @@ class UploadProfileController extends GetxController {
       final response = await UploadProfileModel.profileComplete(
           profileModel, selectedImages);
       if (response["status"] == true) {
-        print('Profile update successful: ${response['data']}');
+        print('Photo Upload Successful: ${response['data']}');
         editProfileController.userDetails(context).then((value) {
           final photoUrl = editProfileController.member?.member?.Photo1;
           if (photoUrl != null && photoUrl.isNotEmpty) {
@@ -37,17 +35,17 @@ class UploadProfileController extends GetxController {
         });
         flowController.Flow(context, 12);
         Dialogs.showSnackbar(
-            context, "Profile update successful: ${response['data']}");
+            context, "Photo Upload Successfully: ${response['data']}");
       } else {
-        print('Profile update failed: ${response['message']}');
+        print('Photo Upload failed: ${response['message']}');
 
         Dialogs.showSnackbar(
-            context, 'Profile update failed: ${response['message']}');
+            context, 'Photo Upload failed: ${response['message']}');
       }
     } catch (e) {
-      print('Profile update failed: $e');
+      print('Photo Upload failed: $e');
 
-      Dialogs.showSnackbar(context, 'Profile update failed: $e');
+      Dialogs.showSnackbar(context, 'Photo Upload failed: $e');
     } finally {
       isLoading.value = false;
     }
@@ -85,7 +83,7 @@ class UploadProfileController extends GetxController {
         }
       } else {
         print('No images selected.');
-       
+
         Navigator.of(Get.context!).pop();
         Dialogs.showSnackbar(Get.context!, 'No images selected.');
       }

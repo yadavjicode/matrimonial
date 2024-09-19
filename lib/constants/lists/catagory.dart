@@ -36,7 +36,7 @@ class SubCastController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.sub_cast_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.subCastUrl}';
 
       final selectedCastId = castController.selectedItemId.value;
       final selectedReligionId = religionController.selectedItemId.value;
@@ -114,7 +114,7 @@ class CastController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.cast_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.castUrl}';
 
       final selectedReligionId = religionController.selectedItemId.value;
       if (selectedReligionId == null) {
@@ -189,7 +189,7 @@ class ReligionsController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.religion_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.religionUrl}';
       final response = await http.post(
         Uri.parse(apiUrl),
         headers: {

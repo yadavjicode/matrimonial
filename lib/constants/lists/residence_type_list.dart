@@ -29,7 +29,7 @@ class ResidenceTypeController extends GetxController {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       String apiUrl =
-          '${ApiConstants.baseUrl}${ApiConstants.residence_type_Url}';
+          '${ApiConstants.baseUrl}${ApiConstants.residencetypeUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

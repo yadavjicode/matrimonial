@@ -29,7 +29,7 @@ class CountryController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.country_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.countryUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),
@@ -92,7 +92,7 @@ class StateControllerPermanent extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.state_url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.stateurl}';
 
       final selectedCountry = countryController.selectedItem.value;
       if (selectedCountry == null) {
@@ -163,7 +163,7 @@ class StateControllerTemporary extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.state_url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.stateurl}';
 
       final selectedCountry = countryController.selectedItem.value;
       if (selectedCountry == null) {
@@ -235,7 +235,7 @@ class CityControllerTemporary extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.city_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.cityUrl}';
 
       final selectedState = stateController.selectedItem.value;
       if (selectedState == null) {
@@ -307,7 +307,7 @@ class CityControllerPermanent extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.city_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.cityUrl}';
 
       final selectedState = stateController.selectedItem.value;
       if (selectedState == null) {
@@ -578,7 +578,7 @@ class StateController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.state_url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.stateurl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),
@@ -640,7 +640,7 @@ class CityController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.city_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.cityUrl}';
 
       final selectedState = stateController.selectedItem.value;
       if (selectedState == null) {

@@ -28,7 +28,7 @@ class ProfessionController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.profession_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.professionUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

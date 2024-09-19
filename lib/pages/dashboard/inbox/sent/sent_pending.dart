@@ -1,3 +1,5 @@
+import 'package:devotee/constants/widget/profile_image.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:devotee/controller/withdrawal_controller.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,8 @@ class _SentPendingState extends State<SentPending> {
       Get.put(InboxSentController());
   final WithdrawalController withdrawalController =
       Get.put(WithdrawalController());
+   final EditProfileController userProfileController =
+      Get.put(EditProfileController());
   @override
   void initState() {
     // TODO: implement initState
@@ -98,17 +102,9 @@ class _SentPendingState extends State<SentPending> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, top: 8, bottom: 10, right: 2),
-                            child: Container(
-                              width: screenWidth * 0.2,
-                              height: screenWidth * 0.2,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.grey),
-                              child: ClipOval(
-                                  child: Image.network(
-                                image,
-                                fit: BoxFit.fill,
-                              )),
+                            child:  ProfileImage(
+                              size: screenWidth * 0.2,
+                              url: image,
                             ),
                           ),
                           Expanded(
@@ -171,27 +167,32 @@ class _SentPendingState extends State<SentPending> {
                           ),
                         ],
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.all(3),
-                        margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                        decoration: BoxDecoration(
-                            color: AppColors.primaryLight,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "To contact her directly,",
-                              style: FontConstant.styleMedium(
-                                  fontSize: 12, color: AppColors.black),
-                            ),
-                            Text(
-                              " Upgrade Now",
-                              style: FontConstant.styleSemiBold(
-                                  fontSize: 12, color: AppColors.primaryColor),
-                            ),
-                          ],
+                      if (userProfileController.member!.member!.accountType !=
+                          1)
+                      GestureDetector(
+                        onTap: () => {Get.toNamed("/membership")},
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(3),
+                          margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                          decoration: BoxDecoration(
+                              color: AppColors.primaryLight,
+                              borderRadius: BorderRadius.all(Radius.circular(5))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "To contact her directly,",
+                                style: FontConstant.styleMedium(
+                                    fontSize: 12, color: AppColors.black),
+                              ),
+                              Text(
+                                " Upgrade Now",
+                                style: FontConstant.styleSemiBold(
+                                    fontSize: 12, color: AppColors.primaryColor),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Padding(

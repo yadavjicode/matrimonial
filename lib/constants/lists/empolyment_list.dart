@@ -1,5 +1,4 @@
 import 'package:devotee/utils/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +28,7 @@ class EmpolymentController extends GetxController {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.employment_Url}';
+      String apiUrl = '${ApiConstants.baseUrl}${ApiConstants.employmentUrl}';
 
       final response = await http.post(
         Uri.parse(apiUrl),

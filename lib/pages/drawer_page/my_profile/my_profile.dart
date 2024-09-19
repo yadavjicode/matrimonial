@@ -284,6 +284,10 @@ class _MyProfileState extends State<MyProfile> {
                           _buildText("Date of Birth",
                               _editProfileController.member!.member!.dOB ?? ""),
                           _buildText(
+                              "Diet",
+                              _editProfileController.member!.member!.diet ??
+                                  "Not Mentioned"),
+                          _buildText(
                               "Hobbies",
                               _editProfileController.member!.member!.hobbies ??
                                   "Not Mentioned"),
@@ -327,7 +331,7 @@ class _MyProfileState extends State<MyProfile> {
                                   "Not Mentioned"),
                           _buildText(
                               "Residence Type",
-                              _editProfileController.member!.member!.state ??
+                              _editProfileController.member!.member!.addressType ??
                                   "Not Mentioned"),
                           _buildText(
                               "Permanent House Type",
