@@ -72,13 +72,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     }
   }
 
-  void selectHobbies(String selectedHobbies) {
-    List<String> selectedList = selectedHobbies.split(', ');
 
-    hobbies.forEach((key, value) {
-      hobbies[key] = selectedList.contains(key);
-    });
-  }
 
   Map<String, bool> hobbies = {
     "Art / Handicraft": false,
@@ -95,11 +89,20 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     "Spending Time With Nature": false,
     "Reading Newspaper": false,
   };
+
+  
   String getSelectedHobbies() {
     return hobbies.entries
         .where((entry) => entry.value)
         .map((entry) => entry.key)
         .join(", ");
+  }
+   void selectHobbies(String selectedHobbies) {
+    List<String> selectedList = selectedHobbies.split(', ');
+
+    hobbies.forEach((key, value) {
+      hobbies[key] = selectedList.contains(key);
+    });
   }
 
   @override
@@ -111,7 +114,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     String mon =
         _basicDetailController.getMonthString(selectedMonth.toString());
     aboutController.text = _editProfileController.member!.member!.about ?? "";
-    selectHobbies(_editProfileController.member!.member!.hobbies ?? "");
+   
     String dob = _editProfileController.member!.member!.dOB ?? "";
     List<String> dateParts = dob.split('-');
 
@@ -120,12 +123,13 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     selectedDay = dateParts[2];
     selectedMonth =
         _basicDetailController.getMonthString(month.toString()); // "01"
-    selectedHeight = _editProfileController.member!.member!.height ;
-    selectedWeight = _editProfileController.member!.member!.weight ;
+    selectedHeight = _editProfileController.member!.member!.height;
+    selectedWeight = _editProfileController.member!.member!.weight;
     selectedMaritalStatus =
         _editProfileController.member!.member!.maritalstatus;
-    selectedDiet = _editProfileController.member!.member!.diet ;
-    selectHobbies(_editProfileController.member!.member!.hobbies );
+    selectedDiet = _editProfileController.member!.member!.diet;   
+    selectHobbies(_editProfileController.member?.member?.hobbies??"");
+   
   }
 
   @override
@@ -436,7 +440,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                         labelText: "About",
                         maxline: 8,
                         controller: aboutController,
-                         hintText: "Enter About",
+                        hintText: "Enter About",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter About';

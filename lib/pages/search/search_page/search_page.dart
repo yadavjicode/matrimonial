@@ -1,4 +1,3 @@
-import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
@@ -14,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
-import '../../../constants/profile_constant.dart';
+
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

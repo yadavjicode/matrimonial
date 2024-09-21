@@ -457,7 +457,7 @@ class ApiService {
       body: jsonEncode({
         "step_12": "1",
         "groom_bride": characteristics,
-        'Hobbies': hobbies,
+        'GB_Hobbies': hobbies,
       }),
     );
 

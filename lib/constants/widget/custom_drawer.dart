@@ -415,7 +415,7 @@ class CustomDrawer extends StatelessWidget {
                         "Share Application to others", 22, 22),
                   ),
                   GestureDetector(
-                    // onTap: () => {Get.toNamed("/accountSetting")},
+                    onTap: () => {Get.toNamed("/accountSetting")},
                     child: buildoption("assets/images/icons/setting.svg",
                         "Account Setting", 22, 22),
                   ),

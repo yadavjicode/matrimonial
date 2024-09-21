@@ -1,3 +1,4 @@
+import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/account_setting_controller.dart';
@@ -18,34 +19,29 @@ class _AccountSettingState extends State<AccountSetting> {
       Get.put(EditProfileController());
   final AccountSettingController accountSettingController =
       Get.put(AccountSettingController());
-
   int them = 0;
   bool? onlineStatus;
-  bool? lastLoginStatus;
+  bool? lastActiveStatus;
   bool? phoneStatus;
   bool? emailStatus;
-  bool profileStatus = false;
-  bool astroStatus = false;
+  bool? profileStatus;
+  bool? astroStatus;
 
   @override
   void initState() {
     super.initState();
-   
-    // onlineStatus = userProfileController.member?.member?.hideOnlineStatus == 1;
-    // lastLoginStatus = userProfileController.member?.member?.hideLastActiveStatus == 1;
-    // phoneStatus = userProfileController.member?.member?.hidePhoneStatus == 1;
-    // emailStatus = userProfileController.member?.member?.hideEmailStatus == 1;
-    // profileStatus = userProfileController.member?.member?.hideProfileStatus == 1;
-    // astroStatus = userProfileController.member?.member?.hideAstroStatus == 1;
-
-    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      onlineStatus =
+          userProfileController.member?.member?.hideOnlineStatus == 1;
+      lastActiveStatus =
+          userProfileController.member?.member?.hideLastActiveStatus == 1;
+      phoneStatus = userProfileController.member?.member?.hidePhoneStatus == 1;
+      emailStatus = userProfileController.member?.member?.hideEmailStatus == 1;
+      profileStatus =
+          userProfileController.member?.member?.hideProfileStatus == 1;
+      astroStatus = userProfileController.member?.member?.hideAstroStatus == 1;
+    });
   }
-  @override
-void dispose() {
-  Get.delete<EditProfileController>();
-  Get.delete<AccountSettingController>();
-  super.dispose();
-}
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +66,6 @@ void dispose() {
                   width: double.infinity,
                   alignment: Alignment.topRight,
                   child: Image.asset("assets/images/bg3.png")),
-              
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.035,
@@ -83,15 +78,33 @@ void dispose() {
                       SizedBox(
                         height: screenHeight * 0.005,
                       ),
-                      GestureDetector(
-                          onTap: () => _phoneBottomSheet(context),
+                      if (userProfileController.member?.member?.mobile != null)
+                        GestureDetector(
+                            onTap: () => _phoneBottomSheet(context),
+                            child: settingTab(
+                                userProfileController.member?.member?.mobile ??
+                                    "",
+                                userProfileController
+                                            .member?.member?.hidePhoneStatus ==
+                                        1
+                                    ? "Hide Phone"
+                                    : "Show Phone",
+                                "")),
+                      if (userProfileController.member?.member?.confirmEmail !=
+                          null)
+                        GestureDetector(
+                          onTap: () => _emailBottomSheet(context),
                           child: settingTab(
-                              "9971253602",userProfileController.member?.member?.hidePhoneStatus==1?"Hide Phone": "Show Phone", "")),
-                      GestureDetector(
-                        onTap: () => _emailBottomSheet(context),
-                        child: settingTab("prashnatyadav3602@gmail.com",
-                            userProfileController.member?.member?.hideEmailStatus==1?"Hide Email": "Show Email", ""),
-                      ),
+                              userProfileController
+                                      .member?.member?.confirmEmail ??
+                                  "",
+                              userProfileController
+                                          .member?.member?.hideEmailStatus ==
+                                      1
+                                  ? "Hide Email"
+                                  : "Show Email",
+                              ""),
+                        ),
                       SizedBox(
                         height: screenHeight * 0.01,
                       ),
@@ -103,8 +116,8 @@ void dispose() {
                           onTap: () => _lastLoginBottomSheet(context),
                           child: settingTab(
                               "Manage Last Active",
-                              userProfileController.member?.member?.
-                                          hideLastActiveStatus ==
+                              userProfileController.member?.member
+                                          ?.hideLastActiveStatus ==
                                       1
                                   ? "Hide last active"
                                   : "Show last active",
@@ -112,12 +125,24 @@ void dispose() {
                       GestureDetector(
                         onTap: () => _onlineStatusBottomSheet(context),
                         child: settingTab(
-                            "Manage Online Status", "Only Premium Members", ""),
+                            "Manage Online Status",
+                            userProfileController
+                                        .member?.member?.hideOnlineStatus ==
+                                    1
+                                ? "Hide Online"
+                                : "Show Online",
+                            ""),
                       ),
                       GestureDetector(
                         onTap: () => _profileBottomSheet(context),
-                        child: settingTab("Manage Profile Visibility",
-                            "Only Premium Members", ""),
+                        child: settingTab(
+                            "Manage Profile Visibility",
+                            userProfileController
+                                        .member?.member?.hideProfileStatus ==
+                                    1
+                                ? "Hide Profile"
+                                : "Show Profile",
+                            ""),
                       ),
                       SizedBox(
                         height: screenHeight * 0.01,
@@ -129,7 +154,13 @@ void dispose() {
                       GestureDetector(
                         onTap: () => _astroBottomSheet(context),
                         child: settingTab(
-                            "Manage Astro Details", "Only Premium Members", ""),
+                            "Manage Astro Details",
+                            userProfileController
+                                        .member?.member?.hideAstroStatus ==
+                                    1
+                                ? "Hide Astro details"
+                                : "Show Astro details",
+                            ""),
                       ),
                       SizedBox(
                         height: screenHeight * 0.01,
@@ -227,7 +258,6 @@ void dispose() {
     );
   }
 
-
 // Start LastLogin bottomSheet=======================================================================================================================
 
   void _lastLoginBottomSheet(BuildContext context) {
@@ -239,12 +269,12 @@ void dispose() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      isDismissible: false,
       shape: RoundedRectangleBorder(
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
       ),
       builder: (BuildContext context) {
+        bool lastActiveValue = lastActiveStatus!;
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -262,10 +292,10 @@ void dispose() {
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
-                      value: lastLoginStatus!,
+                      value: lastActiveValue,
                       onChanged: (value) {
                         setState(() {
-                          lastLoginStatus = value;
+                          lastActiveValue = value;
                         });
                       },
                       activeColor: AppColors.primaryColor,
@@ -286,10 +316,6 @@ void dispose() {
                       children: [
                         GestureDetector(
                           onTap: () {
-                             lastLoginStatus =
-                                userProfileController
-                                        .member?.member?.hideLastActiveStatus ==
-                                    1;
                             Navigator.pop(context); // Closes the bottom sheet
                           },
                           child: Padding(
@@ -306,12 +332,13 @@ void dispose() {
                         ),
                         GestureDetector(
                           onTap: () {
-                            accountSettingController.accountSetting(
-                                context,
-                                "hide_last_active",
-                                lastLoginStatus == true ? 1 : 0);
-                            print(
-                                "lastlogin===============${lastLoginStatus == true ? 1 : 0}");
+                            accountSettingController
+                                .accountSetting(context, "hide_last_active",
+                                    lastActiveValue == true ? 1 : 0)
+                                .then((value) =>
+                                    {
+                                      APIs.updateLastActiveStatus(lastActiveValue == true ? 1 : 0),
+                                      lastActiveStatus = lastActiveValue});
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -348,13 +375,13 @@ void dispose() {
     // Show modal bottom sheet and wait for the result
     showModalBottomSheet(
       context: context,
-      isDismissible: false,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
       ),
       builder: (BuildContext context) {
+        bool phoneValue = phoneStatus!;
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -372,10 +399,10 @@ void dispose() {
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
-                      value: phoneStatus!,
+                      value: phoneValue,
                       onChanged: (value) {
                         setState(() {
-                          phoneStatus = value;
+                          phoneValue = value;
                         });
                       },
                       activeColor: AppColors.primaryColor,
@@ -396,11 +423,7 @@ void dispose() {
                       children: [
                         GestureDetector(
                           onTap: () {
-                         phoneStatus =
-                                userProfileController
-                                        .member?.member?.hidePhoneStatus ==
-                                    1;
-                            Navigator.pop(context); 
+                            Navigator.pop(context);
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -416,10 +439,10 @@ void dispose() {
                         ),
                         GestureDetector(
                           onTap: () {
-                            accountSettingController.accountSetting(
-                                context,
-                                "hide_phone_status",
-                                phoneStatus == true ? 1 : 0);
+                            accountSettingController
+                                .accountSetting(context, "hide_phone_status",
+                                    phoneValue == true ? 1 : 0)
+                                .then((value) => {phoneStatus = phoneValue});
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -444,7 +467,6 @@ void dispose() {
       },
     );
   }
-
 // End PhoneNo bottomSheet=======================================================================================================================
 
 // Start Email bottomSheet=======================================================================================================================
@@ -463,6 +485,7 @@ void dispose() {
             BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
       ),
       builder: (BuildContext context) {
+        bool emailValue = emailStatus!;
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -480,10 +503,10 @@ void dispose() {
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
-                      value: emailStatus!,
+                      value: emailValue,
                       onChanged: (value) {
                         setState(() {
-                          emailStatus = value;
+                          emailValue = value;
                         });
                       },
                       activeColor: AppColors.primaryColor,
@@ -504,11 +527,7 @@ void dispose() {
                       children: [
                         GestureDetector(
                           onTap: () {
-                           emailStatus =
-                                userProfileController
-                                        .member?.member?.hideEmailStatus ==
-                                    1;
-                            Navigator.pop(context); 
+                            Navigator.pop(context);
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -524,10 +543,10 @@ void dispose() {
                         ),
                         GestureDetector(
                           onTap: () {
-                             accountSettingController.accountSetting(
-                                context,
-                                "hide_email_status",
-                               emailStatus == true ? 1 : 0);
+                            accountSettingController
+                                .accountSetting(context, "hide_email_status",
+                                    emailValue == true ? 1 : 0)
+                                .then((value) => {emailStatus = emailValue});
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -570,6 +589,7 @@ void dispose() {
             BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
       ),
       builder: (BuildContext context) {
+        bool astroValue = astroStatus!;
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -587,10 +607,10 @@ void dispose() {
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
-                      value: astroStatus,
+                      value: astroValue,
                       onChanged: (value) {
                         setState(() {
-                          astroStatus = value;
+                          astroValue = value;
                         });
                       },
                       activeColor: AppColors.primaryColor,
@@ -627,8 +647,12 @@ void dispose() {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(
-                                context); // Pass the selected value back
+                            accountSettingController
+                                .accountSetting(
+                                    context,
+                                    "hide_astrological_info",
+                                    astroValue == true ? 1 : 0)
+                                .then((value) => {astroStatus = astroValue});
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -671,6 +695,7 @@ void dispose() {
             BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
       ),
       builder: (BuildContext context) {
+        bool profileValue = profileStatus!;
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -695,10 +720,10 @@ void dispose() {
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
-                      value: profileStatus,
+                      value: profileValue,
                       onChanged: (value) {
                         setState(() {
-                          profileStatus = value;
+                          profileValue = value;
                         });
                       },
                       activeColor: AppColors.primaryColor,
@@ -735,8 +760,11 @@ void dispose() {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(
-                                context); // Pass the selected value back
+                            accountSettingController
+                                .accountSetting(context, "hide_profile_temp",
+                                    profileValue == true ? 1 : 0)
+                                .then(
+                                    (value) => {profileStatus = profileValue});
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -779,6 +807,7 @@ void dispose() {
             BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
       ),
       builder: (BuildContext context) {
+        bool onlinevalue = onlineStatus!;
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
@@ -796,10 +825,10 @@ void dispose() {
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
-                      value: onlineStatus!,
+                      value: onlinevalue!,
                       onChanged: (value) {
                         setState(() {
-                          onlineStatus = value;
+                          onlinevalue = value;
                         });
                       },
                       activeColor: AppColors.primaryColor,
@@ -836,8 +865,15 @@ void dispose() {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pop(
-                                context); // Pass the selected value back
+                            accountSettingController
+                                .accountSetting(context, "hide_online_status",
+                                    onlinevalue == true ? 1 : 0)
+                                .then((value) => {
+                                  APIs.updateOnlineStatus(onlinevalue == true ? 1 : 0),
+                                  onlineStatus = onlinevalue
+                                  });
+                            // Navigator.pop(
+                            //     context); // Pass the selected value back
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -956,7 +992,6 @@ void dispose() {
     );
   }
 // End Theme bottomSheet=======================================================================================================================
-
 
   Widget buildThemeRadio(int value, String title, StateSetter setState) {
     final double screenWidth = MediaQuery.of(context).size.width;

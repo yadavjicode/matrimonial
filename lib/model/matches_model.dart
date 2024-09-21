@@ -130,6 +130,12 @@ class Data {
   dynamic interestStatus;
   dynamic accountType;
   dynamic chatStatus;
+  dynamic hideLastActiveStatus;
+  dynamic hideOnlineStatus;
+  dynamic hideProfileStatus;
+  dynamic hidePhoneStatus;
+  dynamic hideEmailStatus;
+  dynamic hideAstroStatus;
 
   Data(
       {this.hideIncome,
@@ -160,7 +166,13 @@ class Data {
       this.shortlistStatus,
       this.interestStatus,
       this.accountType,
-      this.chatStatus
+      this.chatStatus,
+      this.hideLastActiveStatus,
+      this.hideOnlineStatus,
+      this.hidePhoneStatus,
+      this.hideEmailStatus,
+      this.hideProfileStatus,
+      this.hideAstroStatus,
       });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -193,6 +205,12 @@ class Data {
     interestStatus = json['interest_status'];
     accountType = json['account_type'];
     chatStatus = json['chat_status'];
+    hideLastActiveStatus=json['hide_last_active'];
+    hideOnlineStatus=json['hide_online_status'];
+    hidePhoneStatus=json['hide_phone_status'];
+    hideEmailStatus=json['hide_email_status'];
+    hideProfileStatus=json['hide_profile_temp'];
+    hideAstroStatus=json['hide_astrological_info'];
   }
 
   Map<String, dynamic> toJson() {
@@ -226,6 +244,12 @@ class Data {
     data['interest_status'] = this.interestStatus;
     data['account_type'] = this.accountType;
     data['chat_status'] = this.chatStatus;
+     data['hide_last_active'] = this.hideLastActiveStatus;
+    data['hide_online_status'] = this.hideOnlineStatus;
+    data['hide_phone_status'] = this.hidePhoneStatus;
+    data['hide_email_status'] = this.hideEmailStatus;
+    data['hide_profile_temp'] = this.hideProfileStatus;
+    data['hide_astrological_info'] = this.hideAstroStatus;
     return data;
   }
 }

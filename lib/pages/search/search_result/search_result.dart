@@ -490,7 +490,7 @@ class _SearchResultState extends State<SearchResult> {
                                                     )
                                                 ],
                                               ),
-                                              UserStatusWidget(userId: id),
+                                              UserStatusWidget(userId: id,onlineStatus: data.hideOnlineStatus??0,lastSeenStatus: data.hideLastActiveStatus??0),
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     top: 8, bottom: 8),

@@ -49,8 +49,10 @@ class LastOnline{
   
 class UserStatusWidget extends StatelessWidget {
   final String userId;
+  final int onlineStatus;
+  final int lastSeenStatus;
   final LastOnline lastOnlineService = LastOnline();
-  UserStatusWidget({required this.userId});
+  UserStatusWidget({required this.userId,required this.onlineStatus,required this.lastSeenStatus});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
@@ -74,7 +76,7 @@ class UserStatusWidget extends StatelessWidget {
           // If the future returned a value
           bool isOnline = snapshot.data ?? false;
 
-          if (isOnline) {
+          if (isOnline&& onlineStatus==0) {
             return Row(
               children: [
                 Container(
@@ -93,7 +95,7 @@ class UserStatusWidget extends StatelessWidget {
                 ),
               ],
             );
-          } else {
+          } else if(lastSeenStatus==0) {
             // If the user is not online, show the last active time
             return FutureBuilder<String>(
               future: lastOnlineService.getUserLastActive(userId),
@@ -136,6 +138,8 @@ class UserStatusWidget extends StatelessWidget {
                 }
               },
             );
+          }else{
+            return Text("");
           }
         } else {
           return Text('Unknown status');

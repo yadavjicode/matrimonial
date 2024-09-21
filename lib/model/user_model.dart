@@ -155,7 +155,7 @@ class Member {
   dynamic photoRemindCnt;
   dynamic logincount;
   dynamic lastlogin;
-  dynamic thislogin;
+  dynamic thislogin;   
   dynamic dumprofile;
   dynamic prosta;
   dynamic pagecount;
@@ -313,6 +313,7 @@ class Member {
   dynamic nameOfTemple;
   dynamic cityOfTheTemple;
   dynamic devotionalHobbies;
+  dynamic GBHobbies;
   dynamic nameOfTheCounselorOfMySpiritualPath;
   dynamic connectedWithMyCounselerSince;
   dynamic withWhichTempleYourCounselorIsConnectedTo;
@@ -628,6 +629,7 @@ class Member {
       this.nameOfTemple,
       this.cityOfTheTemple,
       this.devotionalHobbies,
+      this.GBHobbies,
       this.nameOfTheCounselorOfMySpiritualPath,
       this.connectedWithMyCounselerSince,
       this.withWhichTempleYourCounselorIsConnectedTo,
@@ -942,6 +944,7 @@ class Member {
     nameOfTemple = json['name_of_temple'];
     cityOfTheTemple = json['city_of_the_temple'];
     devotionalHobbies = json['devotional_hobbies'];
+    GBHobbies = json['GB_Hobbies'];
     nameOfTheCounselorOfMySpiritualPath =
         json['name_of_the_counselor_of_my_spiritual_path'];
     connectedWithMyCounselerSince = json['connected_with_my_counseler_since'];
@@ -1261,6 +1264,7 @@ class Member {
     data['name_of_temple'] = this.nameOfTemple;
     data['city_of_the_temple'] = this.cityOfTheTemple;
     data['devotional_hobbies'] = this.devotionalHobbies;
+    data['GB_Hobbies'] = this.GBHobbies;
     data['name_of_the_counselor_of_my_spiritual_path'] =
         this.nameOfTheCounselorOfMySpiritualPath;
     data['connected_with_my_counseler_since'] =

@@ -90,7 +90,7 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
       _editProfileController.userDetails(context);
     });
 
-    selectHobbies(_editProfileController.member!.member!.hobbies);
+    selectHobbies(_editProfileController.member!.member!.GBHobbies);
     selectQualities(_editProfileController.member!.member!.groomBride);
 
   }

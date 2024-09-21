@@ -1,8 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
-import 'package:devotee/model/profile_details_model.dart';
-import 'package:devotee/model/search_model.dart';
 import 'package:devotee/model/sent_invitation_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,8 +26,8 @@ class SentInvitationController with ChangeNotifier {
       _member = await apiService.SentInvitation(id);
       CustomDialog.show(
         context,
-        'Sent Invitation',
-        '${member!.message}',
+        member?.message??"",
+        member?.title??"",
         dialogType: DialogType.success,
         btnOkOnPress: btnOkOnPress ??
             () {

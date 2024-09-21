@@ -30,7 +30,6 @@ class _ChatScreenState extends State<ChatScreen> {
   final _textController = TextEditingController();
   @override
   void initState() {
-    
     // TODO: implement initState
     super.initState();
     APIs.getSelfInfo();
@@ -91,7 +90,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
       //
       child: Scaffold(
-        
         //app bar
         appBar: AppBar(
           elevation: 0,
@@ -103,13 +101,12 @@ class _ChatScreenState extends State<ChatScreen> {
         backgroundColor: AppColors.background,
 
         //body
-        body: Stack(
-          children: [
-             Container(
-                  width: double.infinity,
-                  alignment: Alignment.topRight,
-                  child: Image.asset("assets/images/background.png")),
-           SafeArea(
+        body: Stack(children: [
+          Container(
+              width: double.infinity,
+              alignment: Alignment.topRight,
+              child: Image.asset("assets/images/background.png")),
+          SafeArea(
             child: Column(
               children: [
                 Expanded(
@@ -121,18 +118,19 @@ class _ChatScreenState extends State<ChatScreen> {
                         case ConnectionState.waiting:
                         case ConnectionState.none:
                           return const SizedBox();
-        
+
                         // if some or all data is loaded then show it
                         case ConnectionState.active:
                         case ConnectionState.done:
                           if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                             _list = snapshot.data!;
-        
+
                             return ListView.builder(
                               reverse: true,
                               itemCount: _list.length,
                               padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).size.height * .01),
+                                  top:
+                                      MediaQuery.of(context).size.height * .01),
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return MessageCard(message: _list[index]);
@@ -148,7 +146,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                   ),
                 ),
-        
+
                 //progress indicator for showing uploading
                 if (_isUploading)
                   const Align(
@@ -157,10 +155,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           padding:
                               EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                           child: CircularProgressIndicator(strokeWidth: 2))),
-        
+
                 //chat input filed
                 _chatInput(),
-        
+
                 //show emojis on keyboard emoji button click & vice versa
                 if (_showEmoji)
                   SizedBox(
@@ -173,12 +171,26 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
             ),
           ),
-          ]
-        ),
+        ]),
       ),
       // ),
     );
   }
+
+
+  String _getStatusMessage(ChatUser user) {
+    if (user.isOnline && user.onlineStatus == 0) {
+      return 'Online';
+    } else if (user.lastActiveStatus == 0) {
+      return MyDateUtil.getLastActiveTime(
+        context: context,
+        lastActive: user.lastActive,
+      );
+    } else {
+      return ''; // If no valid status or last active time, return empty
+    }
+  }
+
 
   // app bar widget
   Widget _appBar() {
@@ -234,17 +246,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         //last seen time of user
                         Text(
-                            list.isNotEmpty
-                                ? list[0].isOnline
-                                    ? 'Online'
-                                    : MyDateUtil.getLastActiveTime(
-                                        context: context,
-                                        lastActive: list[0].lastActive)
-                                : MyDateUtil.getLastActiveTime(
-                                    context: context,
-                                    lastActive: widget.user.lastActive),
-                            style: const TextStyle(
-                                fontSize: 13, color: AppColors.constColor)),
+                          list.isNotEmpty
+                              ? _getStatusMessage(list[
+                                  0]) // Method to determine the status message
+                              : _getStatusMessage(widget
+                                  .user), // Fallback to the widget's user data
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.constColor,
+                          ),
+                        ),
                       ],
                     )
                   ],

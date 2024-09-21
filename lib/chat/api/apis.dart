@@ -21,14 +21,18 @@ class APIs with ChangeNotifier {
   static final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   static String myid =
-      _editProfileController.member!.member!.matriID.toString();
+      _editProfileController.member?.member?.matriID;
   static String name =
-      "${_editProfileController.member!.member!.name.toString()} ${_editProfileController.member!.member!.surename.toString()}";
+      "${_editProfileController.member?.member?.name} ${_editProfileController.member?.member?.surename.toString()}";
   static String email =
-      _editProfileController.member!.member!.confirmEmail.toString();
+      _editProfileController.member?.member?.confirmEmail;
+   static int onlineStatus =
+      _editProfileController.member?.member?.hideOnlineStatus;
+  static int lastActiveStatus =
+      _editProfileController.member?.member?.hideOnlineStatus;
 
-  static String image = _editProfileController.member!.member!.photo1 != null
-      ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.photo1}"
+  static String image = _editProfileController.member?.member?.photo1 != null
+      ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
       : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
           .toString();
 
@@ -50,6 +54,8 @@ class APIs with ChangeNotifier {
       image: image,
       createdAt: '',
       isOnline: false,
+      onlineStatus: onlineStatus,
+      lastActiveStatus: lastActiveStatus,
       lastActive: '',
       pushToken: '');
 
@@ -241,7 +247,9 @@ static Future<bool> updateUserImage(String imageurl) async {
         image: image,
         createdAt: time,
         isOnline: false,
+        onlineStatus: onlineStatus,
         lastActive: time,
+        lastActiveStatus: lastActiveStatus,
         pushToken: '');
 
     return await firestore
@@ -291,10 +299,26 @@ static Future<bool> updateUserImage(String imageurl) async {
   // for updating user information
   static Future<void> updateUserInfo() async {
     await firestore.collection('users').doc(myid).update({
-      'name': me.name,
+     // 'name': me.name,
       'about': me.about,
     });
   }
+
+  // for updating online status
+  static Future<void> updateOnlineStatus(int onlineStatus) async {
+    await firestore.collection('users').doc(myid).update({
+      'online_status': onlineStatus,
+      
+    });
+  }
+
+  // for updating lastActive status
+  static Future<void> updateLastActiveStatus(int lastActiveStatus) async {
+    await firestore.collection('users').doc(myid).update({
+      'last_active_status': lastActiveStatus,
+    });
+  }
+
 
   // update profile picture of user
   static Future<void> updateProfilePicture(File file) async {

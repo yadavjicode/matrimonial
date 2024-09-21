@@ -34,18 +34,16 @@ class UploadProfileController extends GetxController {
           }
         });
         flowController.Flow(context, 12);
-        Dialogs.showSnackbar(
-            context, "Photo Upload Successfully: ${response['data']}");
+        Dialogs.showSnackbar(context, "Photo Upload Successfully!");
       } else {
         print('Photo Upload failed: ${response['message']}');
 
-        Dialogs.showSnackbar(
-            context, 'Photo Upload failed: ${response['message']}');
+        Dialogs.showSnackbar(context, 'Photo Upload failed!');
       }
     } catch (e) {
       print('Photo Upload failed: $e');
 
-      Dialogs.showSnackbar(context, 'Photo Upload failed: $e');
+      Dialogs.showSnackbar(context, 'Photo Upload failed!');
     } finally {
       isLoading.value = false;
     }

@@ -41,8 +41,8 @@ class _EditYourProfileState extends State<EditYourProfile> {
         ],
       ),
       body: Obx(() {
-      final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+        final double screenWidth = MediaQuery.of(context).size.width;
+        final double screenHeight = MediaQuery.of(context).size.height;
 
         String image = editProfilePhotoController.selectedImage.value != null
             ? editProfilePhotoController.selectedImage.value!.path
@@ -53,22 +53,27 @@ class _EditYourProfileState extends State<EditYourProfile> {
         return Column(
           children: [
             Container(
-              width: screenWidth*1,
-              height:(screenWidth*1)*(5/4) ,
-              color: AppColors.black,
+              width: screenWidth * 1,
+              height: (screenWidth * 1) * (5 / 4),
+              color: AppColors.constColor,
               child: editProfilePhotoController.selectedImage.value != null
                   ? Image.file(editProfilePhotoController.selectedImage.value!,
                       fit: BoxFit.fill)
-                  : Image.network(image, fit: BoxFit.cover,width: screenWidth*1,
-              height:(screenWidth*1)*(5/4) ,),
+                  : Image.network(
+                      image,
+                      fit: BoxFit.cover,
+                      width: screenWidth * 1,
+                      height: (screenWidth * 1) * (5 / 4),
+                    ),
             ),
             GestureDetector(
               onTap: () {
                 if (editProfilePhotoController.selectedImage.value != null) {
-                  editProfilePhotoController.profileCompleteFill(context,"Photo1");
+                  editProfilePhotoController.profileCompleteFill(
+                      context, "Photo1");
                 } else {
-                 
-                   Dialogs.showSnackbar(context, 'Please select an image before updating.');
+                  Dialogs.showSnackbar(
+                      context, 'Please select an image before updating.');
                 }
               },
               child: Container(
@@ -108,7 +113,8 @@ class _EditYourProfileState extends State<EditYourProfile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => editProfilePhotoController.pickImageFromGallery(),
+                    onTap: () =>
+                        editProfilePhotoController.pickImageFromGallery(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -126,7 +132,8 @@ class _EditYourProfileState extends State<EditYourProfile> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => editProfilePhotoController.pickImageFromCamera(),
+                    onTap: () =>
+                        editProfilePhotoController.pickImageFromCamera(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -145,7 +152,6 @@ class _EditYourProfileState extends State<EditYourProfile> {
                   )
                 ],
               ),
-              
             ],
           ),
         );

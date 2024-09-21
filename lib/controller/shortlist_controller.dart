@@ -26,8 +26,8 @@ class ShortlistController with ChangeNotifier {
       _member = await apiService.Shortlist(id);
       CustomDialog.show(
         context,
-        'Shortlist',
-        '${member!.message}',
+        member?.message??"",
+        member?.title??"",
         dialogType: DialogType.success,
         btnOkOnPress: btnOkOnPress ??
             () {
