@@ -71,7 +71,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
   String? selectWeightTo;
 
   String? selectHeightFrom;
+  String? selectHeightFromKey;
+
   String? selectHeightTo;
+  String? selectHeightToKey;
 
   String? selectMaritalStatus;
 
@@ -124,23 +127,28 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    selectAgeFrom = _editProfileController.member!.member!.pEFromAge != 0
+    selectAgeFrom = _editProfileController.member!.member!.pEFromAge != null
         ? "${_editProfileController.member!.member!.pEFromAge} Yrs"
-        : "";
-    selectAgeTo = _editProfileController.member!.member!.pEToAge != 0
+        : null;
+    selectAgeTo = _editProfileController.member!.member!.pEToAge != null
         ? "${_editProfileController.member!.member!.pEToAge} Yrs"
-        : "";
-    selectWeightFrom = _editProfileController.member!.member!.pEFromWeight != 0
-        ? "${_editProfileController.member!.member!.pEFromWeight} KG"
-        : "";
-    selectWeightTo = _editProfileController.member!.member!.pEToWeight != 0
+        : null;
+    selectWeightFrom =
+        _editProfileController.member?.member?.pEFromWeight != null
+            ? "${_editProfileController.member!.member!.pEFromWeight} KG"
+            : null;
+    selectWeightTo = _editProfileController.member!.member!.pEToWeight != null
         ? "${_editProfileController.member!.member!.pEToWeight} KG"
-        : "";
+        : null;
     selectHeightFrom = _editProfileController.member!.member!.pEHeight;
+    selectHeightFromKey = _editProfileController.member?.member?.peHeightKey;
     selectHeightTo = _editProfileController.member!.member!.pEHeight2;
+    selectHeightToKey = _editProfileController.member?.member?.peHeight2Key;
 
-    List<String> languages =_editProfileController.member!.member!.pELanguage!=null?
-        _editProfileController.member!.member!.pELanguage.split(','):[];
+    List<String> languages =
+        _editProfileController.member!.member!.pELanguage != null
+            ? _editProfileController.member!.member!.pELanguage.split(',')
+            : [];
     selectedLanguage ??= []; // Initialize if null
     selectedLanguage!.addAll(languages);
     selectMaritalStatus =
@@ -158,6 +166,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
     selectDiet = _editProfileController.member!.member!.pEDiet;
     selectDrinkHabit = _editProfileController.member!.member!.pEDrink;
     selectSmokeHabit = _editProfileController.member!.member!.pESmoking;
+
     if (_editProfileController.member!.member!.familyType == "Joint") {
       familytype = 1;
     } else if (_editProfileController.member!.member!.familyType == "Nuclear") {
@@ -172,8 +181,8 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
         "Liberal") {
       familyValue = 3;
     }
-    countryController.selectItem(_editProfileController.member!.member!.pECountrylivingin);
-  
+    countryController
+        .selectItem(_editProfileController.member!.member!.pECountrylivingin);
   }
 
   ProfessionsController professionController = Get.put(ProfessionsController());
@@ -281,7 +290,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight From',
-                                  WeightConsController.getWeight(),
+                                  weightConsController.getWeight(),
                                   (value) {
                                     setState(() {
                                       selectWeightFrom =
@@ -305,6 +314,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                       (value) {
                                         setState(() {
                                           selectHeightFrom = null;
+                                          selectHeightFromKey = null;
                                         });
                                       },
                                       selectedItem: 'Loading...',
@@ -318,6 +328,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                         setState(() {
                                           selectHeightFrom =
                                               value; // Update the state
+                                          selectHeightFromKey = heightController
+                                              .getHeightList()
+                                              .indexOf(value!)
+                                              .toString();
                                         });
                                         heightController.selectItem(
                                             value); // Call the controller method
@@ -356,7 +370,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight To',
-                                  WeightConsController.getWeight(),
+                                  weightConsController.getWeight(),
                                   (value) {
                                     setState(() {
                                       selectWeightTo =
@@ -379,7 +393,8 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                       ['Loading...'],
                                       (value) {
                                         setState(() {
-                                          selectHeightFrom = null;
+                                          selectHeightTo = null;
+                                          selectHeightToKey = null;
                                         });
                                       },
                                       selectedItem: 'Loading...',
@@ -393,6 +408,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                         setState(() {
                                           selectHeightTo =
                                               value; // Update the state
+                                          selectHeightToKey = heightController
+                                              .getHeightList()
+                                              .indexOf(value!)
+                                              .toString();
                                         });
                                         heightController.selectItem(
                                             value); // Call the controller method
@@ -1196,10 +1215,18 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                     context,
                     selectAgeFrom ?? "",
                     selectAgeTo ?? "",
-                    selectWeightFrom ?? "",
-                    selectWeightTo ?? "",
-                    selectHeightFrom ?? "",
-                    selectHeightTo ?? "",
+                    selectWeightFrom != null
+                        ? weightConsController
+                            .weightInt(selectWeightFrom!)
+                            .toString()
+                        : "",
+                    selectWeightTo != null
+                        ? weightConsController
+                            .weightInt(selectWeightTo!)
+                            .toString()
+                        : "",
+                    selectHeightFromKey ?? "",
+                    selectHeightToKey ?? "",
                     getLanguageKnown(selectedLanguage ?? []),
                     selectMaritalStatus ?? "",
                     getFamilyType(),

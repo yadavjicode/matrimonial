@@ -2,8 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/model/buy_package_model.dart';
-import 'package:devotee/model/coupons_model.dart';
-import 'package:devotee/model/package_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
@@ -27,7 +25,7 @@ final EditProfileController editProfileController=Get.put(EditProfileController(
       // ignore: use_build_context_synchronously
       CustomDialog.show(
         context,
-        '${member!.status}',
+        '${member!.title}',
         '${member!.message}',
         dialogType: DialogType.success,
        btnOkOnPress: () => {

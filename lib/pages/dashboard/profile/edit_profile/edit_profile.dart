@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:devotee/chat/widgets/notificationIcon_withBadge.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,15 +20,11 @@ class _ProfileEditState extends State<ProfileEdit> {
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
-    });
-  }
+ final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+ 
 
   int _currentIndex = 0;
+ 
 
   List<String> getImageList() {
     List<String> imgList = [];
@@ -51,7 +49,15 @@ class _ProfileEditState extends State<ProfileEdit> {
     return imgList;
   }
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +82,12 @@ class _ProfileEditState extends State<ProfileEdit> {
             scaffoldKey.currentState?.openDrawer();
           },
         ),
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.all(10.0),
+        //     child: NotificationCountWidget(),
+        //   ),
+        // ],
       ),
       body: Obx(() {
         final List<String> imgList = getImageList();
@@ -251,7 +263,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   children: [
                     _buildCont(
                       "Basic Details",
-                      "/editBasicDetails",
+                      "/partner",
                       Column(
                         children: [
                           _buildText(
@@ -292,7 +304,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   "Not Mentioned"),
                           _buildText(
                               "Weight",
-                              "${_editProfileController.member?.member?.weight} KG" ??
+                              _editProfileController.member?.member?.weight !=null?"${_editProfileController.member?.member?.weight} KG":
                                   "Not Mentioned"),
                           _buildText("Date of Birth",
                               _editProfileController.member?.member?.dOB ?? ""),
@@ -762,14 +774,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                               "Body Weight From",
                               _editProfileController
                                           .member?.member?.pEFromWeight !=
-                                      0
+                                      null
                                   ? "${_editProfileController.member?.member?.pEFromWeight} KG"
                                   : "Not Mentioned"),
                           _buildText(
                               "Body Weight To",
                               _editProfileController
                                           .member?.member?.pEToWeight !=
-                                      0
+                                      null
                                   ? "${_editProfileController.member?.member?.pEToWeight} KG"
                                   : "Not Mentioned"),
                           _buildText(
@@ -866,34 +878,33 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   Widget _buildText(String tittle, String value) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                tittle,
-                style: FontConstant.styleMedium(
-                  fontSize: 13,
-                  color: AppColors.darkgrey,
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              tittle,
+              style: FontConstant.styleMedium(
+                fontSize: 13,
+                color: AppColors.darkgrey,
               ),
             ),
-            SizedBox(width: 5),
-            Text(": "),
-            Expanded(
-              child: Text(
-                value,
-                style: FontConstant.styleMedium(
-                  fontSize: 13,
-                  color: AppColors.black,
-                ),
+          ),
+          SizedBox(width: 5),
+          Text(": "),
+          Expanded(
+            child: Text(
+              value,
+              style: FontConstant.styleMedium(
+                fontSize: 13,
+                color: AppColors.black,
               ),
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 

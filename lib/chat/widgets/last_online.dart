@@ -128,7 +128,7 @@ class UserStatusWidget extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          'Last Online: ${MyDateUtil.getLastActiveTime(context: context, lastActive: "${snapshot.data}")}',
+                          '${MyDateUtil.getLastActiveTime(context: context, lastActive: "${snapshot.data}")}',
                           style: FontConstant.styleMedium(
                               fontSize: 13, color: AppColors.darkgrey),
                         ),

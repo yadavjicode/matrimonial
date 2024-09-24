@@ -29,19 +29,21 @@ class _BasicDetailState extends State<BasicDetail> {
   final TextEditingController initiatedNameController = TextEditingController();
   final TextEditingController aboutController = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
+  WeightConsController weightConsController = Get.put(WeightConsController());
 
   final BasicDetailsController _basicDetailController =
       Get.put(BasicDetailsController());
   DietController dietController = Get.put(DietController());
   MaritalController maritalController = Get.put(MaritalController());
   HeightController heightController = Get.put(HeightController());
-  WeightController weightController = Get.put(WeightController());
+ // WeightController weightController = Get.put(WeightController());
 
   bool show = false;
 
   String? selectedTitle;
   String? selectedMaritalStatus;
   String? selectedHeight;
+  String? selectedHeightKey;
   String? selectedWeight;
   String? selectedDay;
   String? selectedMonth;
@@ -284,6 +286,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                           (value) {
                                             setState(() {
                                               selectedHeight = null;
+                                              selectedHeightKey=null;
                                             });
                                           },
                                           selectedItem: 'Loading...',
@@ -295,7 +298,10 @@ class _BasicDetailState extends State<BasicDetail> {
                                           heightController.getHeightList(),
                                           (value) => {
                                             setState(
-                                                () => selectedHeight = value),
+                                                () {
+                                                  selectedHeight = value;
+                                                  selectedHeightKey = heightController.getHeightList().indexOf(value!).toString();
+                                                } ),
                                             isHeightValidated = true
                                           },
                                           search: true,
@@ -315,23 +321,9 @@ class _BasicDetailState extends State<BasicDetail> {
                                   ),
                                   const SizedBox(width: 10),
                                   Expanded(
-                                    child: Obx(() {
-                                      if (weightController.isLoading.value) {
-                                        return buildDropdownWithSearch(
+                                    child: buildDropdownWithSearch(
                                           'Weight *',
-                                          ['Loading...'],
-                                          (value) {
-                                            setState(() {
-                                              selectedWeight = null;
-                                            });
-                                          },
-                                          selectedItem: 'Loading...',
-                                          hintText: 'Select',
-                                        );
-                                      } else {
-                                        return buildDropdownWithSearch(
-                                          'Weight *',
-                                          weightController.getWeightList(),
+                                           weightConsController.getWeight(),
                                           (value) => {
                                             setState(
                                                 () => selectedWeight = value),
@@ -348,9 +340,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                               ? true
                                               : false,
                                           hintText: 'Select',
-                                        );
-                                      }
-                                    }),
+                                    )
                                   ),
                                 ],
                               ),
@@ -503,8 +493,12 @@ class _BasicDetailState extends State<BasicDetail> {
                                           .toString()
                                           .trim(),
                                       selectedMaritalStatus ?? "",
-                                      selectedHeight ?? "",
-                                      selectedWeight ?? "",
+                                      selectedHeightKey ?? "",
+                                     selectedWeight != null
+                                  ? weightConsController
+                                      .weightInt(selectedWeight!)
+                                      .toString()
+                                  : "",
                                       "$selectedYear-$mon-$selectedDay",
                                       getSelectedHobbies(),
                                       selectedDiet ?? "",

@@ -1,4 +1,6 @@
 import 'package:devotee/chat/api/direct_chat_controller.dart';
+import 'package:devotee/chat/helper/count_unread_message.dart';
+import 'package:devotee/chat/widgets/notificationIcon_withBadge.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
@@ -111,11 +113,21 @@ class _HomeState extends State<Home> {
                                     "assets/images/searchd.svg"),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8, top: 5, right: 15),
-                              child: SvgPicture.asset(
-                                  "assets/images/notification.svg"),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NotificationPage()), // Correct syntax here
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 8, top: 5, right: 15),
+                                child: SvgPicture.asset(
+                                    "assets/images/notification.svg"),
+                              ),
                             )
                           ],
                         ),
@@ -170,12 +182,7 @@ class _HomeState extends State<Home> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  "0",
-                                  style: FontConstant.styleRegular(
-                                      fontSize: 22,
-                                      color: AppColors.primaryColor),
-                                ),
+                                CountUnreadMessage(),
                                 Text(
                                   "   Messages   ",
                                   style: FontConstant.styleRegular(

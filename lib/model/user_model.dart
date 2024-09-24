@@ -344,7 +344,9 @@ class Member {
   dynamic hidePhoneStatus;
   dynamic hideEmailStatus;
   dynamic hideAstroStatus;
-
+  dynamic heightKey;
+  dynamic peHeightKey;
+  dynamic peHeight2Key;
   dynamic spiritualCounselerConnected;
 
   Member(
@@ -659,7 +661,12 @@ class Member {
       this.hideEmailStatus,
       this.hideProfileStatus,
       this.hideAstroStatus,
-      this.accountType});
+      this.accountType,
+      this.heightKey,
+      this.peHeightKey,
+      this.peHeight2Key
+      
+      });
 
   Member.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -978,6 +985,9 @@ class Member {
     hideEmailStatus=json['hide_email_status'];
     hideProfileStatus=json['hide_profile_temp'];
     hideAstroStatus=json['hide_astrological_info'];
+    heightKey=json['HeightKey'];
+    peHeightKey=json['PE_HeightKey'];
+    peHeight2Key=json['PE_Height2Key'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1299,6 +1309,9 @@ class Member {
     data['hide_email_status'] = this.hideEmailStatus;
     data['hide_profile_temp'] = this.hideProfileStatus;
     data['hide_astrological_info'] = this.hideAstroStatus;
+    data['PE_HeightKey'] = this.peHeightKey;
+    data['PE_Height2Key'] = this.peHeight2Key;
+    
     return data;
   }
 }

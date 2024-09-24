@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -124,16 +125,14 @@ class _OTPScreenState extends State<OTPScreen> {
                         padding: const EdgeInsets.only(
                             bottom: 10, left: 30, right: 30),
                         child: OTPTextField(
-                          
                           otpFieldStyle: OtpFieldStyle(
-                            focusBorderColor: AppColors.primaryColor,
-                           // enabledBorderColor: AppColors.primaryColor,
-                            
+                              focusBorderColor: AppColors.primaryColor,
+                              // enabledBorderColor: AppColors.primaryColor,
+
                               backgroundColor: AppColors.constColor),
                           outlineBorderRadius: 10,
                           controller: otpbox,
                           length: 4,
-                          
                           width: MediaQuery.of(context).size.width,
                           fieldWidth: 50,
                           style: TextStyle(fontSize: 17),
@@ -189,16 +188,8 @@ class _OTPScreenState extends State<OTPScreen> {
 
                               //   Get.toNamed('/profile1');
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: AppColors.constColor,
-                                  content: Text(
-                                    'Please enter a valid 4-digit OTP',
-                                    style: FontConstant.styleRegular(
-                                        fontSize: 15, color: AppColors.grey),
-                                  ),
-                                ),
-                              );
+                              Dialogs.showSnackbar(
+                                  context, "Please enter a valid 4-digit OTP");
                             }
                           },
                           color: AppColors.primaryColor,

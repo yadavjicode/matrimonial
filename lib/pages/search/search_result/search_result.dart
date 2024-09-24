@@ -422,116 +422,106 @@ class _SearchResultState extends State<SearchResult> {
                                               ))
                                         ]),
                                       ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                name,
+                                     Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                name,
+                                style: FontConstant.styleSemiBold(
+                                    fontSize: 15,
+                                    color: AppColors.primaryColor),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "ID: ${id}",
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 13,
+                                          color: AppColors.black),
+                                    ),
+                                  ),
+                                  if (data.accountType == 1)
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      width: 1,
+                                      height: 12,
+                                      color: AppColors.grey,
+                                    ),
+                                  if (data.accountType == 1)
+                                    Expanded(
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/Crown.png",
+                                              height: 15,
+                                              width: 15,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "Premium",
                                                 style:
-                                                    FontConstant.styleSemiBold(
-                                                        fontSize: 15,
-                                                        color: AppColors
-                                                            .primaryColor),
+                                                    FontConstant.styleMedium(
+                                                        fontSize: 12,
+                                                        color: Color(
+                                                            0xFFF69506)),
                                               ),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      "ID: ${id}",
-                                                      style: FontConstant
-                                                          .styleMedium(
-                                                              fontSize: 13,
-                                                              color: AppColors
-                                                                  .black),
-                                                    ),
-                                                  ),
-                                                  if (data.accountType == 1)
-                                                    Container(
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 5),
-                                                      width: 1,
-                                                      height: 12,
-                                                      color: AppColors.grey,
-                                                    ),
-                                                  if (data.accountType == 1)
-                                                    Expanded(
-                                                      child: Container(
-                                                        child: Row(
-                                                          children: [
-                                                            Image.asset(
-                                                              "assets/images/Crown.png",
-                                                              height: 15,
-                                                              width: 15,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 3,
-                                                            ),
-                                                            Expanded(
-                                                              child: Text(
-                                                                "Premium",
-                                                                style: FontConstant
-                                                                    .styleMedium(
-                                                                        fontSize:
-                                                                            12,
-                                                                        color: Color(
-                                                                            0xFFF69506)),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )
-                                                ],
-                                              ),
-                                              UserStatusWidget(userId: id,onlineStatus: data.hideOnlineStatus??0,lastSeenStatus: data.hideLastActiveStatus??0),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 8, bottom: 8),
-                                                child: Container(
-                                                  height: 1,
-                                                  color: Colors.grey.shade200,
-                                                ),
-                                              ),
-                                              Text(
-                                                occupation,
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 13,
-                                                    color: AppColors.darkgrey),
-                                              ),
-                                              Text(
-                                                "${age}${height}",
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 13,
-                                                    color: AppColors.darkgrey),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10),
-                                                child: Text(
-                                                    "Created By: Myself",
-                                                    style: FontConstant
-                                                        .styleMedium(
-                                                            fontSize: 13,
-                                                            color: AppColors
-                                                                .darkgrey)),
-                                              ),
-                                              Text(
-                                                aadress,
-                                                style: FontConstant.styleMedium(
-                                                    fontSize: 13,
-                                                    color: AppColors.black),
-                                              )
-                                            ],
-                                          ),
+                                            )
+                                          ],
                                         ),
                                       ),
+                                    )
+                                ],
+                              ),
+                              UserStatusWidget(userId: id,onlineStatus: data.hideOnlineStatus??0,lastSeenStatus: data.hideLastActiveStatus??0),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 0, bottom: 5),
+                                child: Container(
+                                  height: 1,
+                                  color: Colors.grey.shade200,
+                                ),
+                              ),
+                              Text(
+                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: FontConstant.styleMedium(
+                                    fontSize: 13, color: AppColors.darkgrey),
+                              ),
+                              Text(
+                                "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                overflow: TextOverflow.ellipsis,
+                                style: FontConstant.styleMedium(
+                                    fontSize: 13, color: AppColors.darkgrey),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 5),
+                                child: Text("Created By: Myself",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 13,
+                                        color: AppColors.darkgrey)),
+                              ),
+                              Text(
+                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: FontConstant.styleMedium(
+                                    fontSize: 13, color: AppColors.black),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                                     ],
                                   ),
                                   Container(
@@ -732,7 +722,5 @@ class _SearchResultState extends State<SearchResult> {
     );
   }
 }
-
-// Replace with the correct import path
 
 

@@ -1,5 +1,4 @@
 import 'package:devotee/constants/button_constant.dart';
-import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/lists/age_list.dart';
 import 'package:devotee/constants/lists/catagory.dart';
@@ -13,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
-
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -48,6 +46,8 @@ class _SearchPageState extends State<SearchPage> {
 
   String? selectAgeFrom;
   String? selectAgeTo;
+  String? selectHeightFromKey;
+  String? selectHeightToKey;
   String? selectMaritalStatus;
   String? selectReligion;
   String? selectCaste;
@@ -64,13 +64,6 @@ class _SearchPageState extends State<SearchPage> {
     } else {
       return "";
     }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    religionsController.noSuchMethod;
-    super.dispose();
   }
 
   @override
@@ -91,21 +84,15 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: Obx(() {
         return Stack(children: [
-          SingleChildScrollView(
-            child: Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                      bottom: screenHeight * 0.5, left: screenWidth * 0.2),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/bg3.png'),
-                      fit: BoxFit.none,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
+          Stack(
+            children: [
+              Container(
+                  width: double.infinity,
+                  alignment: Alignment.topRight,
+                  child: Image.asset("assets/images/background.png")),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 22,right: 22,top: 30,bottom: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -220,93 +207,211 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                         ),
                       ]),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 10),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         'Height',
+                      //         style: FontConstant.styleRegular(
+                      //             fontSize: 16, color: Colors.black),
+                      //       ),
+                      //       RangeSlider(
+                      //         activeColor: AppColors.purple,
+                      //         values: _currentRangeValues,
+                      //         min: 3.0,
+                      //         max: 7.0,
+                      //         divisions:
+                      //             40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
+                      //         labels: RangeLabels(
+                      //           _currentRangeValues.start.toStringAsFixed(1),
+                      //           _currentRangeValues.end.toStringAsFixed(1),
+                      //         ),
+                      //         onChanged: (RangeValues values) {
+                      //           setState(() {
+                      //             _currentRangeValues = values;
+                      //             _heightFrom = _currentRangeValues.start
+                      //                 .toStringAsFixed(1);
+                      //             _heightTo = _currentRangeValues.end
+                      //                 .toStringAsFixed(1);
+                      //           });
+                      //         },
+                      //       ),
+                      //       Row(
+                      //         children: [
+                      //           Text(
+                      //             "3 feet",
+                      //             style: FontConstant.styleRegular(
+                      //                 fontSize: 15, color: AppColors.black),
+                      //           ),
+                      //           Spacer(),
+                      //           Text(
+                      //             "7 feet",
+                      //             style: FontConstant.styleRegular(
+                      //                 fontSize: 15, color: AppColors.black),
+                      //           )
+                      //         ],
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text(
-                              'Height',
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: Colors.black),
+                            Expanded(
+                              child: Obx(() {
+                                if (heightController.isLoading.value) {
+                                  return buildDropdownWithSearch(
+                                    'Height',
+                                    ['Loading...'],
+                                    (value) {
+                                      setState(() {
+                                        selectHeightFromKey = null;
+                                      });
+                                    },
+                                    selectedItem: 'Loading...',
+                                    hintText: 'Select',
+                                  );
+                                } else {
+                                  return buildDropdownWithSearch(
+                                    'Height',
+                                    heightController.HeightLists,
+                                    (value) {
+                                      setState(() {
+                                        selectHeightFromKey = heightController
+                                            .getHeightList()
+                                            .indexOf(value!)
+                                            .toString();
+                                      });
+                                      heightController.selectItem(value);
+                                    },
+                                    hintText: 'Select',
+                                  );
+                                }
+                              }),
                             ),
-                            RangeSlider(
-                              activeColor: AppColors.purple,
-                              values: _currentRangeValues,
-                              min: 3.0,
-                              max: 7.0,
-                              divisions:
-                                  40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
-                              labels: RangeLabels(
-                                _currentRangeValues.start.toStringAsFixed(1),
-                                _currentRangeValues.end.toStringAsFixed(1),
-                              ),
-                              onChanged: (RangeValues values) {
-                                setState(() {
-                                  _currentRangeValues = values;
-                                  _heightFrom = _currentRangeValues.start
-                                      .toStringAsFixed(1);
-                                  _heightTo = _currentRangeValues.end
-                                      .toStringAsFixed(1);
-                                });
-                              },
+                            SizedBox(
+                              width: 10,
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  "3 feet",
-                                  style: FontConstant.styleRegular(
-                                      fontSize: 15, color: AppColors.black),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "7 feet",
-                                  style: FontConstant.styleRegular(
-                                      fontSize: 15, color: AppColors.black),
-                                )
-                              ],
-                            )
+                            Expanded(
+                              child: Obx(() {
+                                if (heightController.isLoading.value) {
+                                  return buildDropdownWithSearch(
+                                    ' ',
+                                    ['Loading...'],
+                                    (value) {
+                                      setState(() {
+                                        selectHeightToKey = null;
+                                      });
+                                    },
+                                    selectedItem: 'Loading...',
+                                    hintText: 'Select',
+                                  );
+                                } else {
+                                  return buildDropdownWithSearch(
+                                    ' ',
+                                    heightController.HeightLists,
+                                    (value) {
+                                      setState(() {
+                                        selectHeightToKey = heightController
+                                            .getHeightList()
+                                            .indexOf(value!)
+                                            .toString();
+                                      });
+                                      heightController.selectItem(
+                                          value); // Call the controller method
+                                    },
+
+                                    // professionController.selectedItem.call,
+                                    hintText: 'Select',
+                                  );
+                                }
+                              }),
+                            ),
                           ],
                         ),
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdown(
-                          'Martial Status',
-                          maritalController.maritalLists,
-                          (value) {
-                            setState(() {
-                              selectMaritalStatus = value; // Update the state
-                            });
-                            maritalController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'select Martial Status',
-                        ),
+                        child: Obx(() {
+                          if (maritalController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Marital Status',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectMaritalStatus = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'Select Marital Status',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                              'Martial Status',
+                              maritalController.maritalLists,
+                              (value) {
+                                setState(() {
+                                  selectMaritalStatus =
+                                      value; // Update the state
+                                });
+                                maritalController.selectItem(
+                                    value); // Call the controller method
+                              },
+                              hintText: 'select Martial Status',
+                            );
+                          }
+                        }),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdownWithSearch(
-                          'Religion',
-                          religionsController.getReligionNames(),
-                          (value) {
-                            setState(() {
-                              selectReligion = value; // Update the state
-                            });
-                            religionsController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'select Religion',
-                        ),
+                        child: Obx(() {
+                          if (religionsController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Religion',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectReligion = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'select Religion',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                              'Religion',
+                              religionsController.getReligionNames(),
+                              (value) {
+                                setState(() {
+                                  selectReligion = value; // Update the state
+                                  selectCaste = null;
+                                });
+                                religionsController.selectItem(
+                                    value); // Call the controller method
+                              },
+                              hintText: 'select Religion',
+                            );
+                          }
+                        }),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Obx(() {
                           if (castController.isLoading.value) {
-                            return Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
-                              ),
+                            return buildDropdownWithSearch(
+                              'Caste',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectCaste = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'Select Caste',
                             );
                           } else {
                             return buildDropdownWithSearch(
@@ -328,27 +433,52 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdownWithSearch(
-                          'Country',
-                          countryController.getCountryList(),
-                          (value) {
-                            setState(() {
-                              selectCountry = value; // Update the state
-                            });
-                            countryController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'select Country',
-                        ),
+                        child: Obx(() {
+                          if (countryController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Country',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectCountry = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'select Country',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                              'Country',
+                              countryController.getCountryList(),
+                              (value) {
+                                setState(() {
+                                  selectCountry = value; // Update the state
+                                  selectCity = null;
+                                  selectState = null;
+                                });
+                                countryController.selectItem(
+                                    value); // Call the controller method
+                              },
+                              selectedItem: selectCountry,
+                              hintText: 'select Country',
+                            );
+                          }
+                        }),
                       ),
                       Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Obx(() {
                             if (stateControllerPermanent.isLoading.value) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
+                              return buildDropdownWithSearch(
+                                'State',
+                                ['Loading...'],
+                                (value) {
+                                  setState(() {
+                                    selectState = null;
+                                  });
+                                },
+                                selectedItem: 'Loading...',
+                                hintText: 'select State',
                               );
                             } else {
                               return buildDropdownWithSearch(
@@ -356,11 +486,13 @@ class _SearchPageState extends State<SearchPage> {
                                 stateControllerPermanent.stateLists,
                                 (value) {
                                   setState(() {
-                                    selectCaste = value; // Update the state
+                                    selectState = value; // Update the state
+                                    selectCity = null;
                                   });
                                   stateControllerPermanent.selectItem(
                                       value); // Call the controller method
                                 },
+                                selectedItem: selectState,
                                 hintText: 'select State',
                               );
                             }
@@ -369,10 +501,16 @@ class _SearchPageState extends State<SearchPage> {
                           padding: const EdgeInsets.only(top: 10),
                           child: Obx(() {
                             if (cityControllerPermanent.isLoading.value) {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.primaryColor,
-                                ),
+                              return buildDropdownWithSearch(
+                                'District/City',
+                                ['Loading...'],
+                                (value) {
+                                  setState(() {
+                                    selectCity = null;
+                                  });
+                                },
+                                selectedItem: 'Loading...',
+                                hintText: 'select District/City',
                               );
                             } else {
                               return buildDropdownWithSearch(
@@ -385,92 +523,112 @@ class _SearchPageState extends State<SearchPage> {
                                   cityControllerPermanent.selectItem(
                                       value); // Call the controller method
                                 },
+                                selectedItem: selectCity,
                                 hintText: 'select District/City',
                               );
                             }
                           })),
                       Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: buildDropdownWithSearch(
-                          'Education',
-                          educationController.EducationLists,
-                          (value) {
-                            setState(() {
-                              selectEducation = value; // Update the state
-                            });
-                            educationController.selectItem(
-                                value); // Call the controller method
-                          },
-                          hintText: 'select Education',
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Show Profile',
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                            Row(
-                              children: [
-                                CustomCheckbox(
-                                  value: selectprofileA!,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectprofileA = value;
-                                    });
-                                  },
-                                ),
-                                Text("With Photo"),
-                                Spacer(),
-                                CustomCheckbox(
-                                  value: selectprofileB!,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectprofileB = value;
-                                    });
-                                  },
-                                ),
-                                Text("Online Right Now"),
-                                SizedBox(
-                                  width: 10,
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                CustomCheckbox(
-                                  value: selectprofileC!,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectprofileC = value;
-                                    });
-                                  },
-                                ),
-                                Text("Premium Members"),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Obx(() {
+                            if (educationController.isLoading.value) {
+                              return buildDropdownWithSearch(
+                                'Education',
+                                ['Loading...'],
+                                (value) {
+                                  setState(() {
+                                    selectEducation = null;
+                                  });
+                                },
+                                selectedItem: 'Loading...',
+                                hintText: 'Select Education',
+                              );
+                            } else {
+                              return buildDropdownWithSearch(
+                                'Education',
+                                educationController.EducationLists,
+                                (value) {
+                                  setState(() {
+                                    selectEducation = value; // Update the state
+                                  });
+                                  educationController.selectItem(
+                                      value); // Call the controller method
+                                },
+                                hintText: 'Select Education',
+                              );
+                            }
+                          })),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 10),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         'Show Profile',
+                      //         style: FontConstant.styleRegular(
+                      //             fontSize: 16, color: Colors.black),
+                      //       ),
+                      //       Row(
+                      //         children: [
+                      //           CustomCheckbox(
+                      //             value: selectprofileA!,
+                      //             onChanged: (value) {
+                      //               setState(() {
+                      //                 selectprofileA = value;
+                      //               });
+                      //             },
+                      //           ),
+                      //           Text("With Photo"),
+                      //           Spacer(),
+                      //           CustomCheckbox(
+                      //             value: selectprofileB!,
+                      //             onChanged: (value) {
+                      //               setState(() {
+                      //                 selectprofileB = value;
+                      //               });
+                      //             },
+                      //           ),
+                      //           Text("Online Right Now"),
+                      //           SizedBox(
+                      //             width: 10,
+                      //           )
+                      //         ],
+                      //       ),
+                      //       Row(
+                      //         children: [
+                      //           CustomCheckbox(
+                      //             value: selectprofileC!,
+                      //             onChanged: (value) {
+                      //               setState(() {
+                      //                 selectprofileC = value;
+                      //               });
+                      //             },
+                      //           ),
+                      //           Text("Premium Members"),
+                      //         ],
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       const SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       CustomButton(
                         text: 'Search',
                         onPressed: () {
+                          print(
+                              "height index==========================${selectHeightFromKey}");
                           Get.toNamed('/searchresult', arguments: {
                             "ageFrom":
                                 searchController.getAge(selectAgeFrom ?? ""),
                             "ageTo": searchController.getAge(selectAgeTo ?? ""),
-                            "heightFrom":
-                                searchController.convertToFeetAndInches(
-                                    double.parse(_heightFrom ?? "3.0")),
-                            "heightTo": searchController.convertToFeetAndInches(
-                                double.parse(_heightTo ?? "7.0")),
+                            // "heightFrom":
+                            //     searchController.convertToFeetAndInches(
+                            //         double.parse(_heightFrom ?? "3.0")),
+                            // "heightTo": searchController.convertToFeetAndInches(
+                            //     double.parse(_heightTo ?? "7.0")),
+                            "heightFrom": selectHeightFromKey ?? "",
+                            "heightTo": selectHeightToKey ?? "",
                             "maritalStatus": selectMaritalStatus ?? "",
                             "religion": selectReligion ?? "",
                             "caste": selectCaste ?? "",
@@ -492,8 +650,8 @@ class _SearchPageState extends State<SearchPage> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           if (searchController.isLoading.value)
             Center(

@@ -29,13 +29,14 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
   DietController dietController = Get.put(DietController());
   MaritalController maritalController = Get.put(MaritalController());
   HeightController heightController = Get.put(HeightController());
-  WeightController weightController = Get.put(WeightController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
+  WeightConsController weightConsController = Get.put(WeightConsController());
 
   String? selectedTitle;
   String? selectedMaritalStatus;
   String? selectedHeight;
+  String? selectedHeightkey;
   String? selectedWeight;
   String? selectedDay;
   String? selectedMonth;
@@ -72,8 +73,6 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     }
   }
 
-
-
   Map<String, bool> hobbies = {
     "Art / Handicraft": false,
     "Yoga": false,
@@ -90,14 +89,14 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     "Reading Newspaper": false,
   };
 
-  
   String getSelectedHobbies() {
     return hobbies.entries
         .where((entry) => entry.value)
         .map((entry) => entry.key)
         .join(", ");
   }
-   void selectHobbies(String selectedHobbies) {
+
+  void selectHobbies(String selectedHobbies) {
     List<String> selectedList = selectedHobbies.split(', ');
 
     hobbies.forEach((key, value) {
@@ -114,7 +113,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     String mon =
         _basicDetailController.getMonthString(selectedMonth.toString());
     aboutController.text = _editProfileController.member!.member!.about ?? "";
-   
+
     String dob = _editProfileController.member!.member!.dOB ?? "";
     List<String> dateParts = dob.split('-');
 
@@ -124,12 +123,14 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     selectedMonth =
         _basicDetailController.getMonthString(month.toString()); // "01"
     selectedHeight = _editProfileController.member!.member!.height;
-    selectedWeight = _editProfileController.member!.member!.weight;
+    selectedWeight = _editProfileController.member?.member?.weight != null
+        ? "${_editProfileController.member?.member?.weight} KG"
+        : "";
     selectedMaritalStatus =
         _editProfileController.member!.member!.maritalstatus;
-    selectedDiet = _editProfileController.member!.member!.diet;   
-    selectHobbies(_editProfileController.member?.member?.hobbies??"");
-   
+    selectedDiet = _editProfileController.member!.member!.diet;
+    selectedHeightkey = _editProfileController.member?.member?.heightKey ?? "";
+    selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
   }
 
   @override
@@ -258,6 +259,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                   (value) {
                                     setState(() {
                                       selectedHeight = null;
+                                      selectedHeightkey = null;
                                     });
                                   },
                                   selectedItem: 'Loading...',
@@ -268,7 +270,15 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                   'Height *',
                                   heightController.getHeightList(),
                                   (value) => {
-                                    setState(() => selectedHeight = value),
+                                    setState(() {
+                                      selectedHeight = value;
+                                      selectedHeightkey = heightController
+                                          .getHeightList()
+                                          .indexOf(value!)
+                                          .toString();
+                                      print(
+                                          'Selected Height Index: $selectedIndex');
+                                    }),
                                     isHeightValidated = true
                                   },
                                   search: true,
@@ -289,23 +299,9 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                           ),
                           const SizedBox(width: 10),
                           Expanded(
-                            child: Obx(() {
-                              if (weightController.isLoading.value) {
-                                return buildDropdownWithSearch(
+                            child: buildDropdownWithSearch(
                                   'Weight *',
-                                  ['Loading...'],
-                                  (value) {
-                                    setState(() {
-                                      selectedWeight = null;
-                                    });
-                                  },
-                                  selectedItem: 'Loading...',
-                                  hintText: 'Select',
-                                );
-                              } else {
-                                return buildDropdownWithSearch(
-                                  'Weight *',
-                                  weightController.getWeightList(),
+                                  weightConsController.getWeight(),
                                   (value) => {
                                     setState(() => selectedWeight = value),
                                     isWeightValidated = true
@@ -322,9 +318,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                                           : false,
                                   selectedItem: selectedWeight,
                                   hintText: 'Select',
-                                );
-                              }
-                            }),
+                                )
                           ),
                         ],
                       ),
@@ -475,27 +469,20 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                               _editProfileController
                                       .member!.member!.spiritualName ??
                                   "",
-                              selectedMaritalStatus ??
-                                  _editProfileController
-                                      .member!.member!.maritalstatus ??
-                                  "",
-                              selectedHeight ??
-                                  _editProfileController
-                                      .member!.member!.height ??
-                                  "",
-                              selectedWeight ??
-                                  _editProfileController
-                                      .member!.member!.weight ??
-                                  "",
+                              selectedMaritalStatus ?? "",
+                              selectedHeightkey ?? "",
+                              selectedWeight != null
+                                  ? weightConsController
+                                      .weightInt(selectedWeight!)
+                                      .toString()
+                                  : "",
                               "${selectedYear ?? year ?? "0000"}-${mon.isEmpty ? month : mon}-${selectedDay ?? day ?? "00"}",
                               getSelectedHobbies().isEmpty
                                   ? _editProfileController
                                           .member!.member!.hobbies ??
                                       ""
                                   : getSelectedHobbies(),
-                              selectedDiet ??
-                                  _editProfileController.member!.member!.diet ??
-                                  "",
+                              selectedDiet ?? "",
                               aboutController.text.toString().trim(),
                               true); // print(
 

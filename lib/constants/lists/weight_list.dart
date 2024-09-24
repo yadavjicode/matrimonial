@@ -58,12 +58,15 @@ class WeightController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  
+
 }
 
 class WeightConsController extends GetxController {
   var selectedItem = RxnString();
 
-  static List<String> getWeight() {
+   List<String> getWeight() {
     List<String> Weight = [];
     for (int weight = 35; weight <= 135; weight++) {
       Weight.add('$weight KG');
@@ -74,4 +77,11 @@ class WeightConsController extends GetxController {
   void selectItem(String? value) {
     selectedItem.value = value;
   }
+
+int weightInt(String weight){
+    String numericWeight = weight.replaceAll(RegExp(r'[^0-9]'), '');
+    return int.parse(numericWeight);
+
+  }
+
 }

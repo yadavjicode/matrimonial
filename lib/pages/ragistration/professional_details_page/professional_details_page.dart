@@ -428,7 +428,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                                 working() == "Yes"
                                                     ? selectedAnnualSalary ?? ""
                                                     : "",
-                                                true);
+                                                false);
                                       }
 
                                     //   Get.toNamed('/devotion')

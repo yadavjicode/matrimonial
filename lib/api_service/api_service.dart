@@ -717,8 +717,8 @@ class ApiService {
     if (maritalStatus != null) body['Maritalstatus'] = maritalStatus;
     if (religion != null) body['Religion'] = religion;
     if (caste != null) body['Caste'] = caste;
-    if (country != null) body['country'] = country;
-    if (state != null) body['state'] = state;
+    if (country != null) body['Country'] = country;
+    if (state != null) body['State'] = state;
     if (city != null) body['City'] = city;
     if (education != null) body['Education'] = education;
 

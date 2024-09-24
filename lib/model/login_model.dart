@@ -1,31 +1,33 @@
 class LoginModel {
   bool? status;
-  Data? data;
+  ResponseData? responseData;
 
-  LoginModel({this.status, this.data});
+  LoginModel({this.status, this.responseData});
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    responseData = json['response_data'] != null
+        ? new ResponseData.fromJson(json['response_data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
+    if (this.responseData != null) {
+      data['response_data'] = this.responseData!.toJson();
     }
     return data;
   }
 }
 
-class Data {
+class ResponseData {
   bool? status;
-  dynamic data;
+  String? data;
 
-  Data({this.status, this.data});
+  ResponseData({this.status, this.data});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ResponseData.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'];
   }

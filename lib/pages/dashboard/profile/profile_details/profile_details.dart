@@ -166,7 +166,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                             }
                           } else {
                             Dialogs.showSnackbar(
-                                context, 'User does not accepted list!');
+                                context, 'The user is not added in your list!');
                           }
                       //   directChatController.isLoading.value = false;
                         },

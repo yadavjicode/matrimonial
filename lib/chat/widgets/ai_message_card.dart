@@ -1,5 +1,3 @@
-import 'package:devotee/main.dart';
-import 'package:devotee/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 

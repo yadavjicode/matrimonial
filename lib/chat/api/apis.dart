@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:devotee/chat/api/notification_access_token.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:rxdart/rxdart.dart' as rxDart; 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,24 +14,18 @@ import 'package:http/http.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
 
-
-
-
-
 class APIs with ChangeNotifier {
   static final EditProfileController _editProfileController =
       Get.put(EditProfileController());
-  static String myid =
-      _editProfileController.member?.member?.matriID;
+
+  static String myid = _editProfileController.member?.member?.matriID;
   static String name =
       "${_editProfileController.member?.member?.name} ${_editProfileController.member?.member?.surename.toString()}";
-  static String email =
-      _editProfileController.member?.member?.confirmEmail;
-   static int onlineStatus =
+  static String email = _editProfileController.member?.member?.confirmEmail;
+  static int onlineStatus =
       _editProfileController.member?.member?.hideOnlineStatus;
   static int lastActiveStatus =
       _editProfileController.member?.member?.hideOnlineStatus;
-
   static String image = _editProfileController.member?.member?.photo1 != null
       ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
       : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"
@@ -81,42 +76,80 @@ class APIs with ChangeNotifier {
   }
 //End find another user deatils to user id =====================================================================
 
- // Test =================================================================================
- 
-  static Future<int> getUnreadMessagesCount(String userId) async {
-    final snapshot = await firestore
-        .collection('chats')
-        .doc('${APIs.myid}_$userId')
-        .collection('messages')
-        .where('read', isEqualTo: '')
-        .where('fromId', isNotEqualTo: APIs.myid)
-        .get();
-    return snapshot.size;
+//Start  total unread message  =================================================================================
+
+ // Method to get the total unread messages count as a Stream
+static  Stream<int> getTotalUnreadMessagesCount() async* {
+    try {
+      // Listen to all users the current user has conversations with
+      final myUsersSnapshot = await firestore
+          .collection('users')
+          .doc(myid)
+          .collection('my_users')
+          .get();
+
+      if (myUsersSnapshot.docs.isEmpty) {
+        yield 0;
+        return;
+      }
+
+      final userIds = myUsersSnapshot.docs.map((doc) => doc.id).toList();
+      int totalUnreadCount = 0;
+
+      // Combine all streams of unread counts from different conversations
+      List<Stream<int>> unreadStreams = [];
+
+      for (final userId in userIds) {
+        final conversationId = getConversationID(userId);
+
+        if (conversationId.isNotEmpty) {
+          // Stream the unread message count for each conversation
+          unreadStreams.add(
+            firestore
+                .collection('chats/$conversationId/messages/')
+                .where('toId', isEqualTo: myid)
+                .where('read', isEqualTo: '') // Assuming '' means unread
+                .where('fromId', isNotEqualTo: myid)
+                .snapshots()
+                .map((snapshot) => snapshot.size),
+          );
+        }
+      }
+
+      // Use rxDart.Rx.combineLatest to combine all streams
+      yield* rxDart.Rx.combineLatest(unreadStreams, (counts) {
+        return counts.fold<int>(0, (sum, count) => sum + (count as int));
+      });
+    } catch (e) {
+      print('Error fetching unread messages count: $e');
+      yield 0;
+    }
   }
 
-// Test =================================================================================
+
+// End  total unread message =================================================================================
+
 
 //Start Update image ===========================================================================================
-static Future<bool> updateUserImage(String imageurl) async {
+  static Future<bool> updateUserImage(String imageurl) async {
     try {
-      me.image=await imageurl;
-   
+      me.image = await imageurl;
+
       // String imageUrl =  imageurl;
       await firestore.collection('users').doc(myid).update({
         'image': me.image,
       });
-      
+
       print('Image updated successfully');
       return true;
     } catch (e) {
       print('Error updating image: $e');
       return false;
     }
-}
+  }
 //End Update image ===========================================================================================
 
-
-  // for accessing firebase messaging (Push Notification)
+// for accessing firebase messaging (Push Notification)
   static FirebaseMessaging fMessaging = FirebaseMessaging.instance;
 
   // for getting firebase messaging token
@@ -140,6 +173,7 @@ static Future<bool> updateUserImage(String imageurl) async {
       }
     });
   }
+
   // for sending push notification (Updated Codes)
   static Future<void> sendPushNotification(
       ChatUser chatUser, String msg) async {
@@ -155,7 +189,7 @@ static Future<bool> updateUserImage(String imageurl) async {
       };
 
       // Firebase Project > Project Settings > General Tab > Project ID
-      const projectID = 'we-chat-75f13';
+      const projectID = 'emotional-cbe85';
 
       // get firebase admin token
       final bearerToken = await NotificationAccessToken.getToken;
@@ -184,7 +218,8 @@ static Future<bool> updateUserImage(String imageurl) async {
 
   // for checking if user exists or not?
   static Future<bool> userExists() async {
-    print( "my user ====${_editProfileController.member!.member!.matriID.toString()}");
+    print(
+        "my user ====${_editProfileController.member!.member!.matriID.toString()}");
 
     return (await firestore
             .collection('users')
@@ -268,7 +303,6 @@ static Future<bool> updateUserImage(String imageurl) async {
         .collection('my_users')
         .snapshots();
   }
- 
 
   // for getting all users from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(
@@ -299,7 +333,7 @@ static Future<bool> updateUserImage(String imageurl) async {
   // for updating user information
   static Future<void> updateUserInfo() async {
     await firestore.collection('users').doc(myid).update({
-     // 'name': me.name,
+      // 'name': me.name,
       'about': me.about,
     });
   }
@@ -308,7 +342,6 @@ static Future<bool> updateUserImage(String imageurl) async {
   static Future<void> updateOnlineStatus(int onlineStatus) async {
     await firestore.collection('users').doc(myid).update({
       'online_status': onlineStatus,
-      
     });
   }
 
@@ -318,7 +351,6 @@ static Future<bool> updateUserImage(String imageurl) async {
       'last_active_status': lastActiveStatus,
     });
   }
-
 
   // update profile picture of user
   static Future<void> updateProfilePicture(File file) async {

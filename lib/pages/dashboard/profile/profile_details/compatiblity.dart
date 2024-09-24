@@ -2,6 +2,7 @@
 
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:flutter/material.dart';
@@ -25,15 +26,9 @@ class _CompatiblityState extends State<Compatiblity> {
     final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        Container(
-          width: screenWidth * 0.2,
-          height: screenWidth * 0.2,
-          child: ClipOval(
-            child: Image.network(
-              imagePath,
-              fit: BoxFit.fill,
-            ),
-          ),
+        ProfileImage(
+          size: screenWidth * 0.2,
+          url: imagePath,
         ),
         SizedBox(
           height: 10,
@@ -160,13 +155,15 @@ class _CompatiblityState extends State<Compatiblity> {
                     Icons.arrow_back,
                     color: Color(0xff583789),
                   )),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 45.0),
-                child: Text(
-                  'You match ${count()}/7 of \nher preferences',
-                  textAlign: TextAlign.center,
-                  style: FontConstant.styleMedium(
-                      fontSize: 14, color: const Color(0xff583789)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 45.0),
+                  child: Text(
+                    'You match ${count()}/7 of her preferences',
+                    textAlign: TextAlign.center,
+                    style: FontConstant.styleMedium(
+                        fontSize: 14, color: const Color(0xff583789)),
+                  ),
                 ),
               ),
               const Padding(
@@ -176,7 +173,6 @@ class _CompatiblityState extends State<Compatiblity> {
                   color: Color(0xff583789),
                 ),
               ),
-              const Spacer(),
               buildAvatarColumn(myImage, 'Your \nMatch'),
             ],
           ),

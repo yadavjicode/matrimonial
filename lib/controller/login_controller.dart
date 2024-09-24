@@ -22,10 +22,10 @@ class LoginController with ChangeNotifier {
     try {
       _member = await apiService.login(mobileno.text.toString().trim());
 
-      print('${_member?.data?.data}');
+      print('${_member?.responseData?.data}');
 
       // ignore: use_build_context_synchronously
-      Dialogs.showSnackbar(context, '${_member?.data?.data}');
+      Dialogs.showSnackbar(context, '${_member?.responseData?.data}');
       Get.off(() => OTPScreen(mobileNumber: mobileno.text.toString().trim()));
 
       print("success");

@@ -15,7 +15,6 @@ import 'view_profile_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
-
   const ChatScreen({super.key, required this.user});
 
   @override

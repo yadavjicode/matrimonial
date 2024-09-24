@@ -468,7 +468,7 @@ Widget _buildDiscount(BuildContext context, List<Data> list) {
                 onTap: () => {
                   Clipboard.setData(ClipboardData(text: data.couponName))
                       .then((_) {
-                    Dialogs.showSnackbar(context, 'copied ${data.couponName}');
+                    Dialogs.showSnackbar(context, 'Copied ${data.couponName}');
                   })
                 },
                 child: Column(

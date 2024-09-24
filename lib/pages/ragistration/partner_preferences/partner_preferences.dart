@@ -70,7 +70,9 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
   String? selectWeightTo;
 
   String? selectHeightFrom;
+  String? selectHeightFromKey;
   String? selectHeightTo;
+  String? selectHeightToKey;
 
   String? selectMaritalStatus;
 
@@ -226,11 +228,11 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight From',
-                                  WeightConsController.getWeight(),
+                                  weightConsController.getWeight(),
                                   (value) {
                                     setState(() {
                                       selectWeightFrom =
-                                          value; // Update the state
+                                          value; 
                                     });
                                     weightConsController.selectItem(
                                         value); // Call the controller method
@@ -250,6 +252,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       (value) {
                                         setState(() {
                                           selectHeightFrom = null;
+                                          selectHeightFromKey=null;
                                         });
                                       },
                                       selectedItem: 'Loading...',
@@ -262,7 +265,8 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       (value) {
                                         setState(() {
                                           selectHeightFrom =
-                                              value; // Update the state
+                                              value; 
+                                          selectHeightFromKey=heightController.getHeightList().indexOf(value!).toString();
                                         });
                                         heightController.selectItem(
                                             value); // Call the controller method
@@ -301,7 +305,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight To',
-                                  WeightConsController.getWeight(),
+                                  weightConsController.getWeight(),
                                   (value) {
                                     setState(() {
                                       selectWeightTo =
@@ -324,7 +328,8 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       ['Loading...'],
                                       (value) {
                                         setState(() {
-                                          selectHeightFrom = null;
+                                          selectHeightTo = null;
+                                          selectHeightToKey=null;
                                         });
                                       },
                                       selectedItem: 'Loading...',
@@ -337,7 +342,8 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       (value) {
                                         setState(() {
                                           selectHeightTo =
-                                              value; // Update the state
+                                              value; 
+                                          selectHeightToKey=heightController.getHeightList().indexOf(value!).toString();
                                         });
                                         heightController.selectItem(
                                             value); // Call the controller method
@@ -1141,10 +1147,18 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                     context,
                     selectAgeFrom ?? "",
                     selectAgeTo ?? "",
-                    selectWeightFrom ?? "",
-                    selectWeightTo ?? "",
-                    selectHeightFrom ?? "",
-                    selectHeightTo ?? "",
+                    selectWeightFrom != null
+                        ? weightConsController
+                            .weightInt(selectWeightFrom!)
+                            .toString()
+                        : "",
+                    selectWeightTo != null
+                        ? weightConsController
+                            .weightInt(selectWeightTo!)
+                            .toString()
+                        : "",
+                    selectHeightFromKey ?? "",
+                    selectHeightToKey ?? "",
                     getLanguageKnown(selectedLanguage ?? []),
                     selectMaritalStatus ?? "",
                     getFamilyType(),

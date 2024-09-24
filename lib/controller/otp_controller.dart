@@ -14,7 +14,7 @@ class OtpController with ChangeNotifier {
   OtpModel? get member => _member;
   String? get error => _error;
 
- FlowController flowController=Get.put(FlowController());
+  FlowController flowController = Get.put(FlowController());
 
   Future<void> otp(String mobileNo, String otp, BuildContext context) async {
     isLoading.value = true;
@@ -24,44 +24,24 @@ class OtpController with ChangeNotifier {
     try {
       // Perform OTP authentication
       _member = await apiService.otp(mobileNo, otp);
-
-      // Save token to SharedPreferences
       final prefs = await SharedPreferences.getInstance();
-      final token = _member?.datas?.data?.token;
-      final name = _member?.datas?.data?.member?.name;
-      final id = _member?.datas?.data?.member?.matriID;
-      final email = _member?.datas?.data?.member?.confirmEmail;
-      final profile = _member?.datas?.data?.member?.profileImage;
-
+      final token = _member?.responseData?.token;
       if (token != null) {
         await prefs.setString('token', token);
-        await prefs.setString('name', name ?? "");
-        await prefs.setString('id', id ?? "");
-        await prefs.setString('email', email ?? "");
-        await prefs.setString('profile', token);
       } else {
         throw Exception('Token is null');
       }
-        flowController.Flow(context, 0);
-      // // Show success message
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     backgroundColor: Colors.grey.shade200,
-      //     content: Text(
-      //       _member?.datas?.data?.message ?? 'Success',
-      //       style: TextStyle(color: Colors.black),
-      //     ),
-      //   ),
-      // );
-     
-      // // Navigate to profile page
+      Dialogs.showSnackbar(context, "${_member?.responseData?.message}");
+
+      flowController.Flow(context, 0);
+
       // Get.toNamed('/profile1');
     } catch (e) {
       _error = e.toString();
       print('Error: $_error');
 
       // Show error message
-    Dialogs.showSnackbar(context, '${_error}');
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

@@ -88,7 +88,7 @@ class _MessageCardState extends State<MessageCard> {
         Padding(
           padding: EdgeInsets.only(right: screenWidth * .04),
           child: Text(
-            MyDateUtil.getFormattedTime(
+            MyDateUtil.getMessageTime(
                 context: context, time: widget.message.sent),
             style: const TextStyle(fontSize: 13, color: Colors.black54),
           ),
@@ -114,12 +114,12 @@ class _MessageCardState extends State<MessageCard> {
             if (widget.message.read.isNotEmpty)
               const Icon(Icons.done_all_rounded, color: Colors.blue, size: 20),
 
-            //for adding some space
+            //for adding some space  getFormattedTime
             const SizedBox(width: 2),
-
+           // MyDateUtil.getMessageTime(context: context, time: widget.message.sent)
             //sent time
             Text(
-              MyDateUtil.getFormattedTime(
+              MyDateUtil.getMessageTime(
                   context: context, time: widget.message.sent),
               style: const TextStyle(fontSize: 13, color: Colors.black54),
             ),
