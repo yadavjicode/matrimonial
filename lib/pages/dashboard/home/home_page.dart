@@ -1,11 +1,14 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/count_unread_message.dart';
-import 'package:devotee/chat/widgets/notificationIcon_withBadge.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/controller/notification_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
@@ -37,6 +40,7 @@ class _HomeState extends State<Home> {
       Get.put(ProfileDetailsController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
+  final NotificationController notificationController = Get.find();
 
   @override
   void initState() {
@@ -98,14 +102,27 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Spacer(),
-                            Text(
-                              "Dashboard",
-                              style: FontConstant.styleSemiBold(
-                                  fontSize: 18, color: AppColors.constColor),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                "Dashboard",
+                                style: FontConstant.styleSemiBold(
+                                    fontSize: 18, color: AppColors.constColor),
+                              ),
                             ),
                             Spacer(),
                             GestureDetector(
-                              onTap: () => {Get.toNamed('/search')},
+                              onTap: () => {
+                                if (editProfileController
+                                        .member?.member?.accountType ==
+                                    1)
+                                  {Get.toNamed('/search')}
+                                else
+                                  {
+                                    Dialogs.showSnackbarPack(
+                                        context, 'search feature')
+                                  }
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     right: 5, top: 5, left: 10),
@@ -115,19 +132,33 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          NotificationPage()), // Correct syntax here
-                                );
+                                notificationController.clearNotificationCount();
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8, top: 5, right: 15),
-                                child: SvgPicture.asset(
-                                    "assets/images/notification.svg"),
-                              ),
+                              // child: Padding(
+                              //   padding: const EdgeInsets.only(
+                              //       left: 8, top: 5, right: 15),
+                              //   child: SvgPicture.asset(
+                              //       "assets/images/notification.svg"),
+                              // ),
+                              child: Obx(() {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 8, top: 5, right: 12),
+                                  child: badges.Badge(
+                                    badgeContent: Text(
+                                      '${notificationController.notificationCount}',
+                                      style: FontConstant.styleRegular(
+                                          fontSize: 12,
+                                          color: AppColors.constColor),
+                                    ),
+                                    child: Icon(
+                                      Icons.notification_add_outlined,
+                                      color: AppColors.constColor,
+                                      size: 27,
+                                    ),
+                                  ),
+                                );
+                              }),
                             )
                           ],
                         ),
@@ -154,7 +185,7 @@ class _HomeState extends State<Home> {
                                             dashboardController
                                                     .member!.responseData !=
                                                 null
-                                        ? "${dashboardController.member!.responseData!.receivedInvitation}"
+                                        ? "${dashboardController.member?.responseData?.receivedInvitation}"
                                         : "0",
                                     style: FontConstant.styleRegular(
                                         fontSize: 22,
@@ -198,17 +229,18 @@ class _HomeState extends State<Home> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  "0",
-                                  style: FontConstant.styleRegular(
-                                      fontSize: 22,
-                                      color: AppColors.primaryColor),
-                                ),
+                                // Text(
+                                //   "0",
+                                //   style: FontConstant.styleRegular(
+                                //       fontSize: 22,
+                                //       color: AppColors.primaryColor),
+                                // ),
+                                NotificationCount(),
                                 Text(
                                   "Notifications",
                                   style: FontConstant.styleRegular(
                                       fontSize: 14, color: AppColors.black),
-                                )
+                                ),
                               ],
                             ),
                           ],

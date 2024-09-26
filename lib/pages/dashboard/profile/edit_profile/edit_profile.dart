@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:devotee/chat/widgets/notificationIcon_withBadge.dart';
+import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
@@ -20,11 +20,9 @@ class _ProfileEditState extends State<ProfileEdit> {
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
 
- final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
- 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   int _currentIndex = 0;
- 
 
   List<String> getImageList() {
     List<String> imgList = [];
@@ -49,14 +47,12 @@ class _ProfileEditState extends State<ProfileEdit> {
     return imgList;
   }
 
-
-   @override
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    
   }
 
   @override
@@ -82,12 +78,6 @@ class _ProfileEditState extends State<ProfileEdit> {
             scaffoldKey.currentState?.openDrawer();
           },
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.all(10.0),
-        //     child: NotificationCountWidget(),
-        //   ),
-        // ],
       ),
       body: Obx(() {
         final List<String> imgList = getImageList();
@@ -263,7 +253,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   children: [
                     _buildCont(
                       "Basic Details",
-                      "/partner",
+                      "/editBasicDetails",
                       Column(
                         children: [
                           _buildText(
@@ -304,8 +294,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   "Not Mentioned"),
                           _buildText(
                               "Weight",
-                              _editProfileController.member?.member?.weight !=null?"${_editProfileController.member?.member?.weight} KG":
-                                  "Not Mentioned"),
+                              _editProfileController.member?.member?.weight !=
+                                      null
+                                  ? "${_editProfileController.member?.member?.weight} KG"
+                                  : "Not Mentioned"),
                           _buildText("Date of Birth",
                               _editProfileController.member?.member?.dOB ?? ""),
                           _buildText(
@@ -747,7 +739,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   "Not Mentioned"),
                           _buildText(
                               "Hobbies or Likings",
-                              _editProfileController.member?.member?.GBHobbies ??
+                              _editProfileController
+                                      .member?.member?.GBHobbies ??
                                   "Not Mentioned"),
                         ],
                       ),

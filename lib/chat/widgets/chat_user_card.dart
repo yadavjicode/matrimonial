@@ -1,4 +1,8 @@
+import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
 import '../models/chat_user.dart';
@@ -18,9 +22,11 @@ class ChatUserCard extends StatefulWidget {
 }
 
 class _ChatUserCardState extends State<ChatUserCard> {
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
   //last message info (if null --> no message)
   Message? _message;
-   String? count;
+  String? count;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +42,14 @@ class _ChatUserCardState extends State<ChatUserCard> {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           onTap: () {
             //for navigating to chat screen
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => ChatScreen(user: widget.user)));
+            if (userProfileController.member?.member?.accountType == 1) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => ChatScreen(user: widget.user)));
+            } else {
+              Dialogs.showSnackbarPack(context, 'chat feature');
+            }
           },
           child: StreamBuilder(
             stream: APIs.getLastMessage(widget.user),
@@ -57,8 +67,12 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         context: context,
                         builder: (_) => ProfileDialog(user: widget.user));
                   },
-                  child: ProfileImage(
-                      size: screenHeight * .055, url: widget.user.image),
+                  child: Stack(children: [
+                    ProfileImage(
+                        size: screenHeight * .055, url: widget.user.image),
+                    if (userProfileController.member?.member?.accountType == 1)
+                      onlineStatus(),
+                  ]),
                 ),
 
                 //user name
@@ -66,11 +80,23 @@ class _ChatUserCardState extends State<ChatUserCard> {
 
                 //last message
                 subtitle: Text(
-                    _message != null
+                    _message != null &&
+                            userProfileController.member?.member?.accountType ==
+                                1
                         ? _message!.type == Type.image
                             ? 'image'
                             : _message!.msg
                         : widget.user.about,
+                    style: _message == null ||
+                            userProfileController.member?.member?.accountType !=
+                                1
+                        ? const TextStyle(color: AppColors.darkgrey)
+                        : _message!.read.isEmpty &&
+                                _message!.fromId != APIs.myid
+                            ? const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold)
+                            : const TextStyle(color: AppColors.darkgrey),
                     maxLines: 1),
 
                 //last message time
@@ -79,14 +105,17 @@ class _ChatUserCardState extends State<ChatUserCard> {
                     : _message!.read.isEmpty && _message!.fromId != APIs.myid
                         ?
                         //show for unread message
-                        const SizedBox(
+                        SizedBox(
                             width: 15,
                             height: 15,
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 0, 230, 119),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
+                                  color: AppColors.primaryColor,
+                                  border: Border.all(
+                                      color: AppColors.background, width: 2),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
+                                  )),
                             ),
                           )
                         :
@@ -94,11 +123,45 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         Text(
                             MyDateUtil.getLastMessageTime(
                                 context: context, time: _message!.sent),
-                            style: const TextStyle(color: Colors.black54),
+                            style: const TextStyle(color: AppColors.darkgrey),
                           ),
               );
             },
           )),
     );
+  }
+
+  Widget onlineStatus() {
+    if (widget.user.isOnline && widget.user.onlineStatus == 0) {
+      return Positioned(
+          bottom: 0,
+          right: 0,
+          child: SizedBox(
+            width: 12,
+            height: 12,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 230, 119),
+                  border: Border.all(color: AppColors.constColor),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+            ),
+          ));
+    } else if (widget.user.lastActiveStatus == 0) {
+      return Positioned(
+          bottom: 0,
+          right: 0,
+          child: SizedBox(
+            width: 12,
+            height: 12,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 192, 189, 189),
+                  border: Border.all(color: AppColors.constColor),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+            ),
+          ));
+    } else {
+      return const Text("");
+    }
   }
 }

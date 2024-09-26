@@ -8,6 +8,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
@@ -37,7 +38,8 @@ class _SearchResultState extends State<SearchResult> {
   final ScrollController _scrollController = ScrollController();
   final DashboardController dashboardController =
       Get.put(DashboardController());
-
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
 
@@ -307,21 +309,32 @@ class _SearchResultState extends State<SearchResult> {
                                         child: Stack(children: [
                                           GestureDetector(
                                             onTap: () => {
-                                              profileDetailsController
-                                                  .profileDetails(
-                                                      context, id, "search", [
-                                                ageFrom,
-                                                ageTo,
-                                                heightFrom,
-                                                heightTo,
-                                                maritalStatus,
-                                                religion,
-                                                caste,
-                                                country,
-                                                state,
-                                                city,
-                                                education
-                                              ])
+                                              if (userProfileController.member
+                                                      ?.member?.accountType ==
+                                                  1)
+                                                {
+                                                  profileDetailsController
+                                                      .profileDetails(context,
+                                                          id, "search", [
+                                                    ageFrom,
+                                                    ageTo,
+                                                    heightFrom,
+                                                    heightTo,
+                                                    maritalStatus,
+                                                    religion,
+                                                    caste,
+                                                    country,
+                                                    state,
+                                                    city,
+                                                    education
+                                                  ])
+                                                }
+                                              else
+                                                {
+                                                  Dialogs.showSnackbarPack(
+                                                      context,
+                                                      'view profile feature')
+                                                }
                                             },
                                             child: ProfileImageSquare(
                                               size: screenWidth * 0.4,
@@ -422,106 +435,131 @@ class _SearchResultState extends State<SearchResult> {
                                               ))
                                         ]),
                                       ),
-                                     Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                name,
-                                style: FontConstant.styleSemiBold(
-                                    fontSize: 15,
-                                    color: AppColors.primaryColor),
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "ID: ${id}",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 13,
-                                          color: AppColors.black),
-                                    ),
-                                  ),
-                                  if (data.accountType == 1)
-                                    Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      width: 1,
-                                      height: 12,
-                                      color: AppColors.grey,
-                                    ),
-                                  if (data.accountType == 1)
-                                    Expanded(
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/Crown.png",
-                                              height: 15,
-                                              width: 15,
-                                            ),
-                                            SizedBox(
-                                              width: 3,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                "Premium",
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                name,
                                                 style:
-                                                    FontConstant.styleMedium(
-                                                        fontSize: 12,
-                                                        color: Color(
-                                                            0xFFF69506)),
+                                                    FontConstant.styleSemiBold(
+                                                        fontSize: 15,
+                                                        color: AppColors
+                                                            .primaryColor),
                                               ),
-                                            )
-                                          ],
+                                              Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      "ID: ${id}",
+                                                      style: FontConstant
+                                                          .styleMedium(
+                                                              fontSize: 13,
+                                                              color: AppColors
+                                                                  .black),
+                                                    ),
+                                                  ),
+                                                  if (data.accountType == 1)
+                                                    Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 5),
+                                                      width: 1,
+                                                      height: 12,
+                                                      color: AppColors.grey,
+                                                    ),
+                                                  if (data.accountType == 1)
+                                                    Expanded(
+                                                      child: Container(
+                                                        child: Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              "assets/images/Crown.png",
+                                                              height: 15,
+                                                              width: 15,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 3,
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                "Premium",
+                                                                style: FontConstant
+                                                                    .styleMedium(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Color(
+                                                                            0xFFF69506)),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                ],
+                                              ),
+                                              if (userProfileController.member
+                                                      ?.member?.accountType ==
+                                                  1)
+                                                UserStatusWidget(
+                                                    userId: id,
+                                                    onlineStatus:
+                                                        data.hideOnlineStatus ??
+                                                            0,
+                                                    lastSeenStatus:
+                                                        data.hideLastActiveStatus ??
+                                                            0),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 3, bottom: 3),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.grey.shade200,
+                                                ),
+                                              ),
+                                              Text(
+                                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 13,
+                                                    color: AppColors.darkgrey),
+                                              ),
+                                              Text(
+                                                "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 13,
+                                                    color: AppColors.darkgrey),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 5),
+                                                child: Text(
+                                                    "Created By: Myself",
+                                                    style: FontConstant
+                                                        .styleMedium(
+                                                            fontSize: 13,
+                                                            color: AppColors
+                                                                .darkgrey)),
+                                              ),
+                                              Text(
+                                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 13,
+                                                    color: AppColors.black),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    )
-                                ],
-                              ),
-                              UserStatusWidget(userId: id,onlineStatus: data.hideOnlineStatus??0,lastSeenStatus: data.hideLastActiveStatus??0),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 0, bottom: 5),
-                                child: Container(
-                                  height: 1,
-                                  color: Colors.grey.shade200,
-                                ),
-                              ),
-                              Text(
-                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: FontConstant.styleMedium(
-                                    fontSize: 13, color: AppColors.darkgrey),
-                              ),
-                              Text(
-                                "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
-                                overflow: TextOverflow.ellipsis,
-                                style: FontConstant.styleMedium(
-                                    fontSize: 13, color: AppColors.darkgrey),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
-                                child: Text("Created By: Myself",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 13,
-                                        color: AppColors.darkgrey)),
-                              ),
-                              Text(
-                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: FontConstant.styleMedium(
-                                    fontSize: 13, color: AppColors.black),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
                                     ],
                                   ),
                                   Container(
@@ -592,30 +630,37 @@ class _SearchResultState extends State<SearchResult> {
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () async {
-                                              if (data.chat_status == 1) {
-                                                if (data.matriID!
-                                                        .trim()
-                                                        .isNotEmpty &&
-                                                    data.matriID != null) {
-                                                  await APIs.addChatUser(
-                                                          data.matriID!)
-                                                      .then((value) {
-                                                    if (!value) {
-                                                      Dialogs.showSnackbar(
-                                                          context,
-                                                          'User does not Exists!');
-                                                    } else {
-                                                      _fetchUser(
-                                                        data.matriID
-                                                            .toString()
-                                                            .trim(),
-                                                      );
-                                                    }
-                                                  });
+                                              if (userProfileController.member
+                                                      ?.member?.accountType ==
+                                                  1) {
+                                                if (data.chat_status == 1) {
+                                                  if (data.matriID!
+                                                          .trim()
+                                                          .isNotEmpty &&
+                                                      data.matriID != null) {
+                                                    await APIs.addChatUser(
+                                                            data.matriID!)
+                                                        .then((value) {
+                                                      if (!value) {
+                                                        Dialogs.showSnackbar(
+                                                            context,
+                                                            'User does not Exists!');
+                                                      } else {
+                                                        _fetchUser(
+                                                          data.matriID
+                                                              .toString()
+                                                              .trim(),
+                                                        );
+                                                      }
+                                                    });
+                                                  }
+                                                } else {
+                                                  Dialogs.showSnackbar(context,
+                                                      'The user is not added in your list!');
                                                 }
                                               } else {
-                                                Dialogs.showSnackbar(context,
-                                                    'The user is not added in your list!');
+                                                Dialogs.showSnackbarPack(
+                                                    context, 'chat feature');
                                               }
                                             },
                                             child: Row(
@@ -645,21 +690,32 @@ class _SearchResultState extends State<SearchResult> {
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () => {
-                                              profileDetailsController
-                                                  .profileDetails(
-                                                      context, id, "search", [
-                                                ageFrom,
-                                                ageTo,
-                                                heightFrom,
-                                                heightTo,
-                                                maritalStatus,
-                                                religion,
-                                                caste,
-                                                country,
-                                                state,
-                                                city,
-                                                education
-                                              ])
+                                              if (userProfileController.member
+                                                      ?.member?.accountType ==
+                                                  1)
+                                                {
+                                                  profileDetailsController
+                                                      .profileDetails(context,
+                                                          id, "search", [
+                                                    ageFrom,
+                                                    ageTo,
+                                                    heightFrom,
+                                                    heightTo,
+                                                    maritalStatus,
+                                                    religion,
+                                                    caste,
+                                                    country,
+                                                    state,
+                                                    city,
+                                                    education
+                                                  ])
+                                                }
+                                              else
+                                                {
+                                                  Dialogs.showSnackbarPack(
+                                                      context,
+                                                      'view profile feature')
+                                                }
                                             },
                                             child: Row(
                                               children: [
@@ -722,5 +778,3 @@ class _SearchResultState extends State<SearchResult> {
     );
   }
 }
-
-

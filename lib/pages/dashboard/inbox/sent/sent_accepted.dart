@@ -1,7 +1,8 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -20,6 +21,9 @@ class _SentAcceptedState extends State<SentAccepted> {
   InboxSentController inboxSentController = Get.put(InboxSentController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -98,20 +102,27 @@ class _SentAcceptedState extends State<SentAccepted> {
                               left: 10, top: 8, bottom: 10, right: 2),
                           child: GestureDetector(
                             onTap: () {
-                              profileDetailsController.profileDetails(
-                                  context, mId, "", [
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
-                                "11"
-                              ]);
+                              if (userProfileController
+                                      .member?.member?.accountType ==
+                                  1) {
+                                profileDetailsController.profileDetails(
+                                    context, mId, "", [
+                                  "1",
+                                  "2",
+                                  "3",
+                                  "4",
+                                  "5",
+                                  "6",
+                                  "7",
+                                  "8",
+                                  "9",
+                                  "10",
+                                  "11"
+                                ]);
+                              } else {
+                                Dialogs.showSnackbarPack(
+                                    context, 'view profile feature');
+                              }
                             },
                             child: ProfileImage(
                               size: screenWidth * 0.2,
@@ -126,8 +137,7 @@ class _SentAcceptedState extends State<SentAccepted> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -156,6 +166,7 @@ class _SentAcceptedState extends State<SentAccepted> {
                                     Flexible(
                                       child: Text(
                                         name,
+                                        overflow: TextOverflow.ellipsis,
                                         style: FontConstant.styleSemiBold(
                                             fontSize: 13,
                                             color: AppColors.primaryColor),
@@ -168,27 +179,36 @@ class _SentAcceptedState extends State<SentAccepted> {
                                   padding: const EdgeInsets.only(top: 2),
                                   child: Text(
                                     "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                     style: FontConstant.styleMedium(
                                         fontSize: 12,
                                         color: AppColors.darkgrey),
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: () => {
-                                    profileDetailsController.profileDetails(
-                                        context, mId, "", [
-                                      "1",
-                                      "2",
-                                      "3",
-                                      "4",
-                                      "5",
-                                      "6",
-                                      "7",
-                                      "8",
-                                      "9",
-                                      "10",
-                                      "11"
-                                    ])
+                                  onTap: () {
+                                    if (userProfileController
+                                            .member?.member?.accountType ==
+                                        1) {
+                                      profileDetailsController.profileDetails(
+                                          context, mId, "", [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7",
+                                        "8",
+                                        "9",
+                                        "10",
+                                        "11"
+                                      ]);
+                                    } else {
+                                      Dialogs.showSnackbarPack(
+                                          context, 'view profile feature');
+                                    }
                                   },
                                   child: Row(
                                     children: [

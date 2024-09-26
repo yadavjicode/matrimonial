@@ -8,6 +8,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
@@ -38,6 +39,8 @@ class _AllMatchesState extends State<AllMatches> {
       Get.put(DashboardController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
 
   Future<void> _fetchUser(String userId) async {
     ChatUser? _chatUser;
@@ -137,20 +140,27 @@ class _AllMatchesState extends State<AllMatches> {
                         child: Stack(children: [
                           GestureDetector(
                             onTap: () {
-                              profileDetailsController.profileDetails(
-                                  context, id, "matches", [
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
-                                "11"
-                              ]);
+                              if (userProfileController
+                                      .member?.member?.accountType ==
+                                  1) {
+                                profileDetailsController.profileDetails(
+                                    context, id, "matches", [
+                                  "1",
+                                  "2",
+                                  "3",
+                                  "4",
+                                  "5",
+                                  "6",
+                                  "7",
+                                  "8",
+                                  "9",
+                                  "10",
+                                  "11"
+                                ]);
+                              } else {
+                                Dialogs.showSnackbarPack(
+                                    context, 'view profile feature');
+                              }
                             },
                             child: ProfileImageSquare(
                               size: screenWidth * 0.4,
@@ -193,7 +203,7 @@ class _AllMatchesState extends State<AllMatches> {
                                           )
                                         : Container(
                                             alignment: Alignment.center,
-                                            height: screenWidth * 0.06,
+                                             height: screenWidth * 0.06,
                                             width: screenWidth * 0.06,
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
@@ -237,8 +247,7 @@ class _AllMatchesState extends State<AllMatches> {
                                     child: Text(
                                       "ID: ${id}",
                                       style: FontConstant.styleMedium(
-                                          fontSize: 13,
-                                          color: AppColors.black),
+                                          fontSize: 13, color: AppColors.black),
                                     ),
                                   ),
                                   if (data.accountType == 1)
@@ -265,11 +274,9 @@ class _AllMatchesState extends State<AllMatches> {
                                             Expanded(
                                               child: Text(
                                                 "Premium",
-                                                style:
-                                                    FontConstant.styleMedium(
-                                                        fontSize: 12,
-                                                        color: Color(
-                                                            0xFFF69506)),
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: Color(0xFFF69506)),
                                               ),
                                             )
                                           ],
@@ -278,10 +285,17 @@ class _AllMatchesState extends State<AllMatches> {
                                     )
                                 ],
                               ),
-                              UserStatusWidget(userId: id,onlineStatus: data.hideOnlineStatus??0,lastSeenStatus: data.hideLastActiveStatus??0),
+                              if (userProfileController
+                                      .member?.member?.accountType ==
+                                  1)
+                              UserStatusWidget(
+                                  userId: id,
+                                  onlineStatus: data.hideOnlineStatus ?? 0,
+                                  lastSeenStatus:
+                                      data.hideLastActiveStatus ?? 0),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 0, bottom: 5),
+                                    const EdgeInsets.only(top: 3, bottom: 3),
                                 child: Container(
                                   height: 1,
                                   color: Colors.grey.shade200,
@@ -373,24 +387,31 @@ class _AllMatchesState extends State<AllMatches> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () async {
-                              if (data.chatStatus == 1) {
-                                if (data.matriID!.trim().isNotEmpty &&
-                                    data.matriID != null) {
-                                  await APIs.addChatUser(data.matriID!)
-                                      .then((value) {
-                                    if (!value) {
-                                      Dialogs.showSnackbar(
-                                          context, 'User does not Exists!');
-                                    } else {
-                                      _fetchUser(
-                                        data.matriID.toString().trim(),
-                                      );
-                                    }
-                                  });
+                              if (userProfileController
+                                      .member?.member?.accountType ==
+                                  1) {
+                                if (data.chatStatus == 1) {
+                                  if (data.matriID!.trim().isNotEmpty &&
+                                      data.matriID != null) {
+                                    await APIs.addChatUser(data.matriID!)
+                                        .then((value) {
+                                      if (!value) {
+                                        Dialogs.showSnackbar(
+                                            context, 'User does not Exists!');
+                                      } else {
+                                        _fetchUser(
+                                          data.matriID.toString().trim(),
+                                        );
+                                      }
+                                    });
+                                  }
+                                } else {
+                                  Dialogs.showSnackbar(context,
+                                      'The user is not added in your list!');
                                 }
                               } else {
-                                Dialogs.showSnackbar(
-                                    context, 'The user is not added in your list!');
+                                Dialogs.showSnackbarPack(
+                                    context, 'chat feature');
                               }
                             },
                             child: Row(
@@ -416,21 +437,28 @@ class _AllMatchesState extends State<AllMatches> {
                         ),
                         Expanded(
                           child: GestureDetector(
-                            onTap: () => {
-                              profileDetailsController.profileDetails(
-                                  context, id, "matches", [
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
-                                "11"
-                              ])
+                            onTap: () {
+                              if (userProfileController
+                                      .member?.member?.accountType ==
+                                  1) {
+                                profileDetailsController.profileDetails(
+                                    context, id, "matches", [
+                                  "1",
+                                  "2",
+                                  "3",
+                                  "4",
+                                  "5",
+                                  "6",
+                                  "7",
+                                  "8",
+                                  "9",
+                                  "10",
+                                  "11"
+                                ]);
+                              } else {
+                                Dialogs.showSnackbarPack(
+                                    context, 'view profile feature');
+                              }
                             },
                             child: Row(
                               children: [

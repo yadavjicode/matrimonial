@@ -4,6 +4,7 @@ import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -37,6 +38,8 @@ class _SeeAllState extends State<SeeAll> {
       Get.put(DashboardController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
 
   Future<void> _fetchUser(String userId) async {
     ChatUser? _chatUser;
@@ -165,26 +168,32 @@ class _SeeAllState extends State<SeeAll> {
                             child: Stack(children: [
                               GestureDetector(
                                   onTap: () {
-                                    profileDetailsController.profileDetails(
-                                        context, id, keys, [
-                                      "1",
-                                      "2",
-                                      "3",
-                                      "4",
-                                      "5",
-                                      "6",
-                                      "7",
-                                      "8",
-                                      "9",
-                                      "10",
-                                      "11"
-                                    ]);
+                                    if (userProfileController
+                                            .member?.member?.accountType ==
+                                        1) {
+                                      profileDetailsController.profileDetails(
+                                          context, id, keys, [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7",
+                                        "8",
+                                        "9",
+                                        "10",
+                                        "11"
+                                      ]);
+                                    } else {
+                                      Dialogs.showSnackbarPack(
+                                          context, 'view profile feature');
+                                    }
                                   },
                                   child: ProfileImageSquare(
                                     size: screenWidth * 0.4,
                                     url: image,
-                                  )
-                                  ),
+                                  )),
                               Positioned(
                                   top: ((screenWidth * 0.4) * (5 / 4) -
                                       screenWidth * 0.075),
@@ -309,10 +318,18 @@ class _SeeAllState extends State<SeeAll> {
                                         )
                                     ],
                                   ),
-                                  UserStatusWidget(userId: id,onlineStatus: data.hideOnlineStatus??0,lastSeenStatus: data.hideLastActiveStatus??0),
+                                  if (userProfileController
+                                          .member?.member?.accountType ==
+                                      1)
+                                    UserStatusWidget(
+                                        userId: id,
+                                        onlineStatus:
+                                            data.hideOnlineStatus ?? 0,
+                                        lastSeenStatus:
+                                            data.hideLastActiveStatus ?? 0),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        top: 0, bottom: 5),
+                                        top: 3, bottom: 3),
                                     child: Container(
                                       height: 1,
                                       color: Colors.grey.shade200,
@@ -409,24 +426,31 @@ class _SeeAllState extends State<SeeAll> {
                             Expanded(
                               child: GestureDetector(
                                 onTap: () async {
-                                  if (data.chatStatus == 1) {
-                                    if (data.matriID!.trim().isNotEmpty &&
-                                        data.matriID != null) {
-                                      await APIs.addChatUser(data.matriID!)
-                                          .then((value) {
-                                        if (!value) {
-                                          Dialogs.showSnackbar(
-                                              context, 'User does not Exists!');
-                                        } else {
-                                          _fetchUser(
-                                            data.matriID.toString().trim(),
-                                          );
-                                        }
-                                      });
+                                  if (userProfileController
+                                          .member?.member?.accountType ==
+                                      1) {
+                                    if (data.chatStatus == 1) {
+                                      if (data.matriID!.trim().isNotEmpty &&
+                                          data.matriID != null) {
+                                        await APIs.addChatUser(data.matriID!)
+                                            .then((value) {
+                                          if (!value) {
+                                            Dialogs.showSnackbar(context,
+                                                'User does not Exists!');
+                                          } else {
+                                            _fetchUser(
+                                              data.matriID.toString().trim(),
+                                            );
+                                          }
+                                        });
+                                      }
+                                    } else {
+                                      Dialogs.showSnackbar(context,
+                                          'The user is not added in your list!');
                                     }
                                   } else {
-                                    Dialogs.showSnackbar(context,
-                                        'The user is not added in your list!');
+                                    Dialogs.showSnackbarPack(
+                                        context, 'chat feature');
                                   }
                                 },
                                 child: Row(
@@ -453,21 +477,28 @@ class _SeeAllState extends State<SeeAll> {
                             ),
                             Expanded(
                               child: GestureDetector(
-                                onTap: () => {
-                                  profileDetailsController.profileDetails(
-                                      context, id, keys, [
-                                    "1",
-                                    "2",
-                                    "3",
-                                    "4",
-                                    "5",
-                                    "6",
-                                    "7",
-                                    "8",
-                                    "9",
-                                    "10",
-                                    "11"
-                                  ])
+                                onTap: () {
+                                  if (userProfileController
+                                          .member?.member?.accountType ==
+                                      1) {
+                                    profileDetailsController.profileDetails(
+                                        context, id, keys, [
+                                      "1",
+                                      "2",
+                                      "3",
+                                      "4",
+                                      "5",
+                                      "6",
+                                      "7",
+                                      "8",
+                                      "9",
+                                      "10",
+                                      "11"
+                                    ]);
+                                  } else {
+                                    Dialogs.showSnackbarPack(
+                                        context, 'view profile feature');
+                                  }
                                 },
                                 child: Row(
                                   children: [

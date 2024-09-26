@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:devotee/chat/firebase_options.dart';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/controller/notification_controller.dart';
 import 'package:devotee/pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_notification_channel/flutter_notification_channel.dart';
@@ -14,6 +16,10 @@ import 'package:get/get.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initializeFirebase();
+  // Register the background message handler
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  Get.put(NotificationController()); // Initialize the NotificationController
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryColor,
   ));
@@ -46,4 +52,8 @@ Future<void> _initializeFirebase() async {
       name: 'Chats');
 
   log('\nNotification Channel Result: $result');
+}
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Handling a background message: ${message.messageId}');
 }

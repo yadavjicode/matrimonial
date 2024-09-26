@@ -33,7 +33,7 @@ class _SentDeclinedState extends State<SentDeclined> {
               if (inboxSentController.isLoading.value == false)
                 declineContent(),
               if (inboxSentController.isLoading.value)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -71,6 +71,7 @@ class _SentDeclinedState extends State<SentDeclined> {
               String date = DateFormat('dd-MM-yyyy')
                   .format(DateTime.parse(data.updatedAt));
               String mId = data.receicedMatriID ?? "";
+              String gender = data.gender == "Male" ? "his" : "her";
               String image = data.photo1 != null
                   ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
                   : data.gender == "Male"
@@ -136,6 +137,7 @@ class _SentDeclinedState extends State<SentDeclined> {
                                       Flexible(
                                         child: Text(
                                           name,
+                                          overflow: TextOverflow.ellipsis,
                                           style: FontConstant.styleSemiBold(
                                               fontSize: 13,
                                               color: AppColors.primaryColor),
@@ -148,6 +150,8 @@ class _SentDeclinedState extends State<SentDeclined> {
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Text(
                                       "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
                                       style: FontConstant.styleMedium(
                                           fontSize: 12,
                                           color: AppColors.darkgrey),
@@ -163,7 +167,9 @@ class _SentDeclinedState extends State<SentDeclined> {
                         padding: const EdgeInsets.only(
                             left: 12, right: 12, bottom: 10),
                         child: Text(
-                          "She Declined her Request, You can’t connect with her",
+                          "She Declined $gender Request, You can’t connect with $gender",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           style: FontConstant.styleMedium(
                               fontSize: 12, color: AppColors.darkgrey),
                         ),

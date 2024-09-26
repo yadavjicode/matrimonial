@@ -159,20 +159,27 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                profileDetailsController.profileDetails(
-                                    context, data.matId!, "", [
-                                  "1",
-                                  "2",
-                                  "3",
-                                  "4",
-                                  "5",
-                                  "6",
-                                  "7",
-                                  "8",
-                                  "9",
-                                  "10",
-                                  "11"
-                                ]);
+                                if (userProfileController
+                                        .member?.member?.accountType ==
+                                    1) {
+                                  profileDetailsController.profileDetails(
+                                      context, data.matId!, "", [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11"
+                                  ]);
+                                } else {
+                                  Dialogs.showSnackbarPack(
+                                      context, 'view profile feature');
+                                }
                               },
                               child: ProfileImage(
                                 size: screenWidth * 0.2,
@@ -246,11 +253,12 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                       if (userProfileController.member!.member!.accountType !=
                           1)
                         GestureDetector(
-                           onTap: () => {Get.toNamed("/membership")},
+                          onTap: () => {Get.toNamed("/membership")},
                           child: Container(
                             alignment: Alignment.center,
                             padding: EdgeInsets.all(3),
-                            margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                            margin:
+                                EdgeInsets.only(left: 8, right: 8, bottom: 8),
                             decoration: BoxDecoration(
                                 color: AppColors.primaryLight,
                                 borderRadius:
@@ -326,24 +334,34 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () async {
-                                        if (data.chat_status == 1) {
-                                          if (data.matId!.trim().isNotEmpty &&
-                                              data.matId != null) {
-                                            await APIs.addChatUser(data.matId!)
-                                                .then((value) {
-                                              if (!value) {
-                                                Dialogs.showSnackbar(context,
-                                                    'User does not Exists!');
-                                              } else {
-                                                _fetchUser(
-                                                  data.matId.toString().trim(),
-                                                );
-                                              }
-                                            });
+                                        if (userProfileController
+                                                .member?.member?.accountType ==
+                                            1) {
+                                          if (data.chat_status == 1) {
+                                            if (data.matId!.trim().isNotEmpty &&
+                                                data.matId != null) {
+                                              await APIs.addChatUser(
+                                                      data.matId!)
+                                                  .then((value) {
+                                                if (!value) {
+                                                  Dialogs.showSnackbar(context,
+                                                      'User does not Exists!');
+                                                } else {
+                                                  _fetchUser(
+                                                    data.matId
+                                                        .toString()
+                                                        .trim(),
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          } else {
+                                            Dialogs.showSnackbar(context,
+                                                'The user is not added in your list!');
                                           }
                                         } else {
-                                          Dialogs.showSnackbar(context,
-                                              'The user is not added in your list!');
+                                          Dialogs.showSnackbarPack(
+                                              context, 'chat feature');
                                         }
                                       },
                                       //hide alert dialog
@@ -372,21 +390,29 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                   ),
                                   Expanded(
                                     child: GestureDetector(
-                                      onTap: () => {
-                                        profileDetailsController.profileDetails(
-                                            context, data.matId!, "", [
-                                          "1",
-                                          "2",
-                                          "3",
-                                          "4",
-                                          "5",
-                                          "6",
-                                          "7",
-                                          "8",
-                                          "9",
-                                          "10",
-                                          "11"
-                                        ])
+                                      onTap: () {
+                                        if (userProfileController
+                                                .member?.member?.accountType ==
+                                            1) {
+                                          profileDetailsController
+                                              .profileDetails(
+                                                  context, data.matId!, "", [
+                                            "1",
+                                            "2",
+                                            "3",
+                                            "4",
+                                            "5",
+                                            "6",
+                                            "7",
+                                            "8",
+                                            "9",
+                                            "10",
+                                            "11"
+                                          ]);
+                                        } else {
+                                          Dialogs.showSnackbarPack(
+                                              context, 'view profile feature');
+                                        }
                                       },
                                       child: Text(
                                         "View Profile",

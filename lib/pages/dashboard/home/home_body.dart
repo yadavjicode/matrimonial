@@ -24,7 +24,6 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
- 
   final DashboardController dashboardController =
       Get.put(DashboardController());
   final ProfileDetailsController profileDetailsController =
@@ -81,7 +80,7 @@ class _HomeBodyState extends State<HomeBody> {
       ],
       [
         "assets/images/profession.png",
-        "Professional",
+        "Profession",
         "${dashboardController.member!.responseData!.matchesProfessionalCount ?? ""}",
         "profession_list"
       ]
@@ -179,20 +178,27 @@ class _HomeBodyState extends State<HomeBody> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                profileDetailsController.profileDetails(
-                                    context, data.matriID!, "", [
-                                  "1",
-                                  "2",
-                                  "3",
-                                  "4",
-                                  "5",
-                                  "6",
-                                  "7",
-                                  "8",
-                                  "9",
-                                  "10",
-                                  "11"
-                                ]);
+                                if (editProfileController
+                                        .member?.member?.accountType ==
+                                    1) {
+                                  profileDetailsController.profileDetails(
+                                      context, data.matriID!, "", [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11"
+                                  ]);
+                                } else {
+                                  Dialogs.showSnackbarPack(
+                                      context, 'view profile feature');
+                                }
                               },
                               child: Container(
                                 width: screenWidth * 0.65,
@@ -396,20 +402,27 @@ class _HomeBodyState extends State<HomeBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: GestureDetector(
                                     onTap: () {
-                                      profileDetailsController.profileDetails(
-                                          context, data.matriID!, "", [
-                                        "1",
-                                        "2",
-                                        "3",
-                                        "4",
-                                        "5",
-                                        "6",
-                                        "7",
-                                        "8",
-                                        "9",
-                                        "10",
-                                        "11"
-                                      ]);
+                                      if (editProfileController
+                                              .member?.member?.accountType ==
+                                          1) {
+                                        profileDetailsController.profileDetails(
+                                            context, data.matriID!, "", [
+                                          "1",
+                                          "2",
+                                          "3",
+                                          "4",
+                                          "5",
+                                          "6",
+                                          "7",
+                                          "8",
+                                          "9",
+                                          "10",
+                                          "11"
+                                        ]);
+                                      } else {
+                                        Dialogs.showSnackbarPack(
+                                            context, 'view profile feature');
+                                      }
                                     },
                                     child: ProfileImage(
                                       size: screenWidth * 0.2,
@@ -433,11 +446,10 @@ class _HomeBodyState extends State<HomeBody> {
                                             Text(
                                               name,
                                               overflow: TextOverflow.ellipsis,
-                                              style:
-                                                  FontConstant.styleSemiBold(
-                                                      fontSize: 15,
-                                                      color: AppColors
-                                                          .primaryColor),
+                                              style: FontConstant.styleSemiBold(
+                                                  fontSize: 15,
+                                                  color:
+                                                      AppColors.primaryColor),
                                             ),
                                             Text(
                                               occupation,
@@ -507,8 +519,7 @@ class _HomeBodyState extends State<HomeBody> {
                                           Icon(
                                             data.shortlistStatus == 1
                                                 ? (Icons.favorite)
-                                                : Icons
-                                                    .favorite_border_rounded,
+                                                : Icons.favorite_border_rounded,
                                             color: data.shortlistStatus == 1
                                                 ? Colors.red
                                                 : AppColors.primaryColor,
@@ -532,29 +543,36 @@ class _HomeBodyState extends State<HomeBody> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () async {
-                                        if (data.chatStatus == 1) {
-                                          if (data.matriID!
-                                                  .trim()
-                                                  .isNotEmpty &&
-                                              data.matriID != null) {
-                                            await APIs.addChatUser(
-                                                    data.matriID!)
-                                                .then((value) {
-                                              if (!value) {
-                                                Dialogs.showSnackbar(context,
-                                                    'User does not Exists!');
-                                              } else {
-                                                _fetchUser(
-                                                  data.matriID
-                                                      .toString()
-                                                      .trim(),
-                                                );
-                                              }
-                                            });
+                                        if (editProfileController
+                                                .member?.member?.accountType ==
+                                            1) {
+                                          if (data.chatStatus == 1) {
+                                            if (data.matriID!
+                                                    .trim()
+                                                    .isNotEmpty &&
+                                                data.matriID != null) {
+                                              await APIs.addChatUser(
+                                                      data.matriID!)
+                                                  .then((value) {
+                                                if (!value) {
+                                                  Dialogs.showSnackbar(context,
+                                                      'User does not Exists!');
+                                                } else {
+                                                  _fetchUser(
+                                                    data.matriID
+                                                        .toString()
+                                                        .trim(),
+                                                  );
+                                                }
+                                              });
+                                            }
+                                          } else {
+                                            Dialogs.showSnackbar(context,
+                                                'The user is not added in your list!');
                                           }
                                         } else {
-                                          Dialogs.showSnackbar(context,
-                                              'The user is not added in your list!');
+                                          Dialogs.showSnackbarPack(
+                                              context, 'chat feature');
                                         }
                                       },
                                       child: Row(
@@ -583,9 +601,8 @@ class _HomeBodyState extends State<HomeBody> {
                                     child: GestureDetector(
                                       onTap: () {
                                         print("${data.matriID}");
-                                        sentInvitationController
-                                            .sentInvitation(
-                                                context, data.matriID!);
+                                        sentInvitationController.sentInvitation(
+                                            context, data.matriID!);
                                       },
                                       child: Row(
                                         children: [

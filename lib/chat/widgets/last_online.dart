@@ -4,8 +4,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter/material.dart';
 
-class LastOnline{
-
+class LastOnline {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Function to get the is_online status based on user_id
@@ -46,13 +45,16 @@ class LastOnline{
     }
   }
 }
-  
+
 class UserStatusWidget extends StatelessWidget {
   final String userId;
   final int onlineStatus;
   final int lastSeenStatus;
   final LastOnline lastOnlineService = LastOnline();
-  UserStatusWidget({required this.userId,required this.onlineStatus,required this.lastSeenStatus});
+  UserStatusWidget(
+      {required this.userId,
+      required this.onlineStatus,
+      required this.lastSeenStatus});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
@@ -63,20 +65,20 @@ class UserStatusWidget extends StatelessWidget {
           return Text(
             'Loading...',
             style: FontConstant.styleMedium(
-            fontSize: 13, color: AppColors.darkgrey),
+                fontSize: 13, color: AppColors.darkgrey),
           );
         } else if (snapshot.hasError) {
           // If an error occurred
           return Text(
             'Error: ${snapshot.error}',
             style: FontConstant.styleMedium(
-            fontSize: 13, color: AppColors.darkgrey),
+                fontSize: 13, color: AppColors.darkgrey),
           );
         } else if (snapshot.hasData) {
           // If the future returned a value
           bool isOnline = snapshot.data ?? false;
 
-          if (isOnline&& onlineStatus==0) {
+          if (isOnline && onlineStatus == 0) {
             return Row(
               children: [
                 Container(
@@ -91,11 +93,11 @@ class UserStatusWidget extends StatelessWidget {
                 Text(
                   'Online',
                   style: FontConstant.styleMedium(
-                  fontSize: 13, color: AppColors.green),
+                      fontSize: 13, color: AppColors.green),
                 ),
               ],
             );
-          } else if(lastSeenStatus==0) {
+          } else if (lastSeenStatus == 0) {
             // If the user is not online, show the last active time
             return FutureBuilder<String>(
               future: lastOnlineService.getUserLastActive(userId),
@@ -138,7 +140,7 @@ class UserStatusWidget extends StatelessWidget {
                 }
               },
             );
-          }else{
+          } else {
             return Text("");
           }
         } else {
@@ -148,4 +150,3 @@ class UserStatusWidget extends StatelessWidget {
     );
   }
 }
-

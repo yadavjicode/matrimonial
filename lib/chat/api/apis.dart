@@ -78,7 +78,7 @@ class APIs with ChangeNotifier {
 
 //Start  total unread message  =================================================================================
 
- // Method to get the total unread messages count as a Stream
+// Method to get the total unread messages count as a Stream
 static  Stream<int> getTotalUnreadMessagesCount() async* {
     try {
       // Listen to all users the current user has conversations with
@@ -165,10 +165,14 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
 
     // for handling foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('Message data: ${message.data}');
       log('Got a message whilst in the foreground!');
       log('Message data: ${message.data}');
+    
 
+    
       if (message.notification != null) {
+           print('Message data: ${message.data}');
         log('Message also contained a notification: ${message.notification}');
       }
     });

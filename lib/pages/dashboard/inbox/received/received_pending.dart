@@ -1,8 +1,9 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/accepted_controller.dart';
 import 'package:devotee/controller/declined_controller.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -18,10 +19,12 @@ class ReceivedPending extends StatefulWidget {
 }
 
 class _ReceivedPendingState extends State<ReceivedPending> {
-  InboxReceivedController inboxReceivedController =
+  final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
-  AcceptedController acceptedController = Get.put(AcceptedController());
-  DeclinedController declinedController = Get.put(DeclinedController());
+  final AcceptedController acceptedController = Get.put(AcceptedController());
+  final DeclinedController declinedController = Get.put(DeclinedController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
 
   @override
   void initState() {
@@ -39,9 +42,9 @@ class _ReceivedPendingState extends State<ReceivedPending> {
         return Stack(
           children: [
             if (!inboxReceivedController.isLoading.value
-            //  &&
-            //     !declinedController.isLoading.value &&
-            //     !acceptedController.isLoading.value
+                //  &&
+                //     !declinedController.isLoading.value &&
+                //     !acceptedController.isLoading.value
                 )
               pendingContent(),
             if (inboxReceivedController.isLoading.value ||
@@ -62,7 +65,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxReceivedController.member;
-   if (member == null ||
+    if (member == null ||
         member.responseData == null ||
         member.responseData!.data == null) {
       return Center(
@@ -76,171 +79,204 @@ class _ReceivedPendingState extends State<ReceivedPending> {
               style: FontConstant.styleMedium(
                   fontSize: 15, color: AppColors.darkgrey)));
     } else {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Column(
-          children: member.responseData!.data!.map((data) {
-            String name = "${data.name ?? ""} ${data.surename ?? ""}";
-            String date =
-                DateFormat('dd-MM-yyyy').format(DateTime.parse(data.updatedAt));
-            String mId = data.sentMatriID ?? "";
-            String image = data.photo1 != null
-                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : data.gender=="Male"? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png":"https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            children: member.responseData!.data!.map((data) {
+              String name = "${data.name ?? ""} ${data.surename ?? ""}";
+              String date = DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(data.updatedAt));
+              String mId = data.sentMatriID ?? "";
+              String image = data.photo1 != null
+                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
+                  : data.gender == "Male"
+                      ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
+                      : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
 
-            return GestureDetector(
-              onTap: () {
-                // Get.toNamed('/profiledtls');
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey.shade200),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                           padding: const EdgeInsets.only(left: 10,top: 10,bottom: 10,right: 2),
-                          child:  ProfileImage(
+              return GestureDetector(
+                onTap: () {
+                  // Get.toNamed('/profiledtls');
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, top: 10, bottom: 10, right: 2),
+                            child: ProfileImage(
                               size: screenWidth * 0.2,
                               url: image,
                             ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("ID: ${mId}",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: AppColors.darkgrey)),
-                                    SizedBox(width: 5),
-                                    Expanded(
-                                      child: Container(
-                                        child: Text(
-                                          textAlign: TextAlign.right,
-                                          "Sent On: ${date}",
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("ID: ${mId}",
                                           style: FontConstant.styleMedium(
                                               fontSize: 12,
-                                              color: AppColors.darkgrey),
+                                              color: AppColors.darkgrey)),
+                                      SizedBox(width: 5),
+                                      Expanded(
+                                        child: Container(
+                                          child: Text(
+                                            textAlign: TextAlign.right,
+                                            "Sent On: ${date}",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 12,
+                                                color: AppColors.darkgrey),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        name,
-                                        style: FontConstant.styleSemiBold(
-                                            fontSize: 13,
-                                            color: AppColors.primaryColor),
-                                      ),
-                                    ),
-                                    SizedBox(width: 20),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 2),
-                                  child: Text(
-                                    "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 12,
-                                        color: AppColors.darkgrey),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10,right: 10,bottom: 5),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 26,
-                            width: 26,
-                            decoration: BoxDecoration(
-                                color: Colors.red, shape: BoxShape.circle),
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.delete,
-                              color: AppColors.constColor,
-                            ),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => {
-                                declinedController.declined(context, mId,btnOkOnPress: () => {
-                                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                                  inboxReceivedController.inboxSent(
-                                      context, "Pending");
-                                })
-                                },),
-                               
-                              },
-                              child: Text(
-                                "Decline Request",
-                                style: FontConstant.styleMedium(
-                                    fontSize: 12, color: Colors.red),
-                              ),
-                            ),
-                          ),
-                          
-                          Container(
-                            height: 26,
-                            width: 26,
-                            decoration: BoxDecoration(
-                                color: Colors.green, shape: BoxShape.circle),
-                            alignment: Alignment.center,
-                            child: SvgPicture.asset(
-                                "assets/images/icons/correct.svg"),
-                          ),
-                          SizedBox(width: 5),
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () => {
-                                acceptedController.accepted(context, mId,btnOkOnPress :()=>{
-                                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                                  inboxReceivedController.inboxSent(
-                                      context, "Pending");
-                                })
-                                }),
-                               
-                              },
-                              child: Text(
-                                "Accept Request",
-                                style: FontConstant.styleMedium(
-                                    fontSize: 12, color: Colors.green),
+                                  Row(
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          name,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: FontConstant.styleSemiBold(
+                                              fontSize: 13,
+                                              color: AppColors.primaryColor),
+                                        ),
+                                      ),
+                                      SizedBox(width: 20),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 2),
+                                    child: Text(
+                                      "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 12,
+                                          color: AppColors.darkgrey),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ],
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, bottom: 5),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 26,
+                              width: 26,
+                              decoration: BoxDecoration(
+                                  color: Colors.red, shape: BoxShape.circle),
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.delete,
+                                color: AppColors.constColor,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => {
+                                  if (userProfileController
+                                          .member?.member?.accountType ==
+                                      1)
+                                    {
+                                      declinedController.declined(
+                                        context,
+                                        mId,
+                                        btnOkOnPress: () => {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            inboxReceivedController.inboxSent(
+                                                context, "Pending");
+                                          })
+                                        },
+                                      ),
+                                    }
+                                  else
+                                    {
+                                      Dialogs.showSnackbarPack(context,
+                                          'declining invitation feature')
+                                    }
+                                },
+                                child: Text(
+                                  "Decline Request",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 12, color: Colors.red),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: 26,
+                              width: 26,
+                              decoration: BoxDecoration(
+                                  color: Colors.green, shape: BoxShape.circle),
+                              alignment: Alignment.center,
+                              child: SvgPicture.asset(
+                                  "assets/images/icons/correct.svg"),
+                            ),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () => {
+                                  if (userProfileController
+                                          .member?.member?.accountType ==
+                                      1)
+                                    {
+                                      acceptedController.accepted(context, mId,
+                                          btnOkOnPress: () => {
+                                                WidgetsBinding.instance
+                                                    .addPostFrameCallback((_) {
+                                                  inboxReceivedController
+                                                      .inboxSent(
+                                                          context, "Pending");
+                                                })
+                                              }),
+                                    }
+                                  else
+                                    {
+                                      Dialogs.showSnackbarPack(context,
+                                          'accepting invitation feature')
+                                    }
+                                },
+                                child: Text(
+                                  "Accept Request",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 12, color: Colors.green),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
-      ),
-    );
+      );
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/lists/age_list.dart';
@@ -6,6 +7,7 @@ import 'package:devotee/constants/lists/education_list.dart';
 import 'package:devotee/constants/lists/heights_list.dart';
 import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/marital_list.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/list_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,8 @@ class _SearchPageState extends State<SearchPage> {
   CityControllerPermanent cityControllerPermanent =
       Get.put(CityControllerPermanent());
   EducationController educationController = Get.put(EducationController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
 
   String? selectAgeFrom;
   String? selectAgeTo;
@@ -92,7 +96,8 @@ class _SearchPageState extends State<SearchPage> {
                   child: Image.asset("assets/images/background.png")),
               SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 22,right: 22,top: 30,bottom: 50),
+                  padding: const EdgeInsets.only(
+                      left: 22, right: 22, top: 30, bottom: 50),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -616,27 +621,32 @@ class _SearchPageState extends State<SearchPage> {
                       CustomButton(
                         text: 'Search',
                         onPressed: () {
-                          print(
-                              "height index==========================${selectHeightFromKey}");
-                          Get.toNamed('/searchresult', arguments: {
-                            "ageFrom":
-                                searchController.getAge(selectAgeFrom ?? ""),
-                            "ageTo": searchController.getAge(selectAgeTo ?? ""),
-                            // "heightFrom":
-                            //     searchController.convertToFeetAndInches(
-                            //         double.parse(_heightFrom ?? "3.0")),
-                            // "heightTo": searchController.convertToFeetAndInches(
-                            //     double.parse(_heightTo ?? "7.0")),
-                            "heightFrom": selectHeightFromKey ?? "",
-                            "heightTo": selectHeightToKey ?? "",
-                            "maritalStatus": selectMaritalStatus ?? "",
-                            "religion": selectReligion ?? "",
-                            "caste": selectCaste ?? "",
-                            "country": selectCountry ?? "",
-                            "state": selectState ?? "",
-                            "city": selectCity ?? "",
-                            "education": selectEducation ?? ""
-                          });
+                          if (userProfileController
+                                  .member?.member?.accountType ==
+                              1) {
+                            Get.toNamed('/searchresult', arguments: {
+                              "ageFrom":
+                                  searchController.getAge(selectAgeFrom ?? ""),
+                              "ageTo":
+                                  searchController.getAge(selectAgeTo ?? ""),
+                              // "heightFrom":
+                              //     searchController.convertToFeetAndInches(
+                              //         double.parse(_heightFrom ?? "3.0")),
+                              // "heightTo": searchController.convertToFeetAndInches(
+                              //     double.parse(_heightTo ?? "7.0")),
+                              "heightFrom": selectHeightFromKey ?? "",
+                              "heightTo": selectHeightToKey ?? "",
+                              "maritalStatus": selectMaritalStatus ?? "",
+                              "religion": selectReligion ?? "",
+                              "caste": selectCaste ?? "",
+                              "country": selectCountry ?? "",
+                              "state": selectState ?? "",
+                              "city": selectCity ?? "",
+                              "education": selectEducation ?? ""
+                            });
+                          } else {
+                            Dialogs.showSnackbarPack(context, 'search feature');
+                          }
 
                           // Get.toNamed('/searchresult');
                         },

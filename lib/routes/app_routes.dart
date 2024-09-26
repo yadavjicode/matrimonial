@@ -1,4 +1,4 @@
-import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/chat/screens/chat_home_screen.dart';
 import 'package:devotee/pages/auth/login_page/login_page.dart';
 import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';

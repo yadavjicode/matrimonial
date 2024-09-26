@@ -113,7 +113,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         padding: const EdgeInsets.only(top: 50, bottom: 20),
                         child: Center(
                           child: Text(
-                            'Code is sent to ${widget.mobileNumber.substring(0, 2)}********${widget.mobileNumber.substring(8, 10)}',
+                            'Code is sent to ${widget.mobileNumber.substring(0, 2)}******${widget.mobileNumber.substring(8, 10)}',
                             style: FontConstant.styleRegular(
                               fontSize: 16,
                               color: Colors.black,

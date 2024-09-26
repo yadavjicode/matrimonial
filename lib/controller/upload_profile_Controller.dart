@@ -33,7 +33,7 @@ class UploadProfileController extends GetxController {
             APIs.updateUserImage("http://devoteematrimony.aks.5g.in/$photoUrl");
           }
         });
-        flowController.Flow(context, 12);
+        flowController.Flow(context, 11);
         Dialogs.showSnackbar(context, "Photo Upload Successfully!");
       } else {
         print('Photo Upload failed: ${response['message']}');

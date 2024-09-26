@@ -1,10 +1,12 @@
 import 'dart:developer';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
 import '../models/chat_user.dart';
@@ -22,7 +24,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
   // for storing all users
   List<ChatUser> _list = [];
 
@@ -35,7 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-  
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userProfileController.userDetails(context);
+    });
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
@@ -219,10 +224,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         case ConnectionState.done:
                           final data = snapshot.data?.docs;
                           _list = data
-                                  ?.map((e) => ChatUser.fromJson(e.data()))   
+                                  ?.map((e) => ChatUser.fromJson(e.data()))
                                   .toList() ??
                               [];
-                           
+
                           if (_list.isNotEmpty) {
                             return ListView.builder(
                                 itemCount: _isSearching
@@ -248,6 +253,11 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
           ),
+          if (userProfileController.isLoading.value)
+            Center(
+                child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ))
         ]),
         drawer: CustomDrawer(scaffoldKey: scaffoldKey),
       ),

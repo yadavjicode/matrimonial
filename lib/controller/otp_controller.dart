@@ -29,7 +29,7 @@ class OtpController with ChangeNotifier {
       if (token != null) {
         await prefs.setString('token', token);
       } else {
-        throw Exception('Token is null');
+        throw Exception('Invalid OTP');
       }
       Dialogs.showSnackbar(context, "${_member?.responseData?.message}");
 

@@ -19,7 +19,7 @@ class _SentPendingState extends State<SentPending> {
       Get.put(InboxSentController());
   final WithdrawalController withdrawalController =
       Get.put(WithdrawalController());
-   final EditProfileController userProfileController =
+  final EditProfileController userProfileController =
       Get.put(EditProfileController());
   @override
   void initState() {
@@ -102,7 +102,7 @@ class _SentPendingState extends State<SentPending> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, top: 8, bottom: 10, right: 2),
-                            child:  ProfileImage(
+                            child: ProfileImage(
                               size: screenWidth * 0.2,
                               url: image,
                             ),
@@ -144,6 +144,7 @@ class _SentPendingState extends State<SentPending> {
                                       Flexible(
                                         child: Text(
                                           name,
+                                          overflow: TextOverflow.ellipsis,
                                           style: FontConstant.styleSemiBold(
                                               fontSize: 13,
                                               color: AppColors.primaryColor),
@@ -156,6 +157,8 @@ class _SentPendingState extends State<SentPending> {
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Text(
                                       "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
                                       style: FontConstant.styleMedium(
                                           fontSize: 12,
                                           color: AppColors.darkgrey),
@@ -169,32 +172,35 @@ class _SentPendingState extends State<SentPending> {
                       ),
                       if (userProfileController.member!.member!.accountType !=
                           1)
-                      GestureDetector(
-                        onTap: () => {Get.toNamed("/membership")},
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.all(3),
-                          margin: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                          decoration: BoxDecoration(
-                              color: AppColors.primaryLight,
-                              borderRadius: BorderRadius.all(Radius.circular(5))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "To contact her directly,",
-                                style: FontConstant.styleMedium(
-                                    fontSize: 12, color: AppColors.black),
-                              ),
-                              Text(
-                                " Upgrade Now",
-                                style: FontConstant.styleSemiBold(
-                                    fontSize: 12, color: AppColors.primaryColor),
-                              ),
-                            ],
+                        GestureDetector(
+                          onTap: () => {Get.toNamed("/membership")},
+                          child: Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(3),
+                            margin:
+                                EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryLight,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "To contact her directly,",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 12, color: AppColors.black),
+                                ),
+                                Text(
+                                  " Upgrade Now",
+                                  style: FontConstant.styleSemiBold(
+                                      fontSize: 12,
+                                      color: AppColors.primaryColor),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 12, right: 12, bottom: 12),

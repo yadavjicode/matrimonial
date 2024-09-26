@@ -1,5 +1,5 @@
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/screens/home_screen.dart';
+import 'package:devotee/chat/screens/chat_home_screen.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';

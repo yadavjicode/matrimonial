@@ -1,4 +1,5 @@
 import 'package:devotee/chat/api/apis.dart';
+import 'package:devotee/chat/helper/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/account_setting_controller.dart';
@@ -19,6 +20,7 @@ class _AccountSettingState extends State<AccountSetting> {
       Get.put(EditProfileController());
   final AccountSettingController accountSettingController =
       Get.put(AccountSettingController());
+
   int them = 0;
   bool? onlineStatus;
   bool? lastActiveStatus;
@@ -80,7 +82,19 @@ class _AccountSettingState extends State<AccountSetting> {
                       ),
                       if (userProfileController.member?.member?.mobile != null)
                         GestureDetector(
-                            onTap: () => _phoneBottomSheet(context),
+                            onTap: () => {
+                                  if (userProfileController
+                                          .member?.member?.accountType ==
+                                      1)
+                                    {
+                                      _phoneBottomSheet(context),
+                                    }
+                                  else
+                                    {
+                                      Dialogs.showSnackbarPack(
+                                          context, 'account setting feature')
+                                    }
+                                },
                             child: settingTab(
                                 userProfileController.member?.member?.mobile ??
                                     "",
@@ -93,7 +107,19 @@ class _AccountSettingState extends State<AccountSetting> {
                       if (userProfileController.member?.member?.confirmEmail !=
                           null)
                         GestureDetector(
-                          onTap: () => _emailBottomSheet(context),
+                          onTap: () => {
+                            if (userProfileController
+                                    .member?.member?.accountType ==
+                                1)
+                              {
+                                _emailBottomSheet(context),
+                              }
+                            else
+                              {
+                                Dialogs.showSnackbarPack(
+                                    context, 'account setting feature')
+                              }
+                          },
                           child: settingTab(
                               userProfileController
                                       .member?.member?.confirmEmail ??
@@ -113,7 +139,19 @@ class _AccountSettingState extends State<AccountSetting> {
                         height: screenHeight * 0.005,
                       ),
                       GestureDetector(
-                          onTap: () => _lastLoginBottomSheet(context),
+                          onTap: () =>{
+                            if (userProfileController
+                                    .member?.member?.accountType ==
+                                1)
+                              {
+                               _lastLoginBottomSheet(context),
+                              }
+                            else
+                              {
+                                Dialogs.showSnackbarPack(
+                                    context, 'account setting feature')
+                              }
+                          }, 
                           child: settingTab(
                               "Manage Last Active",
                               userProfileController.member?.member
@@ -123,7 +161,19 @@ class _AccountSettingState extends State<AccountSetting> {
                                   : "Show last active",
                               "")),
                       GestureDetector(
-                        onTap: () => _onlineStatusBottomSheet(context),
+                        onTap: () =>{
+                          if (userProfileController
+                                    .member?.member?.accountType ==
+                                1)
+                              {
+                               _onlineStatusBottomSheet(context),
+                              }
+                            else
+                              {
+                                Dialogs.showSnackbarPack(
+                                    context, 'account setting feature')
+                              }
+                        } ,
                         child: settingTab(
                             "Manage Online Status",
                             userProfileController
@@ -134,7 +184,19 @@ class _AccountSettingState extends State<AccountSetting> {
                             ""),
                       ),
                       GestureDetector(
-                        onTap: () => _profileBottomSheet(context),
+                        onTap: () =>{
+                          if (userProfileController
+                                    .member?.member?.accountType ==
+                                1)
+                              {
+                               _profileBottomSheet(context),
+                              }
+                            else
+                              {
+                                Dialogs.showSnackbarPack(
+                                    context, 'account setting feature')
+                              }
+                        } ,
                         child: settingTab(
                             "Manage Profile Visibility",
                             userProfileController
@@ -152,7 +214,19 @@ class _AccountSettingState extends State<AccountSetting> {
                         height: screenHeight * 0.005,
                       ),
                       GestureDetector(
-                        onTap: () => _astroBottomSheet(context),
+                        onTap: () =>{
+                          if (userProfileController
+                                    .member?.member?.accountType ==
+                                1)
+                              {
+                                _astroBottomSheet(context),
+                              }
+                            else
+                              {
+                                Dialogs.showSnackbarPack(
+                                    context, 'account setting feature')
+                              }
+                        },
                         child: settingTab(
                             "Manage Astro Details",
                             userProfileController
@@ -170,7 +244,19 @@ class _AccountSettingState extends State<AccountSetting> {
                         height: screenHeight * 0.005,
                       ),
                       GestureDetector(
-                        onTap: () => _appThemeBottomSheet(context),
+                        onTap: () =>{
+                          if (userProfileController
+                                    .member?.member?.accountType ==
+                                1)
+                              {
+                               _appThemeBottomSheet(context),
+                              }
+                            else
+                              {
+                                Dialogs.showSnackbarPack(
+                                    context, 'account setting feature')
+                              }
+                        } ,
                         child: settingTab(
                             "Theme",
                             "Choose how your Devotee Matrimony experience looks for this device.",
@@ -335,10 +421,11 @@ class _AccountSettingState extends State<AccountSetting> {
                             accountSettingController
                                 .accountSetting(context, "hide_last_active",
                                     lastActiveValue == true ? 1 : 0)
-                                .then((value) =>
-                                    {
-                                      APIs.updateLastActiveStatus(lastActiveValue == true ? 1 : 0),
-                                      lastActiveStatus = lastActiveValue});
+                                .then((value) => {
+                                      APIs.updateLastActiveStatus(
+                                          lastActiveValue == true ? 1 : 0),
+                                      lastActiveStatus = lastActiveValue
+                                    });
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -869,9 +956,10 @@ class _AccountSettingState extends State<AccountSetting> {
                                 .accountSetting(context, "hide_online_status",
                                     onlinevalue == true ? 1 : 0)
                                 .then((value) => {
-                                  APIs.updateOnlineStatus(onlinevalue == true ? 1 : 0),
-                                  onlineStatus = onlinevalue
-                                  });
+                                      APIs.updateOnlineStatus(
+                                          onlinevalue == true ? 1 : 0),
+                                      onlineStatus = onlinevalue
+                                    });
                             // Navigator.pop(
                             //     context); // Pass the selected value back
                           },

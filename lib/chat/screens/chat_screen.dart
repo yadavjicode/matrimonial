@@ -359,6 +359,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       widget.user, _textController.text, Type.text);
                 } else {
                   //simply send message
+                  
                   APIs.sendMessage(
                       widget.user, _textController.text, Type.text);
                 }

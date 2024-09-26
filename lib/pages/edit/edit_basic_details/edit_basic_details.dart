@@ -329,7 +329,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Text(
-                      "Hobbies",
+                      "Hobbies *",
                       style: FontConstant.styleRegular(
                           fontSize: 16, color: AppColors.black),
                     ),
@@ -431,7 +431,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                       }),
                       const SizedBox(height: 15),
                       CustomTextField(
-                        labelText: "About",
+                        labelText: "About *",
                         maxline: 8,
                         controller: aboutController,
                         hintText: "Enter About",
