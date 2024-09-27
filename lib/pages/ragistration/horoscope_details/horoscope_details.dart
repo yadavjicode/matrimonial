@@ -69,7 +69,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Horoscope Details",
-            
             style: FontConstant.styleSemiBold(
                 fontSize: 18, color: AppColors.constColor),
           ),
@@ -103,16 +102,11 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                 height: 117,
                                 width: 109,
                               )),
-                          Container(
-                            margin: EdgeInsets.only(top: 30, bottom: 5),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Time Of Birth",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: AppColors.black),
-                            ),
+                          SizedBox(
+                            height: 30,
                           ),
                           CustomTextField(
+                            labelText: "Time Of Birth *",
                             suffixIcon: Icon(
                               Icons.av_timer,
                               color: AppColors.black,
@@ -242,7 +236,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                             child: Container(
                               margin: EdgeInsets.only(bottom: 25, top: 10),
                               padding: EdgeInsets.all(5),
-                              child: Text(   
+                              child: Text(
                                 "SKIP",
                                 style: FontConstant.styleRegular(
                                     fontSize: 20, color: AppColors.black),
@@ -256,7 +250,8 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                 )
               ],
             ),
-            if (horoscopeDetailsController.isLoading.value||flowController.isLoading.value)
+            if (horoscopeDetailsController.isLoading.value ||
+                flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

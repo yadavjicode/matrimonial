@@ -76,6 +76,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
               String date = DateFormat('dd-MM-yyyy')
                   .format(DateTime.parse(data.updatedAt));
               String mId = data.sentMatriID ?? "";
+              String gender = data.gender == "Male" ? "his" : "her";
               String image = data.photo1 != null
                   ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
                   : data.gender == "Male"
@@ -179,7 +180,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                           children: [
                             Expanded(
                               child: Text(
-                                "You Declined her Request",
+                                "You Declined $gender Request",
                                 style: FontConstant.styleMedium(
                                     fontSize: 12, color: AppColors.darkgrey),
                               ),

@@ -80,7 +80,7 @@ class CustomDrawer extends StatelessWidget {
                                     editProfileController.member == null
                                         ? SizedBox()
                                         : Text(
-                                            "${editProfileController.member!.member!.name} ${editProfileController.member!.member!.surename} ",
+                                            " ${editProfileController.member!.member!.name} ${editProfileController.member!.member!.surename} ",
                                             overflow: TextOverflow.ellipsis,
                                             style: FontConstant.styleMedium(
                                                 fontSize: 15,

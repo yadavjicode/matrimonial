@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyDateUtil {
   // for getting formatted time from milliSecondsSinceEpochs String
@@ -71,6 +72,57 @@ class MyDateUtil {
 
     return 'Last seen on ${time.day} $month on $formattedTime';
   }
+
+// get date===============================================================
+  static String getFormattedDate(String timestampString) {
+    // Convert timestamp string to integer
+    int timestamp = int.parse(timestampString);
+
+    // Convert integer to DateTime
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+    // Get the current date
+    DateTime now = DateTime.now();
+
+    // Normalize dates to remove time component for comparison
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime yesterday = today.subtract(Duration(days: 1));
+    DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1)); // Start of this week
+
+    // Normalize the dateTime for comparison
+    DateTime normalizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
+
+    // Calculate the difference in days
+    int differenceInDays = normalizedDateTime.difference(today).inDays;
+
+    // Determine the format based on the difference
+    if (normalizedDateTime.isAtSameMomentAs(today)) {
+      return 'Today';
+    } else if (normalizedDateTime.isAtSameMomentAs(yesterday)) {
+      return 'Yesterday';
+    } else if (differenceInDays >= -6 && differenceInDays <= 0) {
+      // This is within the current week
+      return DateFormat('EEEE').format(dateTime); // Full name of the day (e.g., "Monday")
+    } else {
+      // Format the date as "dd MMM yyyy" for older dates
+      return DateFormat('dd MMM yyyy').format(dateTime);
+    }
+  }
+
+// compare date to timestamp ==================================================
+  static bool shouldShowDate(String timestamp1, String? timestamp2) {
+    if (timestamp2 == null) return true;
+    DateTime dateTime1 =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp1));
+    DateTime dateTime2 =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(timestamp2));
+
+    return !(dateTime1.year == dateTime2.year &&
+        dateTime1.month == dateTime2.month &&
+        dateTime1.day == dateTime2.day);
+  }
+
+//=============================================================================
 
   // get month name from month no. or index
   static String _getMonth(DateTime date) {

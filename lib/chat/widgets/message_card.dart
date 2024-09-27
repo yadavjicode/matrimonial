@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:devotee/main.dart';
-import 'package:devotee/utils/constants.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gallery_saver_updated/gallery_saver.dart';
@@ -10,11 +9,21 @@ import '../helper/dialogs.dart';
 import '../helper/my_date_util.dart';
 import '../models/message.dart';
 
+DateTime parseDate(String dateString) {
+  try {
+    return DateTime.parse(dateString);
+  } catch (e) {
+    // Handle parsing error, e.g., log the error or return a default date
+    return DateTime.now(); // or a default DateTime
+  }
+}
+
 // for showing single message details
 class MessageCard extends StatefulWidget {
-  const MessageCard({super.key, required this.message});
+  const MessageCard({super.key, required this.message, this.previousMessage});
 
   final Message message;
+  final Message? previousMessage;
 
   @override
   State<MessageCard> createState() => _MessageCardState();
@@ -25,10 +34,19 @@ class _MessageCardState extends State<MessageCard> {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    bool shouldShowDate = MyDateUtil.shouldShowDate(
+        widget.message.sent, widget.previousMessage?.sent);
     bool isMe = APIs.myid == widget.message.fromId;
-    return GestureDetector(
-        onLongPress: () => _showBottomSheet(isMe, context),
-        child: isMe ? _greenMessage() : _blueMessage());
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (shouldShowDate)
+          DateSeparator(date: MyDateUtil.getFormattedDate(widget.message.sent)),
+        GestureDetector(
+            onLongPress: () => _showBottomSheet(isMe, context),
+            child: isMe ? _greenMessage() : _blueMessage()),
+      ],
+    );
   }
 
   // sender or another user message
@@ -88,7 +106,7 @@ class _MessageCardState extends State<MessageCard> {
         Padding(
           padding: EdgeInsets.only(right: screenWidth * .04),
           child: Text(
-            MyDateUtil.getMessageTime(
+            MyDateUtil.getFormattedTime(
                 context: context, time: widget.message.sent),
             style: const TextStyle(fontSize: 13, color: Colors.black54),
           ),
@@ -116,10 +134,10 @@ class _MessageCardState extends State<MessageCard> {
 
             //for adding some space  getFormattedTime
             const SizedBox(width: 2),
-           // MyDateUtil.getMessageTime(context: context, time: widget.message.sent)
+            // MyDateUtil.getMessageTime(context: context, time: widget.message.sent)
             //sent time
             Text(
-              MyDateUtil.getMessageTime(
+              MyDateUtil.getFormattedTime(
                   context: context, time: widget.message.sent),
               style: const TextStyle(fontSize: 13, color: Colors.black54),
             ),
@@ -414,5 +432,24 @@ class _OptionItem extends StatelessWidget {
                         letterSpacing: 0.5)))
           ]),
         ));
+  }
+}
+
+class DateSeparator extends StatelessWidget {
+  final String date;
+
+  const DateSeparator({super.key, required this.date});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Center(
+        child: Text(
+          date,
+          style: const TextStyle(fontSize: 14, color: Colors.black54),
+        ),
+      ),
+    );
   }
 }

@@ -24,8 +24,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final EditProfileController userProfileController =
-      Get.put(EditProfileController());
+
   // for storing all users
   List<ChatUser> _list = [];
 
@@ -38,9 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      userProfileController.userDetails(context);
-    });
+    
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
@@ -253,11 +250,11 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
           ),
-          if (userProfileController.isLoading.value)
-            Center(
-                child: CircularProgressIndicator(
-              color: AppColors.primaryColor,
-            ))
+          // if (userProfileController.isLoading.value)
+          //   Center(
+          //       child: CircularProgressIndicator(
+          //     color: AppColors.primaryColor,
+          //   ))
         ]),
         drawer: CustomDrawer(scaffoldKey: scaffoldKey),
       ),

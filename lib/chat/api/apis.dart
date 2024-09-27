@@ -426,6 +426,23 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
     });
   }
 
+   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessagesStream(ChatUser user, DocumentSnapshot? lastMessage) {
+    final currentUserId = myid;
+    var query = firestore
+        .collection('chats/${getConversationID(user.id)}/messages/')
+        .orderBy('sent', descending: true)
+        .limit(20);
+
+    if (lastMessage != null) {
+      query = query.startAfterDocument(lastMessage);
+    }
+
+    return query.snapshots();
+  }
+
+ 
+
+
   // for sending message
   static Future<void> sendMessage(
       ChatUser chatUser, String msg, Type type) async {

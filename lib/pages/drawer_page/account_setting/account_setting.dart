@@ -101,8 +101,8 @@ class _AccountSettingState extends State<AccountSetting> {
                                 userProfileController
                                             .member?.member?.hidePhoneStatus ==
                                         1
-                                    ? "Hide Phone"
-                                    : "Show Phone",
+                                    ? "Hide Phone No."
+                                    : "Show Phone No.",
                                 "")),
                       if (userProfileController.member?.member?.confirmEmail !=
                           null)
@@ -127,8 +127,8 @@ class _AccountSettingState extends State<AccountSetting> {
                               userProfileController
                                           .member?.member?.hideEmailStatus ==
                                       1
-                                  ? "Hide Email"
-                                  : "Show Email",
+                                  ? "Hide Email ID"
+                                  : "Show Email ID",
                               ""),
                         ),
                       SizedBox(
@@ -239,36 +239,36 @@ class _AccountSettingState extends State<AccountSetting> {
                       SizedBox(
                         height: screenHeight * 0.01,
                       ),
-                      header("App setting"),
-                      SizedBox(
-                        height: screenHeight * 0.005,
-                      ),
-                      GestureDetector(
-                        onTap: () =>{
-                          if (userProfileController
-                                    .member?.member?.accountType ==
-                                1)
-                              {
-                               _appThemeBottomSheet(context),
-                              }
-                            else
-                              {
-                                Dialogs.showSnackbarPack(
-                                    context, 'account setting feature')
-                              }
-                        } ,
-                        child: settingTab(
-                            "Theme",
-                            "Choose how your Devotee Matrimony experience looks for this device.",
-                            ""),
-                      ),
+                      // header("App setting"),
+                      // SizedBox(
+                      //   height: screenHeight * 0.005,
+                      // ),
+                      // GestureDetector(
+                      //   onTap: () =>{
+                      //     if (userProfileController
+                      //               .member?.member?.accountType ==
+                      //           1)
+                      //         {
+                      //          _appThemeBottomSheet(context),
+                      //         }
+                      //       else
+                      //         {
+                      //           Dialogs.showSnackbarPack(
+                      //               context, 'account setting feature')
+                      //         }
+                      //   } ,
+                      //   child: settingTab(
+                      //       "Theme",
+                      //       "Choose how your Devotee Matrimony experience looks for this device.",
+                      //       ""),
+                      // ),
                     ],
                   ),
                 ),
               ),
               if (userProfileController.isLoading.value ||
                   accountSettingController.isLoading.value)
-                Center(
+              const  Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -389,7 +389,7 @@ class _AccountSettingState extends State<AccountSetting> {
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                     Text(
-                      "When this is turned off, you won’t be able to see the last active status of other accounts.",
+                      "When this is turned on, others won't be able to see your last active status.",
                       style: FontConstant.styleMedium(
                           fontSize: screenWidth * 0.03 * fontsize,
                           color: AppColors.darkgrey),
@@ -479,10 +479,10 @@ class _AccountSettingState extends State<AccountSetting> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    header("Phone Setting"),
+                    header("Phone No. Setting"),
                     SwitchListTile(
                       contentPadding: const EdgeInsets.all(0),
-                      title: Text('Hide Phone',
+                      title: Text('Hide Phone No.',
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
@@ -497,7 +497,7 @@ class _AccountSettingState extends State<AccountSetting> {
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                     Text(
-                      "When this is turned on, your Phone will be hidden from your profile.",
+                      "When this is turned on, others won't be able to see your phone no.",
                       style: FontConstant.styleMedium(
                           fontSize: screenWidth * 0.03 * fontsize,
                           color: AppColors.darkgrey),
@@ -583,10 +583,10 @@ class _AccountSettingState extends State<AccountSetting> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    header("Email Setting"),
+                    header("Email ID Setting"),
                     SwitchListTile(
                       contentPadding: const EdgeInsets.all(0),
-                      title: Text('Hide Email',
+                      title: Text('Hide Email ID',
                           style: FontConstant.styleMedium(
                               fontSize: screenWidth * 0.04 * fontsize,
                               color: AppColors.black)),
@@ -601,7 +601,7 @@ class _AccountSettingState extends State<AccountSetting> {
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                     Text(
-                      "When this is turned on, your email will be hidden from your profile.",
+                      "When this is turned on, others won't be able to see your email id.",
                       style: FontConstant.styleMedium(
                           fontSize: screenWidth * 0.03 * fontsize,
                           color: AppColors.darkgrey),
@@ -705,7 +705,7 @@ class _AccountSettingState extends State<AccountSetting> {
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                     Text(
-                      "When this is turned on, your Astro Details will be hidden from your profile.",
+                      "When this is turned on, others won't be able to see your astro details.",
                       style: FontConstant.styleMedium(
                           fontSize: screenWidth * 0.03 * fontsize,
                           color: AppColors.darkgrey),
@@ -793,13 +793,6 @@ class _AccountSettingState extends State<AccountSetting> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: SvgPicture.asset("assets/images/icons/eye.svg"),
-                    ),
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                    ),
                     header("Manage Profile Visibility"),
                     SwitchListTile(
                       contentPadding: const EdgeInsets.all(0),
@@ -818,7 +811,7 @@ class _AccountSettingState extends State<AccountSetting> {
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                     Text(
-                      "When this is turned on, your Profile will make it invisible.",
+                      "When this is turned on, others won't be able to see your profile.",
                       style: FontConstant.styleMedium(
                           fontSize: screenWidth * 0.03 * fontsize,
                           color: AppColors.darkgrey),
@@ -923,7 +916,7 @@ class _AccountSettingState extends State<AccountSetting> {
                       inactiveTrackColor: Colors.grey.shade300,
                     ),
                     Text(
-                      "When this is turned off, you won’t be able to see the activity status of other accounts.",
+                      "When this is turned on, others won't be able to see your online status.",
                       style: FontConstant.styleMedium(
                           fontSize: screenWidth * 0.03 * fontsize,
                           color: AppColors.darkgrey),

@@ -117,17 +117,11 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                     height: 117,
                     width: 109,
                   )),
-              Container(
-                margin: EdgeInsets.only(top: 30, bottom: 5),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Time Of Birth",
-                  style: FontConstant.styleRegular(
-                      fontSize: 16, color: AppColors.black),
-                ),
-              ),
+              SizedBox(height: 30,),
               CustomTextField(
+                labelText: "Time Of Birth *",
                 suffixIcon: Icon(
+                 
                   Icons.av_timer,
                   color: AppColors.black,
                 ),

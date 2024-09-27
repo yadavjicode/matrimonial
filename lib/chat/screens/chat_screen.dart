@@ -1,12 +1,14 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/constants/font_constant.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/chat_user.dart';
 import '../models/message.dart';
 import '../widgets/message_card.dart';
@@ -24,14 +26,30 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   //for storing all messages
   List<Message> _list = [];
+  DocumentSnapshot? _lastDocument;
+  bool _hasMore = true; // To track if there are more messages to load
+  bool _isLoadingMore = false; // To track if more messages are being loaded
 
   //for handling message text changes
   final _textController = TextEditingController();
+
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     APIs.getSelfInfo();
+
+    _loadMessages(); // Load initial messages
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+              _scrollController.position.maxScrollExtent &&
+          _hasMore) {
+        _loadMoreMessages(); // Load more messages when scrolled to top
+      }
+    });
+
     SystemChannels.lifecycle.setMessageHandler((message) {
       log('Message: $message');
 
@@ -45,6 +63,48 @@ class _ChatScreenState extends State<ChatScreen> {
       }
       return Future.value(message);
     });
+  }
+
+  void _loadMessages() {
+    APIs.getAllMessagesStream(widget.user, null).listen((snapshot) {
+      setState(() {
+        _list = snapshot.docs
+            .map((doc) => Message.fromJson(doc.data() as Map<String, dynamic>))
+            .where((message) => !message.deletedBy.contains(APIs.myid))
+            .toList();
+
+        if (snapshot.docs.isNotEmpty) {
+          _lastDocument = snapshot.docs.last; // Save the last document snapshot
+        }
+      });
+    });
+  }
+
+  void _loadMoreMessages() {
+    if (_lastDocument != null) {
+      setState(() {
+        _isLoadingMore = true; // Set loading state to true
+      });
+      APIs.getAllMessagesStream(widget.user, _lastDocument).listen((snapshot) {
+        setState(() {
+          final newMessages = snapshot.docs
+              .map(
+                  (doc) => Message.fromJson(doc.data() as Map<String, dynamic>))
+              .where((message) => !message.deletedBy.contains(APIs.myid))
+              .toList();
+
+          if (newMessages.isNotEmpty) {
+            _list.addAll(newMessages);
+            _lastDocument = snapshot.docs.isNotEmpty
+                ? snapshot.docs.last
+                : null; // Update the last document snapshot
+          } else {
+            _hasMore = false; // No more messages to load
+          }
+          _isLoadingMore = false;
+        });
+      });
+    }
   }
 
   //showEmoji -- for storing value of showing or hiding emoji
@@ -106,76 +166,72 @@ class _ChatScreenState extends State<ChatScreen> {
               alignment: Alignment.topRight,
               child: Image.asset("assets/images/background.png")),
           SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: StreamBuilder(
-                    stream: APIs.getAllMessages(widget.user),
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        //if data is loading
-                        case ConnectionState.waiting:
-                        case ConnectionState.none:
-                          return const SizedBox();
-
-                        // if some or all data is loaded then show it
-                        case ConnectionState.active:
-                        case ConnectionState.done:
-                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            _list = snapshot.data!;
-
-                            return ListView.builder(
-                              reverse: true,
-                              itemCount: _list.length,
-                              padding: EdgeInsets.only(
-                                  top:
-                                      MediaQuery.of(context).size.height * .01),
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return MessageCard(message: _list[index]);
-                              },
-                            );
-                          } else {
-                            return const Center(
-                              child: Text('Say Hii! 👋',
-                                  style: TextStyle(fontSize: 20)),
-                            );
-                          }
-                      }
-                    },
-                  ),
-                ),
-
-                //progress indicator for showing uploading
-                if (_isUploading)
-                  const Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                          child: CircularProgressIndicator(strokeWidth: 2))),
-
-                //chat input filed
-                _chatInput(),
-
-                //show emojis on keyboard emoji button click & vice versa
-                if (_showEmoji)
-                  SizedBox(
-                    height: screenHeight * .35,
-                    child: EmojiPicker(
-                      textEditingController: _textController,
-                      config: const Config(),
+            child: Stack(children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      reverse: true,
+                      controller: _scrollController,
+                      itemCount: _list.length,
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * .01),
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final currentMessage = _list[index];
+                        final previousMessage =
+                            index < _list.length - 1 ? _list[index + 1] : null;
+                        return MessageCard(
+                          message: currentMessage,
+                          previousMessage: previousMessage,
+                        );
+                      },
                     ),
-                  )
-              ],
-            ),
+                  ),
+
+                  //progress indicator for showing uploading
+                  if (_isUploading)
+                    const Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 20),
+                            child: CircularProgressIndicator(strokeWidth: 2))),
+
+                  //chat input filed
+                  _chatInput(),
+
+                  //show emojis on keyboard emoji button click & vice versa
+                  if (_showEmoji)
+                    SizedBox(
+                      height: screenHeight * .35,
+                      child: EmojiPicker(
+                        textEditingController: _textController,
+                        config: const Config(),
+                      ),
+                    )
+                ],
+              ),
+              if (_isLoadingMore)
+                Positioned(
+                  top: 2,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Loading ......",
+                        style: FontConstant.styleRegular(
+                            fontSize: 12, color: AppColors.darkgrey),
+                      )),
+                ),
+            ]),
           ),
         ]),
       ),
       // ),
     );
   }
-
 
   String _getStatusMessage(ChatUser user) {
     if (user.isOnline && user.onlineStatus == 0) {
@@ -189,7 +245,6 @@ class _ChatScreenState extends State<ChatScreen> {
       return ''; // If no valid status or last active time, return empty
     }
   }
-
 
   // app bar widget
   Widget _appBar() {
@@ -359,7 +414,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       widget.user, _textController.text, Type.text);
                 } else {
                   //simply send message
-                  
+
                   APIs.sendMessage(
                       widget.user, _textController.text, Type.text);
                 }

@@ -4,11 +4,6 @@ import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/drawer_page/account_setting/account_setting.dart';
-import 'package:devotee/pages/drawer_page/account_setting/contact_privacy/contact_privacy_email.dart';
-import 'package:devotee/pages/drawer_page/account_setting/contact_privacy/contact_privacy_phone.dart';
-import 'package:devotee/pages/drawer_page/account_setting/more_info_privacy/more_info_privacy.dart';
-import 'package:devotee/pages/drawer_page/account_setting/profile_privacy/profile_privacy.dart';
-import 'package:devotee/pages/drawer_page/account_setting/profile_privacy/profile_setting.dart';
 import 'package:devotee/pages/drawer_page/chat/chat.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
@@ -100,7 +95,7 @@ class AppRoutes {
   static const String editProfile = '/editProfile';
   static const String inbox = '/inbox';
   static const String shortlistProfile = '/shortlistProfile';
-   static const String chatHome = '/chatHome';
+  static const String chatHome = '/chatHome';
 
   static const String whoAreYou = '/whoAreYou';
   static const String ourMission = '/ourMission';
@@ -140,26 +135,24 @@ class AppRoutes {
   static const String matches = '/matches';
   static const String basedMatches = '/basedMatches';
   static const String showImage = '/showImage';
-  
+
 // Edit pages
-   static const String profileEdit = '/profileEdit';
-   static const String editAllPhoto = '/editAllPhoto';
-   static const String editBasicDetails = '/editBasicDetails';
-   static const String editContactDetails = '/editContactDetails';
-   static const String editLocationDetails = '/editLocationDetails';
-   static const String editEducationDetails = '/editEducationDetails';
-   static const String editProfessionDetails = '/editProfessionDetails';
-   static const String editDevotionalDetails = '/editDevotionalDetails';
-   static const String editSpiritualDetails = '/editSpiritualDetails';
-   static const String editHoroscopeDetails = '/editHoroscopeDetails';
-   static const String editPartnerQualites = '/editPartnerQualites';
-   static const String editFamilyDetails = '/editFamilyDetails';
-   static const String editPartnerPreference = '/editPartnerPreference';
-   static const String updatePhoto = '/updatePhoto';
+  static const String profileEdit = '/profileEdit';
+  static const String editAllPhoto = '/editAllPhoto';
+  static const String editBasicDetails = '/editBasicDetails';
+  static const String editContactDetails = '/editContactDetails';
+  static const String editLocationDetails = '/editLocationDetails';
+  static const String editEducationDetails = '/editEducationDetails';
+  static const String editProfessionDetails = '/editProfessionDetails';
+  static const String editDevotionalDetails = '/editDevotionalDetails';
+  static const String editSpiritualDetails = '/editSpiritualDetails';
+  static const String editHoroscopeDetails = '/editHoroscopeDetails';
+  static const String editPartnerQualites = '/editPartnerQualites';
+  static const String editFamilyDetails = '/editFamilyDetails';
+  static const String editPartnerPreference = '/editPartnerPreference';
+  static const String updatePhoto = '/updatePhoto';
 
-  
-
-   static const String seeAll = '/seeAll';
+  static const String seeAll = '/seeAll';
 
   static final List<GetPage> routes = [
     GetPage(
@@ -172,7 +165,6 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-  
     GetPage(
       name: profile,
       page: () => const UploadYourProfile(),
@@ -239,13 +231,12 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-    
     GetPage(
       name: spiritual,
       page: () => const SpiritualDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
-    ),   
+    ),
     GetPage(
       name: horoscope,
       page: () => const HoroscopeDetails(),
@@ -324,7 +315,6 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: feedback,
       page: () => const FeedbackPage(),
@@ -337,42 +327,36 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: complaint,
       page: () => const Complaint(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: editProfile,
       page: () => const ProfileEdit(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: inbox,
       page: () => const Inbox(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: shortlistProfile,
       page: () => const MyShorlistProfile(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: spiritualWisdom,
       page: () => const SpiritualWisdom(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: recommended,
       page: () => const RecommendedDevotees(),
@@ -391,14 +375,12 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: disclaimer,
       page: () => const Disclaimer(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: website,
       page: () => const OurWebsite(),
@@ -429,14 +411,12 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: package,
       page: () => const PackageDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: matches,
       page: () => const Matches(),
@@ -473,13 +453,13 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: editEducationDetails,
       page: () => const EditEducationdetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: editProfessionDetails,
       page: () => const EditProfessionalDetails(),
       transition: Transition.fadeIn,
@@ -497,14 +477,12 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
-     GetPage(
+    GetPage(
       name: seeAll,
       page: () => const SeeAll(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
     GetPage(
       name: editAllPhoto,
       page: () => const EditAllPhoto(),
@@ -517,13 +495,13 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: editDevotionalDetails,
       page: () => const EditDevotionDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-      GetPage(
+    GetPage(
       name: editSpiritualDetails,
       page: () => const EditSpiritualDetails(),
       transition: Transition.fadeIn,
@@ -535,81 +513,49 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: editPartnerQualites,
       page: () => const EditPartnerQualites(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: editFamilyDetails,
       page: () => const EditFamilyDetails(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: editPartnerPreference,
       page: () => const EditPartnerPreferences(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-      GetPage(
+    GetPage(
       name: inboxDrawer,
       page: () => const InboxDrawer(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-  
-     GetPage(
+    GetPage(
       name: myProfile,
       page: () => const MyProfile(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
-     GetPage(
+    GetPage(
       name: accountSetting,
       page: () => const AccountSetting(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-      GetPage(
-      name: contactPrivacyPhone,
-      page: () => const ContactPrivacyPhone(),
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-      GetPage(
-      name: contactPrivacyEmail,
-      page: () => const ContactPrivacyEmail(),
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-      GetPage(
-      name: profilePrivacy,
-      page: () => const ProfilePrivacy(),
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-      GetPage(
-      name: profileSetting,
-      page: () => const ProfileSetting(),
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-      GetPage(
-      name: moreInfoPrivacy,
-      page: () => const MoreInfoPrivacy(),
-      transition: Transition.fadeIn,
-      transitionDuration: const Duration(milliseconds: 400),
-    ),
-     GetPage(
+    GetPage(
       name: chatDrawer,
       page: () => const ChatHomeDScreen(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: shortlistProfileDrawer,
       page: () => const MyShorlistProfileD(),
       transition: Transition.fadeIn,

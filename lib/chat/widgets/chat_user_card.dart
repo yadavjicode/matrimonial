@@ -42,7 +42,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           onTap: () {
             //for navigating to chat screen
-            if (userProfileController.member?.member?.accountType == 1) {
+            if (userProfileController.member?.member?.accountType == 1  ) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
