@@ -1,15 +1,15 @@
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/accepted_controller.dart';
 import 'package:devotee/controller/declined_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class ReceivedPending extends StatefulWidget {
   const ReceivedPending({super.key});
@@ -25,7 +25,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
   final DeclinedController declinedController = Get.put(DeclinedController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
-
+// "Accepted"
   @override
   void initState() {
     super.initState();
@@ -41,12 +41,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
       body: Obx(() {
         return Stack(
           children: [
-            if (!inboxReceivedController.isLoading.value
-                //  &&
-                //     !declinedController.isLoading.value &&
-                //     !acceptedController.isLoading.value
-                )
-              pendingContent(),
+            if (!inboxReceivedController.isLoading.value) pendingContent(),
             if (inboxReceivedController.isLoading.value ||
                 declinedController.isLoading.value ||
                 acceptedController.isLoading.value)
@@ -85,14 +80,23 @@ class _ReceivedPendingState extends State<ReceivedPending> {
           child: Column(
             children: member.responseData!.data!.map((data) {
               String name = "${data.name ?? ""} ${data.surename ?? ""}";
-              String date = DateFormat('dd-MM-yyyy')
-                  .format(DateTime.parse(data.updatedAt));
+              String date = CommanClass.dateFormat(data.updatedAt);
               String mId = data.sentMatriID ?? "";
-              String image = data.photo1 != null
-                  ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                  : data.gender == "Male"
-                      ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                      : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+              String image = CommanClass.photo(data.photo1, data.gender);
+              List<String?> haList = [
+                data.age != null ? "${data.age} Yrs" : null,
+                data.height,
+                data.maritalstatus
+              ];  
+              String haString = CommanClass.commaString(haList);
+              List<String?> eoList = [data.occupation];
+              String eoString = CommanClass.commaString(eoList);
+              List<String?> crList = [data.caste, data.religion];
+              String crString = CommanClass.commaString(crList);
+              List<String?> scList = [data.state, data.country];
+              String scString = CommanClass.commaString(scList);
+              List<String?> info = [haString, eoString, crString, scString];
+              String infos = CommanClass.hyphenString(info);
 
               return GestureDetector(
                 onTap: () {
@@ -163,9 +167,9 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Text(
-                                      "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                      infos,
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
+                                      maxLines: 3,
                                       style: FontConstant.styleMedium(
                                           fontSize: 12,
                                           color: AppColors.darkgrey),

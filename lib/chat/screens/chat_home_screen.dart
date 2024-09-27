@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../api/apis.dart';
-import '../helper/dialogs.dart';
+import '../../constants/widget/dialogs.dart';
 import '../models/chat_user.dart';
 import '../widgets/chat_user_card.dart';
 import '../../constants/widget/profile_image.dart';

@@ -1,4 +1,4 @@
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/model/inbox_received_model.dart';
 import 'package:devotee/model/inbox_sent_model.dart';

@@ -1,6 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
@@ -17,6 +17,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../constants/widget/profile_image.dart';
+import '../../../../utils/comman_class_method.dart';
 
 class DesiredPartner extends StatefulWidget {
   const DesiredPartner({super.key});
@@ -115,13 +116,22 @@ class _DesiredPartnerState extends State<DesiredPartner> {
         scrollDirection: Axis.vertical,
         child: Column(children: [
           ...matchesController.matches.map((data) {
-            String name = "${data.name ?? ""} ${data.surename ?? ""}";
+             String name = "${data.name ?? ""} ${data.surename ?? ""}";
+            List<String?> haList = [
+              data.age != null ? "${data.age} Yrs" : null,
+              data.height,
+            ];
             String id = data.matriID ?? "";
-            String image = data.photo1 != null
-                ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                : data.gender == "Male"
-                    ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                    : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+            String haString = CommanClass.commaString(haList);
+            List<String?> eoList = [data.occupation, data.education];
+            String eoString = CommanClass.hyphenString(eoList);
+            List<String?> rcList = [data.caste, data.religion];
+            String rcString = CommanClass.commaString(rcList);
+            List<String?> scList = [data.state, data.country];
+            String scString = CommanClass.commaString(scList);
+            List<String?> infoList = [rcString, scString];
+            String infos = CommanClass.hyphenString(infoList);
+            String image = CommanClass.photo(data.photo1, data.gender);
 
             return Container(
               margin: EdgeInsets.only(top: 5, bottom: 10),
@@ -246,7 +256,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      "ID: ${id}",
+                                      "ID: $id",
                                       style: FontConstant.styleMedium(
                                           fontSize: 13, color: AppColors.black),
                                     ),
@@ -303,14 +313,14 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 ),
                               ),
                               Text(
-                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
+                                eoString,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.darkgrey),
                               ),
                               Text(
-                                "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                haString,
                                 overflow: TextOverflow.ellipsis,
                                 style: FontConstant.styleMedium(
                                     fontSize: 13, color: AppColors.darkgrey),
@@ -323,7 +333,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                         color: AppColors.darkgrey)),
                               ),
                               Text(
-                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                infos,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 style: FontConstant.styleMedium(

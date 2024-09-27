@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/color_constant.dart';

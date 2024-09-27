@@ -4,6 +4,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/notification_controller.dart';
 import 'package:devotee/pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/routes/app_routes.dart';
+import 'package:devotee/utils/size.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -21,22 +22,25 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryColor,
   ));
+
   await disableScreenshots(); //Disable screenshots for the entire app
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'matrimony',
       home: const SplashScreen(),
       initialRoute: AppRoutes.splash,
+
       getPages: AppRoutes.routes,
+
       // initialBinding: MyBindings(),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/model/complaint_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

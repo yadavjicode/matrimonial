@@ -1,4 +1,4 @@
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/model/suggestion_model.dart';
 import 'package:devotee/model/testimonial_model.dart';
 import 'package:flutter/material.dart';

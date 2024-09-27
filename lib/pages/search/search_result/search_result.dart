@@ -3,7 +3,7 @@ import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
@@ -13,6 +13,7 @@ import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -271,19 +272,25 @@ class _SearchResultState extends State<SearchResult> {
                         ...searchController.searchs.map((data) {
                           String name =
                               "${data.name ?? ""} ${data.surename ?? ""}";
-                          String occupation = data.occupation ?? "";
-                          String age = data.age == null
-                              ? ""
-                              : "${data.age.toString()} Years, ";
-                          String height = data.height ?? "";
-                          String aadress =
-                              " ${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"}${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country ?? ""}";
+                          List<String?> haList = [
+                            data.age != null ? "${data.age} Yrs" : null,
+                            data.height,
+                          ];
                           String id = data.matriID ?? "";
-                          String image = data.photo1 != null
-                              ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                              : data.gender == "Male"
-                                  ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                                  : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                          String haString = CommanClass.commaString(haList);
+                          List<String?> eoList = [
+                            data.occupation,
+                            data.education
+                          ];
+                          String eoString = CommanClass.hyphenString(eoList);
+                          List<String?> rcList = [data.caste, data.religion];
+                          String rcString = CommanClass.commaString(rcList);
+                          List<String?> scList = [data.state, data.country];
+                          String scString = CommanClass.commaString(scList);
+                          List<String?> infoList = [rcString, scString];
+                          String infos = CommanClass.hyphenString(infoList);
+                          String image =
+                              CommanClass.photo(data.photo1, data.gender);
 
                           return Container(
                               margin: EdgeInsets.only(
@@ -456,7 +463,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      "ID: ${id}",
+                                                      "ID: $id",
                                                       style: FontConstant
                                                           .styleMedium(
                                                               fontSize: 13,
@@ -523,7 +530,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 ),
                                               ),
                                               Text(
-                                                "${data.occupation == null ? "" : "${data.occupation} - "}${data.education == null ? "" : "${data.education}"}",
+                                                eoString,
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 2,
                                                 style: FontConstant.styleMedium(
@@ -531,7 +538,7 @@ class _SearchResultState extends State<SearchResult> {
                                                     color: AppColors.darkgrey),
                                               ),
                                               Text(
-                                                "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                                haString,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: FontConstant.styleMedium(
                                                     fontSize: 13,
@@ -549,7 +556,7 @@ class _SearchResultState extends State<SearchResult> {
                                                                 .darkgrey)),
                                               ),
                                               Text(
-                                                "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}"} ${data.caste == null && data.religion == null || data.state == null && data.country == null ? "" : " - "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                                infos,
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 2,
                                                 style: FontConstant.styleMedium(

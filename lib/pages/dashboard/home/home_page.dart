@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/count_unread_message.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';

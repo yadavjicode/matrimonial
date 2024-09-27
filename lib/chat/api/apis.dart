@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/api/notification_access_token.dart';
+import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
-import 'package:rxdart/rxdart.dart' as rxDart; 
+import 'package:rxdart/rxdart.dart' as rxDart;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -79,7 +80,7 @@ class APIs with ChangeNotifier {
 //Start  total unread message  =================================================================================
 
 // Method to get the total unread messages count as a Stream
-static  Stream<int> getTotalUnreadMessagesCount() async* {
+  static Stream<int> getTotalUnreadMessagesCount() async* {
     try {
       // Listen to all users the current user has conversations with
       final myUsersSnapshot = await firestore
@@ -126,9 +127,7 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
     }
   }
 
-
 // End  total unread message =================================================================================
-
 
 //Start Update image ===========================================================================================
   static Future<bool> updateUserImage(String imageurl) async {
@@ -165,14 +164,12 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
 
     // for handling foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('Message data: ${message.data}');
+      print('Message data: ${message.data}');
       log('Got a message whilst in the foreground!');
       log('Message data: ${message.data}');
-    
 
-    
       if (message.notification != null) {
-           print('Message data: ${message.data}');
+        print('Message data: ${message.data}');
         log('Message also contained a notification: ${message.notification}');
       }
     });
@@ -426,7 +423,8 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
     });
   }
 
-   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessagesStream(ChatUser user, DocumentSnapshot? lastMessage) {
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMessagesStream(
+      ChatUser user, DocumentSnapshot? lastMessage) {
     final currentUserId = myid;
     var query = firestore
         .collection('chats/${getConversationID(user.id)}/messages/')
@@ -439,9 +437,6 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
 
     return query.snapshots();
   }
-
- 
-
 
   // for sending message
   static Future<void> sendMessage(
@@ -615,4 +610,35 @@ static  Stream<int> getTotalUnreadMessagesCount() async* {
         .doc(message.sent)
         .update({'msg': updatedMsg});
   }
+
+  // direct chat ======================================================================================
+
+ static final DirectChatController directChatController =
+      Get.put(DirectChatController());
+
+ static Future<void> fetchUser(BuildContext context, String userId) async {
+    // Fetch the user asynchronously
+    ChatUser? user = await directChatController.getUserById(userId);
+
+    // Ensure the context is valid and the widget tree is still available
+    if (context.mounted) {
+      if (user != null) {
+        // Navigate to the ChatScreen when the user is fetched successfully
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ChatScreen(user: user), // Directly pass the fetched user
+          ),
+        );
+      } else {
+        // Show a snackbar if unable to fetch the user
+        ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(content: Text('Unable to fetch data')),
+        );
+      }
+    }
+  }
+
+  //=======================================================================================================
 }

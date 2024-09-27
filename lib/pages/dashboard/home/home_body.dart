@@ -1,6 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
@@ -12,6 +12,7 @@ import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/model/dashboard_model.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -156,12 +157,20 @@ class _HomeBodyState extends State<HomeBody> {
                 Row(
                   children: list.map((data) {
                     String name = "${data.name ?? ""} ${data.surename ?? ""}";
-                    String occupation = data.occupation ?? "";
-                    String image = data.Photo1 != null
-                        ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
-                        : data.gender == "Male"
-                            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                    List<String?> haList = [
+                      data.Age != null ? "${data.Age} Yrs" : null,
+                      data.height,
+                    ];
+                    String haString = CommanClass.commaString(haList);
+                    List<String?> eoList = [data.occupation, data.education];
+                    String eoString = CommanClass.hyphenString(eoList);
+                    List<String?> rcList = [data.caste, data.religion];
+                    String rcString = CommanClass.commaString(rcList);
+                    List<String?> scList = [data.state, data.country];
+                    String scString = CommanClass.commaString(scList);
+                    List<String?> infoList = [rcString, scString];
+                    String infos = CommanClass.hyphenString(infoList);
+                    String image = CommanClass.photo(data.Photo1, data.gender);
 
                     return Container(
                       width: screenWidth * 0.65,
@@ -231,21 +240,21 @@ class _HomeBodyState extends State<HomeBody> {
                                         color: AppColors.primaryColor),
                                   ),
                                   Text(
-                                    occupation,
+                                    eoString,
                                     overflow: TextOverflow.ellipsis,
                                     style: FontConstant.styleMedium(
                                         fontSize: 14,
                                         color: AppColors.darkgrey),
                                   ),
                                   Text(
-                                    "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                    haString,
                                     overflow: TextOverflow.ellipsis,
                                     style: FontConstant.styleMedium(
                                         fontSize: 14,
                                         color: AppColors.darkgrey),
                                   ),
                                   Text(
-                                    "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                    infos,
                                     overflow: TextOverflow.ellipsis,
                                     style: FontConstant.styleMedium(
                                         fontSize: 14, color: AppColors.black),
@@ -378,12 +387,20 @@ class _HomeBodyState extends State<HomeBody> {
                 Row(
                   children: list.map((data) {
                     String name = "${data.name ?? ""} ${data.surename ?? ""}";
-                    String occupation = data.occupation ?? "";
-                    String image = data.Photo1 != null
-                        ? "http://devoteematrimony.aks.5g.in/${data.Photo1}"
-                        : data.gender == "Male"
-                            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                    List<String?> haList = [
+                      data.Age != null ? "${data.Age} Yrs" : null,
+                      data.height,
+                    ];
+                    String haString = CommanClass.commaString(haList);
+                    List<String?> eoList = [data.occupation, data.education];
+                    String eoString = CommanClass.hyphenString(eoList);
+                    List<String?> rcList = [data.caste, data.religion];
+                    String rcString = CommanClass.commaString(rcList);
+                    List<String?> scList = [data.state, data.country];
+                    String scString = CommanClass.commaString(scList);
+                    List<String?> infoList = [rcString, scString];
+                    String infos = CommanClass.hyphenString(infoList);
+                    String image = CommanClass.photo(data.Photo1, data.gender);
 
                     return Container(
                       margin: EdgeInsets.only(
@@ -452,21 +469,21 @@ class _HomeBodyState extends State<HomeBody> {
                                                       AppColors.primaryColor),
                                             ),
                                             Text(
-                                              occupation,
+                                              eoString,
                                               overflow: TextOverflow.ellipsis,
                                               style: FontConstant.styleMedium(
                                                   fontSize: 12,
                                                   color: AppColors.darkgrey),
                                             ),
                                             Text(
-                                              "${data.Age == null ? "" : "${data.Age} Yrs, "}${data.height == null ? "" : "${data.height}"}",
+                                              haString,
                                               overflow: TextOverflow.ellipsis,
                                               style: FontConstant.styleMedium(
                                                   fontSize: 12,
                                                   color: AppColors.darkgrey),
                                             ),
                                             Text(
-                                              "${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                              infos,
                                               overflow: TextOverflow.ellipsis,
                                               style: FontConstant.styleMedium(
                                                   fontSize: 12,

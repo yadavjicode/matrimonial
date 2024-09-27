@@ -1,10 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -299,7 +298,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   ? "${_editProfileController.member?.member?.weight} KG"
                                   : "Not Mentioned"),
                           _buildText("Date of Birth",
-                              _editProfileController.member?.member?.dOB ?? ""),
+                         CommanClass.dateFormat(_editProfileController.member?.member?.dOB)),
                           _buildText(
                               "Diet",
                               _editProfileController.member?.member?.diet ??

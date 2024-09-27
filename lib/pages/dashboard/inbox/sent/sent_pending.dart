@@ -2,11 +2,11 @@ import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_sent_controller.dart';
 import 'package:devotee/controller/withdrawal_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class SentPending extends StatefulWidget {
   const SentPending({super.key});
@@ -23,7 +23,6 @@ class _SentPendingState extends State<SentPending> {
       Get.put(EditProfileController());
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       inboxSentController.inboxSent(context, "Pending");
@@ -74,25 +73,30 @@ class _SentPendingState extends State<SentPending> {
             child: Column(
               children:
                   inboxSentController.member!.responseData!.data!.map((data) {
-                // int index = entry.key;
                 String name = "${data.name ?? ""} ${data.surename ?? ""}";
-                String date = DateFormat('dd-MM-yyyy')
-                    .format(DateTime.parse(data.updatedAt));
-                String mId = data.receicedMatriID ?? "";
-                String image = data.photo1 != null
-                    ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                    : data.gender == "Male"
-                        ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                        : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+                String date = CommanClass.dateFormat(data.updatedAt);
+                String mId = data.sentMatriID ?? "";
+                String image = CommanClass.photo(data.photo1, data.gender);
+                List<String?> haList = [
+                  data.age != null ? "${data.age} Yrs" : null,
+                  data.height,
+                  data.maritalstatus
+                ];
+                String haString = CommanClass.commaString(haList);
+                List<String?> eoList = [data.occupation];
+                String eoString = CommanClass.commaString(eoList);
+                List<String?> crList = [data.caste, data.religion];
+                String crString = CommanClass.commaString(crList);
+                List<String?> scList = [data.state, data.country];
+                String scString = CommanClass.commaString(scList);
+                List<String?> info = [haString, eoString, crString, scString];
+                String infos = CommanClass.hyphenString(info);
+
+                String gender = CommanClass.hisHer(data.gender);
                 return Container(
-                  //  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   decoration: BoxDecoration(
-                    // color: selectedIndex == index
-                    //     ? Colors.grey.shade300
-                    //     : Colors.white,
                     color: Colors.white,
                     border: Border.all(color: Colors.grey.shade200),
-                    //  borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     children: [
@@ -119,7 +123,7 @@ class _SentPendingState extends State<SentPending> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("ID: ${mId}",
+                                      Text("ID: $mId",
                                           style: FontConstant.styleMedium(
                                               fontSize: 12,
                                               color: AppColors.darkgrey)),
@@ -130,7 +134,7 @@ class _SentPendingState extends State<SentPending> {
                                         child: Container(
                                           child: Text(
                                             textAlign: TextAlign.right,
-                                            "Sent On: ${date}",
+                                            "Sent On: $date",
                                             style: FontConstant.styleMedium(
                                                 fontSize: 12,
                                                 color: AppColors.darkgrey),
@@ -156,9 +160,9 @@ class _SentPendingState extends State<SentPending> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 2),
                                     child: Text(
-                                      "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}",
+                                      infos,
                                       overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
+                                      maxLines: 3,
                                       style: FontConstant.styleMedium(
                                           fontSize: 12,
                                           color: AppColors.darkgrey),
@@ -187,7 +191,7 @@ class _SentPendingState extends State<SentPending> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "To contact her directly,",
+                                  "To contact $gender directly,",
                                   style: FontConstant.styleMedium(
                                       fontSize: 12, color: AppColors.black),
                                 ),

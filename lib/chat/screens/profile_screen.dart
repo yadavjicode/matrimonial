@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';

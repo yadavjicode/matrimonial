@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/comman_class_method.dart';
+
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
 
@@ -280,10 +282,12 @@ class _MyProfileState extends State<MyProfile> {
                                   "Not Mentioned"),
                           _buildText(
                               "Weight",
-                              "${_editProfileController.member?.member?.weight} KG" ??
-                                  "Not Mentioned"),
+                              _editProfileController.member?.member?.weight !=
+                                      null
+                                  ? "${_editProfileController.member?.member?.weight} KG"
+                                  : "Not Mentioned"),
                           _buildText("Date of Birth",
-                              _editProfileController.member?.member?.dOB ?? ""),
+                         CommanClass.dateFormat(_editProfileController.member?.member?.dOB)),
                           _buildText(
                               "Diet",
                               _editProfileController.member?.member?.diet ??
@@ -306,12 +310,12 @@ class _MyProfileState extends State<MyProfile> {
                         children: [
                           _buildText(
                               "Phone Number",
-                          
                               _editProfileController.member?.member?.mobile ??
                                   "Not Mentioned"),
                           _buildText(
                               "Email Address",
-                              _editProfileController.member?.member?.confirmEmail ??
+                              _editProfileController
+                                      .member?.member?.confirmEmail ??
                                   "Not Mentioned"),
                           _buildText(
                               "Instagram ID",
@@ -723,7 +727,8 @@ class _MyProfileState extends State<MyProfile> {
                                   "Not Mentioned"),
                           _buildText(
                               "Hobbies or Likings",
-                              _editProfileController.member?.member?.GBHobbies ??
+                              _editProfileController
+                                      .member?.member?.GBHobbies ??
                                   "Not Mentioned"),
                         ],
                       ),
@@ -750,14 +755,14 @@ class _MyProfileState extends State<MyProfile> {
                               "Body Weight From",
                               _editProfileController
                                           .member?.member?.pEFromWeight !=
-                                      0
+                                      null
                                   ? "${_editProfileController.member?.member?.pEFromWeight} KG"
                                   : "Not Mentioned"),
                           _buildText(
                               "Body Weight To",
                               _editProfileController
                                           .member?.member?.pEToWeight !=
-                                      0
+                                      null
                                   ? "${_editProfileController.member?.member?.pEToWeight} KG"
                                   : "Not Mentioned"),
                           _buildText(
@@ -854,34 +859,47 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   Widget _buildText(String tittle, String value) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                tittle,
-                style: FontConstant.styleMedium(
-                  fontSize: 13,
-                  color: AppColors.darkgrey,
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              tittle,
+              style: FontConstant.styleMedium(
+                fontSize: 13,
+                color: AppColors.darkgrey,
               ),
             ),
-            SizedBox(width: 5),
-            Text(": "),
-            Expanded(
-              child: Text(
-                value,
-                style: FontConstant.styleMedium(
-                  fontSize: 13,
-                  color: AppColors.black,
-                ),
+          ),
+          SizedBox(width: 5),
+          Text(": "),
+          Expanded(
+            child: Text(
+              value,
+              style: FontConstant.styleMedium(
+                fontSize: 13,
+                color: AppColors.black,
               ),
             ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildmess(String data) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 10),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        data,
+        style: FontConstant.styleMedium(
+          fontSize: 13,
+          color: AppColors.darkgrey,
         ),
-      ],
+      ),
     );
   }
 

@@ -6,7 +6,7 @@ import 'package:devotee/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
-import '../helper/dialogs.dart';
+import '../../constants/widget/dialogs.dart';
 import '../models/message.dart';
 import '../widgets/ai_message_card.dart';
 

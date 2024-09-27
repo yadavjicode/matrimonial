@@ -1,4 +1,4 @@
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/lists/age_list.dart';

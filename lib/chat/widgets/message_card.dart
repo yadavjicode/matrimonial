@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gallery_saver_updated/gallery_saver.dart';
 import '../api/apis.dart';
-import '../helper/dialogs.dart';
+import '../../constants/widget/dialogs.dart';
 import '../helper/my_date_util.dart';
 import '../models/message.dart';
 

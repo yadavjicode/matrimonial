@@ -1,16 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:devotee/constants/color_constant.dart';
-import 'package:devotee/main.dart';
 import 'package:devotee/utils/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../api/apis.dart';
-import '../../helper/dialogs.dart';
-
+import '../../../constants/widget/dialogs.dart';
 import '../chat_home_screen.dart';
 
 //login screen -- implements google sign in or sign up feature for app

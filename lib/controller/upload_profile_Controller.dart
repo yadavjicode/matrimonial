@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/chat/helper/dialogs.dart';
+import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
