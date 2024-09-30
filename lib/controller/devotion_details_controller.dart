@@ -1,4 +1,4 @@
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/devotion_details_model.dart';
@@ -13,10 +13,9 @@ class DevotionalDetailsController with ChangeNotifier {
   String? _error;
   DevotionalDetailsModel? get member => _member;
   String? get error => _error;
-  final FlowController flowController=Get.put(FlowController());
-   final EditProfileController _editProfileController =
+  final FlowController flowController = Get.put(FlowController());
+  final EditProfileController _editProfileController =
       Get.put(EditProfileController());
-
 
   Future<void> devotionalDetails(
       BuildContext context,
@@ -24,31 +23,31 @@ class DevotionalDetailsController with ChangeNotifier {
       String iskontype,
       String templeName,
       String templeCity,
-      String devotionalHobbies,bool status) async {
+      String whichSampraya,
+      String devotionalHobbies,
+      bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.devotionalDetails(
-          somethingAbout, iskontype, templeName, templeCity, devotionalHobbies);
-    
-    if(status){
-       _editProfileController.userDetails(context);
+      _member = await apiService.devotionalDetails(somethingAbout, iskontype,
+          templeName, templeCity, whichSampraya, devotionalHobbies);
+
+      if (status) {
+        _editProfileController.userDetails(context);
         Navigator.pop(context);
+      } else {
+        flowController.Flow(context, 7);
+      }
 
-    }else{
-      flowController.Flow(context, 7);
-    }
-
-    
       // Get.toNamed('/spiritual');
     } catch (e) {
       _error = e.toString();
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     Dialogs.showSnackbar(context, '${_error}');
+      Dialogs.showSnackbar(context, '${_error}');
     } finally {
       isLoading.value = false;
       notifyListeners();

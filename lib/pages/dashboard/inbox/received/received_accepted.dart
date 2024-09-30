@@ -1,4 +1,4 @@
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/inbox_received_controller.dart';
@@ -10,6 +10,10 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../../chat/api/apis.dart';
+import '../../../../chat/api/direct_chat_controller.dart';
+import '../../../../constants/widget/dialog.dart';
 
 class ReceivedAccepted extends StatefulWidget {
   const ReceivedAccepted({super.key});
@@ -25,6 +29,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
       Get.put(ProfileDetailsController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
 
   @override
   void initState() {
@@ -44,7 +50,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
               if (inboxReceivedController.isLoading.value == false)
                 acceptContent(),
               if (inboxReceivedController.isLoading.value ||
-                  profileDetailsController.isLoading.value)
+                  profileDetailsController.isLoading.value ||
+                  directChatController.isLoading.value)
                 const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -56,7 +63,6 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
   }
 
   Widget acceptContent() {
-    
     final member = inboxReceivedController.member;
     if (member == null ||
         member.responseData == null ||
@@ -130,7 +136,7 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                   "11"
                                 ]);
                               } else {
-                                Dialogs.showSnackbarPack(
+                                DialogConstant.packageDialog(
                                     context, 'view profile feature');
                               }
                             },
@@ -196,54 +202,125 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                         color: AppColors.darkgrey),
                                   ),
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            if (userProfileController.member
+                                                    ?.member?.accountType ==
+                                                1) {
+                                              if (data.chatStatus == 1) {
+                                                if (data.sentMatriID!
+                                                        .trim()
+                                                        .isNotEmpty &&
+                                                    data.sentMatriID != null) {
+                                                  await APIs.addChatUser(
+                                                          data.sentMatriID!)
+                                                      .then((value) {
+                                                    if (!value) {
+                                                      Dialogs.showSnackbar(
+                                                          context,
+                                                          'User does not Exists!');
+                                                    } else {
+                                                      APIs.fetchUser(
+                                                        context,
+                                                        data.sentMatriID
+                                                            .toString()
+                                                            .trim(),
+                                                      );
+                                                    }
+                                                  });
+                                                }
+                                              } else {
+                                                Dialogs.showSnackbar(context,
+                                                    'The user is not added in your list!');
+                                              }
+                                            } else {
+                                              DialogConstant.packageDialog(
+                                                  context, 'chat feature');
+                                            }
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/images/chat_d.svg",
+                                                height: 20,
+                                                width: 20,
+                                              ),
+                                              const SizedBox(
+                                                width: 3,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "Chat Now",
+                                                  style:
+                                                      FontConstant.styleMedium(
+                                                          fontSize: 11,
+                                                          color:
+                                                              AppColors.black),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            if (userProfileController.member
+                                                    ?.member?.accountType ==
+                                                1) {
+                                              profileDetailsController
+                                                  .profileDetails(
+                                                      context, mId, "", [
+                                                "1",
+                                                "2",
+                                                "3",
+                                                "4",
+                                                "5",
+                                                "6",
+                                                "7",
+                                                "8",
+                                                "9",
+                                                "10",
+                                                "11"
+                                              ]);
+                                            } else {
+                                              DialogConstant.packageDialog(
+                                                  context,
+                                                  'view profile feature');
+                                            }
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/images/pink_search.svg",
+                                                height: 20,
+                                                width: 20,
+                                              ),
+                                              const SizedBox(width: 3),
+                                              Text(
+                                                "View Profile",
+                                                style: FontConstant.styleMedium(
+                                                    fontSize: 12,
+                                                    color: const Color.fromARGB(
+                                                        255, 20, 14, 14)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
                           ),
                         ),
                       ],
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (userProfileController.member?.member?.accountType ==
-                            1) {
-                          profileDetailsController.profileDetails(
-                              context, mId, "", [
-                            "1",
-                            "2",
-                            "3",
-                            "4",
-                            "5",
-                            "6",
-                            "7",
-                            "8",
-                            "9",
-                            "10",
-                            "11"
-                          ]);
-                        } else {
-                          Dialogs.showSnackbarPack(
-                              context, 'view profile feature');
-                        }
-                      },
-                      child: Row(
-                        children: [
-                          Spacer(),
-                          SvgPicture.asset(
-                            "assets/images/pink_search.svg",
-                            height: 20,
-                            width: 20,
-                          ),
-                          SizedBox(width: 3),
-                          Text(
-                            "View Profile",
-                            style: FontConstant.styleMedium(
-                                fontSize: 12, color: AppColors.black),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          )
-                        ],
-                      ),
                     ),
                   ],
                 ),

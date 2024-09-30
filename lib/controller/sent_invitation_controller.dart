@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../constants/widget/dialog.dart';
+
 class SentInvitationController with ChangeNotifier {
   final ApiService apiService = ApiService();
   SentInvitationModel? _member;
@@ -24,16 +26,21 @@ class SentInvitationController with ChangeNotifier {
 
     try {
       _member = await apiService.SentInvitation(id);
-      CustomDialog.show(
-        context,
-        member?.message??"",
-        member?.title??"",
-        dialogType: DialogType.success,
-        btnOkOnPress: btnOkOnPress ??
-            () {
-              // Navigator.of(context).pop(); // Default action if none is provided
-            },
-      );
+
+      if (_member?.status == "true") {
+        CustomDialog.show(
+          context,
+          member?.message ?? "",
+          member?.title ?? "",
+          dialogType: DialogType.success,
+          btnOkOnPress: btnOkOnPress ??
+              () {
+                // Navigator.of(context).pop(); // Default action if none is provided
+              },
+        );
+      } else {
+        DialogConstant.packageDialog(context, 'sent invitation feature');
+      }
     } catch (e) {
       _error = e.toString();
       print(_error);

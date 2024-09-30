@@ -47,11 +47,11 @@ class _RecommendedDevoteesState extends State<RecommendedDevotees> {
                     ),
                     DrawerCommanCode()
                         .buildTextSemiBold("Recommended by Senior Devotees\n"),
-                    DrawerCommanCode().buildText("Coming Soon")
+                    DrawerCommanCode().buildText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.\n")
                   ],
                 ),
               )
-            ],
+            ], 
           )
         ],
       ),

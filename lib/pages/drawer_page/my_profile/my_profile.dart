@@ -286,8 +286,10 @@ class _MyProfileState extends State<MyProfile> {
                                       null
                                   ? "${_editProfileController.member?.member?.weight} KG"
                                   : "Not Mentioned"),
-                          _buildText("Date of Birth",
-                         CommanClass.dateFormat(_editProfileController.member?.member?.dOB)),
+                          _buildText(
+                              "Date of Birth",
+                              CommanClass.dateFormat(
+                                  _editProfileController.member?.member?.dOB)),
                           _buildText(
                               "Diet",
                               _editProfileController.member?.member?.diet ??
@@ -511,7 +513,11 @@ class _MyProfileState extends State<MyProfile> {
                               _editProfileController
                                       .member?.member?.cityOfTheTemple ??
                                   "Not Mentioned"),
-                          _buildText("Sampradaya belong to", "Not Mentioned"),
+                          _buildText(
+                              "Sampradaya belong to",
+                              _editProfileController
+                                      .member?.member?.whichsampradaya ??
+                                  "Not Mentioned"),
                           _buildText(
                               "Devotional Habits",
                               _editProfileController

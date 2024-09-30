@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:restart_app/restart_app.dart';
 
 class LogoutConfirmationDialog extends StatelessWidget {
+  const LogoutConfirmationDialog({super.key});
+
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await APIs.updateActiveStatus(false);
@@ -15,7 +17,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
     Get.delete<EditProfileController>();
 
     // Delay a little to ensure the dialog is fully closed before restarting
-   // await Future.delayed(Duration(milliseconds: 100));
+    // await Future.delayed(Duration(milliseconds: 100));
 
     // Restart the app after logout
     Restart.restartApp();
@@ -24,8 +26,13 @@ class LogoutConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Logout Confirmation'),
-      content: Text('Are you sure you want to log out?'),
+      title: Text('Logout Confirmation',
+          style:
+              FontConstant.styleSemiBold(fontSize: 17, color: AppColors.black)),
+      backgroundColor: AppColors.background,
+      content: Text('Are you sure you want to log out?',
+          style:
+              FontConstant.styleRegular(fontSize: 13, color: AppColors.black)),
       actions: <Widget>[
         TextButton(
           child: Text(
@@ -57,7 +64,7 @@ void showLogoutConfirmationDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return LogoutConfirmationDialog();
+      return const LogoutConfirmationDialog();
     },
   );
 }

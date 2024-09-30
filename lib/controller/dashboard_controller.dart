@@ -1,4 +1,4 @@
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/model/accepted_model.dart';
 import 'package:devotee/model/dashboard_model.dart';

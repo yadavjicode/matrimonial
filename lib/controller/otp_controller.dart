@@ -1,5 +1,5 @@
 import 'package:devotee/api_service/api_service.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:devotee/model/otp_model.dart';
 import 'package:flutter/material.dart';

@@ -356,6 +356,7 @@ class ApiService {
       String iskontype,
       String templeName,
       String templeCity,
+      String whichSampraya,
       String devotionalHobbies) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -376,6 +377,7 @@ class ApiService {
         'iskon_type': iskontype,
         "name_of_temple": templeName,
         "city_of_the_temple": templeCity,
+        "which_sampradaya_you_belogn_to":whichSampraya,
         "devotional_hobbies": devotionalHobbies
       }),
     );

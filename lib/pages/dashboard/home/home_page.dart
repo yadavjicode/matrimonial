@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/count_unread_message.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -16,6 +16,8 @@ import 'package:devotee/pages/dashboard/home/home_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../constants/widget/dialog.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -119,7 +121,7 @@ class _HomeState extends State<Home> {
                                   {Get.toNamed('/search')}
                                 else
                                   {
-                                    Dialogs.showSnackbarPack(
+                                    DialogConstant.packageDialog(
                                         context, 'search feature')
                                   }
                               },

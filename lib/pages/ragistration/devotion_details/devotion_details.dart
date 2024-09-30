@@ -19,6 +19,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
   final TextEditingController nameTemple = TextEditingController();
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
+  final TextEditingController whichSampraya= TextEditingController();
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -204,6 +205,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                               ),
                               const SizedBox(height: 10),
                               CustomTextField(
+                                controller: whichSampraya,
                                 labelText: "Which Sampradaya you belong to?",
                                 //   controller: nameTemple,
                                 hintText:
@@ -312,7 +314,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                 somethingAbout.text.toString().trim(),
                 getiskon(),
                 nameTemple.text.toString().trim(),
-                cityTemple.text.toString().trim(),
+                cityTemple.text,
+                whichSampraya.text..toString().trim(),
                 getSelectedHobbies(),
                 false);
           }

@@ -24,6 +24,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
   final TextEditingController nameTemple = TextEditingController();
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
+  final TextEditingController whichSampraya = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -96,6 +97,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
         "";
     nameTemple.text = _editProfileController.member!.member!.nameOfTemple ?? "";
     cityTemple.text = _editProfileController.member!.member!.city ?? "";
+    whichSampraya.text = _editProfileController.member!.member!.whichsampradaya ?? "";
 
     if (_editProfileController.member!.member!.iskonType ==
         "Already Connected with ISKCON") {
@@ -150,7 +152,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                   ),
                   devotionalContent()
                 ],
-              ),    
+              ),
             ),
             if (devotionalController.isLoading.value ||
                 _editProfileController.isLoading.value)
@@ -176,6 +178,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                 getiskon(),
                 nameTemple.text.toString().trim(),
                 cityTemple.text.toString().trim(),
+                whichSampraya.text.toString().trim(),
                 getSelectedHobbies(),
                 true);
           }
@@ -273,6 +276,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                 ),
                 const SizedBox(height: 15),
                 CustomTextField(
+                  controller: whichSampraya,
                   labelText: "Which Sampradaya you belong to?",
                   //   controller: nameTemple,
                   hintText: "Enter Which Sampradaya you belong to",

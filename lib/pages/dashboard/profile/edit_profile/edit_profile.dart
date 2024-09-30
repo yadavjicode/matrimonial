@@ -522,7 +522,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                               _editProfileController
                                       .member?.member?.cityOfTheTemple ??
                                   "Not Mentioned"),
-                          _buildText("Sampradaya belong to", "Not Mentioned"),
+                          _buildText("Sampradaya belong to",  _editProfileController
+                                      .member?.member?.whichsampradaya ??
+                                  "Not Mentioned"),
                           _buildText(
                               "Devotional Habits",
                               _editProfileController

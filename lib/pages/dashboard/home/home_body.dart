@@ -1,6 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
@@ -16,6 +16,8 @@ import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../constants/widget/dialog.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
@@ -205,7 +207,7 @@ class _HomeBodyState extends State<HomeBody> {
                                     "11"
                                   ]);
                                 } else {
-                                  Dialogs.showSnackbarPack(
+                                  DialogConstant.packageDialog(
                                       context, 'view profile feature');
                                 }
                               },
@@ -437,7 +439,7 @@ class _HomeBodyState extends State<HomeBody> {
                                           "11"
                                         ]);
                                       } else {
-                                        Dialogs.showSnackbarPack(
+                                        DialogConstant.packageDialog(
                                             context, 'view profile feature');
                                       }
                                     },
@@ -588,7 +590,7 @@ class _HomeBodyState extends State<HomeBody> {
                                                 'The user is not added in your list!');
                                           }
                                         } else {
-                                          Dialogs.showSnackbarPack(
+                                          DialogConstant.packageDialog(
                                               context, 'chat feature');
                                         }
                                       },
@@ -619,7 +621,16 @@ class _HomeBodyState extends State<HomeBody> {
                                       onTap: () {
                                         print("${data.matriID}");
                                         sentInvitationController.sentInvitation(
-                                            context, data.matriID!);
+                                          context,
+                                          data.matriID!,
+                                          btnOkOnPress: () => {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) {
+                                              dashboardController
+                                                  .dashboard(context);
+                                            })
+                                          },
+                                        );
                                       },
                                       child: Row(
                                         children: [
@@ -633,7 +644,9 @@ class _HomeBodyState extends State<HomeBody> {
                                           ),
                                           Expanded(
                                             child: Text(
-                                              "Send Interest",
+                                              data.interestStatus == 1
+                                                  ? "Sent Interest"
+                                                  : "Send Interest",
                                               style: FontConstant.styleMedium(
                                                   fontSize: 11,
                                                   color: AppColors.black),

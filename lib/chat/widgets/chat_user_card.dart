@@ -1,8 +1,8 @@
-import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../constants/widget/dialog.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
 import '../models/chat_user.dart';
@@ -42,13 +42,13 @@ class _ChatUserCardState extends State<ChatUserCard> {
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           onTap: () {
             //for navigating to chat screen
-            if (userProfileController.member?.member?.accountType == 1  ) {
+            if (userProfileController.member?.member?.accountType == 1) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (_) => ChatScreen(user: widget.user)));
             } else {
-              Dialogs.showSnackbarPack(context, 'chat feature');
+              DialogConstant.packageDialog(context, 'chat feature');
             }
           },
           child: StreamBuilder(

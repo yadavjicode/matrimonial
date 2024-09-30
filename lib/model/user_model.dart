@@ -348,6 +348,7 @@ class Member {
   dynamic peHeightKey;
   dynamic peHeight2Key;
   dynamic spiritualCounselerConnected;
+  dynamic whichsampradaya;
 
   Member(
       {this.id,
@@ -664,7 +665,8 @@ class Member {
       this.accountType,
       this.heightKey,
       this.peHeightKey,
-      this.peHeight2Key
+      this.peHeight2Key,
+      this.whichsampradaya
       
       });
 
@@ -988,6 +990,7 @@ class Member {
     heightKey=json['HeightKey'];
     peHeightKey=json['PE_HeightKey'];
     peHeight2Key=json['PE_Height2Key'];
+    whichsampradaya=json['which_sampradaya_you_belogn_to'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1290,7 +1293,7 @@ class Member {
     data['step_4'] = this.step4;
     data['step_5'] = this.step5;
     data['step_6'] = this.step6;
-    data['step_7'] = this.step7;
+    data['step_7'] = this.step7;     
     data['step_8'] = this.step8;
     data['step_9'] = this.step9;
     data['step_10'] = this.step10;
@@ -1311,7 +1314,7 @@ class Member {
     data['hide_astrological_info'] = this.hideAstroStatus;
     data['PE_HeightKey'] = this.peHeightKey;
     data['PE_Height2Key'] = this.peHeight2Key;
-    
+    data['which_sampradaya_you_belogn_to'] = this.whichsampradaya;
     return data;
   }
 }

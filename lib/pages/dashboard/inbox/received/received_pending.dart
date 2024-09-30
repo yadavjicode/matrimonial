@@ -1,4 +1,3 @@
-import 'package:devotee/constants/widget/dialogs.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/accepted_controller.dart';
 import 'package:devotee/controller/declined_controller.dart';
@@ -10,6 +9,8 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../../constants/widget/dialog.dart';
 
 class ReceivedPending extends StatefulWidget {
   const ReceivedPending({super.key});
@@ -87,7 +88,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                 data.age != null ? "${data.age} Yrs" : null,
                 data.height,
                 data.maritalstatus
-              ];  
+              ];
               String haString = CommanClass.commaString(haList);
               List<String?> eoList = [data.occupation];
               String eoString = CommanClass.commaString(eoList);
@@ -219,7 +220,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                                     }
                                   else
                                     {
-                                      Dialogs.showSnackbarPack(context,
+                                      DialogConstant.packageDialog(context,
                                           'declining invitation feature')
                                     }
                                 },
@@ -259,7 +260,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                                     }
                                   else
                                     {
-                                      Dialogs.showSnackbarPack(context,
+                                      DialogConstant.packageDialog(context,
                                           'accepting invitation feature')
                                     }
                                 },

@@ -331,8 +331,11 @@ class CustomDrawer extends StatelessWidget {
                     child: buildoption("assets/images/icons/offer.svg",
                         "Offering Your Gratitude", 22, 22),
                   ),
-                  buildoption("assets/images/icons/refferal.svg",
-                      "Referral and Reward Scheme", 22, 22),
+                  GestureDetector(
+                    onTap: () => {Get.toNamed("/referralReward")},
+                    child: buildoption("assets/images/icons/refferal.svg",
+                        "Referral and Reward Scheme", 22, 22),
+                  ),
                   GestureDetector(
                     onTap: () => {Get.toNamed("/warning")},
                     child: buildoption(

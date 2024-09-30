@@ -70,7 +70,7 @@ class _SentDeclinedState extends State<SentDeclined> {
                 inboxSentController.member!.responseData!.data!.map((data) {
               String name = "${data.name ?? ""} ${data.surename ?? ""}";
               String date = CommanClass.dateFormat(data.updatedAt);
-              String mId = data.sentMatriID ?? "";
+              String mId = data.receicedMatriID ?? "";
               String image = CommanClass.photo(data.photo1, data.gender);
               List<String?> haList = [
                 data.age != null ? "${data.age} Yrs" : null,

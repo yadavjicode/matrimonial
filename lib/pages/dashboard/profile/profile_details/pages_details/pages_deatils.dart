@@ -141,12 +141,12 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Phone Number",
         "value":
-            "${profileDetailsController.member!.data!.hidePhoneStatus==1?"Phone Number Hidden": profileDetailsController.member!.data!.mobile?? "Not Mentioned"}"
+            "${profileDetailsController.member!.data!.hidePhoneStatus == 1 ? "Phone Number Hidden" : profileDetailsController.member!.data!.mobile ?? "Not Mentioned"}"
       },
       {
         "title": "Email Address",
         "value":
-           "${profileDetailsController.member!.data!.hideEmailStatus==1?"Email Address Hidden": profileDetailsController.member!.data!.confirmEmail?? "Not Mentioned"}"
+            "${profileDetailsController.member!.data!.hideEmailStatus == 1 ? "Email Address Hidden" : profileDetailsController.member!.data!.confirmEmail ?? "Not Mentioned"}"
       },
       {
         "title": "Instagram ID",
@@ -340,7 +340,11 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         "value":
             "${profileDetailsController.member!.data!.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
       },
-      {"title": "Which Sampradaya you belong to?", "value": "Not Mentioned"},
+      {
+        "title": "Which Sampradaya you belong to?",
+        "value":
+            "${profileDetailsController.member?.data?.whichsampradaya ?? "Not Mentioned"}"
+      },
       {
         "title": "Devotional Hobbies",
         "value":
@@ -597,17 +601,17 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Time Of Birth",
         "value":
-              "${profileDetailsController.member!.data!.hideAstroStatus==1?"Hidden": profileDetailsController.member!.data!.timeOfBirth?? "Not Mentioned"}"
+            "${profileDetailsController.member!.data!.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member!.data!.timeOfBirth ?? "Not Mentioned"}"
       },
       {
         "title": "State of Birth",
         "value":
-                "${profileDetailsController.member!.data!.hideAstroStatus==1?"Hidden": profileDetailsController.member!.data!.stateOfBirth?? "Not Mentioned"}"
+            "${profileDetailsController.member!.data!.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member!.data!.stateOfBirth ?? "Not Mentioned"}"
       },
       {
         "title": "City of Birth",
         "value":
-                 "${profileDetailsController.member!.data!.hideAstroStatus==1?"Hidden": profileDetailsController.member!.data!.cityOfBirth?? "Not Mentioned"}"
+            "${profileDetailsController.member!.data!.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member!.data!.cityOfBirth ?? "Not Mentioned"}"
       },
     ];
 // End horoscopeDetails ========================================================================================================================================================================

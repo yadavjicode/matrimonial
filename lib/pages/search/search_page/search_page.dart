@@ -1,4 +1,4 @@
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/lists/age_list.dart';
@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
+
+import '../../../constants/widget/dialog.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -645,7 +647,8 @@ class _SearchPageState extends State<SearchPage> {
                               "education": selectEducation ?? ""
                             });
                           } else {
-                            Dialogs.showSnackbarPack(context, 'search feature');
+                            DialogConstant.packageDialog(
+                                context, 'search feature');
                           }
 
                           // Get.toNamed('/searchresult');

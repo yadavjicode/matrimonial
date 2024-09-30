@@ -75,7 +75,7 @@ class _SentPendingState extends State<SentPending> {
                   inboxSentController.member!.responseData!.data!.map((data) {
                 String name = "${data.name ?? ""} ${data.surename ?? ""}";
                 String date = CommanClass.dateFormat(data.updatedAt);
-                String mId = data.sentMatriID ?? "";
+                String mId = data.receicedMatriID ?? "";
                 String image = CommanClass.photo(data.photo1, data.gender);
                 List<String?> haList = [
                   data.age != null ? "${data.age} Yrs" : null,
@@ -230,18 +230,18 @@ class _SentPendingState extends State<SentPending> {
                                   Container(
                                     height: 26,
                                     width: 26,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: Colors.red,
                                         shape: BoxShape.circle),
                                     alignment: Alignment.center,
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.delete,
                                       color: AppColors.constColor,
                                     ),
                                     // child: Image.asset(
                                     //     "assets/images/delete.png"),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 3,
                                   ),
                                   Text(
@@ -265,19 +265,19 @@ class _SentPendingState extends State<SentPending> {
                             //     ),
                             //   ],
                             // ),
-                            Row(
-                              children: [
-                                Image.asset("assets/images/call.png"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Call",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 12, color: AppColors.purple),
-                                ),
-                              ],
-                            )
+                            // Row(
+                            //   children: [
+                            //     Image.asset("assets/images/call.png"),
+                            //     SizedBox(
+                            //       width: 5,
+                            //     ),
+                            //     Text(
+                            //       "Call",
+                            //       style: FontConstant.styleMedium(
+                            //           fontSize: 12, color: AppColors.purple),
+                            //     ),
+                            //   ],
+                            // )
                           ],
                         ),
                       )

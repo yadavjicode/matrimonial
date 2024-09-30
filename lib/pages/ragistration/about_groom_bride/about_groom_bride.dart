@@ -36,6 +36,19 @@ final  AboutGroomBrideController aboutGroomBrideController =
   };
 
   Map<String, bool> hobbies = {
+    "Art / Handicraft": false,
+    "Yoga": false,
+    "Cooking": false,
+    "Dancing": false,
+    "Gardening / Landscaping": false,
+    "Painting": false,
+    "Gym": false,
+    "Travelling": false,
+    "Serving Animals": false,
+    "Politics": false,
+    "Writing": false,
+    "Spending Time With Nature": false,
+    "Reading Newspaper": false,
     "Chanting of Holy Names": false,
     "Hearing Krishna Katha": false,
     "Reading Spiritual Books": false,

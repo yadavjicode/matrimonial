@@ -1,14 +1,12 @@
 import 'dart:developer';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
-import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import '../api/apis.dart';
-import '../../constants/widget/dialogs.dart';
+import '../../constants/widget/Snackbar.dart';
 import '../models/chat_user.dart';
 import '../widgets/chat_user_card.dart';
 import '../../constants/widget/profile_image.dart';
@@ -199,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ));
-
+      
                 //if some or all data is loaded then show it
                 case ConnectionState.active:
                 case ConnectionState.done:
@@ -224,6 +222,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ?.map((e) => ChatUser.fromJson(e.data()))
                                   .toList() ??
                               [];
+                          
+                          
+
 
                           if (_list.isNotEmpty) {
                             return ListView.builder(

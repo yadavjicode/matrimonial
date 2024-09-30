@@ -16,7 +16,9 @@ import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
+
+import '../../../../constants/widget/dialog.dart';
 
 class SeeAll extends StatefulWidget {
   const SeeAll({super.key});
@@ -196,7 +198,7 @@ class _SeeAllState extends State<SeeAll> {
                                         "11"
                                       ]);
                                     } else {
-                                      Dialogs.showSnackbarPack(
+                                      DialogConstant.packageDialog(
                                           context, 'view profile feature');
                                     }
                                   },
@@ -256,7 +258,7 @@ class _SeeAllState extends State<SeeAll> {
                                           width: 5,
                                         ),
                                         Text(
-                                          "Send Interest",
+                                          data.interestStatus == 1?"Sent Interest":"Send Interest",
                                           style: FontConstant.styleMedium(
                                               fontSize: screenWidth * 0.03,
                                               color: AppColors.constColor),
@@ -459,7 +461,7 @@ class _SeeAllState extends State<SeeAll> {
                                           'The user is not added in your list!');
                                     }
                                   } else {
-                                    Dialogs.showSnackbarPack(
+                                    DialogConstant.packageDialog(
                                         context, 'chat feature');
                                   }
                                 },
@@ -506,7 +508,7 @@ class _SeeAllState extends State<SeeAll> {
                                       "11"
                                     ]);
                                   } else {
-                                    Dialogs.showSnackbarPack(
+                                    DialogConstant.packageDialog(
                                         context, 'view profile feature');
                                   }
                                 },

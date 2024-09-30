@@ -3,7 +3,7 @@ import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
@@ -17,6 +17,8 @@ import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../constants/widget/dialog.dart';
 
 class SearchResult extends StatefulWidget {
   const SearchResult({super.key});
@@ -338,7 +340,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 }
                                               else
                                                 {
-                                                  Dialogs.showSnackbarPack(
+                                                  DialogConstant.packageDialog(
                                                       context,
                                                       'view profile feature')
                                                 }
@@ -428,7 +430,7 @@ class _SearchResultState extends State<SearchResult> {
                                                       width: 5,
                                                     ),
                                                     Text(
-                                                      "Send Interest",
+                                                     data.interestStatus == 1?"Sent Interest":"Send Interest",
                                                       style: FontConstant
                                                           .styleMedium(
                                                               fontSize:
@@ -666,7 +668,7 @@ class _SearchResultState extends State<SearchResult> {
                                                       'The user is not added in your list!');
                                                 }
                                               } else {
-                                                Dialogs.showSnackbarPack(
+                                                DialogConstant.packageDialog(
                                                     context, 'chat feature');
                                               }
                                             },
@@ -719,7 +721,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 }
                                               else
                                                 {
-                                                  Dialogs.showSnackbarPack(
+                                                  DialogConstant.packageDialog(
                                                       context,
                                                       'view profile feature')
                                                 }

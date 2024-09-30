@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../api/apis.dart';
-import '../../../constants/widget/dialogs.dart';
+import '../../../constants/widget/Snackbar.dart';
 import '../chat_home_screen.dart';
 
 //login screen -- implements google sign in or sign up feature for app

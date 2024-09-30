@@ -23,6 +23,7 @@ import 'package:devotee/pages/drawer_page/our_website/our_wesite.dart';
 import 'package:devotee/pages/drawer_page/package_details/package_details.dart';
 import 'package:devotee/pages/drawer_page/privacy_policy/privacy_policy.dart';
 import 'package:devotee/pages/drawer_page/recommended_by_senior_devotees/recommended_devotees.dart';
+import 'package:devotee/pages/drawer_page/referral_and_reward/referral_and_reward.dart';
 import 'package:devotee/pages/drawer_page/request_from_our_side/request_from_our_side.dart';
 import 'package:devotee/pages/drawer_page/spiritual_wisdom/spiritual_wisdom.dart';
 import 'package:devotee/pages/drawer_page/suggestion/suggestion.dart';
@@ -121,6 +122,7 @@ class AppRoutes {
   static const String myProfile = '/myProfile';
   static const String chatDrawer = '/chatDrawer';
   static const String shortlistProfileDrawer = '/shortlistProfileDrawer';
+  static const String referralReward= '/referralReward';
 
   static const String membership = '/membership';
   static const String package = '/package';
@@ -558,6 +560,12 @@ class AppRoutes {
     GetPage(
       name: shortlistProfileDrawer,
       page: () => const MyShorlistProfileD(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: referralReward,
+      page: () => const ReferralAndReward(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

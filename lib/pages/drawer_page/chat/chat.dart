@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/profile_screen.dart';
 import 'package:devotee/chat/widgets/chat_user_card.dart';

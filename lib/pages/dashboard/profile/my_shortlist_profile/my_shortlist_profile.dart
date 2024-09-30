@@ -1,6 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
@@ -13,6 +13,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../../../constants/widget/dialog.dart';
 import '../../../../utils/comman_class_method.dart';
 
 class MyShorlistProfile extends StatefulWidget {
@@ -190,7 +191,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                         "11"
                                       ]);
                                     } else {
-                                      Dialogs.showSnackbarPack(
+                                      DialogConstant.packageDialog(
                                           context, 'view profile feature');
                                     }
                                   },
@@ -407,7 +408,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                                     'The user is not added in your list!');
                                               }
                                             } else {
-                                              Dialogs.showSnackbarPack(
+                                              DialogConstant.packageDialog(
                                                   context, 'chat feature');
                                             }
                                           },
@@ -459,7 +460,8 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                                 "11"
                                               ]);
                                             } else {
-                                              Dialogs.showSnackbarPack(context,
+                                              DialogConstant.packageDialog(
+                                                  context,
                                                   'view profile feature');
                                             }
                                           },

@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
+import '../../../constants/widget/dialog.dart';
+
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
@@ -68,7 +70,7 @@ class _DashboardState extends State<Dashboard> {
       body:WillPopScope(
       onWillPop: () async {
         // Show the confirmation dialog
-        bool shouldExit = await _showExitConfirmationDialog(context);
+        bool shouldExit = await DialogConstant.showExitConfirmationDialog(context);
         return shouldExit;
       },
         child: PageView(
@@ -160,30 +162,6 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-    Future<bool> _showExitConfirmationDialog(BuildContext context) async {
-    return await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Exit App',),
-            content: Text('Do you want to exit the app?'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false), // Cancel
-                child: Text('Cancel',style: FontConstant.styleSemiBold(
-                fontSize: 15, color: AppColors.black),),
-              ),
-              TextButton(
-                onPressed: () =>{
-                 APIs.updateActiveStatus(false),
-                  Navigator.of(context).pop(true),
-                }  ,// Exit
-                child: Text('Exit',style: FontConstant.styleSemiBold(
-                fontSize: 15, color: AppColors.black),),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
+    
 }
 

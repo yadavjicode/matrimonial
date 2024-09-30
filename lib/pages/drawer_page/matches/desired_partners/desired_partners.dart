@@ -1,6 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/chat/models/chat_user.dart';
 import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../constants/widget/dialog.dart';
 import '../../../../constants/widget/profile_image.dart';
 import '../../../../utils/comman_class_method.dart';
 
@@ -116,7 +117,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
         scrollDirection: Axis.vertical,
         child: Column(children: [
           ...matchesController.matches.map((data) {
-             String name = "${data.name ?? ""} ${data.surename ?? ""}";
+            String name = "${data.name ?? ""} ${data.surename ?? ""}";
             List<String?> haList = [
               data.age != null ? "${data.age} Yrs" : null,
               data.height,
@@ -169,7 +170,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                   "11"
                                 ]);
                               } else {
-                                Dialogs.showSnackbarPack(
+                                DialogConstant.packageDialog(
                                     context, 'view profile feature');
                               }
                             },
@@ -229,7 +230,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                       width: 5,
                                     ),
                                     Text(
-                                      "Send Interest",
+                                      data.interestStatus == 1?"Sent Interest":"Send Interest",
                                       style: FontConstant.styleMedium(
                                           fontSize: screenWidth * 0.03,
                                           color: AppColors.constColor),
@@ -299,11 +300,11 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                               if (userProfileController
                                       .member?.member?.accountType ==
                                   1)
-                              UserStatusWidget(
-                                  userId: id,
-                                  onlineStatus: data.hideOnlineStatus ?? 0,
-                                  lastSeenStatus:
-                                      data.hideLastActiveStatus ?? 0),
+                                UserStatusWidget(
+                                    userId: id,
+                                    onlineStatus: data.hideOnlineStatus ?? 0,
+                                    lastSeenStatus:
+                                        data.hideLastActiveStatus ?? 0),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 3, bottom: 3),
@@ -397,7 +398,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         ),
                         Expanded(
                           child: GestureDetector(
-                             onTap: () async {
+                            onTap: () async {
                               if (userProfileController
                                       .member?.member?.accountType ==
                                   1) {
@@ -421,7 +422,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                       'The user is not added in your list!');
                                 }
                               } else {
-                                Dialogs.showSnackbarPack(
+                                DialogConstant.packageDialog(
                                     context, 'chat feature');
                               }
                             },
@@ -448,7 +449,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                         ),
                         Expanded(
                           child: GestureDetector(
-                          onTap: () {
+                            onTap: () {
                               if (userProfileController
                                       .member?.member?.accountType ==
                                   1) {
@@ -467,7 +468,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                   "11"
                                 ]);
                               } else {
-                                Dialogs.showSnackbarPack(
+                                DialogConstant.packageDialog(
                                     context, 'view profile feature');
                               }
                             },

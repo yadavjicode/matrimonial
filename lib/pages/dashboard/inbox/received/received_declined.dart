@@ -5,6 +5,7 @@ import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class ReceivedDeclined extends StatefulWidget {
@@ -37,7 +38,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                   acceptedController.isLoading.value == false)
                 declinedContent(),
               if (inboxReceivedController.isLoading.value ||
-                  acceptedController.isLoading.value == true)
+                  acceptedController.isLoading.value)
                 Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -91,7 +92,6 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
               List<String?> info = [haString, eoString, crString, scString];
               String infos = CommanClass.hyphenString(info);
 
-              
               String gender = CommanClass.hisHer(data.gender);
               return GestureDetector(
                 onTap: () {
@@ -190,41 +190,45 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                                     fontSize: 12, color: AppColors.darkgrey),
                               ),
                             ),
-                            // SizedBox(
-                            //   width: 3,
-                            // ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                            //     Container(
-                            //         height: 26,
-                            //         width: 26,
-                            //         decoration: BoxDecoration(
-                            //             color: Colors.green,
-                            //             shape: BoxShape.circle),
-                            //         alignment: Alignment.center,
-                            //         child: SvgPicture.asset(
-                            //             "assets/images/icons/correct.svg")),
-                            //     SizedBox(
-                            //       width: 3,
-                            //     ),
-                            //     GestureDetector(
-                            //       onTap: () => {
-                            //         acceptedController.accepted(context, mId),
-                            //         WidgetsBinding.instance
-                            //             .addPostFrameCallback((_) {
-                            //           inboxReceivedController.inboxSent(
-                            //               context, "Declined");
-                            //         })
-                            //       },
-                            //       child: Text(
-                            //         "Accept Request Now",
-                            //         style: FontConstant.styleMedium(
-                            //             fontSize: 12, color: Colors.green),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // )
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      height: 26,
+                                      width: 26,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          shape: BoxShape.circle),
+                                      alignment: Alignment.center,
+                                      child: SvgPicture.asset(
+                                          "assets/images/icons/correct.svg")),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () => {
+                                        acceptedController.accepted(
+                                            context, mId),
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          inboxReceivedController.inboxSent(
+                                              context, "Declined");
+                                        })
+                                      },
+                                      child: Text(
+                                        "Accept Request Now",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12, color: Colors.green),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )

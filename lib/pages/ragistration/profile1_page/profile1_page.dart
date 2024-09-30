@@ -5,6 +5,7 @@ import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
 import '../../../constants/profile_constant.dart';
+import '../../../constants/widget/Snackbar.dart';
 
 class Profile1Page extends StatefulWidget {
   const Profile1Page({super.key});
@@ -182,9 +183,15 @@ class _Profile1PageState extends State<Profile1Page> {
                                 if (selectedProfile == "Myself" ||
                                     selectedProfile == "My Relative" ||
                                     selectedProfile == "My Friend" ||
-                                    selectedProfile == "My Counselee") {
-                                  _profileAControllers.profileA(
+                                    selectedProfile == "My Counselee" ) {
+                                      if(selectedGender.isNotEmpty){
+                                          _profileAControllers.profileA(
                                       context, selectedProfile, selectedGender);
+                                      }else{
+
+                                          Dialogs.showSnackbar(context, 'Select Gender');
+                                      }
+                                  
                                 } else if (selectedProfile == "My Son" ||
                                     selectedProfile == "My Brother") {
                                   _profileAControllers.profileA(

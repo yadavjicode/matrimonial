@@ -1,4 +1,4 @@
-import 'package:devotee/constants/widget/dialogs.dart';
+import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/model/photo_delete_model.dart';
 import 'package:flutter/material.dart';

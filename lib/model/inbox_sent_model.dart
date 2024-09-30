@@ -139,6 +139,7 @@ class Data {
   dynamic mobile;
   dynamic id;
   dynamic profileImage;
+  dynamic chatStatus;
 
   Data(
       {this.sentMatriID,
@@ -164,7 +165,8 @@ class Data {
       this.occupation,
       this.mobile,
       this.id,
-      this.profileImage});
+      this.profileImage,
+      this.chatStatus});
 
   Data.fromJson(Map<String, dynamic> json) {
     sentMatriID = json['Sent_MatriID'];
@@ -191,6 +193,7 @@ class Data {
     mobile = json['Mobile'];
     id = json['id'];
     profileImage = json['profile_image'];
+     chatStatus = json['chat_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -219,6 +222,7 @@ class Data {
     data['Mobile'] = this.mobile;
     data['id'] = this.id;
     data['profile_image'] = this.profileImage;
+    data['chat_status'] = this.chatStatus;
     return data;
   }
 }
