@@ -22,13 +22,8 @@ class PackageController with ChangeNotifier {
 
     try {
       _member = await apiService.Package();
-      //  CustomDialog.show(
-      //             context,
-      //             'Shortlist',
-      //             '${member!.message}',
-      //             dialogType:DialogType.success,
-                 
-      //           );
+     
+
     } catch (e) {
       _error = e.toString();
       print(_error);

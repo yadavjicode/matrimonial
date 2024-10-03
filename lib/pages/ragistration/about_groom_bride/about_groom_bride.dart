@@ -16,9 +16,9 @@ class AboutGroomBride extends StatefulWidget {
 }
 
 class _AboutGroomBrideState extends State<AboutGroomBride> {
-final  AboutGroomBrideController aboutGroomBrideController =
+  final AboutGroomBrideController aboutGroomBrideController =
       Get.put(AboutGroomBrideController());
-       final FlowController flowController=Get.put(FlowController());
+  final FlowController flowController = Get.put(FlowController());
   // Define state variables for checkboxes
   Map<String, bool> characteristics = {
     "Independent": false,
@@ -89,7 +89,7 @@ final  AboutGroomBrideController aboutGroomBrideController =
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAndToNamed('/profile');
+              Get.offAndToNamed('/packageInfo');
             },
           ),
         ),
@@ -237,8 +237,11 @@ final  AboutGroomBrideController aboutGroomBrideController =
                               String selectedCharacteristics =
                                   getSelectedCharacteristics();
                               String selectedHobbies = getSelectedHobbies();
-                              aboutGroomBrideController.aboutGroomBride(context,
-                                  selectedCharacteristics, selectedHobbies,false);
+                              aboutGroomBrideController.aboutGroomBride(
+                                  context,
+                                  selectedCharacteristics,
+                                  selectedHobbies,
+                                  false);
                               //   Get.toNamed('/horoscope');
                               print(
                                   "Selected Characteristics: $selectedCharacteristics");
@@ -252,8 +255,8 @@ final  AboutGroomBrideController aboutGroomBrideController =
                         GestureDetector(
                           onTap: () => {
                             // Get.offAndToNamed('/partner')
-                             flowController.Flow(context, 12)
-                            },
+                            flowController.Flow(context, 12)
+                          },
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
                             padding: EdgeInsets.all(5),
@@ -270,7 +273,8 @@ final  AboutGroomBrideController aboutGroomBrideController =
                 )
               ],
             ),
-            if (aboutGroomBrideController.isLoading.value||flowController.isLoading.value)
+            if (aboutGroomBrideController.isLoading.value ||
+                flowController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

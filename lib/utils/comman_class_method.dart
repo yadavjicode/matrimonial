@@ -59,4 +59,16 @@ class CommanClass {
       return "their";
     }
   }
+
+  // Method to convert a comma-separated string to a list and add to target list
+ static List<String> addCommaSeparatedValuesToList(String? data) {
+    List<String> localList = data != null  ? data.split(',') : [];
+    return localList;
+  }
+
+//method list to string
+   static   String listtoString(List<String> list) {
+    return list.join(', ');
+  }
+
 }

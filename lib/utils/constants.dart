@@ -45,12 +45,14 @@ class ApiConstants {
   static const String shortlistUrl = "member/shortlist";
   static const String shortlistedUrl = "member/short-listed-profile-list";
   static const String withdrawalUrl = "member/withdrawal-request";
-  static const String couponsUrl ="member/coupon-list";
+  static const String couponsUrl = "member/coupon-list";
   static const String packageUrl = "member/package-list";
   static const String buyPackageUrl = "member/checkout";
- static const String langaugeUrl = "get-languages";
- static const String accountSettingUrl = "member/user-setting";
- static const String deletePhotoUrl = "member/delete-photo";
+  static const String langaugeUrl = "get-languages";
+  static const String accountSettingUrl = "member/user-setting";
+  static const String deletePhotoUrl = "member/delete-photo";
+  static const String recommendedUrl = "member/inspiration-list";
+  
 }
-late Size mq;
 
+late Size mq;

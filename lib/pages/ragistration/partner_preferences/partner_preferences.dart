@@ -22,6 +22,8 @@ import 'package:devotee/controller/partner_preference_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/comman_class_method.dart';
+
 class PartnerPreferences extends StatefulWidget {
   const PartnerPreferences({super.key});
 
@@ -77,15 +79,13 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
   String? selectMaritalStatus;
 
   String? selectCountry;
-  String? selectState;
+  
 
-  String? selectHighestQualification;
-  String? selectProfessionalQualification;
-  String? selectOccupation;
+
   String? selectIncome;
 
   String? selectReligions;
-  String? selectCaste;
+ String? selectCaste;
 
   String? selectDiet;
   String? selectDrinkHabit;
@@ -102,10 +102,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
   }
 
   List<String>? selectedLanguage;
-
-  String getLanguageKnown(List<String> language) {
-    return language.join(', ');
-  }
+  List<String>? selectedHighestQualification;
+  List<String>? selectedProfessionalQualification;
+  List<String>? selectedOccupation;
+  List<String>? selectedState;
 
   String getFamilyValue() {
     if (familyValue == 1) {
@@ -151,7 +151,8 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                 partnerPreferenceContent()
               ],
             ),
-            if (_partnerPreferenceController.isLoading.value||flowController.isLoading.value)
+            if (_partnerPreferenceController.isLoading.value ||
+                flowController.isLoading.value)
               Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
@@ -159,6 +160,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
           ]);
         }));
   }
+
   Widget partnerPreferenceContent() {
     return SingleChildScrollView(
       child: Column(
@@ -220,7 +222,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         value); // Call the controller method
                                   },
                                   // professionController.selectedItem.call,
-                               
+
                                   hintText: 'Select',
                                 ),
                                 SizedBox(
@@ -231,13 +233,12 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   weightConsController.getWeight(),
                                   (value) {
                                     setState(() {
-                                      selectWeightFrom =
-                                          value; 
+                                      selectWeightFrom = value;
                                     });
                                     weightConsController.selectItem(
                                         value); // Call the controller method
                                   },
-                                 
+
                                   // professionController.selectedItem.call,
                                   hintText: 'Select',
                                 ),
@@ -252,7 +253,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       (value) {
                                         setState(() {
                                           selectHeightFrom = null;
-                                          selectHeightFromKey=null;
+                                          selectHeightFromKey = null;
                                         });
                                       },
                                       selectedItem: 'Loading...',
@@ -264,14 +265,16 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       heightController.HeightLists,
                                       (value) {
                                         setState(() {
-                                          selectHeightFrom =
-                                              value; 
-                                          selectHeightFromKey=heightController.getHeightList().indexOf(value!).toString();
+                                          selectHeightFrom = value;
+                                          selectHeightFromKey = heightController
+                                              .getHeightList()
+                                              .indexOf(value!)
+                                              .toString();
                                         });
                                         heightController.selectItem(
                                             value); // Call the controller method
                                       },
-                                    
+
                                       // professionController.selectedItem.call,
                                       hintText: 'Select',
                                     );
@@ -297,7 +300,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         value); // Call the controller method
                                   },
                                   // professionController.selectedItem.call,
-                                 
+
                                   hintText: 'Select',
                                 ),
                                 SizedBox(
@@ -314,7 +317,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                     weightConsController.selectItem(
                                         value); // Call the controller method
                                   },
-                                 
+
                                   // professionController.selectedItem.call,
                                   hintText: 'Select',
                                 ),
@@ -329,7 +332,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       (value) {
                                         setState(() {
                                           selectHeightTo = null;
-                                          selectHeightToKey=null;
+                                          selectHeightToKey = null;
                                         });
                                       },
                                       selectedItem: 'Loading...',
@@ -341,14 +344,16 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                       heightController.HeightLists,
                                       (value) {
                                         setState(() {
-                                          selectHeightTo =
-                                              value; 
-                                          selectHeightToKey=heightController.getHeightList().indexOf(value!).toString();
+                                          selectHeightTo = value;
+                                          selectHeightToKey = heightController
+                                              .getHeightList()
+                                              .indexOf(value!)
+                                              .toString();
                                         });
                                         heightController.selectItem(
                                             value); // Call the controller method
                                       },
-                                     
+
                                       // professionController.selectedItem.call,
                                       hintText: 'Select',
                                     );
@@ -384,7 +389,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 selectedLanguage = value;
                               });
                             },
-                            
                             hintText: 'Select Languages Known',
                           );
                         }
@@ -417,7 +421,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   value); // Call the controller method
                             },
                             search: false,
-                           
+
                             // professionController.selectedItem.call,
                             hintText: 'Select Marital Status',
                           );
@@ -650,12 +654,11 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                             (value) {
                               setState(() {
                                 selectCountry = value; // Update the state
-                                selectState = null;
+                                selectedState = [];
                               });
                               countryController.selectItem(
                                   value); // Call the controller method
                             },
-                          
                             hintText: 'Select Nationality',
                           );
                         }
@@ -664,31 +667,30 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         height: 10,
                       ),
                       Obx(() {
-                        if (stateControllerPermanent.isLoading.value) {
-                          return buildDropdownWithSearch(
+                          if (stateControllerPermanent.isLoading.value) {
+                          return buildDropdownWithSearchMulti(
                             'State',
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectState = null;
+                                selectedState = [];
                               });
                             },
-                            selectedItem: 'Loading...',
-                            hintText: 'Select State',
+                            selectedItems: [],
+                            hintText: 'Loading...',
                           );
-                        } else {
-                          return buildDropdownWithSearch(
+                        }else {
+                          return buildDropdownWithSearchMulti(
                             'State',
                             stateControllerPermanent.stateLists,
                             //  stateControllerPermanent.selectedItem,
                             (value) {
                               setState(() {
-                                selectState = value; // Update the state
+                                selectedState = value; // Update the state
                               });
-                              stateControllerPermanent.selectItem(
-                                  value); // Call the controller method
-                            },
                             
+                            },
+                             selectedItems: selectedState,
                             hintText: 'Select State',
                           );
                         }
@@ -748,25 +750,24 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectHighestQualification = null;
+                                selectedHighestQualification = [];
                               });
                             },
                             selectedItem: 'Loading...',
                             hintText: 'Select Highest Qualification',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'Highest Qualification',
                             highestQualController.HighestLists,
                             (value) {
                               setState(() {
-                                selectHighestQualification =
+                                selectedHighestQualification =
                                     value; // Update the state
                               });
-                              highestQualController.selectItem(
-                                  value); // Call the controller method
+                             
                             },
-                           
+
                             // professionController.selectedItem.call,
                             hintText: 'Select Highest Qualification',
                           );
@@ -782,25 +783,24 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectProfessionalQualification = null;
+                                selectedProfessionalQualification = [];
                               });
                             },
                             selectedItem: 'Loading...',
                             hintText: 'Select Professional Qualification',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'Professional Qualification',
                             professionQualController.professionQualLists,
                             (value) {
                               setState(() {
-                                selectProfessionalQualification =
+                                selectedProfessionalQualification =
                                     value; // Update the state
                               });
-                              professionQualController.selectItem(
-                                  value); // Call the controller method
-                            },
                             
+                            },
+
                             // professionController.selectedItem.call,
                             hintText: 'Select Professional Qualification',
                           );
@@ -816,24 +816,23 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectOccupation = null;
+                                selectedOccupation = null;
                               });
                             },
                             selectedItem: 'Loading...',
                             hintText: 'Select Occupation',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'Occupation',
                             professionsController.professionLists,
                             (value) {
                               setState(() {
-                                selectOccupation = value; // Update the state
+                                selectedOccupation = value; // Update the state
                               });
-                              professionsController.selectItem(
-                                  value); // Call the controller method
+                             
                             },
-                            
+
                             // professionController.selectedItem.call,
                             hintText: 'Select Occupation',
                           );
@@ -866,7 +865,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               incomeController.selectItem(
                                   value); // Call the controller method
                             },
-                            
+
                             // professionController.selectedItem.call,
                             hintText: 'Select Annual Income Range',
                           );
@@ -934,7 +933,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                             hintText: 'Select Religion',
                           );
                         } else {
-                          
                           return buildDropdownWithSearch(
                             'Religion',
                             religionsController.getReligionNames(),
@@ -946,7 +944,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
 
                               religionsController.selectItem(value);
                             },
-                         
                             hintText: 'Select Religion',
                           );
                         }
@@ -977,7 +974,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               });
                               castController.selectItem(value);
                             },
-                            
                             hintText: 'Select Cast',
                           );
                         }
@@ -1055,7 +1051,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   value); // Call the controller method
                             },
                             search: false,
-                          
                             hintText: 'Select Diet',
                           );
                         }
@@ -1088,7 +1083,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   value); // Call the controller method
                             },
                             search: false,
-                            
                             hintText: 'Select Drinking Habit',
                           );
                         }
@@ -1121,7 +1115,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   value); // Call the controller method
                             },
                             search: false,
-                         
                             hintText: 'Select Smoking Habit',
                           );
                         }
@@ -1159,15 +1152,17 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         : "",
                     selectHeightFromKey ?? "",
                     selectHeightToKey ?? "",
-                    getLanguageKnown(selectedLanguage ?? []),
+                    CommanClass.listtoString(selectedLanguage ?? []),
                     selectMaritalStatus ?? "",
                     getFamilyType(),
                     getFamilyValue(),
                     selectCountry ?? "",
-                    selectState ?? "",
-                    selectHighestQualification ?? "",
-                    selectProfessionalQualification ?? "",
-                    selectOccupation ?? "",
+                    CommanClass.listtoString(selectedState ?? []),
+                    CommanClass.listtoString(
+                        selectedHighestQualification ?? []),
+                    CommanClass.listtoString(
+                        selectedProfessionalQualification ?? []),
+                    CommanClass.listtoString(selectedOccupation ?? []),
                     selectIncome ?? "",
                     selectReligions ?? "",
                     selectCaste ?? "",
@@ -1182,23 +1177,23 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                   FontConstant.styleMedium(fontSize: 18, color: Colors.white),
             ),
           ),
-         GestureDetector(
-                        onTap: () => {
-                          // Get.offAndToNamed('/partner')
-                          flowController.Flow(context, 13)
-                        },
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            "SKIP",
-                            style: FontConstant.styleRegular(
-                                fontSize: 20, color: AppColors.black),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
+          GestureDetector(
+            onTap: () => {
+              // Get.offAndToNamed('/partner')
+              flowController.Flow(context, 13)
+            },
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: Text(
+                "SKIP",
+                style: FontConstant.styleRegular(
+                    fontSize: 20, color: AppColors.black),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 40,
+          ),
         ],
       ),
     );

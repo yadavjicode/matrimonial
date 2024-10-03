@@ -1,15 +1,18 @@
 class AcceptedModel {
   String? status;
+  String? message;
 
-  AcceptedModel({this.status});
+  AcceptedModel({this.status, this.message});
 
   AcceptedModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
+    data['message'] = this.message;
     return data;
   }
 }

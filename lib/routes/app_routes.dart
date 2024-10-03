@@ -59,7 +59,9 @@ import 'package:devotee/pages/ragistration/professional_details_page/professiona
 import 'package:devotee/pages/dashboard/profile/edit_profile/edit_profile.dart';
 import 'package:devotee/pages/search/search_result/search_result.dart';
 import 'package:devotee/pages/ragistration/spiritual_counsellor_details/spiritual_counsellor_details.dart';
+import 'package:devotee/pages/splash_Screen/guru_screen.dart';
 import 'package:get/get.dart';
+import '../pages/ragistration/package_information/package_information.dart';
 import '../pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/pages/ragistration/education_page/education_page.dart';
 import 'package:devotee/pages/ragistration/family_page/family_page.dart';
@@ -70,6 +72,8 @@ import 'package:devotee/pages/search/search_page/search_page.dart';
 
 class AppRoutes {
   static const String splash = '/';
+  static const String guruscreen = '/guruscreen';
+
   static const String login = '/login';
   static const String mobile = '/mobile';
   static const String otp = '/otp';
@@ -92,6 +96,7 @@ class AppRoutes {
   static const String horoscope = '/horoscope';
   static const String aboutgroom = '/aboutgroom';
   static const String location = '/location';
+  static const String packageInfo = '/packageInfo';
   static const String partner = '/partner';
   static const String editProfile = '/editProfile';
   static const String inbox = '/inbox';
@@ -566,6 +571,19 @@ class AppRoutes {
      GetPage(
       name: referralReward,
       page: () => const ReferralAndReward(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+
+     GetPage(
+      name: guruscreen,
+      page: () => const GuruScreen(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+     GetPage(
+      name: packageInfo,
+      page: () => const PackageInformation(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

@@ -15,20 +15,19 @@ class AcceptedController with ChangeNotifier {
 
   Future<void> accepted(
     BuildContext context,
-    String id,
-   { VoidCallback? btnOkOnPress,}
-  ) async {   
+    String id, {
+    VoidCallback? btnOkOnPress,
+  }) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
-   
 
     try {
       _member = await apiService.Accepted(id);
       CustomDialog.show(
         context,
         'Accepted',
-        '${member!.status}',
+        '${member!.message}',
         dialogType: DialogType.success,
         btnOkOnPress: btnOkOnPress ??
             () {
@@ -38,8 +37,6 @@ class AcceptedController with ChangeNotifier {
     } catch (e) {
       _error = e.toString();
       print(_error);
-
-      // Show error message using ScaffoldMessenger
       CustomDialog.show(
         context,
         'Error',

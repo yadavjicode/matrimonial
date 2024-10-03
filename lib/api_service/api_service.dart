@@ -40,6 +40,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/recommended_model.dart';
+
 class ApiService {
 //== Start Api Login ====================================================================================================
   Future<LoginModel> login(String mobileNo) async {
@@ -377,7 +379,7 @@ class ApiService {
         'iskon_type': iskontype,
         "name_of_temple": templeName,
         "city_of_the_temple": templeCity,
-        "which_sampradaya_you_belogn_to":whichSampraya,
+        "which_sampradaya_you_belogn_to": whichSampraya,
         "devotional_hobbies": devotionalHobbies
       }),
     );
@@ -1368,9 +1370,7 @@ class ApiService {
 
 //==== Start Api AccountSetting==========================================================================================
 
-  Future<AccountSettingModel> accountSetting(
-   String key, int value
-  ) async {
+  Future<AccountSettingModel> accountSetting(String key, int value) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -1402,9 +1402,7 @@ class ApiService {
 
 //==== Start Api Photo Delete==========================================================================================
 
-  Future<PhotoDeleteModel> photoDelete(
-   String key, int value
-  ) async {
+  Future<PhotoDeleteModel> photoDelete(String key, int value) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -1434,6 +1432,32 @@ class ApiService {
   }
 //==== End Api Photo Delete==========================================================================================
 
+//==== Start Api Recommended ==========================================================================================
 
+  Future<RecommendedModel> recommended() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
 
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.recommendedUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return RecommendedModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api Recommended ==========================================================================================
 }

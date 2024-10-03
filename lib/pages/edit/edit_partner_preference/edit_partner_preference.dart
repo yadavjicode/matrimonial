@@ -22,6 +22,8 @@ import 'package:devotee/controller/partner_preference_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/comman_class_method.dart';
+
 class EditPartnerPreferences extends StatefulWidget {
   const EditPartnerPreferences({super.key});
 
@@ -79,11 +81,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
   String? selectMaritalStatus;
 
   String? selectCountry;
-  String? selectState;
 
-  String? selectHighestQualification;
-  String? selectProfessionalQualification;
-  String? selectOccupation;
   String? selectIncome;
 
   String? selectReligions;
@@ -104,10 +102,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
   }
 
   List<String>? selectedLanguage;
-
-  String getLanguageKnown(List<String> language) {
-    return language.join(', ');
-  }
+  List<String>? selectedHighestQualification;
+  List<String>? selectedProfessionalQualification;
+  List<String>? selectedOccupation;
+  List<String>? selectedState;
 
   String getFamilyValue() {
     if (familyValue == 1) {
@@ -145,21 +143,21 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
     selectHeightTo = _editProfileController.member!.member!.pEHeight2;
     selectHeightToKey = _editProfileController.member?.member?.peHeight2Key;
 
-    List<String> languages =
-        _editProfileController.member!.member!.pELanguage != null
-            ? _editProfileController.member!.member!.pELanguage.split(',')
-            : [];
-    selectedLanguage ??= []; // Initialize if null
-    selectedLanguage!.addAll(languages);
+    selectedLanguage = CommanClass.addCommaSeparatedValuesToList(
+        _editProfileController.member?.member?.pELanguage);
+    selectedState = CommanClass.addCommaSeparatedValuesToList(
+        _editProfileController.member?.member?.pEState);
+    selectedHighestQualification = CommanClass.addCommaSeparatedValuesToList(
+        _editProfileController.member?.member?.pEEducation);
+    selectedProfessionalQualification =
+        CommanClass.addCommaSeparatedValuesToList(
+            _editProfileController.member?.member?.pEProfessional);
+    selectedOccupation = CommanClass.addCommaSeparatedValuesToList(
+        _editProfileController.member?.member?.pEOccupation);
+
     selectMaritalStatus =
         _editProfileController.member!.member!.pEMaritalStatus;
     selectCountry = _editProfileController.member!.member!.pECountrylivingin;
-    selectState = _editProfileController.member!.member!.pEState;
-    selectHighestQualification =
-        _editProfileController.member!.member!.pEEducation;
-    selectProfessionalQualification =
-        _editProfileController.member!.member!.pEProfessional;
-    selectOccupation = _editProfileController.member!.member!.pEOccupation;
     selectIncome = _editProfileController.member!.member!.pEAnnualincome;
     selectReligions = _editProfileController.member!.member!.pEReligion;
     selectCaste = _editProfileController.member!.member!.pECaste;
@@ -718,7 +716,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                             (value) {
                               setState(() {
                                 selectCountry = value; // Update the state
-                                selectState = null;
+                                selectedState = [];
                               });
                               countryController.selectItem(
                                   value); // Call the controller method
@@ -733,30 +731,27 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                       ),
                       Obx(() {
                         if (stateControllerPermanent.isLoading.value) {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'State',
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectState = null;
+                                selectedState = [];
                               });
                             },
-                            selectedItem: 'Loading...',
-                            hintText: 'Select State',
+                            selectedItems: [],
+                            hintText: 'Loading...',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'State',
                             stateControllerPermanent.stateLists,
-                            //  stateControllerPermanent.selectedItem,
                             (value) {
                               setState(() {
-                                selectState = value; // Update the state
+                                selectedState = value;
                               });
-                              stateControllerPermanent.selectItem(
-                                  value); // Call the controller method
                             },
-                            selectedItem: selectState,
+                            selectedItems: selectedState,
                             hintText: 'Select State',
                           );
                         }
@@ -816,25 +811,23 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectHighestQualification = null;
+                                selectedHighestQualification = [];
                               });
                             },
                             selectedItem: 'Loading...',
                             hintText: 'Select Highest Qualification',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'Highest Qualification',
                             highestQualController.HighestLists,
                             (value) {
                               setState(() {
-                                selectHighestQualification =
+                                selectedHighestQualification =
                                     value; // Update the state
                               });
-                              highestQualController.selectItem(
-                                  value); // Call the controller method
                             },
-                            selectedItem: selectHighestQualification,
+                            selectedItems: selectedHighestQualification,
                             // professionController.selectedItem.call,
                             hintText: 'Select Highest Qualification',
                           );
@@ -850,26 +843,22 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectProfessionalQualification = null;
+                                selectedProfessionalQualification = [];
                               });
                             },
                             selectedItem: 'Loading...',
                             hintText: 'Select Professional Qualification',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'Professional Qualification',
                             professionQualController.professionQualLists,
                             (value) {
                               setState(() {
-                                selectProfessionalQualification =
-                                    value; // Update the state
+                                selectedProfessionalQualification = value;
                               });
-                              professionQualController.selectItem(
-                                  value); // Call the controller method
                             },
-                            selectedItem: selectProfessionalQualification,
-                            // professionController.selectedItem.call,
+                            selectedItems: selectedProfessionalQualification,
                             hintText: 'Select Professional Qualification',
                           );
                         }
@@ -884,24 +873,22 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                             ['Loading...'],
                             (value) {
                               setState(() {
-                                selectOccupation = null;
+                                selectedOccupation = [];
                               });
                             },
                             selectedItem: 'Loading...',
                             hintText: 'Select Occupation',
                           );
                         } else {
-                          return buildDropdownWithSearch(
+                          return buildDropdownWithSearchMulti(
                             'Occupation',
                             professionsController.professionLists,
                             (value) {
                               setState(() {
-                                selectOccupation = value; // Update the state
+                                selectedOccupation = value; // Update the state
                               });
-                              professionsController.selectItem(
-                                  value); // Call the controller method
                             },
-                            selectedItem: selectOccupation,
+                            selectedItems: selectedOccupation,
                             // professionController.selectedItem.call,
                             hintText: 'Select Occupation',
                           );
@@ -1227,15 +1214,17 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         : "",
                     selectHeightFromKey ?? "",
                     selectHeightToKey ?? "",
-                    getLanguageKnown(selectedLanguage ?? []),
+                    CommanClass.listtoString(selectedLanguage ?? []),
                     selectMaritalStatus ?? "",
                     getFamilyType(),
                     getFamilyValue(),
                     selectCountry ?? "",
-                    selectState ?? "",
-                    selectHighestQualification ?? "",
-                    selectProfessionalQualification ?? "",
-                    selectOccupation ?? "",
+                    CommanClass.listtoString(selectedState ?? []),
+                    CommanClass.listtoString(
+                        selectedHighestQualification ?? []),
+                    CommanClass.listtoString(
+                        selectedProfessionalQualification ?? []),
+                    CommanClass.listtoString(selectedOccupation ?? []),
                     selectIncome ?? "",
                     selectReligions ?? "",
                     selectCaste ?? "",

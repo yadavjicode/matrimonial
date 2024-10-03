@@ -1,8 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:devotee/constants/widget/Snackbar.dart';
-import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/widget/custom_dailog.dart';
-import 'package:devotee/model/accepted_model.dart';
 import 'package:devotee/model/declined_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +28,7 @@ class DeclinedController with ChangeNotifier {
       CustomDialog.show(
         context,
         'Declined',
-        '${member!.status}',
+        '${member!.message}',
         dialogType: DialogType.error,
         btnOkOnPress: btnOkOnPress ?? () {},
       );

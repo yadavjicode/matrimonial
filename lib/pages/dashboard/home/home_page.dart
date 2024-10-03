@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/helper/count_unread_message.dart';
-import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -97,10 +96,15 @@ class _HomeState extends State<Home> {
                             // SizedBox(
                             //   width: 20,
                             // ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5, left: 5),
-                              child: SvgPicture.asset(
-                                "assets/images/icons/music.svg",
+                            GestureDetector(
+                              onTap: () => {
+                                // {Get.toNamed('/partner')}
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 5, left: 5),
+                                child: SvgPicture.asset(
+                                  "assets/images/icons/music.svg",
+                                ),
                               ),
                             ),
                             Spacer(),

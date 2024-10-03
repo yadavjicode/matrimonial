@@ -109,8 +109,8 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                               GestureDetector(
                                 onTap: () =>
                                     {
-                                     // Get.offAndToNamed('/aboutgroom')
-                                     flowController.Flow(context, 11)
+                                     Get.offAndToNamed('/packageInfo')
+                                    //  flowController.Flow(context, 11)
                                       },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
