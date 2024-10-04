@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../utils/connection_check/connectivity_service.dart';
+
 class SpiritualDetailsController with ChangeNotifier {
   final ApiService apiService = ApiService();
   SpiritualDetailsModel? _member;
@@ -16,6 +18,8 @@ class SpiritualDetailsController with ChangeNotifier {
   final FlowController flowController = Get.put(FlowController());
    final EditProfileController _editProfileController =
       Get.put(EditProfileController());
+  final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   Future<void> spiritualDetails(
       BuildContext context,
@@ -53,7 +57,11 @@ class SpiritualDetailsController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     Dialogs.showSnackbar(context, '${_error}');
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context, "error: $_error");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

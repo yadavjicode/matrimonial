@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../constants/widget/Snackbar.dart';
+import '../utils/connection_check/connectivity_service.dart';
+
 class WithdrawalController with ChangeNotifier {
   final ApiService apiService = ApiService();
   WithDrawalModel? _member;
@@ -12,6 +15,8 @@ class WithdrawalController with ChangeNotifier {
   String? _error;
   WithDrawalModel? get member => _member;
   String? get error => _error;
+  final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   Future<void> withdrawal(
     BuildContext context,
@@ -38,12 +43,11 @@ class WithdrawalController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-      CustomDialog.show(
-        context,
-        'Error',
-        '${_error}',
-        dialogType: DialogType.error,
-      );
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context, "error: $_error");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

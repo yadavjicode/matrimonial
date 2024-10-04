@@ -17,8 +17,8 @@ class GuruScreen extends StatefulWidget {
 }
 
 class _GuruScreenState extends State<GuruScreen> {
-   final SplashController splashController = Get.put(SplashController());
-   final FlowController flowController = Get.put(FlowController());
+  final SplashController splashController = Get.put(SplashController());
+  final FlowController flowController = Get.put(FlowController());
 
   Future<void> _loadTokenAndNavigate() async {
     final prefs = await SharedPreferences.getInstance();
@@ -47,77 +47,73 @@ class _GuruScreenState extends State<GuruScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              "assets/images/guru.png",
-              fit: BoxFit.cover,
+            child: SafeArea(
+              child: Image.asset(
+                "assets/images/guruBackground.png",
+                fit: BoxFit.fill,
+              ),
             ),
           ),
-          Positioned(   
+          Positioned(
             left: 0,
             right: 0,
             top: 0,
             bottom: 0,
-            child: Column(
-              children: [
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                  child: Text(
-                    "This Application is Dedicated to His Divine Grace",
-                    textAlign: TextAlign.center,
-                    style: FontConstant.styleRegular(
-                      fontSize: 18,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xFF6E2D8A), // Hex color #6E2D8A
-                        Color(0xFFDA1E75), // Hex color #DA1E75
+            child: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 15, right: 15, bottom: 35),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            "Our Honest Efforts are Dedicated to",
+                            textAlign: TextAlign.center,
+                            style: FontConstant.styleRegularGabriela(
+                              fontSize: 20,
+                              color: AppColors.constColor,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '"His Divine Grace A. C. Bhaktivedanta Swami Prabhupada"',
+                          textAlign: TextAlign.center,
+                          style: FontConstant.styleRegularGabriela(
+                            fontSize: 25,
+                            color: AppColors.constColor,
+                          ),
+                        )
                       ],
-                      begin:
-                          Alignment.topLeft, // Starting point of the gradient
-                      end: Alignment
-                          .bottomRight, // Ending point of the gradient
                     ),
                   ),
-                  child: Center(
+                  Image.asset(
+                    "assets/images/guru.png",
+                    fit: BoxFit.fill,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 35, left: 15, right: 15),
                     child: Text(
-                      'A. C. Bhaktivedanta\nSwami Prabhupada',
+                      "The Founder-Acharya of the  International Society for Krishna Consciousness (ISKCON)",
                       textAlign: TextAlign.center,
-                      style: FontConstant.styleBold(
-                        color: Colors.white,
-                        fontSize: 20,
+                      style: FontConstant.styleRegularGabriela(
+                        fontSize: 22,
+                        color: AppColors.constColor,
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Text(
-                    "The Founder-Acharya of the  International Society for Krishna Consciousness (ISKCON)",
-                    textAlign: TextAlign.center,
-                    style: FontConstant.styleRegular(
-                      fontSize: 18,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ),
-               const SizedBox(
-                height: 10,
-               )
-              ],
+                ],
+              ),
             ),
           ),
         ],

@@ -7,6 +7,7 @@ import 'package:devotee/pages/ragistration/education_page/education_page.dart';
 import 'package:devotee/pages/ragistration/family_page/family_page.dart';
 import 'package:devotee/pages/ragistration/horoscope_details/horoscope_details.dart';
 import 'package:devotee/pages/ragistration/location_details/location_details.dart';
+import 'package:devotee/pages/ragistration/package_information/package_information.dart';
 import 'package:devotee/pages/ragistration/partner_preferences/partner_preferences.dart';
 import 'package:devotee/pages/ragistration/professional_details_page/professional_details_page.dart';
 import 'package:devotee/pages/ragistration/profile1_page/profile1_page.dart'; //Import Profile2Page
@@ -14,7 +15,6 @@ import 'package:devotee/pages/ragistration/spiritual_counsellor_details/spiritua
 import 'package:devotee/pages/ragistration/upload_your_profile/upload_your_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class Flows with ChangeNotifier {
   static void navigateToNextStep(
@@ -43,7 +43,7 @@ class Flows with ChangeNotifier {
       case 3:
         return const ContactDetails();
       case 4:
-        return const LocationDetails(); 
+        return const LocationDetails();
       case 5:
         return const EducationDetails();
       case 6:
@@ -59,8 +59,10 @@ class Flows with ChangeNotifier {
       case 11:
         return const UploadYourProfile();
       case 12:
-        return const AboutGroomBride();
+        return const PackageInformation();
       case 13:
+        return const AboutGroomBride();
+      case 14:
         return const PartnerPreferences();
       default:
         return const Dashboard(); // Default to dashboard if no step matches

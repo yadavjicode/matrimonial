@@ -16,11 +16,12 @@ class DialogConstant {
         backgroundColor: AppColors.background,
         content: Text(
             'Hare Krishna!\nDear user, this ${msg} is not available for free members. Please buy our premium membership which is very budget friendly and enjoy all the features. \u{1F60A}',
+            textAlign: TextAlign.justify,
             style: FontConstant.styleRegular(
                 fontSize: 13, color: AppColors.black)),
         actions: [
           TextButton(
-            onPressed: () => Get.back(), 
+            onPressed: () => Get.back(),
             child: Text(
               'Not now',
               style: FontConstant.styleSemiBold(
@@ -28,7 +29,7 @@ class DialogConstant {
             ),
           ),
           TextButton(
-            onPressed: () => Get.toNamed("/package"), 
+            onPressed: () => Get.toNamed("/package"),
             child: Text(
               ' Upgrade',
               style: FontConstant.styleSemiBold(

@@ -1,9 +1,10 @@
 import 'package:devotee/constants/widget/Snackbar.dart';
-import 'package:devotee/model/suggestion_model.dart';
 import 'package:devotee/model/testimonial_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
+
+import '../utils/connection_check/connectivity_service.dart';
 
 class TestimonialController with ChangeNotifier {
   final ApiService apiService = ApiService();
@@ -12,6 +13,8 @@ class TestimonialController with ChangeNotifier {
   String? _error;
   TestimonialModel? get member => _member;
   String? get error => _error;
+   final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   Future<void> testimonial(
     BuildContext context,
@@ -36,7 +39,11 @@ class TestimonialController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-      Dialogs.showSnackbar(context, '${_error}');
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context, "error: $_error");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

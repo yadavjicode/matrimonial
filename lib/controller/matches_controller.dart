@@ -3,6 +3,7 @@ import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../model/matches_model.dart';
+import '../utils/connection_check/connectivity_service.dart';
 
 class MatchesController extends GetxController {
   final ApiService apiService = ApiService();
@@ -14,6 +15,8 @@ class MatchesController extends GetxController {
   var hasMore = true.obs;
   MatchesModel? get member => _member;
   var status = 'all'.obs; 
+    final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   // Function to fetch matches
   Future<void> fetchMatches(BuildContext context, String type) async {
@@ -40,7 +43,12 @@ class MatchesController extends GetxController {
         }
       }
     } catch (e) {
-      Dialogs.showSnackbar(context, "Error fetching matches: $e");
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context,
+            "Something went wrong while fetching data. Please try again later!");
+      }
       // Handle exceptions
       print("Error fetching matches: $e");
     } finally {

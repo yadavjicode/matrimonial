@@ -15,8 +15,8 @@ import 'package:devotee/pages/dashboard/home/home_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../constants/widget/dialog.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
                             // ),
                             GestureDetector(
                               onTap: () => {
-                                // {Get.toNamed('/partner')}
+                                // {Get.toNamed('/guruscreen')}
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),

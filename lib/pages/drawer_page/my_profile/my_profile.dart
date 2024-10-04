@@ -357,7 +357,7 @@ class _MyProfileState extends State<MyProfile> {
                                       .member?.member?.permanentCity ??
                                   "Not Mentioned"),
                           _buildText(
-                              "Permanent Pin Code",
+                              "Permanent Pin Code/ ZIP Code/ ZIP Code",
                               _editProfileController
                                       .member?.member?.permanentPincode ??
                                   "Not Mentioned"),
@@ -371,7 +371,7 @@ class _MyProfileState extends State<MyProfile> {
                               _editProfileController.member?.member?.tempCity ??
                                   "Not Mentioned"),
                           _buildText(
-                              "Temporary Pin Code",
+                              "Temporary Pin Code/ ZIP Code/ ZIP Code",
                               _editProfileController
                                       .member?.member?.tempPincode ??
                                   "Not Mentioned"),
@@ -721,139 +721,146 @@ class _MyProfileState extends State<MyProfile> {
                         ],
                       ),
                     ),
-                    _buildCont(
-                      "Partner's Desired Qualities",
-                      "/editPartnerQualites",
-                      Column(
-                        children: [
-                          _buildText(
-                              "Partner Partner",
-                              _editProfileController
-                                      .member?.member?.groomBride ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Hobbies or Likings",
-                              _editProfileController
-                                      .member?.member?.GBHobbies ??
-                                  "Not Mentioned"),
-                        ],
+                    if (_editProfileController.member?.member?.accountType == 1)
+                      _buildCont(
+                        "Partner's Desired Qualities",
+                        "/editPartnerQualites",
+                        Column(
+                          children: [
+                            _buildText(
+                                "Partner Partner",
+                                _editProfileController
+                                        .member?.member?.groomBride ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Hobbies or Likings",
+                                _editProfileController
+                                        .member?.member?.GBHobbies ??
+                                    "Not Mentioned"),
+                          ],
+                        ),
                       ),
-                    ),
-                    _buildCont(
-                      "Partner Preferences",
-                      "/editPartnerPreference",
-                      Column(
-                        children: [
-                          _buildText(
-                              "Age Range From",
-                              _editProfileController
-                                          .member?.member?.pEFromAge !=
-                                      null
-                                  ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
-                                  : "Not Mentioned"),
-                          _buildText(
-                              "Age Range To",
-                              _editProfileController.member?.member?.pEToAge !=
-                                      null
-                                  ? "${_editProfileController.member?.member?.pEToAge} Yrs"
-                                  : "Not Mentioned"),
-                          _buildText(
-                              "Body Weight From",
-                              _editProfileController
-                                          .member?.member?.pEFromWeight !=
-                                      null
-                                  ? "${_editProfileController.member?.member?.pEFromWeight} KG"
-                                  : "Not Mentioned"),
-                          _buildText(
-                              "Body Weight To",
-                              _editProfileController
-                                          .member?.member?.pEToWeight !=
-                                      null
-                                  ? "${_editProfileController.member?.member?.pEToWeight} KG"
-                                  : "Not Mentioned"),
-                          _buildText(
-                              "Height Range From",
-                              _editProfileController.member?.member?.pEHeight ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Height Range To",
-                              _editProfileController
-                                      .member?.member?.pEHeight2 ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Languages Known",
-                              _editProfileController
-                                      .member?.member?.pELanguage ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Marital Status",
-                              _editProfileController
-                                      .member?.member?.pEMaritalStatus ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Family Type",
-                              _editProfileController
-                                      .member?.member?.pEFamilyType ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Family Value",
-                              _editProfileController
-                                      .member?.member?.pEFamilyValue ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Nationality",
-                              _editProfileController
-                                      .member?.member?.pECountrylivingin ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "State",
-                              _editProfileController.member?.member?.pEState ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Highest Qualification",
-                              _editProfileController
-                                      .member?.member?.pEEducation ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Professional Qualification",
-                              _editProfileController
-                                      .member?.member?.pEProfessional ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Occupation",
-                              _editProfileController
-                                      .member?.member?.pEOccupation ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Annual Income Range",
-                              _editProfileController
-                                      .member?.member?.pEAnnualincome ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Religion",
-                              _editProfileController
-                                      .member?.member?.pEReligion ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Caste",
-                              _editProfileController.member?.member?.pECaste ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Diet Preference",
-                              _editProfileController.member?.member?.pEDiet ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Drinking Habit",
-                              _editProfileController.member?.member?.pEDrink ??
-                                  "Not Mentioned"),
-                          _buildText(
-                              "Smoking Habit",
-                              _editProfileController
-                                      .member?.member?.pESmoking ??
-                                  "Not Mentioned"),
-                        ],
+                    if (_editProfileController.member?.member?.accountType == 1)
+                      _buildCont(
+                        "Partner Preferences",
+                        "/editPartnerPreference",
+                        Column(
+                          children: [
+                            _buildText(
+                                "Age Range From",
+                                _editProfileController
+                                            .member?.member?.pEFromAge !=
+                                        null
+                                    ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
+                                    : "Not Mentioned"),
+                            _buildText(
+                                "Age Range To",
+                                _editProfileController
+                                            .member?.member?.pEToAge !=
+                                        null
+                                    ? "${_editProfileController.member?.member?.pEToAge} Yrs"
+                                    : "Not Mentioned"),
+                            _buildText(
+                                "Body Weight From",
+                                _editProfileController
+                                            .member?.member?.pEFromWeight !=
+                                        null
+                                    ? "${_editProfileController.member?.member?.pEFromWeight} KG"
+                                    : "Not Mentioned"),
+                            _buildText(
+                                "Body Weight To",
+                                _editProfileController
+                                            .member?.member?.pEToWeight !=
+                                        null
+                                    ? "${_editProfileController.member?.member?.pEToWeight} KG"
+                                    : "Not Mentioned"),
+                            _buildText(
+                                "Height Range From",
+                                _editProfileController
+                                        .member?.member?.pEHeight ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Height Range To",
+                                _editProfileController
+                                        .member?.member?.pEHeight2 ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Languages Known",
+                                _editProfileController
+                                        .member?.member?.pELanguage ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Marital Status",
+                                _editProfileController
+                                        .member?.member?.pEMaritalStatus ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Family Type",
+                                _editProfileController
+                                        .member?.member?.pEFamilyType ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Family Value",
+                                _editProfileController
+                                        .member?.member?.pEFamilyValue ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Nationality",
+                                _editProfileController
+                                        .member?.member?.pECountrylivingin ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "State",
+                                _editProfileController
+                                        .member?.member?.pEState ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Highest Qualification",
+                                _editProfileController
+                                        .member?.member?.pEEducation ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Professional Qualification",
+                                _editProfileController
+                                        .member?.member?.pEProfessional ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Occupation",
+                                _editProfileController
+                                        .member?.member?.pEOccupation ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Annual Income Range",
+                                _editProfileController
+                                        .member?.member?.pEAnnualincome ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Religion",
+                                _editProfileController
+                                        .member?.member?.pEReligion ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Caste",
+                                _editProfileController
+                                        .member?.member?.pECaste ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Diet Preference",
+                                _editProfileController.member?.member?.pEDiet ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Drinking Habit",
+                                _editProfileController
+                                        .member?.member?.pEDrink ??
+                                    "Not Mentioned"),
+                            _buildText(
+                                "Smoking Habit",
+                                _editProfileController
+                                        .member?.member?.pESmoking ??
+                                    "Not Mentioned"),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

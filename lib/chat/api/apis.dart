@@ -613,10 +613,10 @@ class APIs with ChangeNotifier {
 
   // direct chat ======================================================================================
 
- static final DirectChatController directChatController =
+  static final DirectChatController directChatController =
       Get.put(DirectChatController());
 
- static Future<void> fetchUser(BuildContext context, String userId) async {
+  static Future<void> fetchUser(BuildContext context, String userId) async {
     // Fetch the user asynchronously
     ChatUser? user = await directChatController.getUserById(userId);
 
@@ -634,7 +634,7 @@ class APIs with ChangeNotifier {
       } else {
         // Show a snackbar if unable to fetch the user
         ScaffoldMessenger.of(context).showSnackBar(
-         const SnackBar(content: Text('Unable to fetch data')),
+          const SnackBar(content: Text('Unable to fetch data')),
         );
       }
     }

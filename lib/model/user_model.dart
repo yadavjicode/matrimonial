@@ -155,7 +155,7 @@ class Member {
   dynamic photoRemindCnt;
   dynamic logincount;
   dynamic lastlogin;
-  dynamic thislogin;   
+  dynamic thislogin;
   dynamic dumprofile;
   dynamic prosta;
   dynamic pagecount;
@@ -333,6 +333,7 @@ class Member {
   dynamic step11;
   dynamic step12;
   dynamic step13;
+  dynamic step14;
   dynamic spiritualName;
   dynamic instagramId;
   dynamic employmentSummary;
@@ -652,6 +653,7 @@ class Member {
       this.step11,
       this.step12,
       this.step13,
+      this.step14,
       this.spiritualName,
       this.instagramId,
       this.employmentSummary,
@@ -666,9 +668,7 @@ class Member {
       this.heightKey,
       this.peHeightKey,
       this.peHeight2Key,
-      this.whichsampradaya
-      
-      });
+      this.whichsampradaya});
 
   Member.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -975,22 +975,23 @@ class Member {
     step11 = json['step_11'];
     step12 = json['step_12'];
     step13 = json['step_13'];
+    step14 = json['step_14'];
     accountType = json['account_type'];
     spiritualName = json['spiritual_name'];
     instagramId = json['instagram_id'];
     employmentSummary = json['employment_summary'];
     spiritualCounselerConnected = json['spiritual_counseler_connected'];
     Photo1 = json['Photo1'];
-    hideLastActiveStatus=json['hide_last_active'];
-    hideOnlineStatus=json['hide_online_status'];
-    hidePhoneStatus=json['hide_phone_status'];
-    hideEmailStatus=json['hide_email_status'];
-    hideProfileStatus=json['hide_profile_temp'];
-    hideAstroStatus=json['hide_astrological_info'];
-    heightKey=json['HeightKey'];
-    peHeightKey=json['PE_HeightKey'];
-    peHeight2Key=json['PE_Height2Key'];
-    whichsampradaya=json['which_sampradaya_you_belogn_to'];
+    hideLastActiveStatus = json['hide_last_active'];
+    hideOnlineStatus = json['hide_online_status'];
+    hidePhoneStatus = json['hide_phone_status'];
+    hideEmailStatus = json['hide_email_status'];
+    hideProfileStatus = json['hide_profile_temp'];
+    hideAstroStatus = json['hide_astrological_info'];
+    heightKey = json['HeightKey'];
+    peHeightKey = json['PE_HeightKey'];
+    peHeight2Key = json['PE_Height2Key'];
+    whichsampradaya = json['which_sampradaya_you_belogn_to'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1293,13 +1294,14 @@ class Member {
     data['step_4'] = this.step4;
     data['step_5'] = this.step5;
     data['step_6'] = this.step6;
-    data['step_7'] = this.step7;     
+    data['step_7'] = this.step7;
     data['step_8'] = this.step8;
     data['step_9'] = this.step9;
     data['step_10'] = this.step10;
     data['step_11'] = this.step11;
     data['step_12'] = this.step12;
     data['step_13'] = this.step13;
+    data['step_14'] = this.step14;
     data['spiritual_name'] = this.spiritualName;
     data['instagram_id'] = this.instagramId;
     data['employment_summary'] = this.employmentSummary;

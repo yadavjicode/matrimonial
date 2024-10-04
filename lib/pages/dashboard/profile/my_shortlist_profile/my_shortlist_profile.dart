@@ -293,29 +293,13 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                     color: AppColors.primaryLight,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5))),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "To contact $gender directly,",
-                                        textAlign: TextAlign.right,
-                                        style: FontConstant.styleMedium(
-                                            fontSize:
-                                                SizeConfig.textSize * 0.033,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        " Upgrade Now",
-                                        style: FontConstant.styleSemiBold(
-                                            fontSize:
-                                                SizeConfig.textSize * 0.033,
-                                            color: AppColors.primaryColor),
-                                      ),
-                                    ),
-                                  ],
+                                child: Text(
+                                  "Upgrade now to connect with the user",
+                                  textAlign: TextAlign.right,
+                                  style: FontConstant.styleMedium(
+                                      fontSize:
+                                          SizeConfig.textSize * 0.033,
+                                      color: AppColors.black),
                                 ),
                               ),
                             ),

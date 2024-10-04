@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../constants/widget/Snackbar.dart';
+import '../utils/connection_check/connectivity_service.dart';
+
 class ShortlistController with ChangeNotifier {
   final ApiService apiService = ApiService();
   ShortlistModel? _member;
@@ -12,6 +15,8 @@ class ShortlistController with ChangeNotifier {
   String? _error;
   ShortlistModel? get member => _member;
   String? get error => _error;
+   final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   Future<void> shortlist(
     BuildContext context,
@@ -38,12 +43,12 @@ class ShortlistController with ChangeNotifier {
       _error = e.toString();
       print(_error);
 
-      CustomDialog.show(
-        context,
-        'error',
-        "${_error}",
-        dialogType: DialogType.error,
-      );
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context,
+            "Something went wrong while fetching data. Please try again later!");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

@@ -1180,7 +1180,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
           GestureDetector(
             onTap: () => {
               // Get.offAndToNamed('/partner')
-              flowController.Flow(context, 13)
+              flowController.Flow(context, 14)
             },
             child: Container(
               padding: EdgeInsets.all(5),

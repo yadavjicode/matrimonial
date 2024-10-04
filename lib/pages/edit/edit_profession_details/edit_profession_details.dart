@@ -361,13 +361,13 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                       padding: const EdgeInsets.only(top: 15),
                       child: CustomTextField(
                         controller: pincodeController,
-                        labelText: "Pin Code *",
+                        labelText: "Pin Code/ ZIP Code *",
                         keyboardType: TextInputType.number,
                         maxlength: 6,
-                        hintText: "Enter Pin Code",
+                        hintText: "Enter Pin Code/ ZIP Code",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please Enter Pin Code';
+                            return 'Please Enter Pin Code/ ZIP Code';
                           }
                           return null;
                         },

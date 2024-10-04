@@ -341,13 +341,13 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                 padding: const EdgeInsets.only(top: 15),
                                 child: CustomTextField(
                                   controller: pincodeController,
-                                  labelText: "Pin Code",
+                                  labelText: "Pin Code/ ZIP Code",
                                   keyboardType: TextInputType.number,
-                                  hintText: "Enter Pin Code",
+                                  hintText: "Enter Pin Code/ ZIP Code",
                                   maxlength: 6,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter Pin Code';
+                                      return 'Please enter Pin Code/ ZIP Code';
                                     }
                                     return null;
                                   },

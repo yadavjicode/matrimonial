@@ -351,15 +351,15 @@ class _LocationDetailsState extends State<LocationDetails> {
                           CustomTextField(
                             maxline: 1,
                             controller: permanentPinCode,
-                            labelText: 'Pin Code *',
-                            hintText: "Enter Pin Code",
+                            labelText: 'Pin Code/ ZIP Code *',
+                            hintText: "Enter Pin Code/ ZIP Code",
                             maxlength: 6,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty ||
                                   value.length > 6) {
-                                return 'Please enter Pin Code';
+                                return 'Please enter Pin Code/ ZIP Code';
                               }
                               return null;
                             },
@@ -461,8 +461,8 @@ class _LocationDetailsState extends State<LocationDetails> {
                           CustomTextField(
                             maxline: 1,
                             controller: temporaryPinCode,
-                            labelText: 'Pin Code',
-                            hintText: "Enter Pin Code",
+                            labelText: 'Pin Code/ ZIP Code',
+                            hintText: "Enter Pin Code/ ZIP Code",
                             maxlength: 6,
                             keyboardType: TextInputType.number,
                           ),

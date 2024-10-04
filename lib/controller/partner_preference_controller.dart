@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../utils/connection_check/connectivity_service.dart';
+
 class PartnerPreferenceController with ChangeNotifier {
   final ApiService apiService = ApiService();
   PartnerModel? _member;
@@ -16,6 +18,9 @@ class PartnerPreferenceController with ChangeNotifier {
   final FlowController flowController=Get.put(FlowController());
 final EditProfileController _editProfileController =
       Get.put(EditProfileController());
+       final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
+      
   Future<void> partnerPreference(
       BuildContext context,
       String ageFrom,
@@ -72,7 +77,7 @@ final EditProfileController _editProfileController =
          _editProfileController.userDetails(context);
         Navigator.pop(context);
         }else{
-          flowController.Flow(context, 13);
+          flowController.Flow(context, 14);
         }
           
       // Get.toNamed("/dashboard");
@@ -81,7 +86,12 @@ final EditProfileController _editProfileController =
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     Dialogs.showSnackbar(context, '${_error}');
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context,
+            "Something went wrong while fetching data. Please try again later!");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

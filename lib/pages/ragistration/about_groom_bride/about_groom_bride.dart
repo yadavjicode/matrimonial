@@ -255,7 +255,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                         GestureDetector(
                           onTap: () => {
                             // Get.offAndToNamed('/partner')
-                            flowController.Flow(context, 12)
+                            flowController.Flow(context, 13)
                           },
                           child: Container(
                             margin: EdgeInsets.only(top: 10),

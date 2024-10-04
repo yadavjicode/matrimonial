@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../utils/connection_check/connectivity_service.dart';
+
 class SuggestionController with ChangeNotifier {
   final ApiService apiService = ApiService();
   SuggestionModel? _member;
@@ -11,6 +13,8 @@ class SuggestionController with ChangeNotifier {
   String? _error;
   SuggestionModel? get member => _member;
   String? get error => _error;
+ final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   Future<void> suggestion(
     BuildContext context,
@@ -29,7 +33,11 @@ class SuggestionController with ChangeNotifier {
     } catch (e) {
       _error = e.toString();
       print(_error);
-      Dialogs.showSnackbar(context, '${_error}');
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context, "error: $_error");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

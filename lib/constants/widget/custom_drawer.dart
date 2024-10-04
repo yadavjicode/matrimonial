@@ -1,3 +1,4 @@
+import 'package:devotee/constants/widget/dialog.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,10 @@ class CustomDrawer extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(
                                             4.0), // Adjust the radius as needed
                                         child: LinearProgressIndicator(
-                                          value: (editProfileController.member?.profilePercentage ?? 0) / 100,
+                                          value: (editProfileController.member
+                                                      ?.profilePercentage ??
+                                                  0) /
+                                              100,
                                           backgroundColor: Colors.grey.shade100,
                                           color: AppColors.primaryColor,
                                         ),
@@ -257,7 +261,16 @@ class CustomDrawer extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => {Get.toNamed("/editPartnerPreference")},
+                    onTap: () => {
+                      if (editProfileController.member?.member?.accountType ==
+                          1)
+                        {Get.toNamed("/editPartnerPreference")}
+                      else
+                        {
+                          DialogConstant.packageDialog(
+                              context, 'Partner Preferences feature')
+                        }
+                    },
                     child: buildoption("assets/images/icons/partner.svg",
                         "Partner Preferences", 22, 22),
                   ),

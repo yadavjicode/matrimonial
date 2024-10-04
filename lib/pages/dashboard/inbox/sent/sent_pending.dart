@@ -181,27 +181,16 @@ class _SentPendingState extends State<SentPending> {
                           child: Container(
                             alignment: Alignment.center,
                             padding: EdgeInsets.all(3),
-                            margin:
-                                EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                            decoration: BoxDecoration(
+                            margin: const EdgeInsets.only(
+                                left: 8, right: 8, bottom: 8),
+                            decoration: const BoxDecoration(
                                 color: AppColors.primaryLight,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5))),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "To contact $gender directly,",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 12, color: AppColors.black),
-                                ),
-                                Text(
-                                  " Upgrade Now",
-                                  style: FontConstant.styleSemiBold(
-                                      fontSize: 12,
-                                      color: AppColors.primaryColor),
-                                ),
-                              ],
+                            child: Text(
+                              "Upgrade now to connect with the user",
+                              style: FontConstant.styleMedium(
+                                  fontSize: 12, color: AppColors.black),
                             ),
                           ),
                         ),

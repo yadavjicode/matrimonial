@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../constants/widget/dialog.dart';
+import '../../../utils/comman_class_method.dart';
+import '../../../utils/size.dart';
 
 class MyShorlistProfileD extends StatefulWidget {
   const MyShorlistProfileD({super.key});
@@ -35,25 +37,6 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
       Get.put(ShortlistController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
-
-  Future<void> _fetchUser(String userId) async {
-    ChatUser? _chatUser;
-    ChatUser? user = await directChatController.getUserById(userId);
-
-    setState(() {
-      _chatUser = user;
-    });
-    if (_chatUser != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(user: _chatUser!),
-        ),
-      );
-    } else {
-      Dialogs.showSnackbar(context, 'unable to fetch data');
-    }
-  }
 
   @override
   void initState() {
@@ -107,333 +90,384 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
   }
 
   Widget shortlistedContent() {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     final member = shortlistedListController.member;
     if (member == null ||
         member.responseData == null ||
-        member.responseData!.data == null) {
-      return Center(child: Text("No data available"));
+        member.responseData!.data == null &&
+            shortlistedListController.isLoading.value == false) {
+      return const Center(child: Text("No data available"));
     }
     if (shortlistedListController.member!.responseData!.data!.isEmpty) {
       return Container(
-          margin: const EdgeInsets.only(top: 10, left: 16, right: 16),
+          margin: EdgeInsets.only(
+              top: SizeConfig.blockSizeVertical * 2,
+              left: SizeConfig.blockSizeHorizontal * 4,
+              right: SizeConfig.blockSizeHorizontal * 4),
           color: AppColors.constColor,
           width: double.infinity,
           alignment: Alignment.center,
           child: Text("No users found!",
               style: FontConstant.styleMedium(
-                  fontSize: 15, color: AppColors.darkgrey)));
+                  fontSize: SizeConfig.textSize * 0.04,
+                  color: AppColors.darkgrey)));
     } else {
       return Padding(
-        padding: const EdgeInsets.only(top: 10, left: 16, right: 16),
+        padding: EdgeInsets.only(
+            top: SizeConfig.blockSizeVertical * 2,
+            left: SizeConfig.blockSizeHorizontal * 4,
+            right: SizeConfig.blockSizeHorizontal * 4),
         child: Container(
-          padding: EdgeInsets.only(bottom: 20),
           height: double.infinity,
           color: AppColors.constColor,
           child: SingleChildScrollView(
             child: Column(
-              children: shortlistedListController.member!.responseData!.data!
-                  .map((data) {
-                String name = "${data.name ?? ""} ${data.surename ?? ""}";
-                String id = data.matId;
-                String date = DateFormat('dd-MM-yyyy')
-                    .format(DateTime.parse(data.createdAt));
-                String information =
-                    "${data.age == null ? "" : "${data.age} Yrs, "}${data.height == null ? "" : "${data.height}, "}${data.caste == null ? "" : "${data.caste}, "}${data.religion == null ? "" : "${data.religion}, "}${data.maritalstatus == null ? "" : "${data.maritalstatus}, "}${data.occupation == null ? "" : "${data.occupation}, "}${data.state == null ? "" : "${data.state}, "}${data.country == null ? "" : "${data.country}"}";
-                String image = data.photo1 != null
-                    ? "http://devoteematrimony.aks.5g.in/${data.photo1}"
-                    : data.gender == "Male"
-                        ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                        : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+              children: [
+                Column(
+                  children: shortlistedListController
+                      .member!.responseData!.data!
+                      .map((data) {
+                    String name = "${data.name ?? ""} ${data.surename ?? ""}";
+                    String date = CommanClass.dateFormat(data.createdAt);
+                    String Id = data.matId ?? "";
+                    String image = CommanClass.photo(data.photo1, data.gender);
+                    List<String?> haList = [
+                      data.age != null ? "${data.age} Yrs" : null,
+                      data.height,
+                      data.maritalstatus
+                    ];
+                    String haString = CommanClass.commaString(haList);
+                    List<String?> eoList = [data.occupation];
+                    String eoString = CommanClass.commaString(eoList);
+                    List<String?> crList = [data.caste, data.religion];
+                    String crString = CommanClass.commaString(crList);
+                    List<String?> scList = [data.state, data.country];
+                    String scString = CommanClass.commaString(scList);
+                    List<String?> info = [
+                      haString,
+                      eoString,
+                      crString,
+                      scString
+                    ];
+                    String infos = CommanClass.hyphenString(info);
 
-                return Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.constColor,
-                    border: Border.all(color: Colors.grey.shade200),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    String gender = CommanClass.hisHer(data.gender);
+
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.constColor,
+                        border: Border.all(color: Colors.grey.shade200),
+                      ),
+                      child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                if (userProfileController
-                                        .member?.member?.accountType ==
-                                    1) {
-                                  profileDetailsController.profileDetails(
-                                      context, data.matId!, "", [
-                                    "1",
-                                    "2",
-                                    "3",
-                                    "4",
-                                    "5",
-                                    "6",
-                                    "7",
-                                    "8",
-                                    "9",
-                                    "10",
-                                    "11"
-                                  ]);
-                                } else {
-                                  DialogConstant.packageDialog(
-                                      context, 'view profile feature');
-                                }
-                              },
-                              child: ProfileImage(
-                                size: screenWidth * 0.2,
-                                url: image,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        SizeConfig.blockSizeHorizontal * 2,
+                                    vertical: SizeConfig.blockSizeVertical * 1),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (userProfileController
+                                            .member?.member?.accountType ==
+                                        1) {
+                                      profileDetailsController.profileDetails(
+                                          context, data.matId!, "", [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7",
+                                        "8",
+                                        "9",
+                                        "10",
+                                        "11"
+                                      ]);
+                                    } else {
+                                      DialogConstant.packageDialog(
+                                          context, 'view profile feature');
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top:
+                                            SizeConfig.blockSizeVertical * 0.2),
+                                    child: ProfileImage(
+                                      size: SizeConfig.screenWidth * 0.2,
+                                      url: image,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      right: SizeConfig.blockSizeHorizontal * 2,
+                                      top: SizeConfig.blockSizeVertical * 1,
+                                      bottom:
+                                          SizeConfig.blockSizeVertical * 0.5),
+                                  child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("ID: ${id}",
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("ID: $Id",
+                                              style: FontConstant.styleMedium(
+                                                  fontSize:
+                                                      SizeConfig.textSize *
+                                                          0.033,
+                                                  color: AppColors.darkgrey)),
+                                          SizedBox(
+                                            width:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    2,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              textAlign: TextAlign.right,
+                                              "Shortlist On: $date",
+                                              style: FontConstant.styleMedium(
+                                                  fontSize:
+                                                      SizeConfig.textSize *
+                                                          0.033,
+                                                  color: AppColors.darkgrey),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: FontConstant.styleSemiBold(
+                                            fontSize:
+                                                SizeConfig.textSize * 0.035,
+                                            color: AppColors.primaryColor),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 2),
+                                        child: Text(
+                                          infos,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
                                           style: FontConstant.styleMedium(
-                                              fontSize: 12,
-                                              color: AppColors.darkgrey)),
+                                              fontSize:
+                                                  SizeConfig.textSize * 0.033,
+                                              color: AppColors.darkgrey),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (userProfileController
+                                  .member!.member!.accountType !=
+                              1)
+                            GestureDetector(
+                              onTap: () => {Get.toNamed("/membership")},
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        SizeConfig.blockSizeHorizontal * 1,
+                                    vertical:
+                                        SizeConfig.blockSizeVertical * 0.3),
+                                margin: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 2,
+                                    right: SizeConfig.blockSizeHorizontal * 2,
+                                    bottom: SizeConfig.blockSizeVertical * 1),
+                                decoration: const BoxDecoration(
+                                    color: AppColors.primaryLight,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Text(
+                                  "Upgrade now to connect with the user",
+                                  textAlign: TextAlign.right,
+                                  style: FontConstant.styleMedium(
+                                      fontSize: SizeConfig.textSize * 0.033,
+                                      color: AppColors.black),
+                                ),
+                              ),
+                            ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: SizeConfig.blockSizeHorizontal * 2.5,
+                                right: SizeConfig.blockSizeHorizontal * 2.5,
+                                bottom: SizeConfig.blockSizeVertical * 1),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      shortlistController.shortlist(
+                                        context,
+                                        data.matId!,
+                                        btnOkOnPress: () => {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            shortlistedListController
+                                                .shortlisted(context);
+                                          })
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            "assets/images/icons/remove.svg"),
+                                        SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  1.5,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Remove",
+                                            style: FontConstant.styleMedium(
+                                                fontSize:
+                                                    SizeConfig.textSize * 0.033,
+                                                color: AppColors.black),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/images/chat_d.svg",
+                                        height: 20,
+                                        width: 20,
+                                      ),
                                       SizedBox(
-                                        width: 5,
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            1.5,
                                       ),
                                       Expanded(
-                                        child: Container(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            if (userProfileController.member
+                                                    ?.member?.accountType ==
+                                                1) {
+                                              if (data.chat_status == 1) {
+                                                if (data.matId!
+                                                        .trim()
+                                                        .isNotEmpty &&
+                                                    data.matId != null) {
+                                                  await APIs.addChatUser(
+                                                          data.matId!)
+                                                      .then((value) {
+                                                    if (!value) {
+                                                      Dialogs.showSnackbar(
+                                                          context,
+                                                          'User does not Exists!');
+                                                    } else {
+                                                      APIs.fetchUser(
+                                                        context,
+                                                        data.matId
+                                                            .toString()
+                                                            .trim(),
+                                                      );
+                                                    }
+                                                  });
+                                                }
+                                              } else {
+                                                Dialogs.showSnackbar(context,
+                                                    'The user is not added in your list!');
+                                              }
+                                            } else {
+                                              DialogConstant.packageDialog(
+                                                  context, 'chat feature');
+                                            }
+                                          },
+                                          //hide alert dialog
+
                                           child: Text(
-                                            textAlign: TextAlign.right,
-                                            "Shortlist On: ${date}",
+                                            "Chat Now",
                                             style: FontConstant.styleMedium(
-                                                fontSize: 12,
-                                                color: AppColors.darkgrey),
+                                                fontSize:
+                                                    SizeConfig.textSize * 0.033,
+                                                color: AppColors.black),
                                           ),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Row(
+                                ),
+                                Expanded(
+                                  child: Row(
                                     children: [
-                                      Flexible(
-                                        child: Text(
-                                          name,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FontConstant.styleSemiBold(
-                                              fontSize: 13,
-                                              color: AppColors.primaryColor),
+                                      SvgPicture.asset(
+                                        "assets/images/pink_search.svg",
+                                        height: 20,
+                                        width: 20,
+                                      ),
+                                      SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            1.5,
+                                      ),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            if (userProfileController.member
+                                                    ?.member?.accountType ==
+                                                1) {
+                                              profileDetailsController
+                                                  .profileDetails(context,
+                                                      data.matId!, "", [
+                                                "1",
+                                                "2",
+                                                "3",
+                                                "4",
+                                                "5",
+                                                "6",
+                                                "7",
+                                                "8",
+                                                "9",
+                                                "10",
+                                                "11"
+                                              ]);
+                                            } else {
+                                              DialogConstant.packageDialog(
+                                                  context,
+                                                  'view profile feature');
+                                            }
+                                          },
+                                          child: Text(
+                                            "View Profile",
+                                            style: FontConstant.styleMedium(
+                                                fontSize:
+                                                    SizeConfig.textSize * 0.033,
+                                                color: AppColors.black),
+                                          ),
                                         ),
                                       ),
-                                      SizedBox(width: 20),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 2),
-                                    child: Text(
-                                      information,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12,
-                                          color: AppColors.darkgrey),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (userProfileController.member!.member!.accountType !=
-                          1)
-                        GestureDetector(
-                          onTap: () => {Get.toNamed("/membership")},
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.all(3),
-                            margin:
-                                EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                            decoration: BoxDecoration(
-                                color: AppColors.primaryLight,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "To contact her directly,",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 12, color: AppColors.black),
-                                ),
-                                Text(
-                                  " Upgrade Now",
-                                  style: FontConstant.styleSemiBold(
-                                      fontSize: 12,
-                                      color: AppColors.primaryColor),
-                                ),
+                                )
                               ],
                             ),
-                          ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 12, right: 12, bottom: 12),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  shortlistController.shortlist(
-                                    context,
-                                    data.matId!,
-                                    btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        shortlistedListController
-                                            .shortlisted(context);
-                                      })
-                                    },
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                        "assets/images/icons/remove.svg"),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "Remove",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/chat_d.svg",
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        if (userProfileController
-                                                .member?.member?.accountType ==
-                                            1) {
-                                          if (data.chat_status == 1) {
-                                            if (data.matId!.trim().isNotEmpty &&
-                                                data.matId != null) {
-                                              await APIs.addChatUser(
-                                                      data.matId!)
-                                                  .then((value) {
-                                                if (!value) {
-                                                  Dialogs.showSnackbar(context,
-                                                      'User does not Exists!');
-                                                } else {
-                                                  _fetchUser(
-                                                    data.matId
-                                                        .toString()
-                                                        .trim(),
-                                                  );
-                                                }
-                                              });
-                                            }
-                                          } else {
-                                            Dialogs.showSnackbar(context,
-                                                'The user is not added in your list!');
-                                          }
-                                        } else {
-                                          DialogConstant.packageDialog(
-                                              context, 'chat feature');
-                                        }
-                                      },
-                                      //hide alert dialog
-
-                                      child: Text(
-                                        "Chat Now",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/images/pink_search.svg",
-                                    height: 20,
-                                    width: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        if (userProfileController
-                                                .member?.member?.accountType ==
-                                            1) {
-                                          profileDetailsController
-                                              .profileDetails(
-                                                  context, data.matId!, "", [
-                                            "1",
-                                            "2",
-                                            "3",
-                                            "4",
-                                            "5",
-                                            "6",
-                                            "7",
-                                            "8",
-                                            "9",
-                                            "10",
-                                            "11"
-                                          ]);
-                                        } else {
-                                          DialogConstant.packageDialog(
-                                              context, 'view profile feature');
-                                        }
-                                      },
-                                      child: Text(
-                                        "View Profile",
-                                        style: FontConstant.styleMedium(
-                                            fontSize: 12,
-                                            color: AppColors.black),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              }).toList(),
+                          )
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 4,
+                )
+              ],
             ),
           ),
         ),

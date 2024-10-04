@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../utils/connection_check/connectivity_service.dart';
+
 class SplashController with ChangeNotifier {
   final ApiService apiService = ApiService();
   UserModel? _member;
@@ -13,7 +15,9 @@ class SplashController with ChangeNotifier {
   UserModel? get member => _member;
   String? get error => _error;
   final Flows flow=Get.put(Flows());
-  
+  final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
+      
   Future<void> userDetails(BuildContext context) async {
     isLoading.value = true;
     _error = null;
@@ -48,7 +52,11 @@ class SplashController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     Dialogs.showSnackbar(context, '${_error}');
+     if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context, "error: $_error");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();

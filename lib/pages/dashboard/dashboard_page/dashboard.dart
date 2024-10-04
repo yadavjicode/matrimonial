@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
+import '../../../constants/widget/Snackbar.dart';
 import '../../../constants/widget/dialog.dart';
+import '../../../utils/connection_check/connectivity_service.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -32,6 +34,7 @@ class _DashboardState extends State<Dashboard> {
   final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
   // final StateController stateController = Get.put(StateController());
+  final ConnectivityService connectivityService = Get.put(ConnectivityService());
 
   void login() async {
     if (_editProfileController.member!.member!.matriID != null) {
@@ -66,6 +69,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body:WillPopScope(
       onWillPop: () async {
@@ -73,17 +77,27 @@ class _DashboardState extends State<Dashboard> {
         bool shouldExit = await DialogConstant.showExitConfirmationDialog(context);
         return shouldExit;
       },
-        child: PageView(
-          controller: controller,
-          physics: NeverScrollableScrollPhysics(),
-          children: const [
-            Inbox(),
-            ProfileEdit(),
-            MyShorlistProfile(),
-            HomeScreen(),
-            Home(),
-          ],
-        ),
+        child: Obx(() {  return Stack(
+          children: [
+           PageView(
+            controller: controller,
+            physics: NeverScrollableScrollPhysics(),
+            children: const [
+              Inbox(),
+              ProfileEdit(),
+              MyShorlistProfile(),
+              HomeScreen(),
+              Home(),
+            ],
+          ),
+         if(!connectivityService.isConnected.value)
+          Text("no internet")
+    
+
+          ]
+        );
+        }
+        )
       ),
       bottomNavigationBar: StylishBottomBar(
         notchStyle: NotchStyle.circle,

@@ -185,7 +185,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
             "${profileDetailsController.member!.data!.permanentCity ?? "Not Mentioned"}"
       },
       {
-        "title": "Permanent Pin Code",
+        "title": "Permanent Pin Code/ ZIP Code/ ZIP Code",
         "value":
             "${profileDetailsController.member!.data!.permanentPincode ?? "Not Mentioned"}"
       },
@@ -200,7 +200,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
             "${profileDetailsController.member!.data!.tempCity ?? "Not Mentioned"}"
       },
       {
-        "title": "Temporary Pin Code",
+        "title": "Temporary Pin Code/ ZIP Code/ ZIP Code",
         "value":
             "${profileDetailsController.member!.data!.tempPincode ?? "Not Mentioned"}"
       },
@@ -300,7 +300,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
               "${profileDetailsController.member!.data!.workCity ?? "Not Mentioned"}"
         },
         {
-          "title": "Working Pincode",
+          "title": "Working Pin Code/ ZIP Code/ ZIP Code",
           "value":
               "${profileDetailsController.member!.data!.workPincode ?? "Not Mentioned"}"
         },

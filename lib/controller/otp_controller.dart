@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/connection_check/connectivity_service.dart';
+
 class OtpController with ChangeNotifier {
   final ApiService apiService = ApiService();
   OtpModel? _member;
@@ -13,8 +15,10 @@ class OtpController with ChangeNotifier {
   String? _error;
   OtpModel? get member => _member;
   String? get error => _error;
-
+  
   FlowController flowController = Get.put(FlowController());
+    final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   Future<void> otp(String mobileNo, String otp, BuildContext context) async {
     isLoading.value = true;
@@ -41,7 +45,12 @@ class OtpController with ChangeNotifier {
       print('Error: $_error');
 
       // Show error message
-      Dialogs.showSnackbar(context, '${_error}');
+      if (!connectivityService.isConnected.value) {
+        Dialogs.showSnackbar(context, "No internet connection!");
+      } else {
+        Dialogs.showSnackbar(context,
+            "Something went wrong while fetching data. Please try again later!");
+      }
     } finally {
       isLoading.value = false;
       notifyListeners();
