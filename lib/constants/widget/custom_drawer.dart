@@ -327,7 +327,7 @@ class CustomDrawer extends StatelessWidget {
                   GestureDetector(
                     onTap: () => {Get.toNamed("/spiritualWisdom")},
                     child: buildoption("assets/images/icons/spiritual.svg",
-                        "Spiritual Wisdom", 22, 22),
+                        "Happy Married Life-Wisdom", 22, 22),
                   ),
                   GestureDetector(
                     onTap: () => {Get.toNamed("/recommended")},

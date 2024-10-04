@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
+import '../../../controller/skip_controller.dart';
 
 class DevotionDetails extends StatefulWidget {
   const DevotionDetails({super.key});
@@ -19,9 +20,10 @@ class _DevotionDetailsState extends State<DevotionDetails> {
   final TextEditingController nameTemple = TextEditingController();
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
-  final TextEditingController whichSampraya= TextEditingController();
+  final TextEditingController whichSampraya = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final SkipController skipController = Get.put(SkipController());
 
   final DevotionalDetailsController devotionalController =
       Get.put(DevotionalDetailsController());
@@ -292,8 +294,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
               ),
             ),
             if (devotionalController.isLoading.value ||
-                flowController.isLoading.value)
-              Center(
+                flowController.isLoading.value||skipController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -335,7 +337,9 @@ class _DevotionDetailsState extends State<DevotionDetails> {
         text: 'Skip',
         onPressed: () {
           // Get.offAndToNamed('/spiritual');
-          flowController.Flow(context, 7);
+          // flowController.Flow(context, 7);
+
+          skipController.skip(context, "step_7", 7);
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),

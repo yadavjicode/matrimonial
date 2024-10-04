@@ -297,8 +297,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                   "Upgrade now to connect with the user",
                                   textAlign: TextAlign.right,
                                   style: FontConstant.styleMedium(
-                                      fontSize:
-                                          SizeConfig.textSize * 0.033,
+                                      fontSize: SizeConfig.textSize * 0.033,
                                       color: AppColors.black),
                                 ),
                               ),

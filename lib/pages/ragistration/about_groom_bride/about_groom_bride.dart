@@ -8,6 +8,8 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/constants/font_constant.dart';
 
+import '../../../controller/skip_controller.dart';
+
 class AboutGroomBride extends StatefulWidget {
   const AboutGroomBride({super.key});
 
@@ -19,6 +21,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
   final AboutGroomBrideController aboutGroomBrideController =
       Get.put(AboutGroomBrideController());
   final FlowController flowController = Get.put(FlowController());
+   final SkipController skipController = Get.put(SkipController());
   // Define state variables for checkboxes
   Map<String, bool> characteristics = {
     "Independent": false,
@@ -255,7 +258,9 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                         GestureDetector(
                           onTap: () => {
                             // Get.offAndToNamed('/partner')
-                            flowController.Flow(context, 13)
+                            // flowController.Flow(context, 13)
+
+                           skipController.skip(context, "step_13", 13)
                           },
                           child: Container(
                             margin: EdgeInsets.only(top: 10),
@@ -274,7 +279,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
               ],
             ),
             if (aboutGroomBrideController.isLoading.value ||
-                flowController.isLoading.value)
+                flowController.isLoading.value||skipController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

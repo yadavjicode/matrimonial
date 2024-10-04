@@ -8,6 +8,8 @@ import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/comman_class_method.dart';
+
 class Compatiblity extends StatefulWidget {
   const Compatiblity({super.key});
 
@@ -119,16 +121,12 @@ class _CompatiblityState extends State<Compatiblity> {
 
   @override
   Widget build(BuildContext context) {
-    String otherImage = profileDetailsController.member?.data?.photo1 != null
-        ? "http://devoteematrimony.aks.5g.in/${profileDetailsController.member?.data?.photo1}"
-        : profileDetailsController.member?.data?.gender == "Male"
-            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
-    String myImage = user.member!.member!.Photo1 != null
-        ? "http://devoteematrimony.aks.5g.in/${user.member!.member!.Photo1}"
-        : user.member!.member!.gender == "Male"
-            ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-            : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+    String otherImage = CommanClass.photo(
+        profileDetailsController.member?.data?.photo1,
+        profileDetailsController.member?.data?.gender);
+    String myImage = CommanClass.photo(
+        user.member?.member?.Photo1, user.member?.member?.gender);
+
     return Container(
       width: double.infinity,
       color: Colors.white,
@@ -183,7 +181,12 @@ class _CompatiblityState extends State<Compatiblity> {
               children: [
                 InfoRow(
                     'Age',
-                    '${profileDetailsController.member!.data!.pEFromAge ?? "_ _"} to ${profileDetailsController.member!.data!.pEToAge ?? "_ _"}',
+                    // profileDetailsController.member?.data?.pEFromAge == null ||
+                    //         profileDetailsController.member?.data?.pEToAge ==
+                    //             null
+                    //     ? ""
+                    //     : '${profileDetailsController.member!.data!.pEFromAge} to ${profileDetailsController.member!.data!.pEToAge}',
+                    "",
                     false,
                     profileDetailsController.member!.data!.pEFromAge != null &&
                             profileDetailsController.member!.data!.pEToAge !=
@@ -201,7 +204,12 @@ class _CompatiblityState extends State<Compatiblity> {
                         : false),
                 InfoRow(
                     'Height',
-                    '${profileDetailsController.member!.data!.pEHeight ?? "_ _"} to ${profileDetailsController.member!.data!.pEHeight2 ?? "_ _"}',
+                    // profileDetailsController.member?.data?.pEHeight == null ||
+                    //         profileDetailsController.member?.data?.pEHeight2 ==
+                    //             null
+                    //     ? ""
+                    //     : '${profileDetailsController.member!.data!.pEHeight} to ${profileDetailsController.member!.data!.pEHeight2}',
+                    "",
                     true,
                     profileDetailsController.member!.data!.pEHeight != null &&
                             profileDetailsController.member!.data!.pEHeight2 !=
@@ -219,7 +227,8 @@ class _CompatiblityState extends State<Compatiblity> {
                         : false),
                 InfoRow(
                     'Marital Status',
-                    '${profileDetailsController.member!.data!.pEMaritalStatus ?? "_ _"}',
+                    // '${profileDetailsController.member!.data!.pEMaritalStatus ?? ""}',
+                    "",
                     false,
                     profileDetailsController.member!.data!.pEMaritalStatus !=
                                 null &&
@@ -231,49 +240,53 @@ class _CompatiblityState extends State<Compatiblity> {
                         : false),
                 InfoRow(
                     'Religion / Community',
-                    '${profileDetailsController.member!.data!.pEReligion ?? "_ _"}',
+                    // '${profileDetailsController.member!.data!.pEReligion ?? ""}',
+                    "",
                     true,
                     profileDetailsController.member!.data!.pEReligion != null &&
                             user.member!.member!.pEReligion != null
                         ? compare(
-                            profileDetailsController.member!.data!.pEReligion,
-                            user.member!.member!.pEReligion)
+                            profileDetailsController.member?.data?.pEReligion,
+                            user.member?.member?.pEReligion)
                         : false),
                 InfoRow(
                     'Country Living in',
-                    '${profileDetailsController.member!.data!.pECountrylivingin ?? "_ _"}',
+                    // '${profileDetailsController.member?.data?.pECountrylivingin ?? ""}',
+                    "",
                     false,
-                    profileDetailsController.member!.data!.pECountrylivingin !=
+                    profileDetailsController.member?.data?.pECountrylivingin !=
                                 null &&
-                            user.member!.member!.pECountrylivingin != null
+                            user.member?.member?.pECountrylivingin != null
                         ? compare(
                             profileDetailsController
-                                .member!.data!.pECountrylivingin,
-                            user.member!.member!.pECountrylivingin)
+                                .member?.data?.pECountrylivingin,
+                            user.member?.member?.pECountrylivingin)
                         : false),
                 InfoRow(
                     'State Living in',
-                    '${profileDetailsController.member!.data!.pEState ?? "_ _"}',
+                    // '${profileDetailsController.member?.data?.pEState ?? ""}',
+                    "",
                     true,
-                    profileDetailsController.member!.data!.pEState != null &&
-                            user.member!.member!.pEState != null
+                    profileDetailsController.member?.data?.pEState != null &&
+                            user.member?.member?.pEState != null
                         ? compare(
-                            profileDetailsController.member!.data!.pEState,
-                            user.member!.member!.pEState)
+                            profileDetailsController.member?.data?.pEState,
+                            user.member?.member?.pEState)
                         : false),
                 InfoRow(
                     'Annual Income',
-                    '${profileDetailsController.member!.data!.pEAnnualincome ?? "_ _"}',
+                    // '${profileDetailsController.member?.data?.pEAnnualincome ?? ""}',
+                    "",
                     false,
-                    profileDetailsController.member!.data!.pEAnnualincome !=
+                    profileDetailsController.member?.data?.pEAnnualincome !=
                                 null &&
-                            user.member!.member!.pEAnnualincome != null
+                            user.member!.member?.pEAnnualincome != null
                         ? compare(
                             profileDetailsController
-                                .member!.data!.pEAnnualincome,
-                            user.member!.member!.pEAnnualincome)
+                                .member?.data?.pEAnnualincome,
+                            user.member?.member?.pEAnnualincome)
                         : false),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
               ],
             ),
           )
@@ -300,11 +313,12 @@ class InfoRow extends StatelessWidget {
         color: backColor == true ? AppColors.constColor : Colors.grey.shade100,
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10),
         child: Row(
           children: [
             Expanded(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -312,11 +326,11 @@ class InfoRow extends StatelessWidget {
                     style: FontConstant.styleMedium(
                         fontSize: 15, color: Colors.black),
                   ),
-                  Text(
-                    value,
-                    style: FontConstant.styleMedium(
-                        fontSize: 12, color: Colors.grey.shade600),
-                  ),
+                  // Text(
+                  //   value,
+                  //   style: FontConstant.styleMedium(
+                  //       fontSize: 12, color: Colors.grey.shade600),
+                  // ),
                 ],
               ),
             ),

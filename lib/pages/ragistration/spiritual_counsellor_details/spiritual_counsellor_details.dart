@@ -9,6 +9,8 @@ import 'package:devotee/controller/spiritual_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/skip_controller.dart';
+
 class SpiritualDetails extends StatefulWidget {
   const SpiritualDetails({super.key});
 
@@ -27,6 +29,8 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final SkipController skipController = Get.put(SkipController());
+
   String? selectedState;
   String? selectedCity;
   int? counsellor;
@@ -172,7 +176,8 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   child: CustomTextField(
                                     labelText:
                                         "Name of the Counsellor for my Spiritual Path",
-                                        hintText: "Enter Name of the Counsellor for my Spiritual Path",
+                                    hintText:
+                                        "Enter Name of the Counsellor for my Spiritual Path",
                                     controller: nameCounselor,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
@@ -189,7 +194,8 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                         "Connected with my Counsellor Since (Year)",
                                     controller: connectCounselor,
                                     keyboardType: TextInputType.number,
-                                    hintText: "Enter Connected with my Counsellor Since (Year)",
+                                    hintText:
+                                        "Enter Connected with my Counsellor Since (Year)",
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter connected with Counsellor Since';
@@ -205,7 +211,8 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                     labelText:
                                         "With which temple your Counsellor is connected to?",
                                     controller: templeCounselor,
-                                    hintText: "Enter With which temple your Counsellor is connected to?",
+                                    hintText:
+                                        "Enter With which temple your Counsellor is connected to?",
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter temple your Counsellor';
@@ -254,7 +261,6 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                           show == true && selectedState == null
                                               ? true
                                               : false,
-                                     
                                     );
                                   }
                                 }),
@@ -297,14 +303,14 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                           show == true && selectedCity == null
                                               ? true
                                               : false,
-                                     
                                     );
                                   }
                                 }),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 15),
                                   child: CustomTextField(
-                                    hintText: "Enter Something more about the Counsellor",
+                                    hintText:
+                                        "Enter Something more about the Counsellor",
                                     labelText:
                                         "Something more about the Counsellor",
                                     maxline: 5,
@@ -369,7 +375,9 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                           GestureDetector(
                             onTap: () => {
                               // Get.offAndToNamed('/family')
-                              flowController.Flow(context, 8)
+                              // flowController.Flow(context, 8)
+
+                              skipController.skip(context, "step_8", 8)
                             },
                             child: Container(
                               margin: EdgeInsets.only(top: 10),
@@ -388,7 +396,9 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                 )
               ],
             ),
-            if (spiritualController.isLoading.value||flowController.isLoading.value)
+            if (spiritualController.isLoading.value ||
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

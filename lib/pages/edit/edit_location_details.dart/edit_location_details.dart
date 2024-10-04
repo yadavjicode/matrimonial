@@ -393,13 +393,13 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                   CustomTextField(
                     maxline: 1,
                     controller: permanentPinCode,
-                    labelText: 'Pin Code/ ZIP Code/ ZIP Code *',
+                    labelText: 'Pin Code/ ZIP Code *',
                     maxlength: 6,
                     keyboardType: TextInputType.number,
-                    hintText: "Enter Pin Code/ ZIP Code/ ZIP Code",
+                    hintText: "Enter Pin Code/ ZIP Code",
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length > 6) {
-                        return 'Please Enter Pin Code/ ZIP Code/ ZIP Code';
+                        return 'Please Enter Pin Code/ ZIP Code';
                       }
                       return null;
                     },

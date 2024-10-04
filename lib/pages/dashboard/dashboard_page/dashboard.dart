@@ -34,7 +34,8 @@ class _DashboardState extends State<Dashboard> {
   final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
   // final StateController stateController = Get.put(StateController());
-  final ConnectivityService connectivityService = Get.put(ConnectivityService());
+  final ConnectivityService connectivityService =
+      Get.put(ConnectivityService());
 
   void login() async {
     if (_editProfileController.member!.member!.matriID != null) {
@@ -69,17 +70,15 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      body:WillPopScope(
-      onWillPop: () async {
-        // Show the confirmation dialog
-        bool shouldExit = await DialogConstant.showExitConfirmationDialog(context);
-        return shouldExit;
-      },
-        child: Obx(() {  return Stack(
-          children: [
-           PageView(
+      body: WillPopScope(
+          onWillPop: () async {
+            // Show the confirmation dialog
+            bool shouldExit =
+                await DialogConstant.showExitConfirmationDialog(context);
+            return shouldExit;
+          },
+          child: PageView(
             controller: controller,
             physics: NeverScrollableScrollPhysics(),
             children: const [
@@ -89,16 +88,7 @@ class _DashboardState extends State<Dashboard> {
               HomeScreen(),
               Home(),
             ],
-          ),
-         if(!connectivityService.isConnected.value)
-          Text("no internet")
-    
-
-          ]
-        );
-        }
-        )
-      ),
+          )),
       bottomNavigationBar: StylishBottomBar(
         notchStyle: NotchStyle.circle,
         backgroundColor: AppColors.primaryColor,
@@ -109,7 +99,11 @@ class _DashboardState extends State<Dashboard> {
         ),
         items: [
           BottomBarItem(
-            icon: Image.asset("assets/images/email.png",height: 28,width: 28,),
+            icon: Image.asset(
+              "assets/images/email.png",
+              height: 28,
+              width: 28,
+            ),
             title: Text(
               'inbox',
               style:
@@ -119,7 +113,11 @@ class _DashboardState extends State<Dashboard> {
             //  selectedIcon: Icon(Icons.chat)
           ),
           BottomBarItem(
-            icon: Image.asset("assets/images/users.png",height: 28,width: 24,),
+            icon: Image.asset(
+              "assets/images/users.png",
+              height: 28,
+              width: 24,
+            ),
             title: Text(
               'Profile',
               style:
@@ -129,7 +127,11 @@ class _DashboardState extends State<Dashboard> {
             //  selectedIcon: Icon(Icons.person)
           ),
           BottomBarItem(
-            icon: Image.asset("assets/images/love.png",height: 28,width: 28,),
+            icon: Image.asset(
+              "assets/images/love.png",
+              height: 28,
+              width: 28,
+            ),
             title: Text(
               'Liked',
               style:
@@ -139,7 +141,11 @@ class _DashboardState extends State<Dashboard> {
             // selectedIcon: Icon(Icons.favorite)
           ),
           BottomBarItem(
-            icon: Image.asset("assets/images/chat.png",height: 28,width: 30,),
+            icon: Image.asset(
+              "assets/images/chat.png",
+              height: 28,
+              width: 30,
+            ),
             title: Text(
               'Search',
               style:
@@ -176,6 +182,4 @@ class _DashboardState extends State<Dashboard> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-    
 }
-

@@ -41,6 +41,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/recommended_model.dart';
+import '../model/skip_model.dart';
 
 class ApiService {
 //== Start Api Login ====================================================================================================
@@ -1460,4 +1461,35 @@ class ApiService {
     }
   }
 //==== End Api Recommended ==========================================================================================
+//==== Start Api skip ==========================================================================================
+
+  Future<SkipModel> skip(String step) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.ragisUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        step: "1",
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return SkipModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api skip ==========================================================================================
 }

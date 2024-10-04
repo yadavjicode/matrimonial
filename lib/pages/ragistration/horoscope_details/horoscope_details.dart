@@ -9,6 +9,8 @@ import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/skip_controller.dart';
+
 class HoroscopeDetails extends StatefulWidget {
   const HoroscopeDetails({super.key});
 
@@ -20,7 +22,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
-
+   final SkipController skipController = Get.put(SkipController());
   final HoroscopeDetailsController horoscopeDetailsController =
       Get.put(HoroscopeDetailsController());
 
@@ -231,7 +233,9 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                           GestureDetector(
                             onTap: () => {
                               // Get.offAndToNamed('/profile')
-                              flowController.Flow(context, 10)
+                              // flowController.Flow(context, 10)
+
+                              skipController.skip(context, "step_10", 10)
                             },
                             child: Container(
                               margin: EdgeInsets.only(bottom: 25, top: 10),
@@ -251,7 +255,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
               ],
             ),
             if (horoscopeDetailsController.isLoading.value ||
-                flowController.isLoading.value)
+                flowController.isLoading.value||skipController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

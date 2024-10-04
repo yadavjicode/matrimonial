@@ -79,13 +79,11 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
   String? selectMaritalStatus;
 
   String? selectCountry;
-  
-
 
   String? selectIncome;
 
   String? selectReligions;
- String? selectCaste;
+  String? selectCaste;
 
   String? selectDiet;
   String? selectDrinkHabit;
@@ -667,7 +665,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         height: 10,
                       ),
                       Obx(() {
-                          if (stateControllerPermanent.isLoading.value) {
+                        if (stateControllerPermanent.isLoading.value) {
                           return buildDropdownWithSearchMulti(
                             'State',
                             ['Loading...'],
@@ -679,7 +677,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                             selectedItems: [],
                             hintText: 'Loading...',
                           );
-                        }else {
+                        } else {
                           return buildDropdownWithSearchMulti(
                             'State',
                             stateControllerPermanent.stateLists,
@@ -688,9 +686,8 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               setState(() {
                                 selectedState = value; // Update the state
                               });
-                            
                             },
-                             selectedItems: selectedState,
+                            selectedItems: selectedState,
                             hintText: 'Select State',
                           );
                         }
@@ -765,7 +762,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 selectedHighestQualification =
                                     value; // Update the state
                               });
-                             
                             },
 
                             // professionController.selectedItem.call,
@@ -798,7 +794,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 selectedProfessionalQualification =
                                     value; // Update the state
                               });
-                            
                             },
 
                             // professionController.selectedItem.call,
@@ -830,7 +825,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               setState(() {
                                 selectedOccupation = value; // Update the state
                               });
-                             
                             },
 
                             // professionController.selectedItem.call,
@@ -1180,7 +1174,32 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
           GestureDetector(
             onTap: () => {
               // Get.offAndToNamed('/partner')
-              flowController.Flow(context, 14)
+              // flowController.Flow(context, 14)
+
+              _partnerPreferenceController.partnerPreference(
+                  context,
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  false)
             },
             child: Container(
               padding: EdgeInsets.all(5),

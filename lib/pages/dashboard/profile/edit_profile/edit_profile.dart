@@ -368,7 +368,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       .member?.member?.permanentCity ??
                                   "Not Mentioned"),
                           _buildText(
-                              "Permanent Pin Code/ ZIP Code/ZIP Code",
+                              "Permanent Pin Code/ ZIP Code",
                               _editProfileController
                                       .member?.member?.permanentPincode ??
                                   "Not Mentioned"),
@@ -382,7 +382,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                               _editProfileController.member?.member?.tempCity ??
                                   "Not Mentioned"),
                           _buildText(
-                              "Temporary Pin Code/ ZIP Code/ZIP Code",
+                              "Temporary Pin Code/ ZIP Code",
                               _editProfileController
                                       .member?.member?.tempPincode ??
                                   "Not Mentioned"),
@@ -486,7 +486,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         .member?.member?.workCity ??
                                     "Not Mentioned"),
                             _buildText(
-                                "Pincode",
+                                "Pin Code/ ZIP Code",
                                 _editProfileController
                                         .member?.member?.workPincode ??
                                     "Not Mentioned"),

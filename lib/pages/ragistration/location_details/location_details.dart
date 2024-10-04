@@ -8,6 +8,7 @@ import 'package:devotee/controller/location_details_controller.dart';
 import 'package:devotee/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../controller/skip_controller.dart';
 import '/constants/CustomTextFeild.dart';
 import '/constants/button_constant.dart';
 import '/constants/color_constant.dart';
@@ -37,6 +38,7 @@ class _LocationDetailsState extends State<LocationDetails> {
   PermanentTypeController permanentHouseTypeController =
       Get.put(PermanentTypeController());
   final FlowController flowController = Get.put(FlowController());
+  final SkipController skipController = Get.put(SkipController());
   RelationController relationController = Get.put(RelationController());
   final TextEditingController permanentPinCode = TextEditingController();
   final TextEditingController temporaryPinCode = TextEditingController();
@@ -60,7 +62,6 @@ class _LocationDetailsState extends State<LocationDetails> {
   bool show = false;
 
   bool validation() {
-    
     if (_formKey.currentState!.validate() &&
         selectedCountry != null &&
         selectedResidence != null &&
@@ -154,12 +155,15 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedCountry,
-                                borderColor:show==true && selectedCountry == null
-                                    ? Colors.red
-                                    : Colors.black.withOpacity(0.5),
+                                borderColor:
+                                    show == true && selectedCountry == null
+                                        ? Colors.red
+                                        : Colors.black.withOpacity(0.5),
                                 errorMessage: "Please select nationality",
-                                errorshow:show==true &&
-                                    selectedCountry == null ? true : false,
+                                errorshow:
+                                    show == true && selectedCountry == null
+                                        ? true
+                                        : false,
                                 hintText: 'Select Nationality',
                               );
                             }
@@ -194,12 +198,15 @@ class _LocationDetailsState extends State<LocationDetails> {
                                 },
                                 search: false,
                                 selectedItem: selectedResidence,
-                                borderColor:show==true && selectedResidence == null
-                                    ? Colors.red
-                                    : Colors.black.withOpacity(0.5),
+                                borderColor:
+                                    show == true && selectedResidence == null
+                                        ? Colors.red
+                                        : Colors.black.withOpacity(0.5),
                                 errorMessage: "Please select residence type",
-                                errorshow:show==true &&
-                                    selectedResidence == null ? true : false,
+                                errorshow:
+                                    show == true && selectedResidence == null
+                                        ? true
+                                        : false,
                                 hintText: 'Select Residence Type',
                               );
                             }
@@ -289,11 +296,13 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedPermanentState,
-                                borderColor:show==true && selectedPermanentState == null
+                                borderColor: show == true &&
+                                        selectedPermanentState == null
                                     ? Colors.red
                                     : Colors.black.withOpacity(0.5),
                                 errorMessage: "Please select state",
-                                errorshow:show==true && selectedPermanentState == null
+                                errorshow: show == true &&
+                                        selectedPermanentState == null
                                     ? true
                                     : false,
                                 hintText: 'Select State',
@@ -334,11 +343,13 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedPermanentCity,
-                                borderColor:show==true && selectedPermanentCity == null
+                                borderColor: show == true &&
+                                        selectedPermanentCity == null
                                     ? Colors.red
                                     : Colors.black.withOpacity(0.5),
                                 errorMessage: "Please select city",
-                                errorshow:show==true && selectedPermanentCity == null
+                                errorshow: show == true &&
+                                        selectedPermanentCity == null
                                     ? true
                                     : false,
                                 hintText: 'Select City',
@@ -510,11 +521,13 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedRefeARelation,
-                                borderColor:show==true && selectedRefeARelation == null
+                                borderColor: show == true &&
+                                        selectedRefeARelation == null
                                     ? Colors.red
                                     : Colors.black.withOpacity(0.5),
                                 errorMessage: "Please select relation",
-                                errorshow:show==true && selectedRefeARelation == null
+                                errorshow: show == true &&
+                                        selectedRefeARelation == null
                                     ? true
                                     : false,
                                 hintText: 'Select Relation',
@@ -609,11 +622,13 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedRefeBRelation,
-                                borderColor:show==true && selectedRefeBRelation == null
+                                borderColor: show == true &&
+                                        selectedRefeBRelation == null
                                     ? Colors.red
                                     : Colors.black.withOpacity(0.5),
                                 errorMessage: "Please select relation",
-                                errorshow:show==true && selectedRefeBRelation == null
+                                errorshow: show == true &&
+                                        selectedRefeBRelation == null
                                     ? true
                                     : false,
                                 hintText: 'Select Relation',
@@ -671,7 +686,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                             text: 'CONTINUE',
                             onPressed: () {
                               setState(() {
-                                show=true;
+                                show = true;
                               });
                               if (validation()) {
                                 _locationDetailsController.locationDetails(
@@ -706,14 +721,15 @@ class _LocationDetailsState extends State<LocationDetails> {
                           ),
                           GestureDetector(
                             onTap: () => {
-                              
-                              flowController.Flow(context, 4)
+                              //flowController.Flow(context, 4)
+                              skipController.skip(context, "step_4", 4)
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              margin: EdgeInsets.only(bottom: 25, top: 10),
-                              padding: EdgeInsets.all(5),
-                              child: Text(   
+                              margin:
+                                  const EdgeInsets.only(bottom: 25, top: 10),
+                              padding: const EdgeInsets.all(5),
+                              child: Text(
                                 "SKIP",
                                 style: FontConstant.styleRegular(
                                     fontSize: 20, color: AppColors.black),
@@ -727,8 +743,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                 )
               ],
             ),
-            if (_locationDetailsController.isLoading.value||flowController.isLoading.value)
-              Center(
+            if (_locationDetailsController.isLoading.value ||
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
+              const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ))

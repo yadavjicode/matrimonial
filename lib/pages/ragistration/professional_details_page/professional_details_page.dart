@@ -12,6 +12,8 @@ import 'package:devotee/controller/professional_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/skip_controller.dart';
+
 class ProfessionalDetailsPage extends StatefulWidget {
   const ProfessionalDetailsPage({super.key});
 
@@ -31,6 +33,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final SkipController skipController = Get.put(SkipController());
 
   String? selectedProfession;
   String? selectedAnnualSalary;
@@ -148,11 +151,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                               selectedItem: selectedProfession,
                               hintText: 'Select Profession',
                               errorMessage: "Please Select Profession",
-                              errorshow:show==true&&
-                                  selectedProfession == null ? true : false,
-                              borderColor:show==true&& selectedProfession == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
+                              errorshow:
+                                  show == true && selectedProfession == null
+                                      ? true
+                                      : false,
+                              borderColor:
+                                  show == true && selectedProfession == null
+                                      ? Colors.red
+                                      : Colors.black.withOpacity(0.5),
                             );
                           }
                         }),
@@ -201,7 +207,7 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                             )
                           ],
                         ),
-                        if (show==true&&working() == null)
+                        if (show == true && working() == null)
                           Container(
                               margin: EdgeInsets.only(bottom: 5),
                               alignment: Alignment.centerLeft,
@@ -241,12 +247,14 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                         employmentController.selectItem(
                                             value); // Call the controller method
                                       },
-                                      borderColor:show==true&& selectedEmpolyment == null
+                                      borderColor: show == true &&
+                                              selectedEmpolyment == null
                                           ? Colors.red
                                           : Colors.black.withOpacity(0.5),
-                                     
+
                                       errorMessage: "Please Select Empolyment",
-                                      errorshow:show==true&& selectedEmpolyment == null
+                                      errorshow: show == true &&
+                                              selectedEmpolyment == null
                                           ? true
                                           : false,
                                       hintText: 'Select Empolyment',
@@ -283,14 +291,17 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                         stateController.selectItem(
                                             value); // Call the controller method
                                       },
-                                      borderColor:show==true&& selectedState == null
-                                          ? Colors.red
-                                          : Colors.black.withOpacity(0.5),
+                                      borderColor:
+                                          show == true && selectedState == null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
                                       errorMessage:
                                           "Please Select Working State",
-                                      errorshow:show==true&&
-                                          selectedState == null ? true : false,
-                                
+                                      errorshow:
+                                          show == true && selectedState == null
+                                              ? true
+                                              : false,
+
                                       hintText: 'Select State',
                                     );
                                   }
@@ -324,14 +335,17 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                         cityController.selectItem(
                                             value); // Call the controller method
                                       },
-                                      borderColor:show==true&& selectedCity == null
-                                          ? Colors.red
-                                          : Colors.black.withOpacity(0.5),
+                                      borderColor:
+                                          show == true && selectedCity == null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
                                       errorMessage:
                                           "Please Select Working City",
-                                      errorshow:show==true&&
-                                          selectedCity == null ? true : false,
-                                     
+                                      errorshow:
+                                          show == true && selectedCity == null
+                                              ? true
+                                              : false,
+
                                       hintText: 'Select City',
                                     );
                                   }
@@ -381,13 +395,13 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                                       incomeController.selectItem(
                                           value); // Call the controller method
                                     },
-                                        borderColor:show==true&&
-                                            selectedAnnualSalary == null
-                                                ? Colors.red
-                                                : Colors.black.withOpacity(0.5),
-                                       
+                                        borderColor: show == true &&
+                                                selectedAnnualSalary == null
+                                            ? Colors.red
+                                            : Colors.black.withOpacity(0.5),
                                         errorMessage: "Please Annual Income",
-                                        errorshow:show==true&& selectedAnnualSalary == null
+                                        errorshow: show == true &&
+                                                selectedAnnualSalary == null
                                             ? true
                                             : false,
                                         hintText: 'Select Annual Income Range');
@@ -400,39 +414,42 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                           padding: const EdgeInsets.only(top: 25, bottom: 15),
                           child: CustomButton(
                               text: "CONTINUE",
-                              onPressed: ()  {
-                                    setState(() {
-                                      show = true;
-                                    });
-                                    if (validation())
-                                      {
-                                        professionalDeatilsController
-                                            .professionalDetails(
-                                                context,
-                                                selectedProfession ?? "",
-                                                working()!,
-                                                working() == "Yes"
-                                                    ? selectedEmpolyment ?? ""
-                                                    : "",
-                                                working() == "Yes"
-                                                    ? selectedState ?? ""
-                                                    : "",
-                                                working() == "Yes"
-                                                    ? selectedCity ?? ""
-                                                    : "",
-                                                working() == "Yes"
-                                                    ? pincodeController.text
-                                                        .toString()
-                                                        .trim()
-                                                    : "",
-                                                working() == "Yes"
-                                                    ? selectedAnnualSalary ?? ""
-                                                    : "",
-                                                false);
-                                      }
+                              onPressed: () {
+                                setState(() {
+                                  show = true;
+                                });
+                                if (validation()) {
+                                  professionalDeatilsController
+                                      .professionalDetails(
+                                          context,
+                                          selectedProfession ?? "",
+                                          working()!,
+                                          working() ==
+                                                  "Yes"
+                                              ? selectedEmpolyment ?? ""
+                                              : "",
+                                          working() ==
+                                                  "Yes"
+                                              ? selectedState ?? ""
+                                              : "",
+                                          working() ==
+                                                  "Yes"
+                                              ? selectedCity ?? ""
+                                              : "",
+                                          working() ==
+                                                  "Yes"
+                                              ? pincodeController.text
+                                                  .toString()
+                                                  .trim()
+                                              : "",
+                                          working() == "Yes"
+                                              ? selectedAnnualSalary ?? ""
+                                              : "",
+                                          false);
+                                }
 
-                                    //   Get.toNamed('/devotion')
-                                  },
+                                //   Get.toNamed('/devotion')
+                              },
                               color: AppColors.primaryColor,
                               textStyle: FontConstant.styleRegular(
                                   fontSize: 20, color: AppColors.constColor)),
@@ -440,11 +457,13 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                         GestureDetector(
                           onTap: () => {
                             // Get.offAndToNamed('/devotion')
-                            flowController.Flow(context, 6)
+                            // flowController.Flow(context, 6)
+
+                            skipController.skip(context, "step_6", 6)
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.all(5),
+                            margin: const EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.all(5),
                             child: Text(
                               "SKIP",
                               style: FontConstant.styleRegular(
@@ -458,8 +477,10 @@ class _ProfessionalDetailsPageState extends State<ProfessionalDetailsPage> {
                 ),
               ),
             ]),
-            if (professionalDeatilsController.isLoading.value||flowController.isLoading.value)
-              Center(
+            if (professionalDeatilsController.isLoading.value ||
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

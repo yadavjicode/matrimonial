@@ -14,6 +14,8 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/font_constant.dart';
 
+import '../../../controller/skip_controller.dart';
+
 class FamilyDetails extends StatefulWidget {
   const FamilyDetails({super.key});
 
@@ -42,6 +44,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKeyFather = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKeyMother = GlobalKey<FormState>();
+  final SkipController skipController = Get.put(SkipController());
 
   List<String> selectedLanguagesList = []; // List to store selected languages
 
@@ -321,7 +324,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     religionController.selectItem(value);
                                     //  religionController.selectItem(value);
                                   },
-                                  
                                   borderColor: show == true &&
                                           selectedReligionName == null
                                       ? Colors.red
@@ -363,13 +365,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     });
                                     castController.selectItem(value);
                                   },
-                                  
-                                  borderColor:show == true && selectedCastName == null
-                                      ? Colors.red
-                                      : Colors.black.withOpacity(0.5),
+                                  borderColor:
+                                      show == true && selectedCastName == null
+                                          ? Colors.red
+                                          : Colors.black.withOpacity(0.5),
                                   errorMessage: "Please Select Cast",
-                                  errorshow:show == true &&
-                                      selectedCastName == null ? true : false,
+                                  errorshow:
+                                      show == true && selectedCastName == null
+                                          ? true
+                                          : false,
                                   hintText: 'Select Cast',
                                 );
                               }
@@ -399,7 +403,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     });
                                     subCastController.selectItem(value);
                                   },
-                                  
                                   hintText: 'Select SubCast',
                                 );
                               }
@@ -436,18 +439,20 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                           value; // Update the state
                                     });
                                   },
-                                  borderColor:show == true && getLanguageKnown(
-                                              selectedLanguage ?? []) ==
-                                          ""
+                                  borderColor: show == true &&
+                                          getLanguageKnown(
+                                                  selectedLanguage ?? []) ==
+                                              ""
                                       ? Colors.red
                                       : Colors.black.withOpacity(0.5),
                                   errorMessage: "Please Select Languages",
-                                  errorshow:show == true && getLanguageKnown(
-                                              selectedLanguage ?? []) ==
-                                          ""
+                                  errorshow: show == true &&
+                                          getLanguageKnown(
+                                                  selectedLanguage ?? []) ==
+                                              ""
                                       ? true
                                       : false,
-                           
+
                                   hintText: 'Select Languages Known',
                                 );
                               }
@@ -482,11 +487,13 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                         value); // Call the controller method
                                   },
                                   selectedItem: selectedMothertongue,
-                                  borderColor:show == true && selectedMothertongue == null
+                                  borderColor: show == true &&
+                                          selectedMothertongue == null
                                       ? Colors.red
                                       : Colors.black.withOpacity(0.5),
                                   errorMessage: "Please select mother tongue",
-                                  errorshow:show == true && selectedMothertongue == null
+                                  errorshow: show == true &&
+                                          selectedMothertongue == null
                                       ? true
                                       : false,
                                   hintText: 'Select Mother tongue',
@@ -547,7 +554,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
-                            if (show == true &&getFatherAlive() == null)
+                            if (show == true && getFatherAlive() == null)
                               Container(
                                   margin: EdgeInsets.only(bottom: 5),
                                   alignment: Alignment.centerLeft,
@@ -605,18 +612,18 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                             professionController.selectItem(
                                                 value); // Call the controller method
                                           },
-                                         
-                                          borderColor:show == true &&
-                                              selectedFatherOccupation == null
-                                                  ? Colors.red
-                                                  : Colors.black
-                                                      .withOpacity(0.5),
+                                          borderColor: show == true &&
+                                                  selectedFatherOccupation ==
+                                                      null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
                                           errorMessage:
                                               "Please select occupation",
-                                          errorshow:show == true &&
-                                              selectedFatherOccupation == null
-                                                  ? true
-                                                  : false,
+                                          errorshow: show == true &&
+                                                  selectedFatherOccupation ==
+                                                      null
+                                              ? true
+                                              : false,
                                           hintText: 'Select Occupation',
                                         );
                                       }
@@ -669,19 +676,18 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                               selectedFatherAnnualIncomeRange,
                                           hintText:
                                               'Select Annual income range',
-                                          borderColor:show == true &&
-                                              selectedFatherAnnualIncomeRange ==
+                                          borderColor: show == true &&
+                                                  selectedFatherAnnualIncomeRange ==
                                                       null
-                                                  ? Colors.red
-                                                  : Colors.black
-                                                      .withOpacity(0.5),
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
                                           errorMessage:
                                               "Please select income range",
-                                          errorshow:show == true &&
-                                              selectedFatherAnnualIncomeRange ==
+                                          errorshow: show == true &&
+                                                  selectedFatherAnnualIncomeRange ==
                                                       null
-                                                  ? true
-                                                  : false,
+                                              ? true
+                                              : false,
                                         );
                                       }
                                     }),
@@ -742,7 +748,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
-                            if (show == true &&getMotherAlive() == null)
+                            if (show == true && getMotherAlive() == null)
                               Container(
                                   margin: EdgeInsets.only(bottom: 5),
                                   alignment: Alignment.centerLeft,
@@ -803,17 +809,18 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                           selectedItem:
                                               selectedMotherOccupation,
                                           hintText: 'Select Occupation',
-                                          borderColor:show == true &&
-                                              selectedMotherOccupation == null
-                                                  ? Colors.red
-                                                  : Colors.black
-                                                      .withOpacity(0.5),
+                                          borderColor: show == true &&
+                                                  selectedMotherOccupation ==
+                                                      null
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
                                           errorMessage:
                                               "Please select Occupation",
-                                          errorshow:show == true &&
-                                              selectedMotherOccupation == null
-                                                  ? true
-                                                  : false,
+                                          errorshow: show == true &&
+                                                  selectedMotherOccupation ==
+                                                      null
+                                              ? true
+                                              : false,
                                         );
                                       }
                                     }),
@@ -851,19 +858,18 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                               selectedMotherAnnualIncomeRange,
                                           hintText:
                                               'Select Annual income range',
-                                          borderColor:show == true &&
-                                              selectedMotherAnnualIncomeRange ==
+                                          borderColor: show == true &&
+                                                  selectedMotherAnnualIncomeRange ==
                                                       null
-                                                  ? Colors.red
-                                                  : Colors.black
-                                                      .withOpacity(0.5),
+                                              ? Colors.red
+                                              : Colors.black.withOpacity(0.5),
                                           errorMessage:
                                               "Please select Annual income",
-                                          errorshow:show == true &&
-                                              selectedMotherAnnualIncomeRange ==
+                                          errorshow: show == true &&
+                                                  selectedMotherAnnualIncomeRange ==
                                                       null
-                                                  ? true
-                                                  : false,
+                                              ? true
+                                              : false,
                                         );
                                       }
                                     }),
@@ -924,7 +930,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
-                            if (show == true &&getSister() == null)
+                            if (show == true && getSister() == null)
                               Container(
                                   margin: EdgeInsets.only(bottom: 5),
                                   alignment: Alignment.centerLeft,
@@ -950,12 +956,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                       numberController.selectItem(
                                           value); // Call the controller method
                                     },
-                                    borderColor:show == true && selectedNoSister == null
-                                        ? Colors.red
-                                        : Colors.black.withOpacity(0.5),
+                                    borderColor:
+                                        show == true && selectedNoSister == null
+                                            ? Colors.red
+                                            : Colors.black.withOpacity(0.5),
                                     errorMessage: "Please select Annual income",
-                                    errorshow:show == true &&
-                                        selectedNoSister == null ? true : false,
+                                    errorshow:
+                                        show == true && selectedNoSister == null
+                                            ? true
+                                            : false,
                                     selectedItem: selectedNoSister,
                                     hintText: '0',
                                   ),
@@ -1015,7 +1024,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 )
                               ],
                             ),
-                            if (show == true &&getBrother() == null)
+                            if (show == true && getBrother() == null)
                               Container(
                                   margin: EdgeInsets.only(bottom: 5),
                                   alignment: Alignment.centerLeft,
@@ -1042,11 +1051,13 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                           value); // Call the controller method
                                     },
                                     selectedItem: selectedNoBrother,
-                                    borderColor:show == true && selectedNoBrother == null
+                                    borderColor: show == true &&
+                                            selectedNoBrother == null
                                         ? Colors.red
                                         : Colors.black.withOpacity(0.5),
                                     errorMessage: "Please select Annual income",
-                                    errorshow:show == true && selectedNoBrother == null
+                                    errorshow: show == true &&
+                                            selectedNoBrother == null
                                         ? true
                                         : false,
                                     hintText: '0',
@@ -1263,7 +1274,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                 onPressed: () {
                                   setState(() {
                                     show = true;
-                                      });
+                                  });
                                   if (validation()) {
                                     String gotra =
                                         gotraController.text.toString().trim();
@@ -1322,9 +1333,15 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                         getBrother() == "Yes"
                                             ? selectedNoBrother ?? ""
                                             : "",
-                                        getFamilyType()!=null?getFamilyType()!:"",
-                                        getFamilyValue()!=null?getFamilyValue()!:"",
-                                        getAffluenceLevel()!=null? getAffluenceLevel()!:"",
+                                        getFamilyType() != null
+                                            ? getFamilyType()!
+                                            : "",
+                                        getFamilyValue() != null
+                                            ? getFamilyValue()!
+                                            : "",
+                                        getAffluenceLevel() != null
+                                            ? getAffluenceLevel()!
+                                            : "",
                                         false);
                                   }
 
@@ -1335,24 +1352,23 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                                     fontSize: 18, color: Colors.white),
                               ),
                             ),
-                            
                             GestureDetector(
-                            onTap: () => {
-                              
-                              flowController.Flow(context, 9)
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(bottom: 25, top: 10),
-                              padding: EdgeInsets.all(5),
-                              child: Text(   
-                                "SKIP",
-                                style: FontConstant.styleRegular(
-                                    fontSize: 20, color: AppColors.black),
+                              onTap: () => {
+                                // flowController.Flow(context, 9)
+                                skipController.skip(context, "step_9", 9)
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(bottom: 25, top: 10),
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  "SKIP",
+                                  style: FontConstant.styleRegular(
+                                      fontSize: 20, color: AppColors.black),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 15),
+                            const SizedBox(height: 15),
                           ],
                         ),
                       ),
@@ -1361,7 +1377,8 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                 ),
               ],
             ),
-            if (_familyDetailsController.isLoading.value||flowController.isLoading.value)
+            if (_familyDetailsController.isLoading.value ||
+                flowController.isLoading.value||skipController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

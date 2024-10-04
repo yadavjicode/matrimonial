@@ -2,6 +2,7 @@ import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/flow_controller.dart';
+import 'package:devotee/controller/skip_controller.dart';
 import 'package:devotee/controller/upload_profile_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
   UploadProfileController completeProfileController =
       Get.put(UploadProfileController());
   final FlowController flowController = Get.put(FlowController());
+  final SkipController skipController = Get.put(SkipController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,9 +75,8 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                             children: [
                               GestureDetector(
                                 onTap: () => {
-                                //  _showBottomSheet(context)
-                                  
-                                  },
+                                  //  _showBottomSheet(context)
+                                },
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 15),
                                   child:
@@ -107,11 +108,11 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                                         color: AppColors.constColor)),
                               ),
                               GestureDetector(
-                                onTap: () =>
-                                    {
-                                     Get.offAndToNamed('/packageInfo')
-                                    //  flowController.Flow(context, 11)
-                                      },
+                                onTap: () => {
+                                  //  Get.offAndToNamed('/packageInfo')
+                                  //  flowController.Flow(context, 11)
+                                  skipController.skip(context, "step_11", 11)
+                                },
                                 child: Container(
                                   padding: EdgeInsets.all(10),
                                   alignment: Alignment.center,
@@ -136,7 +137,9 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                 ),
               ],
             ),
-            if (completeProfileController.isLoading.value||flowController.isLoading.value)
+            if (completeProfileController.isLoading.value ||
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
               Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -156,10 +159,9 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
           return Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(25),
-            height:200,
+            height: 200,
             child: Column(
               children: [
-                
                 Row(
                   //  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,8 +208,11 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
-                  child: Text("You can only select up to 5 images",style: FontConstant.styleRegular(
-                                fontSize: 1, color: AppColors.black),),
+                  child: Text(
+                    "You can only select up to 5 images",
+                    style: FontConstant.styleRegular(
+                        fontSize: 1, color: AppColors.black),
+                  ),
                 )
               ],
             ),

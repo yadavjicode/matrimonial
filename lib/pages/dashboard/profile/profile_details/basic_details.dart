@@ -5,6 +5,8 @@ import 'package:devotee/pages/dashboard/profile/profile_details/pages_details/pa
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../utils/comman_class_method.dart';
+
 //start Basic deatils ==================================================================================================================
 
 class BasicDetails extends StatelessWidget {
@@ -71,7 +73,6 @@ class BasicDetails extends StatelessWidget {
   }
 }
 
-
 class BasicDetailsGrid extends StatelessWidget {
   BasicDetailsGrid({super.key});
   final ProfileDetailsController profileDetailsController =
@@ -79,6 +80,11 @@ class BasicDetailsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String?> liveList = [
+      profileDetailsController.member?.data?.permanentCity,
+      profileDetailsController.member?.data?.permanentState
+    ];
+    String liveString = CommanClass.commaString(liveList);
     return Wrap(
       spacing: 16,
       runSpacing: 16,
@@ -89,10 +95,10 @@ class BasicDetailsGrid extends StatelessWidget {
           value: profileDetailsController.member?.data?.gender ?? "",
         ),
         DetailRow(
-          path: "assets/images/icons/dob.svg",
-          title: 'Birth Date',
-          value: profileDetailsController.member?.data?.dOB ?? "",
-        ),
+            path: "assets/images/icons/dob.svg",
+            title: 'Birth Date',
+            value: CommanClass.dateFormat(
+                profileDetailsController.member?.data?.dOB)),
         DetailRow(
           path: "assets/images/icons/region.svg",
           title: 'Religion',
@@ -116,9 +122,7 @@ class BasicDetailsGrid extends StatelessWidget {
         DetailRow(
           path: "assets/images/icons/location.svg",
           title: 'Lived In',
-          value:
-              "${profileDetailsController.member?.data?.permanentCity ?? ""}${profileDetailsController.member?.data?.permanentCity == null || profileDetailsController.member?.data?.permanentState == null ? "" : ", "}${profileDetailsController.member?.data?.permanentState ?? ""} " ??
-                  "",
+          value: liveString,
         ),
         DetailRow(
           path: "assets/images/icons/occupation.svg",

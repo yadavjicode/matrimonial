@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../../utils/comman_class_method.dart';
+
 //Start Pages details deatils ==================================================================================================================
 
 class DetailRow extends StatelessWidget {
@@ -114,8 +116,11 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       },
       {
         "title": "Date of Birth",
-        "value":
-            "${profileDetailsController.member!.data!.dOB ?? "Not Mentioned"}"
+        "value": CommanClass.dateFormat(
+                    profileDetailsController.member?.data?.dOB)
+                .isEmpty
+            ? "Not Mentioned"
+            : CommanClass.dateFormat(profileDetailsController.member?.data?.dOB)
       },
       {
         "title": "Hobbies",
@@ -185,7 +190,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
             "${profileDetailsController.member!.data!.permanentCity ?? "Not Mentioned"}"
       },
       {
-        "title": "Permanent Pin Code/ ZIP Code/ ZIP Code",
+        "title": "Permanent Pin Code/ ZIP Code",
         "value":
             "${profileDetailsController.member!.data!.permanentPincode ?? "Not Mentioned"}"
       },
@@ -200,7 +205,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
             "${profileDetailsController.member!.data!.tempCity ?? "Not Mentioned"}"
       },
       {
-        "title": "Temporary Pin Code/ ZIP Code/ ZIP Code",
+        "title": "Temporary Pin Code/ ZIP Code",
         "value":
             "${profileDetailsController.member!.data!.tempPincode ?? "Not Mentioned"}"
       },
@@ -300,7 +305,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
               "${profileDetailsController.member!.data!.workCity ?? "Not Mentioned"}"
         },
         {
-          "title": "Working Pin Code/ ZIP Code/ ZIP Code",
+          "title": "Working Pin Code/ ZIP Code",
           "value":
               "${profileDetailsController.member!.data!.workPincode ?? "Not Mentioned"}"
         },
@@ -578,22 +583,22 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
 
     // End familyDetails ========================================================================================================================================================================
 
-    // Start aboutDetails ========================================================================================================================================================================
+    // // Start aboutDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> aboutDetails = [
-      {
-        "title":
-            "${profileDetailsController.member!.data!.gender == "Male" ? "About Bride" : "About Groom"}",
-        "value":
-            "${profileDetailsController.member!.data!.groomBride ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Hobbies or Likings",
-        "value":
-            "${profileDetailsController.member!.data!.hobbies ?? "Not Mentioned"}"
-      },
-    ];
-    // End aboutDetails ========================================================================================================================================================================
+    // List<Map<String, String>> aboutDetails = [
+    //   {
+    //     "title":
+    //         "${profileDetailsController.member!.data!.gender == "Male" ? "About Bride" : "About Groom"}",
+    //     "value":
+    //         "${profileDetailsController.member!.data!.groomBride ?? "Not Mentioned"}"
+    //   },
+    //   {
+    //     "title": "Hobbies or Likings",
+    //     "value":
+    //         "${profileDetailsController.member!.data!.hobbies ?? "Not Mentioned"}"
+    //   },
+    // ];
+    // // End aboutDetails ========================================================================================================================================================================
 
     // Start horoscopeDetails ========================================================================================================================================================================
 
@@ -616,101 +621,101 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
     ];
 // End horoscopeDetails ========================================================================================================================================================================
 
-// Start preferencesDetails ========================================================================================================================================================================
+// // Start preferencesDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> preferencesDetails = [
-      {
-        "title": "Age Range",
-        "value":
-            "${profileDetailsController.member!.data!.pEFromAge != null || profileDetailsController.member!.data!.pEToAge != null ? "${profileDetailsController.member!.data!.pEFromAge ?? ""} - ${profileDetailsController.member!.data!.pEToAge ?? ""} Years" : "Not Mentioned"}"
-      },
-      {
-        "title": "Weight Range",
-        "value":
-            "${profileDetailsController.member!.data!.pEFromWeight != null || profileDetailsController.member!.data!.pEToWeight != null ? "${profileDetailsController.member!.data!.pEFromWeight ?? ""} - ${profileDetailsController.member!.data!.pEToWeight ?? ""} KG" : "Not Mentioned"}"
-      },
-      {
-        "title": "Height Range",
-        "value":
-            "${profileDetailsController.member!.data!.pEHeight != null || profileDetailsController.member!.data!.pEHeight2 != null ? "${profileDetailsController.member!.data!.pEHeight ?? ""} - ${profileDetailsController.member!.data!.pEHeight2 ?? ""}" : "Not Mentioned"}"
-      },
-      {
-        "title": "Languages Known",
-        "value":
-            "${profileDetailsController.member!.data!.pELanguage ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Marital Status",
-        "value":
-            "${profileDetailsController.member!.data!.pEMaritalStatus ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Family Type",
-        "value":
-            "${profileDetailsController.member!.data!.pEFamilyType ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Family Value",
-        "value":
-            "${profileDetailsController.member!.data!.pEFamilyValue ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Nationality",
-        "value":
-            "${profileDetailsController.member!.data!.pECountrylivingin ?? "Not Mentioned"}"
-      },
-      {
-        "title": "State",
-        "value":
-            "${profileDetailsController.member!.data!.pEState ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Highest Qualification",
-        "value":
-            "${profileDetailsController.member!.data!.pEEducation ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Professional Qualification",
-        "value":
-            "${profileDetailsController.member!.data!.pEProfessional ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Occupation",
-        "value":
-            "${profileDetailsController.member!.data!.pEOccupation ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Annual Income Range",
-        "value":
-            "${profileDetailsController.member!.data!.pEAnnualincome ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Religion",
-        "value":
-            "${profileDetailsController.member!.data!.pEReligion ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Caste",
-        "value":
-            "${profileDetailsController.member!.data!.pECaste ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Diet Preference",
-        "value":
-            "${profileDetailsController.member!.data!.pEDiet ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Drinking Habit",
-        "value":
-            "${profileDetailsController.member!.data!.pEDrink ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Smoking Habit",
-        "value":
-            "${profileDetailsController.member!.data!.pESmoking ?? "Not Mentioned"}"
-      },
-    ];
-    // End preferencesDetails ========================================================================================================================================================================
+//     List<Map<String, String>> preferencesDetails = [
+//       {
+//         "title": "Age Range",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEFromAge != null || profileDetailsController.member!.data!.pEToAge != null ? "${profileDetailsController.member!.data!.pEFromAge ?? ""} - ${profileDetailsController.member!.data!.pEToAge ?? ""} Years" : "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Weight Range",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEFromWeight != null || profileDetailsController.member!.data!.pEToWeight != null ? "${profileDetailsController.member!.data!.pEFromWeight ?? ""} - ${profileDetailsController.member!.data!.pEToWeight ?? ""} KG" : "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Height Range",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEHeight != null || profileDetailsController.member!.data!.pEHeight2 != null ? "${profileDetailsController.member!.data!.pEHeight ?? ""} - ${profileDetailsController.member!.data!.pEHeight2 ?? ""}" : "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Languages Known",
+//         "value":
+//             "${profileDetailsController.member!.data!.pELanguage ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Marital Status",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEMaritalStatus ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Family Type",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEFamilyType ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Family Value",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEFamilyValue ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Nationality",
+//         "value":
+//             "${profileDetailsController.member!.data!.pECountrylivingin ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "State",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEState ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Highest Qualification",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEEducation ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Professional Qualification",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEProfessional ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Occupation",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEOccupation ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Annual Income Range",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEAnnualincome ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Religion",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEReligion ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Caste",
+//         "value":
+//             "${profileDetailsController.member!.data!.pECaste ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Diet Preference",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEDiet ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Drinking Habit",
+//         "value":
+//             "${profileDetailsController.member!.data!.pEDrink ?? "Not Mentioned"}"
+//       },
+//       {
+//         "title": "Smoking Habit",
+//         "value":
+//             "${profileDetailsController.member!.data!.pESmoking ?? "Not Mentioned"}"
+//       },
+//     ];
+//     // End preferencesDetails ========================================================================================================================================================================
 
     return Column(
       children: [
@@ -721,7 +726,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
           isScrollable: true,
           indicatorColor: AppColors.primaryColor,
           labelColor: AppColors.primaryColor,
-          tabs: [
+          tabs: const [
             Tab(text: 'Basic Details'),
             Tab(text: 'Contact Details'),
             Tab(text: 'Location Details'),
@@ -731,8 +736,8 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
             Tab(text: 'Spiritual Counsellor Details'),
             Tab(text: 'Family & More Details'),
             Tab(text: 'Horoscope Details'),
-            Tab(text: "Partner's Desired Qualities"),
-            Tab(text: 'Partner Preferences'),
+            // Tab(text: "Partner's Desired Qualities"),
+            // Tab(text: 'Partner Preferences'),
           ],
         ),
         SizedBox(
@@ -749,8 +754,8 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
               CustomPage(customContent: spiritualDetails),
               CustomPage(customContent: familyDetails),
               CustomPage(customContent: horoscopeDetails),
-              CustomPage(customContent: aboutDetails),
-              CustomPage(customContent: preferencesDetails),
+              // CustomPage(customContent: aboutDetails),
+              // CustomPage(customContent: preferencesDetails),
             ],
           ),
         ),

@@ -477,6 +477,16 @@ class APIs with ChangeNotifier {
         .snapshots();
   }
 
+//get only UnreadMessageCount of a specific chat
+  static Future<int> getUnreadMessageCount(ChatUser user) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await firestore
+        .collection('chats/${getConversationID(user.id)}/messages/')
+        .where('toId', isEqualTo: myid) // Messages sent to the user
+        .where('read', isEqualTo: '') // Or check for read status not set
+        .get();
+    return snapshot.docs.length; // Return the count of unread messages
+  }
+
   //send chat image
   static Future<void> sendChatImage(ChatUser chatUser, File file) async {
     //getting image file extension
