@@ -95,12 +95,17 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
 
   Widget shortlistedContent() {
     final member = shortlistedListController.member;
+
     if (member == null ||
         member.responseData == null ||
-        member.responseData!.data == null &&
-            shortlistedListController.isLoading.value == false) {
-      return const Center(child: Text("No data available"));
+        member.responseData!.data == null) {
+      return Center(
+          child: Text("No data available",
+              style: FontConstant.styleMedium(
+                  fontSize: SizeConfig.textSize * 0.04,
+                  color: AppColors.darkgrey)));
     }
+
     if (shortlistedListController.member!.responseData!.data!.isEmpty) {
       return Container(
           margin: EdgeInsets.only(

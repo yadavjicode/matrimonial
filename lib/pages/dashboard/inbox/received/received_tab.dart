@@ -25,29 +25,29 @@ class _ReceivedTabState extends State<ReceivedTab> {
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
-            Container(child: Obx(() {
+            Obx(() {
               return TabBar(
                 indicatorColor: AppColors.primaryColor,
                 labelColor: AppColors.primaryColor,
-                labelPadding: EdgeInsets.only(bottom: 10),
+                labelPadding: const EdgeInsets.only(bottom: 10),
                 unselectedLabelColor: Colors.black,
                 tabs: [
                   Text(
-                    "Pending (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member!.pendingInvitationCount : inboxReceivedController.member!.pendingInvitationCount})",
-                    style: TextStyle(fontSize: 16),
+                    "Pending (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.pendingInvitationCount??0 : inboxReceivedController.member?.pendingInvitationCount??0})",
+                    style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Accepted (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member!.acceptedInvitationCount : inboxReceivedController.member!.acceptedInvitationCount})",
-                    style: TextStyle(fontSize: 16),
+                    "Accepted (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.acceptedInvitationCount??0 : inboxReceivedController.member?.acceptedInvitationCount??0})",
+                    style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Declined (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member!.declinedInvitationCount : inboxReceivedController.member!.declinedInvitationCount})",
-                    style: TextStyle(fontSize: 16),
+                    "Declined (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.declinedInvitationCount??0 : inboxReceivedController.member?.declinedInvitationCount??0})",
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               );
-            })),
-            Expanded(
+            }),
+            const Expanded(
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [

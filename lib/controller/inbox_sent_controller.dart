@@ -30,6 +30,7 @@ class InboxSentController with ChangeNotifier {
     } catch (e) {
       _error = e.toString();
       print(_error);
+        _member = null;
 
       // Show error message using ScaffoldMessenger
    if (!connectivityService.isConnected.value) {

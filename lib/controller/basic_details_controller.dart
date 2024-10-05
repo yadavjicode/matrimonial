@@ -86,7 +86,7 @@ class BasicDetailsController with ChangeNotifier {
         _editProfileController.userDetails(context);
         Navigator.pop(context);
       } else {
-        await flowController.Flow(context, 2);
+       await flowController.Flow(context, 2);
       }
 
       // Get.toNamed('/contact');

@@ -13,7 +13,7 @@ class InboxReceivedController with ChangeNotifier {
   String? _error;
   InboxReceivedModel? get member => _member;
   String? get error => _error;
-   final ConnectivityService connectivityService =
+  final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
   Future<void> inboxSent(
@@ -26,13 +26,12 @@ class InboxReceivedController with ChangeNotifier {
 
     try {
       _member = await apiService.InboxReceived(status);
-     
     } catch (e) {
       _error = e.toString();
       print(_error);
-
+      _member = null;
       // Show error message using ScaffoldMessenger
-    if (!connectivityService.isConnected.value) {
+      if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
         Dialogs.showSnackbar(context,

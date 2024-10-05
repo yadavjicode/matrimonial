@@ -8,7 +8,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../chat/api/apis.dart';
 import '../../../../chat/api/direct_chat_controller.dart';
 import '../../../../constants/widget/Snackbar.dart';

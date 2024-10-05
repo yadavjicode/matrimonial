@@ -1,8 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
-import 'package:devotee/chat/models/chat_user.dart';
-import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -13,8 +11,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-
 import '../../../constants/widget/dialog.dart';
 import '../../../utils/comman_class_method.dart';
 import '../../../utils/size.dart';
@@ -77,7 +73,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                   shortlistController.isLoading.value ||
                   profileDetailsController.isLoading.value ||
                   directChatController.isLoading.value)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -93,9 +89,12 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
     final member = shortlistedListController.member;
     if (member == null ||
         member.responseData == null ||
-        member.responseData!.data == null &&
-            shortlistedListController.isLoading.value == false) {
-      return const Center(child: Text("No data available"));
+        member.responseData!.data == null) {
+      return Center(
+          child: Text("No data available",
+              style: FontConstant.styleMedium(
+                  fontSize: SizeConfig.textSize * 0.04,
+                  color: AppColors.darkgrey)));
     }
     if (shortlistedListController.member!.responseData!.data!.isEmpty) {
       return Container(

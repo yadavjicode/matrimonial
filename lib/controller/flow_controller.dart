@@ -4,7 +4,6 @@ import 'package:devotee/utils/flow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
-
 import '../utils/connection_check/connectivity_service.dart';
 
 class FlowController with ChangeNotifier {
@@ -26,6 +25,7 @@ class FlowController with ChangeNotifier {
     try {
       _member = await apiService.userDetails();
       if (_member != null && _member!.member != null) {
+        
         if (_member!.member!.accountType == 1) {
           List<int> steps = [
             _member!.member!.step1,

@@ -30,47 +30,34 @@ class _SentTabState extends State<SentTab> {
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
-            Container(
-              child:Obx(() {
-
-          return 
-          
-          TabBar(
+            Obx(() {
+              return TabBar(
                 indicatorColor: AppColors.primaryColor,
                 labelColor: AppColors.primaryColor,
-                labelPadding: EdgeInsets.only(bottom: 10),
+                labelPadding: const EdgeInsets.only(bottom: 10),
                 unselectedLabelColor: Colors.black,
-                
                 tabs: [
-               //   if (inboxSentController.isLoading.value == false)
+                  //   if (inboxSentController.isLoading.value == false)
                   Text(
-                    "Pending (${(inboxSentController.isLoading.value == false)?inboxSentController.member!.pendingSentInvitationCount:inboxSentController.member!.pendingSentInvitationCount})",
-                    style: TextStyle(fontSize: 16),
+                    "Pending (${(inboxSentController.isLoading.value == false) ? inboxSentController.member?.pendingSentInvitationCount ?? 0 : inboxSentController.member?.pendingSentInvitationCount ?? 0})",
+                    style: const TextStyle(fontSize: 16),
                   ),
                   //  if (inboxSentController.isLoading.value == false)
                   Text(
-                    "Accepted (${(inboxSentController.isLoading.value == false)?inboxSentController.member!.acceptedSentInvitationCount:inboxSentController.member!.acceptedSentInvitationCount})",
-                    style: TextStyle(fontSize: 16),
+                    "Accepted (${(inboxSentController.isLoading.value == false) ? inboxSentController.member?.acceptedSentInvitationCount ?? 0 : inboxSentController.member?.acceptedSentInvitationCount ?? 0})",
+                    style: const TextStyle(fontSize: 16),
                   ),
-              //     if (inboxSentController.isLoading.value == false)
+                  //     if (inboxSentController.isLoading.value == false)
                   Text(
-                    "Declined (${(inboxSentController.isLoading.value == false)?inboxSentController.member!.declinedSentInvitationCount:inboxSentController.member!.declinedSentInvitationCount})",
-                    style: TextStyle(fontSize: 16),
+                    "Declined (${(inboxSentController.isLoading.value == false) ? inboxSentController.member?.declinedSentInvitationCount ?? 0 : inboxSentController.member?.declinedSentInvitationCount ?? 0})",
+                    style: const TextStyle(fontSize: 16),
                   ),
-                //    if (inboxSentController.isLoading.value)
-                // Center(
-                //   child: CircularProgressIndicator(
-                //     color: AppColors.primaryColor,
-                //   ),
-                // ),
                 ],
               );
-              }
-              )
-            ),
-            Expanded(
+            }),
+            const Expanded(
               child: TabBarView(
-                   physics: NeverScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 children: [SentPending(), SentAccepted(), SentDeclined()],
               ),
             ),
