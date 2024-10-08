@@ -1,6 +1,4 @@
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/chat/models/chat_user.dart';
-import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
@@ -17,8 +15,8 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
-
 import '../../../../constants/widget/dialog.dart';
+
 
 class SeeAll extends StatefulWidget {
   const SeeAll({super.key});
@@ -43,24 +41,6 @@ class _SeeAllState extends State<SeeAll> {
       Get.put(DirectChatController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
-
-  Future<void> _fetchUser(String userId) async {
-    ChatUser? _chatUser;
-    ChatUser? user = await directChatController.getUserById(userId);
-    setState(() {
-      _chatUser = user;
-    });
-    if (_chatUser != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(user: _chatUser!),
-        ),
-      );
-    } else {
-      Dialogs.showSnackbar(context, 'unable to fetch data');
-    }
-  }
 
   @override
   void initState() {
@@ -98,30 +78,37 @@ class _SeeAllState extends State<SeeAll> {
               fontSize: 18, color: AppColors.constColor),
         ),
       ),
-      body: Obx(() {
-        return Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              alignment: Alignment.topRight,
-              child: Image.asset("assets/images/bg3.png"),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: allMatchesContent(keys),
-            ),
-            if (shortlistController.isLoading.value ||
-                sentInvitationController.isLoading.value ||
-                profileDetailsController.isLoading.value ||
-                directChatController.isLoading.value)
-              Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ),
+      body: RefreshIndicator(
+        color: AppColors.primaryColor,
+        onRefresh: () async {
+          matchesController.reset(context, keys);
+          matchesController.fetchMatches(context, keys);
+        },
+        child: Obx(() {
+          return Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                alignment: Alignment.topRight,
+                child: Image.asset("assets/images/bg3.png"),
               ),
-          ],
-        );
-      }),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: allMatchesContent(keys),
+              ),
+              if (shortlistController.isLoading.value ||
+                  sentInvitationController.isLoading.value ||
+                  profileDetailsController.isLoading.value ||
+                  directChatController.isLoading.value)
+                const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+            ],
+          );
+        }),
+      ),
     );
   }
 
@@ -258,7 +245,9 @@ class _SeeAllState extends State<SeeAll> {
                                           width: 5,
                                         ),
                                         Text(
-                                          data.interestStatus == 1?"Sent Interest":"Send Interest",
+                                          data.interestStatus == 1
+                                              ? "Sent Interest"
+                                              : "Send Interest",
                                           style: FontConstant.styleMedium(
                                               fontSize: screenWidth * 0.03,
                                               color: AppColors.constColor),
@@ -450,7 +439,8 @@ class _SeeAllState extends State<SeeAll> {
                                             Dialogs.showSnackbar(context,
                                                 'User does not Exists!');
                                           } else {
-                                            _fetchUser(
+                                            APIs.fetchUser(
+                                              context,
                                               data.matriID.toString().trim(),
                                             );
                                           }

@@ -9,15 +9,21 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_notification_channel/flutter_notification_channel.dart';
 import 'package:flutter_notification_channel/notification_importance.dart';
 import 'package:get/get.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _initializeFirebase();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // Initialize the notification channel
+  await _initializeLocalNotification();
   Get.put(NotificationController()); // Initialize the NotificationController
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryColor,
@@ -53,7 +59,6 @@ Future<void> _initializeFirebase() async {
       id: 'chats',
       importance: NotificationImportance.IMPORTANCE_HIGH,
       name: 'Chats');
-
   log('\nNotification Channel Result: $result');
 }
 
@@ -65,4 +70,27 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> disableScreenshots() async {
   // This will prevent screenshots and screen recording for the whole app
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+}
+
+// Initialize the local notification plugin
+Future<void> _initializeLocalNotification() async {
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  // Define what happens when a notification is clicked
+  const InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+
+  // Initialize the plugin
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse:
+        (NotificationResponse notificationResponse) {
+      if (notificationResponse.payload != null) {
+        log('Notification Payload: ${notificationResponse.payload}');
+        // Handle the notification response here
+      }
+    },
+  );
 }

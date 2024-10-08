@@ -45,24 +45,6 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
   final DirectChatController directChatController =
       Get.put(DirectChatController());
 
-  Future<void> _fetchUser(String userId) async {
-    ChatUser? _chatUser;
-    ChatUser? user = await directChatController.getUserById(userId);
-    setState(() {
-      _chatUser = user;
-    });
-    if (_chatUser != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(user: _chatUser!),
-        ),
-      );
-    } else {
-      Dialogs.showSnackbar(context, 'unable to fetch data');
-    }
-  }
-
   @override
   void initState() {
     super.initState();
@@ -83,22 +65,29 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Stack(
-        children: [
-          allMatchesContent(),
-          if (shortlistController.isLoading.value ||
-              sentInvitationController.isLoading.value ||
-              profileDetailsController.isLoading.value ||
-              directChatController.isLoading.value)
-            Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
+    return RefreshIndicator(
+      color: AppColors.primaryColor,
+      onRefresh: () async {
+        matchesController.reset(context, "daily_recommendation");
+        matchesController.fetchMatches(context, "daily_recommendation");
+      },
+      child: Obx(() {
+        return Stack(
+          children: [
+            allMatchesContent(),
+            if (shortlistController.isLoading.value ||
+                sentInvitationController.isLoading.value ||
+                profileDetailsController.isLoading.value ||
+                directChatController.isLoading.value)
+              Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
               ),
-            ),
-        ],
-      );
-    });
+          ],
+        );
+      }),
+    );
   }
 
   Widget allMatchesContent() {
@@ -229,7 +218,9 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                       width: 5,
                                     ),
                                     Text(
-                                     data.interestStatus == 1?"Sent Interest":"Send Interest",
+                                      data.interestStatus == 1
+                                          ? "Sent Interest"
+                                          : "Send Interest",
                                       style: FontConstant.styleMedium(
                                           fontSize: screenWidth * 0.03,
                                           color: AppColors.constColor),
@@ -410,7 +401,8 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                         Dialogs.showSnackbar(
                                             context, 'User does not Exists!');
                                       } else {
-                                        _fetchUser(
+                                        APIs.fetchUser(
+                                          context,
                                           data.matriID.toString().trim(),
                                         );
                                       }

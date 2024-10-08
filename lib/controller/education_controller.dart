@@ -32,9 +32,8 @@ class EducationDetailsController with ChangeNotifier {
           await apiService.educationDetails(education, qualification, describe);
 
       if (status) {
-      _editProfileController.userDetails(context);
+        _editProfileController.userDetails(context);
         Navigator.pop(context);
-
       } else {
         flowController.Flow(context, 5);
       }

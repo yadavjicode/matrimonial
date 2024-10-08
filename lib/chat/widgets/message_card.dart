@@ -41,7 +41,9 @@ class _MessageCardState extends State<MessageCard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (shouldShowDate)
-          DateSeparator(date: MyDateUtil.getFormattedDate(widget.message.sent)),
+          DateSeparator(
+              date: MyDateUtil.getFormattedDate(
+                  context: context, timestampString: widget.message.sent)),
         GestureDetector(
             onLongPress: () => _showBottomSheet(isMe, context),
             child: isMe ? _greenMessage() : _blueMessage()),

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
+import '../chat/api/apis.dart';
+import '../chat/api/direct_chat_controller.dart';
+import '../chat/models/chat_user.dart';
 import '../constants/widget/Snackbar.dart';
 import '../utils/connection_check/connectivity_service.dart';
 
@@ -17,6 +20,8 @@ class DeclinedController with ChangeNotifier {
   String? get error => _error;
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
+  final DirectChatController directChatController =
+      Get.put(DirectChatController());
 
   Future<void> declined(
     BuildContext context,
@@ -29,6 +34,9 @@ class DeclinedController with ChangeNotifier {
 
     try {
       _member = await apiService.Declined(id);
+      ChatUser? user = await directChatController.getUserById(id);
+      // ignore: use_build_context_synchronously
+
       // ignore: use_build_context_synchronously
       CustomDialog.show(
         context,
@@ -37,6 +45,16 @@ class DeclinedController with ChangeNotifier {
         dialogType: DialogType.error,
         btnOkOnPress: btnOkOnPress ?? () {},
       );
+
+      if (!directChatController.isLoading.value) {
+        if (user != null) {
+          if (user.pushToken.isNotEmpty) {
+            print("user token ${user.pushToken}");
+            APIs.sendPushNotification(
+                user, "The user has declined your connection request.");
+          }
+        }
+      }
     } catch (e) {
       _error = e.toString();
       print(_error);

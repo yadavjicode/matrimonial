@@ -195,6 +195,15 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                           Column(
                             children: [
                               CustomTextField(
+                                controller: whichSampraya,
+                                labelText:
+                                    "Name of Spirtual Master (Diksha Guru)",
+                                //   controller: nameTemple,
+                                hintText:
+                                    "Name of Spirtual Master (Diksha Guru)",
+                              ),
+                              const SizedBox(height: 15),
+                              CustomTextField(
                                 labelText:
                                     "With which temple you are connected to?",
                                 controller: nameTemple,
@@ -205,7 +214,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                                 controller: cityTemple,
                                 hintText: "City of the Temple",
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 15),
                               CustomTextField(
                                 controller: whichSampraya,
                                 labelText: "Which Sampradaya you belong to?",
@@ -294,7 +303,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
               ),
             ),
             if (devotionalController.isLoading.value ||
-                flowController.isLoading.value||skipController.isLoading.value)
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
               const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

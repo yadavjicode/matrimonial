@@ -223,6 +223,11 @@ class CustomDrawer extends StatelessWidget {
                   ),
                   buildoption("assets/images/icons/mypackage.svg",
                       "My Packages", 22, 22),
+                  GestureDetector(
+                    onTap: () => {Get.toNamed("/myWallet")},
+                    child: buildoption(
+                        "assets/images/icons/wallet.svg", "My Wallet", 18, 16),
+                  ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                     alignment: Alignment.centerLeft,

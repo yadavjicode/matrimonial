@@ -17,7 +17,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../constants/widget/dialog.dart';
 
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -65,7 +64,7 @@ class _HomeState extends State<Home> {
           children: [
             Stack(children: [
               Container(
-                  margin: EdgeInsets.only(top: 130),
+                  margin: const EdgeInsets.only(top: 130),
                   width: double.infinity,
                   alignment: Alignment.topRight,
                   child: Image.asset("assets/images/background.png")),
@@ -76,7 +75,7 @@ class _HomeState extends State<Home> {
                       Container(
                         padding: EdgeInsets.only(top: 16),
                         height: 130,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: AppColors.primaryColor,
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(18),
@@ -98,7 +97,7 @@ class _HomeState extends State<Home> {
                             // ),
                             GestureDetector(
                               onTap: () => {
-                                // {Get.toNamed('/guruscreen')}
+                                // {Get.toNamed('/myWallet')}
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),
@@ -107,7 +106,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Text(
@@ -116,7 +115,7 @@ class _HomeState extends State<Home> {
                                     fontSize: 18, color: AppColors.constColor),
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             GestureDetector(
                               onTap: () => {
                                 if (editProfileController
@@ -148,7 +147,7 @@ class _HomeState extends State<Home> {
                               // ),
                               child: Obx(() {
                                 return Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 8, top: 5, right: 12),
                                   child: badges.Badge(
                                     badgeContent: Text(
@@ -157,7 +156,7 @@ class _HomeState extends State<Home> {
                                           fontSize: 12,
                                           color: AppColors.constColor),
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.notification_add_outlined,
                                       color: AppColors.constColor,
                                       size: 27,
@@ -170,10 +169,11 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 95, left: 15, right: 15),
+                        margin:
+                            const EdgeInsets.only(top: 95, left: 15, right: 15),
                         height: 70,
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: AppColors.constColor,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
@@ -261,27 +261,27 @@ class _HomeState extends State<Home> {
                           onRefresh: () async {
                             dashboardController.dashboard(context);
                           },
-                          child: Container(child: Obx(() {
+                          child: Obx(() {
                             return Stack(children: [
-                              SingleChildScrollView(
+                              const SingleChildScrollView(
                                 child: Stack(children: [HomeBody()]),
                               ),
                               if (shortlistController.isLoading.value ||
                                   sentInvitationController.isLoading.value ||
                                   profileDetailsController.isLoading.value ||
                                   directChatController.isLoading.value)
-                                Center(
+                                const Center(
                                   child: CircularProgressIndicator(
                                     color: AppColors.primaryColor,
                                   ),
                                 )
                             ]);
-                          })),
+                          }),
                         ),
                       ),
                     if (dashboardController.isLoading.value ||
                         editProfileController.isLoading.value)
-                      Expanded(
+                      const Expanded(
                         child: Center(
                           child: CircularProgressIndicator(
                             color: AppColors.primaryColor,

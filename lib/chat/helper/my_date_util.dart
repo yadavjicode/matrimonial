@@ -74,7 +74,8 @@ class MyDateUtil {
   }
 
 // get date===============================================================
-  static String getFormattedDate(String timestampString) {
+  static String getFormattedDate(
+      {required BuildContext context, required String timestampString}) {
     // Convert timestamp string to integer
     int timestamp = int.parse(timestampString);
 
@@ -87,10 +88,12 @@ class MyDateUtil {
     // Normalize dates to remove time component for comparison
     DateTime today = DateTime(now.year, now.month, now.day);
     DateTime yesterday = today.subtract(Duration(days: 1));
-    DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1)); // Start of this week
+    DateTime startOfWeek =
+        today.subtract(Duration(days: today.weekday - 1)); // Start of this week
 
     // Normalize the dateTime for comparison
-    DateTime normalizedDateTime = DateTime(dateTime.year, dateTime.month, dateTime.day);
+    DateTime normalizedDateTime =
+        DateTime(dateTime.year, dateTime.month, dateTime.day);
 
     // Calculate the difference in days
     int differenceInDays = normalizedDateTime.difference(today).inDays;
@@ -102,10 +105,29 @@ class MyDateUtil {
       return 'Yesterday';
     } else if (differenceInDays >= -6 && differenceInDays <= 0) {
       // This is within the current week
-      return DateFormat('EEEE').format(dateTime); // Full name of the day (e.g., "Monday")
+      return DateFormat('EEEE')
+          .format(dateTime); // Full name of the day (e.g., "Monday")
     } else {
       // Format the date as "dd MMM yyyy" for older dates
       return DateFormat('dd MMM yyyy').format(dateTime);
+    }
+  }
+
+// time stamp to date and time
+  static String getTimestampToDateFormat(
+      {required BuildContext context, String? timestamp}) {
+    if (timestamp != null) {
+      if (timestamp.isNotEmpty) {
+        DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+        DateTime dateTime = dateFormat.parse(timestamp);
+        String timestampString = dateTime.millisecondsSinceEpoch.toString();
+        String time = getFormattedTime(context: context, time: timestampString);
+        return "$time ${getFormattedDate(context: context, timestampString: timestampString)}";
+      } else {
+        return "";
+      }
+    } else {
+      return "";
     }
   }
 

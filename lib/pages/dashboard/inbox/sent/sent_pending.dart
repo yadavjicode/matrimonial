@@ -39,7 +39,7 @@ class _SentPendingState extends State<SentPending> {
               if (inboxSentController.isLoading.value == false)
                 pendingContent(),
               if (inboxSentController.isLoading.value)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -49,6 +49,7 @@ class _SentPendingState extends State<SentPending> {
         }));
   }
 
+  
   Widget pendingContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -92,7 +93,6 @@ class _SentPendingState extends State<SentPending> {
                 List<String?> info = [haString, eoString, crString, scString];
                 String infos = CommanClass.hyphenString(info);
 
-                String gender = CommanClass.hisHer(data.gender);
                 return Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -127,18 +127,16 @@ class _SentPendingState extends State<SentPending> {
                                           style: FontConstant.styleMedium(
                                               fontSize: 12,
                                               color: AppColors.darkgrey)),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Expanded(
-                                        child: Container(
-                                          child: Text(
-                                            textAlign: TextAlign.right,
-                                            "Sent On: $date",
-                                            style: FontConstant.styleMedium(
-                                                fontSize: 12,
-                                                color: AppColors.darkgrey),
-                                          ),
+                                        child: Text(
+                                          textAlign: TextAlign.right,
+                                          "Sent On: $date",
+                                          style: FontConstant.styleMedium(
+                                              fontSize: 12,
+                                              color: AppColors.darkgrey),
                                         ),
                                       ),
                                     ],
@@ -154,7 +152,7 @@ class _SentPendingState extends State<SentPending> {
                                               color: AppColors.primaryColor),
                                         ),
                                       ),
-                                      SizedBox(width: 20),
+                                      const SizedBox(width: 20),
                                     ],
                                   ),
                                   Padding(

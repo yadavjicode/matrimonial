@@ -1,3 +1,4 @@
+import 'package:devotee/chat/helper/my_date_util.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -43,7 +44,7 @@ class BasicDetails extends StatelessWidget {
               const SizedBox(width: 2),
               Expanded(
                 child: Text(
-                  'Last Login: ${profileDetailsController.member!.data!.lastlogin ?? ""}',
+                  'Last Login: ${MyDateUtil.getTimestampToDateFormat(context: context, timestamp: profileDetailsController.member!.data!.lastlogin)}',
                   style: FontConstant.styleSemiBold(
                       fontSize: 12, color: Colors.black),
                 ),

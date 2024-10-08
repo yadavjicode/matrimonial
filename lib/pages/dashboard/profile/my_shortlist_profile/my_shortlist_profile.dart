@@ -74,7 +74,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
             child: Image.asset("assets/images/background.png")),
         Obx(() {
           return Stack(
-            children: [
+            children: [    
               shortlistedContent(),
               if (shortlistedListController.isLoading.value ||
                   shortlistController.isLoading.value ||
@@ -102,7 +102,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
       return Center(
           child: Text("No data available",
               style: FontConstant.styleMedium(
-                  fontSize: SizeConfig.textSize * 0.04,
+                  fontSize: 15,
                   color: AppColors.darkgrey)));
     }
 
@@ -117,7 +117,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           alignment: Alignment.center,
           child: Text("No users found!",
               style: FontConstant.styleMedium(
-                  fontSize: SizeConfig.textSize * 0.04,
+                  fontSize: 15,
                   color: AppColors.darkgrey)));
     } else {
       return Padding(
@@ -231,8 +231,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                           Text("ID: $Id",
                                               style: FontConstant.styleMedium(
                                                   fontSize:
-                                                      SizeConfig.textSize *
-                                                          0.033,
+                                                      12,
                                                   color: AppColors.darkgrey)),
                                           SizedBox(
                                             width:
@@ -245,8 +244,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                               "Shortlist On: $date",
                                               style: FontConstant.styleMedium(
                                                   fontSize:
-                                                      SizeConfig.textSize *
-                                                          0.033,
+                                                     12,
                                                   color: AppColors.darkgrey),
                                             ),
                                           ),
@@ -257,7 +255,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                         overflow: TextOverflow.ellipsis,
                                         style: FontConstant.styleSemiBold(
                                             fontSize:
-                                                SizeConfig.textSize * 0.035,
+                                                13,
                                             color: AppColors.primaryColor),
                                       ),
                                       Padding(
@@ -268,7 +266,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                           maxLines: 3,
                                           style: FontConstant.styleMedium(
                                               fontSize:
-                                                  SizeConfig.textSize * 0.033,
+                                                  12,
                                               color: AppColors.darkgrey),
                                         ),
                                       ),
@@ -343,7 +341,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                             "Remove",
                                             style: FontConstant.styleMedium(
                                                 fontSize:
-                                                    SizeConfig.textSize * 0.033,
+                                                    12,
                                                 color: AppColors.black),
                                           ),
                                         ),
@@ -406,7 +404,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                             "Chat Now",
                                             style: FontConstant.styleMedium(
                                                 fontSize:
-                                                    SizeConfig.textSize * 0.033,
+                                                    12,
                                                 color: AppColors.black),
                                           ),
                                         ),
@@ -457,7 +455,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                             "View Profile",
                                             style: FontConstant.styleMedium(
                                                 fontSize:
-                                                    SizeConfig.textSize * 0.033,
+                                                    12,
                                                 color: AppColors.black),
                                           ),
                                         ),

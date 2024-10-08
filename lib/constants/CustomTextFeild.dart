@@ -5,6 +5,7 @@ import 'font_constant.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? labelText;
+  final Color? labelTextColor;
   final String? hintText;
   final int? maxlength;
   final int? maxline;
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
       {super.key,
       this.controller,
       this.labelText,
+      this.labelTextColor,
       this.hintText,
       this.maxlength,
       this.obscureText,
@@ -41,7 +43,7 @@ class CustomTextField extends StatelessWidget {
         if (labelText != null) ...[
           Text(
             labelText!,
-            style: FontConstant.styleRegular(fontSize: 16, color: Colors.black),
+            style: FontConstant.styleRegular(fontSize: 16, color:labelTextColor?? Colors.black),
           ),
           const SizedBox(height: 8),
         ],

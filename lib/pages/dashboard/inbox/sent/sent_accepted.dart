@@ -49,7 +49,7 @@ class _SentAcceptedState extends State<SentAccepted> {
               if (inboxSentController.isLoading.value ||
                   profileDetailsController.isLoading.value ||
                   directChatController.isLoading.value)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),

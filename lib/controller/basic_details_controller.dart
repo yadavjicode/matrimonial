@@ -15,7 +15,7 @@ class BasicDetailsController with ChangeNotifier {
   String? _error;
   BasicDetailsModel? get member => _member;
   String? get error => _error;
-  final FlowController flowController = Get.find<FlowController>();
+  final FlowController flowController = Get.put(FlowController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   final ConnectivityService connectivityService =
@@ -86,7 +86,7 @@ class BasicDetailsController with ChangeNotifier {
         _editProfileController.userDetails(context);
         Navigator.pop(context);
       } else {
-       await flowController.Flow(context, 2);
+        await flowController.Flow(context, 2);
       }
 
       // Get.toNamed('/contact');

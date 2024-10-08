@@ -75,7 +75,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 11, vsync: this);
+    tabController = TabController(length: 9, vsync: this);
   }
 
   @override
@@ -722,7 +722,6 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         TabBar(
           // tabAlignment: TabAlignment.start,
           controller: tabController,
-
           isScrollable: true,
           indicatorColor: AppColors.primaryColor,
           labelColor: AppColors.primaryColor,

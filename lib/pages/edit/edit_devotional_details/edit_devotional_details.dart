@@ -93,24 +93,25 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
       _editProfileController.userDetails(context);
     });
     somethingAbout.text = _editProfileController
-            .member!.member!.somethingAboutYourDevotionalLife ??
+            .member?.member?.somethingAboutYourDevotionalLife ??
         "";
-    nameTemple.text = _editProfileController.member!.member!.nameOfTemple ?? "";
-    cityTemple.text = _editProfileController.member!.member!.city ?? "";
-    whichSampraya.text = _editProfileController.member!.member!.whichsampradaya ?? "";
+    nameTemple.text = _editProfileController.member?.member?.nameOfTemple ?? "";
+    cityTemple.text = _editProfileController.member?.member?.city ?? "";
+    whichSampraya.text =
+        _editProfileController.member?.member?.whichsampradaya ?? "";
 
-    if (_editProfileController.member!.member!.iskonType ==
+    if (_editProfileController.member?.member?.iskonType ==
         "Already Connected with ISKCON") {
       iskon_type = 1;
-    } else if (_editProfileController.member!.member!.iskonType ==
+    } else if (_editProfileController.member?.member?.iskonType ==
         "Only a Basic idea about ISKCON") {
       iskon_type = 2;
-    } else if (_editProfileController.member!.member!.iskonType ==
+    } else if (_editProfileController.member?.member?.iskonType ==
         "No idea about ISKCON") {
       iskon_type = 3;
     }
     selectHobbies(
-        _editProfileController.member!.member!.devotionalHobbies ?? "");
+        _editProfileController.member?.member?.devotionalHobbies ?? "");
   }
 
   @override
@@ -156,7 +157,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
             ),
             if (devotionalController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -264,6 +265,13 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
             const SizedBox(height: 15),
             Column(
               children: [
+                CustomTextField(
+                  controller: whichSampraya,
+                  labelText: "Name of Spirtual Master (Diksha Guru)",
+                  //   controller: nameTemple,
+                  hintText: "Enter Name of Spirtual Master (Diksha Guru)",
+                ),
+                const SizedBox(height: 15),
                 CustomTextField(
                   labelText: "With which temple you are connected to?",
                   controller: nameTemple,

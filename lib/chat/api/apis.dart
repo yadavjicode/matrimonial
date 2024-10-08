@@ -167,10 +167,9 @@ class APIs with ChangeNotifier {
       print('Message data: ${message.data}');
       log('Got a message whilst in the foreground!');
       log('Message data: ${message.data}');
-
       if (message.notification != null) {
         print('Message data: ${message.data}');
-        log('Message also contained a notification: ${message.notification}');
+        log('Message also contained a notification: ${message.notification!.title}');
       }
     });
   }
@@ -194,7 +193,6 @@ class APIs with ChangeNotifier {
 
       // get firebase admin token
       final bearerToken = await NotificationAccessToken.getToken;
-
       log('bearerToken: $bearerToken');
 
       // handle null token
@@ -430,11 +428,9 @@ class APIs with ChangeNotifier {
         .collection('chats/${getConversationID(user.id)}/messages/')
         .orderBy('sent', descending: true)
         .limit(20);
-
     if (lastMessage != null) {
       query = query.startAfterDocument(lastMessage);
     }
-
     return query.snapshots();
   }
 

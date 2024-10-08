@@ -13,6 +13,7 @@ import 'package:devotee/pages/drawer_page/inbox/inbox_drawer.dart';
 import 'package:devotee/pages/drawer_page/matches/based_matches/based_matches.dart';
 import 'package:devotee/pages/drawer_page/matches/matches.dart';
 import 'package:devotee/pages/drawer_page/membership_packages/membership_packages.dart';
+import 'package:devotee/pages/drawer_page/my_%20wallet/my_wallet.dart';
 import 'package:devotee/pages/drawer_page/my_profile/my_profile.dart';
 import 'package:devotee/pages/drawer_page/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/drawer_page/offering_your_gratitude/offering_gratitude.dart';
@@ -23,6 +24,7 @@ import 'package:devotee/pages/drawer_page/our_website/our_wesite.dart';
 import 'package:devotee/pages/drawer_page/package_details/package_details.dart';
 import 'package:devotee/pages/drawer_page/privacy_policy/privacy_policy.dart';
 import 'package:devotee/pages/drawer_page/recommended_by_senior_devotees/recommended_devotees.dart';
+import 'package:devotee/pages/drawer_page/referral_and_reward/refer_earn.dart';
 import 'package:devotee/pages/drawer_page/referral_and_reward/referral_and_reward.dart';
 import 'package:devotee/pages/drawer_page/request_from_our_side/request_from_our_side.dart';
 import 'package:devotee/pages/drawer_page/spiritual_wisdom/spiritual_wisdom.dart';
@@ -127,7 +129,9 @@ class AppRoutes {
   static const String myProfile = '/myProfile';
   static const String chatDrawer = '/chatDrawer';
   static const String shortlistProfileDrawer = '/shortlistProfileDrawer';
-  static const String referralReward= '/referralReward';
+  static const String referralReward = '/referralReward';
+  static const String referEarn = '/referEarn';
+  static const String myWallet = '/myWallet';
 
   static const String membership = '/membership';
   static const String package = '/package';
@@ -568,22 +572,33 @@ class AppRoutes {
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: referralReward,
       page: () => const ReferralAndReward(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-
-     GetPage(
+    GetPage(
       name: guruscreen,
       page: () => const GuruScreen(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
-     GetPage(
+    GetPage(
       name: packageInfo,
       page: () => const PackageInformation(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: myWallet,
+      page: () => const MyWallet(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: referEarn,
+      page: () => const ReferEarn(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),
