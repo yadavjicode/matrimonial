@@ -18,7 +18,7 @@ class DevotionalDetailsController with ChangeNotifier {
   final FlowController flowController = Get.put(FlowController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
-   final ConnectivityService connectivityService =
+  final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
   Future<void> devotionalDetails(
@@ -29,6 +29,7 @@ class DevotionalDetailsController with ChangeNotifier {
       String templeCity,
       String whichSampraya,
       String devotionalHobbies,
+      String dikshaGuru,
       bool status) async {
     isLoading.value = true;
     _error = null;
@@ -36,7 +37,7 @@ class DevotionalDetailsController with ChangeNotifier {
 
     try {
       _member = await apiService.devotionalDetails(somethingAbout, iskontype,
-          templeName, templeCity, whichSampraya, devotionalHobbies);
+          templeName, templeCity, whichSampraya, devotionalHobbies, dikshaGuru);
 
       if (status) {
         _editProfileController.userDetails(context);
@@ -51,7 +52,7 @@ class DevotionalDetailsController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-       if (!connectivityService.isConnected.value) {
+      if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
         Dialogs.showSnackbar(context,

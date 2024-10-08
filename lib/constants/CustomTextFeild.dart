@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final double? borderRadius;
+  final Color? borderColor;
 
   const CustomTextField(
       {super.key,
@@ -33,7 +34,8 @@ class CustomTextField extends StatelessWidget {
       this.onChanged,
       this.maxline,
       this.onTap,
-      this.borderRadius});
+      this.borderRadius,
+      this.borderColor});
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +45,12 @@ class CustomTextField extends StatelessWidget {
         if (labelText != null) ...[
           Text(
             labelText!,
-            style: FontConstant.styleRegular(fontSize: 16, color:labelTextColor?? Colors.black),
+            style: FontConstant.styleRegular(
+                fontSize: 16, color: labelTextColor ?? Colors.black),
           ),
           const SizedBox(height: 8),
         ],
         TextFormField(
-          
           controller: controller,
           obscureText: obscureText ?? false,
           onTap: onTap,
@@ -67,7 +69,7 @@ class CustomTextField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius ?? 23),
               borderSide: BorderSide(
-                color: Colors.black.withOpacity(0.4),
+                color:borderColor?? Colors.black.withOpacity(0.4),
               ),
             ),
             errorBorder: OutlineInputBorder(

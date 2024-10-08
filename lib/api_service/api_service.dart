@@ -360,7 +360,8 @@ class ApiService {
       String templeName,
       String templeCity,
       String whichSampraya,
-      String devotionalHobbies) async {
+      String devotionalHobbies,
+      String dikshaGuru) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -381,7 +382,8 @@ class ApiService {
         "name_of_temple": templeName,
         "city_of_the_temple": templeCity,
         "which_sampradaya_you_belogn_to": whichSampraya,
-        "devotional_hobbies": devotionalHobbies
+        "devotional_hobbies": devotionalHobbies,
+        "name_of_spiritual_master_diksha_guru":dikshaGuru
       }),
     );
 

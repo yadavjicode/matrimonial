@@ -33,15 +33,15 @@ class _ReceivedTabState extends State<ReceivedTab> {
                 unselectedLabelColor: Colors.black,
                 tabs: [
                   Text(
-                    "Pending (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.pendingInvitationCount??0 : inboxReceivedController.member?.pendingInvitationCount??0})",
+                    "Pending (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.pendingInvitationCount ?? 0 : inboxReceivedController.member?.pendingInvitationCount ?? 0})",
                     style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Accepted (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.acceptedInvitationCount??0 : inboxReceivedController.member?.acceptedInvitationCount??0})",
+                    "Accepted (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.acceptedInvitationCount ?? 0 : inboxReceivedController.member?.acceptedInvitationCount ?? 0})",
                     style: const TextStyle(fontSize: 16),
                   ),
                   Text(
-                    "Declined (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.declinedInvitationCount??0 : inboxReceivedController.member?.declinedInvitationCount??0})",
+                    "Declined (${(inboxReceivedController.isLoading.value == false) ? inboxReceivedController.member?.declinedInvitationCount ?? 0 : inboxReceivedController.member?.declinedInvitationCount ?? 0})",
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

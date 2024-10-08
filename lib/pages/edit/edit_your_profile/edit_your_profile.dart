@@ -3,6 +3,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/edit_profile_Photo_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -23,11 +24,14 @@ class _EditYourProfileState extends State<EditYourProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
-        title: Text("Profile Edit"),
+        title: Text("Profile Edit",
+            style:
+                FontConstant.styleSemiBold(fontSize: 18, color: Colors.white)),
         actions: [
           IconButton(
             icon: const Icon(
@@ -42,13 +46,11 @@ class _EditYourProfileState extends State<EditYourProfile> {
       ),
       body: Obx(() {
         final double screenWidth = MediaQuery.of(context).size.width;
-        final double screenHeight = MediaQuery.of(context).size.height;
 
         String image = editProfilePhotoController.selectedImage.value != null
             ? editProfilePhotoController.selectedImage.value!.path
-            : (editProfileController.member!.member!.photo1 != null
-                ? "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.photo1}"
-                : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg");
+            : CommanClass.photo(editProfileController.member?.member?.photo1,
+                editProfileController.member?.member?.gender);
 
         return Column(
           children: [

@@ -45,6 +45,22 @@ class CommanClass {
     }
   }
 
+  static String photoURl(String? photo, String? gender) {
+    if (photo != null) {
+      return photo;
+    } else {
+      if (gender != null) {
+        if (gender == "Male") {
+          return "https://devoteematrimony.aks.5g.in/public/images/nophoto.png";
+        } else {
+          return "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg";
+        }
+      } else {
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvmLjYj0ADoq3XB2XLYWsv6_M-IzKhsbam4g&s";
+      }
+    }
+  }
+
 
  static String hisHer(String? gender) {
     if (gender != null) {

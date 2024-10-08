@@ -336,7 +336,7 @@ class Data {
   dynamic hideEmailStatus;
   dynamic hideAstroStatus;
   dynamic whichsampradaya;
-
+  dynamic dikshaGuru;
   Data(
       {this.id,
       this.matriID,
@@ -653,7 +653,8 @@ class Data {
       this.hideEmailStatus,
       this.hideProfileStatus,
       this.hideAstroStatus,
-      this.whichsampradaya});
+      this.whichsampradaya,
+      this.dikshaGuru});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -974,6 +975,7 @@ class Data {
     hideAstroStatus = json['hide_astrological_info'];
     spiritualConnected = json['spiritual_counseler_connected'];
     whichsampradaya = json['which_sampradaya_you_belogn_to'];
+    dikshaGuru = json['name_of_spiritual_master_diksha_guru'];
     if (json['profile_images'] != null) {
       profileImages = <ProfileImages>[];
       json['profile_images'].forEach((v) {
@@ -1302,6 +1304,7 @@ class Data {
     data['hide_astrological_info'] = this.hideAstroStatus;
     data['spiritual_counseler_connected'] = this.spiritualConnected;
     data['which_sampradaya_you_belogn_to'] = this.whichsampradaya;
+    data['name_of_spiritual_master_diksha_guru'] = this.dikshaGuru;
     data['chat_status'] = this.chatStatus;
     if (this.profileImages != null) {
       data['profile_images'] =

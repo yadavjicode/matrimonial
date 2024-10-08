@@ -93,42 +93,52 @@ class BasicDetailsGrid extends StatelessWidget {
         DetailRow(
           path: "assets/images/icons/region.svg",
           title: 'Gender',
-          value: profileDetailsController.member?.data?.gender ?? "",
+          value:
+              profileDetailsController.member?.data?.gender ?? "Not Mentioned",
         ),
         DetailRow(
             path: "assets/images/icons/dob.svg",
             title: 'Birth Date',
             value: CommanClass.dateFormat(
-                profileDetailsController.member?.data?.dOB)),
+                        profileDetailsController.member?.data?.dOB) !=
+                    ""
+                ? CommanClass.dateFormat(
+                    profileDetailsController.member?.data?.dOB)
+                : "Not Mentioned"),
         DetailRow(
           path: "assets/images/icons/region.svg",
           title: 'Religion',
-          value: profileDetailsController.member?.data?.religion ?? "",
+          value: profileDetailsController.member?.data?.religion ??
+              "Not Mentioned",
         ),
         DetailRow(
           path: "assets/images/icons/marital.svg",
           title: 'Marital Status',
-          value: profileDetailsController.member?.data?.maritalstatus ?? "",
+          value: profileDetailsController.member?.data?.maritalstatus ??
+              "Not Mentioned",
         ),
         DetailRow(
           path: "assets/images/icons/study.svg",
           title: 'Study',
-          value: profileDetailsController.member?.data?.education ?? "",
+          value: profileDetailsController.member?.data?.education ??
+              "Not Mentioned",
         ),
         DetailRow(
           path: "assets/images/icons/langu.svg",
           title: 'Language',
-          value: profileDetailsController.member?.data?.language ?? "",
+          value: profileDetailsController.member?.data?.language ??
+              "Not Mentioned",
         ),
         DetailRow(
           path: "assets/images/icons/location.svg",
           title: 'Lived In',
-          value: liveString,
+          value: liveString != "" ? liveString : "Not Mentioned",
         ),
         DetailRow(
           path: "assets/images/icons/occupation.svg",
           title: 'Occupation',
-          value: profileDetailsController.member?.data?.occupation ?? "",
+          value: profileDetailsController.member?.data?.occupation ??
+              "Not Mentioned",
         ),
       ],
     );

@@ -57,6 +57,7 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   connectivity_plus: ^5.0.2
   firebase_analytics: ^10.8.0
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:

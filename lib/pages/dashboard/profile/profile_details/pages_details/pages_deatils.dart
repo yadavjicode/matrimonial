@@ -92,27 +92,27 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Name",
         "value":
-            "${profileDetailsController.member!.data!.nameTitle ?? ""} ${profileDetailsController.member!.data!.name ?? ""} ${profileDetailsController.member!.data!.surename ?? ""}"
+            "${profileDetailsController.member?.data?.nameTitle ?? ""} ${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""}"
       },
       {
         "title": "Initiated Name (Spiritual Name)",
         "value":
-            "${profileDetailsController.member!.data!.spiritualName ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.spiritualName ?? "Not Mentioned"}"
       },
       {
         "title": "Marital Status",
         "value":
-            "${profileDetailsController.member!.data!.maritalstatus ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.maritalstatus ?? "Not Mentioned"}"
       },
       {
         "title": "Height",
         "value":
-            "${profileDetailsController.member!.data!.height ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.height ?? "Not Mentioned"}"
       },
       {
         "title": "Weight",
         "value":
-            "${profileDetailsController.member!.data!.weight != null ? "${profileDetailsController.member!.data!.weight} KG" : "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.weight != null ? "${profileDetailsController.member?.data?.weight} KG" : "Not Mentioned"}"
       },
       {
         "title": "Date of Birth",
@@ -125,17 +125,17 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Hobbies",
         "value":
-            "${profileDetailsController.member!.data!.hobbies ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.hobbies ?? "Not Mentioned"}"
       },
       {
         "title": "Diet",
         "value":
-            "${profileDetailsController.member!.data!.diet ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.diet ?? "Not Mentioned"}"
       },
       {
         "title": "About ",
         "value":
-            "${profileDetailsController.member!.data!.about ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.about ?? "Not Mentioned"}"
       }
     ];
 // End basicDetails ========================================================================================================================================================================
@@ -146,17 +146,17 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Phone Number",
         "value":
-            "${profileDetailsController.member!.data!.hidePhoneStatus == 1 ? "Phone Number Hidden" : profileDetailsController.member!.data!.mobile ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.hidePhoneStatus == 1 ? "Phone Number Hidden" : profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
       },
       {
         "title": "Email Address",
         "value":
-            "${profileDetailsController.member!.data!.hideEmailStatus == 1 ? "Email Address Hidden" : profileDetailsController.member!.data!.confirmEmail ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Email Address Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned"}"
       },
       {
         "title": "Instagram ID",
         "value":
-            "${profileDetailsController.member!.data!.instagramId ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.instagramId ?? "Not Mentioned"}"
       }
     ];
 // End contactDetails ========================================================================================================================================================================
@@ -167,87 +167,87 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Nationality",
         "value":
-            "${profileDetailsController.member!.data!.country ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.country ?? "Not Mentioned"}"
       },
       {
         "title": "Residence Type",
         "value":
-            "${profileDetailsController.member!.data!.residencystatus ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.residencystatus ?? "Not Mentioned"}"
       },
       {
         "title": "Permanent House Type",
         "value":
-            "${profileDetailsController.member!.data!.permanentHouseType ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.permanentHouseType ?? "Not Mentioned"}"
       },
       {
         "title": "Permanent State",
         "value":
-            "${profileDetailsController.member!.data!.permanentState ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.permanentState ?? "Not Mentioned"}"
       },
       {
         "title": "Permanent City",
         "value":
-            "${profileDetailsController.member!.data!.permanentCity ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.permanentCity ?? "Not Mentioned"}"
       },
       {
         "title": "Permanent Pin Code/ ZIP Code",
         "value":
-            "${profileDetailsController.member!.data!.permanentPincode ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.permanentPincode ?? "Not Mentioned"}"
       },
       {
         "title": "Temporary State",
         "value":
-            "${profileDetailsController.member!.data!.tempState ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.tempState ?? "Not Mentioned"}"
       },
       {
         "title": "Temporary City",
         "value":
-            "${profileDetailsController.member!.data!.tempCity ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.tempCity ?? "Not Mentioned"}"
       },
       {
         "title": "Temporary Pin Code/ ZIP Code",
         "value":
-            "${profileDetailsController.member!.data!.tempPincode ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.tempPincode ?? "Not Mentioned"}"
       },
       {
         "title": "References 1 Relation",
         "value":
-            "${profileDetailsController.member!.data!.reference1Reletion ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference1Reletion ?? "Not Mentioned"}"
       },
       {
         "title": "References 1 Name",
         "value":
-            "${profileDetailsController.member!.data!.reference1Name ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference1Name ?? "Not Mentioned"}"
       },
       {
         "title": "References 1 Email",
         "value":
-            "${profileDetailsController.member!.data!.reference1Email ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference1Email ?? "Not Mentioned"}"
       },
       {
         "title": "References 1 Mobile no",
         "value":
-            "${profileDetailsController.member!.data!.reference1Mobile ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference1Mobile ?? "Not Mentioned"}"
       },
       {
         "title": "References 2 Relation",
         "value":
-            "${profileDetailsController.member!.data!.reference2Reletion ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference2Reletion ?? "Not Mentioned"}"
       },
       {
         "title": "References 2 Name",
         "value":
-            "${profileDetailsController.member!.data!.reference2Name ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference2Name ?? "Not Mentioned"}"
       },
       {
         "title": "References 2 Email",
         "value":
-            "${profileDetailsController.member!.data!.reference2Email ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference2Email ?? "Not Mentioned"}"
       },
       {
         "title": "References 2 Mobile no",
         "value":
-            "${profileDetailsController.member!.data!.reference2Mobile ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.reference2Mobile ?? "Not Mentioned"}"
       },
     ];
     // End locationDetails ========================================================================================================================================================================
@@ -258,17 +258,17 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Highest Qualification",
         "value":
-            "${profileDetailsController.member!.data!.education ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.education ?? "Not Mentioned"}"
       },
       {
         "title": "Professional Qualification",
         "value":
-            "${profileDetailsController.member!.data!.professionalQualification ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.professionalQualification ?? "Not Mentioned"}"
       },
       {
         "title": "Describe other qualifications (if any)",
         "value":
-            "${profileDetailsController.member!.data!.otherProfrsionQualification ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.otherProfrsionQualification ?? "Not Mentioned"}"
       }
     ];
     // End educationDetails ========================================================================================================================================================================
@@ -277,42 +277,42 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
 
     List<Map<String, String>> professionalDetails = [];
 
-    if (profileDetailsController.member!.data!.workingAnywhere == "Yes") {
+    if (profileDetailsController.member?.data?.workingAnywhere == "Yes") {
       professionalDetails.addAll([
         {
           "title": "Title of the Profession",
           "value":
-              "${profileDetailsController.member!.data!.occupation ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.occupation ?? "Not Mentioned"}"
         },
         {
           "title": "Working anywhere",
           "value":
-              "${profileDetailsController.member!.data!.workingAnywhere ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.workingAnywhere ?? "Not Mentioned"}"
         },
         {
           "title": "Employment",
           "value":
-              "${profileDetailsController.member!.data!.employedin ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.employedin ?? "Not Mentioned"}"
         },
         {
           "title": "Working State",
           "value":
-              "${profileDetailsController.member!.data!.workState ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.workState ?? "Not Mentioned"}"
         },
         {
           "title": "Working City",
           "value":
-              "${profileDetailsController.member!.data!.workCity ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.workCity ?? "Not Mentioned"}"
         },
         {
           "title": "Working Pin Code/ ZIP Code",
           "value":
-              "${profileDetailsController.member!.data!.workPincode ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.workPincode ?? "Not Mentioned"}"
         },
         {
           "title": "Annual Income Range",
           "value":
-              "${profileDetailsController.member!.data!.annualincome ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.annualincome ?? "Not Mentioned"}"
         },
       ]);
     } else {
@@ -320,12 +320,12 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         {
           "title": "Title of the Profession",
           "value":
-              "${profileDetailsController.member!.data!.occupation ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.occupation ?? "Not Mentioned"}"
         },
         {
           "title": "Working anywhere",
           "value":
-              "${profileDetailsController.member!.data!.workingAnywhere ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.workingAnywhere ?? "Not Mentioned"}"
         },
       ]);
     }
@@ -338,12 +338,27 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Something about your Devotional Life",
         "value":
-            "${profileDetailsController.member!.data!.somethingAboutYourDevotionalLife ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.somethingAboutYourDevotionalLife ?? "Not Mentioned"}"
       },
       {
-        "title": "With which temple you are connected to?",
+        "title": "Iskcon Knowledge",
         "value":
-            "${profileDetailsController.member!.data!.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.iskonType ?? "Not Mentioned"}"
+      },
+      {
+        "title": "Name of spiritual master",
+        "value":
+            "${profileDetailsController.member?.data?.dikshaGuru ?? "Not Mentioned"}"
+      },
+      {
+        "title": "With which temple you are connected to",
+        "value":
+            "${profileDetailsController.member?.data?.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
+      },
+      {
+        "title": "City of temple",
+        "value":
+            "${profileDetailsController.member?.data?.cityOfTheTemple ?? "Not Mentioned"}"
       },
       {
         "title": "Which Sampradaya you belong to?",
@@ -353,7 +368,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Devotional Hobbies",
         "value":
-            "${profileDetailsController.member!.data!.devotionalHobbies ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.devotionalHobbies ?? "Not Mentioned"}"
       }
     ];
 
@@ -363,42 +378,42 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
 
     List<Map<String, String>> spiritualDetails = [];
 
-    if (profileDetailsController.member!.data!.spiritualConnected == "Yes") {
+    if (profileDetailsController.member?.data?.spiritualConnected == "Yes") {
       spiritualDetails.addAll([
         {
           "title": "connected with any Spirtual Counsellor",
           "value":
-              "${profileDetailsController.member!.data!.spiritualConnected ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.spiritualConnected ?? "Not Mentioned"}"
         },
         {
           "title": "Name of the Counsellor for my Spiritual Path",
           "value":
-              "${profileDetailsController.member!.data!.nameOfTheCounselorOfMySpiritualPath ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.nameOfTheCounselorOfMySpiritualPath ?? "Not Mentioned"}"
         },
         {
           "title": "Connected with my Counsellor Since (Year)",
           "value":
-              "${profileDetailsController.member!.data!.connectedWithMyCounselerSince ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.connectedWithMyCounselerSince ?? "Not Mentioned"}"
         },
         {
           "title": "With which temple your Counsellor is connected to?",
           "value":
-              "${profileDetailsController.member!.data!.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
         },
         {
           "title": "Counsellor residing in State",
           "value":
-              "${profileDetailsController.member!.data!.counselorResidingInState ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.counselorResidingInState ?? "Not Mentioned"}"
         },
         {
           "title": "Counsellor residing in City",
           "value":
-              "${profileDetailsController.member!.data!.counselorResidingInCity ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.counselorResidingInCity ?? "Not Mentioned"}"
         },
         {
           "title": "Something more about the Counsellor",
           "value":
-              "${profileDetailsController.member!.data!.somethingAboutMoreCounselor ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.somethingAboutMoreCounselor ?? "Not Mentioned"}"
         }
       ]);
     } else {
@@ -406,7 +421,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         {
           "title": "connected with any Spirtual Counsellor",
           "value":
-              "${profileDetailsController.member!.data!.spiritualConnected ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.spiritualConnected ?? "Not Mentioned"}"
         },
       ]);
     }
@@ -418,60 +433,60 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Religion",
         "value":
-            "${profileDetailsController.member!.data!.religion ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.religion ?? "Not Mentioned"}"
       },
       {
         "title": "Caste",
         "value":
-            "${profileDetailsController.member!.data!.caste ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.caste ?? "Not Mentioned"}"
       },
       {
         "title": "Subcaste",
         "value":
-            "${profileDetailsController.member!.data!.subcaste ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.subcaste ?? "Not Mentioned"}"
       },
       {
         "title": "Gotra",
         "value":
-            "${profileDetailsController.member!.data!.gothram ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.gothram ?? "Not Mentioned"}"
       },
       {
         "title": "Languages Known",
         "value":
-            "${profileDetailsController.member!.data!.language ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.language ?? "Not Mentioned"}"
       },
       {
         "title": "Mother Tongue",
         "value":
-            "${profileDetailsController.member!.data!.pEMotherTongue ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.pEMotherTongue ?? "Not Mentioned"}"
       },
     ];
-    if (profileDetailsController.member!.data!.fatherlivingstatus == "Yes") {
+    if (profileDetailsController.member?.data?.fatherlivingstatus == "Yes") {
       familyDetails.addAll([
         {
           "title": "Father Alive",
           "value":
-              "${profileDetailsController.member!.data!.fatherlivingstatus ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.fatherlivingstatus ?? "Not Mentioned"}"
         },
         {
           "title": "Full Name of Father",
           "value":
-              "${profileDetailsController.member!.data!.fathername ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.fathername ?? "Not Mentioned"}"
         },
         {
           "title": "Father Occupation",
           "value":
-              "${profileDetailsController.member!.data!.fathersoccupation ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.fathersoccupation ?? "Not Mentioned"}"
         },
         {
           "title": "Father Business",
           "value":
-              "${profileDetailsController.member!.data!.fatherBussness ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.fatherBussness ?? "Not Mentioned"}"
         },
         {
           "title": "Father Annual Income Range",
           "value":
-              "${profileDetailsController.member!.data!.fatherAnnualIncome ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.fatherAnnualIncome ?? "Not Mentioned"}"
         },
       ]);
     } else {
@@ -479,32 +494,32 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         {
           "title": "Father Alive",
           "value":
-              "${profileDetailsController.member!.data!.fatherlivingstatus ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.fatherlivingstatus ?? "Not Mentioned"}"
         },
       ]);
     }
 
-    if (profileDetailsController.member!.data!.motherlivingstatus == "Yes") {
+    if (profileDetailsController.member?.data?.motherlivingstatus == "Yes") {
       familyDetails.addAll([
         {
           "title": "Mother Alive",
           "value":
-              "${profileDetailsController.member!.data!.motherlivingstatus ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.motherlivingstatus ?? "Not Mentioned"}"
         },
         {
           "title": "Full Name of Mother",
           "value":
-              "${profileDetailsController.member!.data!.mothersname ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.mothersname ?? "Not Mentioned"}"
         },
         {
           "title": "Mother Occupation",
           "value":
-              "${profileDetailsController.member!.data!.mothersoccupation ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.mothersoccupation ?? "Not Mentioned"}"
         },
         {
           "title": "Mother Annual Income Range",
           "value":
-              "${profileDetailsController.member!.data!.motherAnnualIncome ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.motherAnnualIncome ?? "Not Mentioned"}"
         },
       ]);
     } else {
@@ -512,22 +527,22 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         {
           "title": "Mother Alive",
           "value":
-              "${profileDetailsController.member!.data!.motherlivingstatus ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.motherlivingstatus ?? "Not Mentioned"}"
         },
       ]);
     }
 
-    if (profileDetailsController.member!.data!.brother == "Yes") {
+    if (profileDetailsController.member?.data?.brother == "Yes") {
       familyDetails.addAll([
         {
           "title": "Brother",
           "value":
-              "${profileDetailsController.member!.data!.brother ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.brother ?? "Not Mentioned"}"
         },
         {
           "title": "Number of Brother",
           "value":
-              "${profileDetailsController.member!.data!.noofbrothers ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.noofbrothers ?? "Not Mentioned"}"
         },
       ]);
     } else {
@@ -535,22 +550,22 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         {
           "title": "Brother",
           "value":
-              "${profileDetailsController.member!.data!.brother ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.brother ?? "Not Mentioned"}"
         },
       ]);
     }
 
-    if (profileDetailsController.member!.data!.sister == "Yes") {
+    if (profileDetailsController.member?.data?.sister == "Yes") {
       familyDetails.addAll([
         {
           "title": "Sister",
           "value":
-              "${profileDetailsController.member!.data!.sister ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.sister ?? "Not Mentioned"}"
         },
         {
           "title": "Number of Sisters",
           "value":
-              "${profileDetailsController.member!.data!.noofsisters ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.noofsisters ?? "Not Mentioned"}"
         },
       ]);
     } else {
@@ -558,7 +573,7 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
         {
           "title": "Sister",
           "value":
-              "${profileDetailsController.member!.data!.sister ?? "Not Mentioned"}"
+              "${profileDetailsController.member?.data?.sister ?? "Not Mentioned"}"
         },
       ]);
     }
@@ -567,17 +582,17 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Family Type",
         "value":
-            "${profileDetailsController.member!.data!.familyType ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.familyType ?? "Not Mentioned"}"
       },
       {
         "title": "Family Value",
         "value":
-            "${profileDetailsController.member!.data!.familyvalues ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.familyvalues ?? "Not Mentioned"}"
       },
       {
         "title": "Affluence Level",
         "value":
-            "${profileDetailsController.member!.data!.familyStatus ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.familyStatus ?? "Not Mentioned"}"
       },
     ]);
 
@@ -606,17 +621,17 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
       {
         "title": "Time Of Birth",
         "value":
-            "${profileDetailsController.member!.data!.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member!.data!.timeOfBirth ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.timeOfBirth ?? "Not Mentioned"}"
       },
       {
         "title": "State of Birth",
         "value":
-            "${profileDetailsController.member!.data!.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member!.data!.stateOfBirth ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.stateOfBirth ?? "Not Mentioned"}"
       },
       {
         "title": "City of Birth",
         "value":
-            "${profileDetailsController.member!.data!.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member!.data!.cityOfBirth ?? "Not Mentioned"}"
+            "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.cityOfBirth ?? "Not Mentioned"}"
       },
     ];
 // End horoscopeDetails ========================================================================================================================================================================

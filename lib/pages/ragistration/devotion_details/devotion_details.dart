@@ -21,6 +21,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
   final TextEditingController whichSampraya = TextEditingController();
+  final TextEditingController dikshaGuru = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SkipController skipController = Get.put(SkipController());
@@ -195,7 +196,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                           Column(
                             children: [
                               CustomTextField(
-                                controller: whichSampraya,
+                                controller: dikshaGuru,
                                 labelText:
                                     "Name of Spirtual Master (Diksha Guru)",
                                 //   controller: nameTemple,
@@ -234,10 +235,10 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                                   fontSize: 16, color: AppColors.black),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Container(
+                          SizedBox(
                             height: 250,
                             child: ScrollbarTheme(
                               data: ScrollbarThemeData(
@@ -247,7 +248,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                                       .primaryLight), // Change track color here
                                   trackBorderColor: MaterialStateProperty.all(
                                       AppColors.primaryLight),
-                                  radius: Radius.circular(
+                                  radius: const Radius.circular(
                                       10) // Change track border color here
                                   ),
                               child: Scrollbar(
@@ -329,6 +330,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                 cityTemple.text,
                 whichSampraya.text..toString().trim(),
                 getSelectedHobbies(),
+                dikshaGuru.text.toString().trim(),
                 false);
           }
 

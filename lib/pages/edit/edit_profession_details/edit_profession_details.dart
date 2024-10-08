@@ -127,7 +127,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                 stateController.isLoading.value ||
                 cityController.isLoading.value ||
                 incomeController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

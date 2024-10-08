@@ -154,35 +154,41 @@ class CustomButton extends StatelessWidget {
   final Color color;
   final TextStyle textStyle;
   final double? padding;
+  final double? radius;
 
-  const CustomButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-    required this.color,
-    required this.textStyle,
-    this.padding
-  });
+  const CustomButton(
+      {super.key,
+      required this.text,
+      required this.onPressed,
+      required this.color,
+      required this.textStyle,
+      this.padding,
+      this.radius});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(radius ?? 25),
       ),
       child: InkWell(
         splashColor: Colors.grey.shade400,
         borderRadius: BorderRadius.circular(10),
         onTap: onPressed,
         child: Padding(
-          padding: EdgeInsets.all(padding??10.0),
+          padding: EdgeInsets.all(padding ?? 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                text,
-                style: textStyle,
+              Expanded(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  text,
+                  style: textStyle,
+                ),
               ),
             ],
           ),

@@ -25,6 +25,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
   final TextEditingController cityTemple = TextEditingController();
   final TextEditingController somethingAbout = TextEditingController();
   final TextEditingController whichSampraya = TextEditingController();
+  final TextEditingController dikshaGuru = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -87,7 +88,6 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
@@ -99,7 +99,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
     cityTemple.text = _editProfileController.member?.member?.city ?? "";
     whichSampraya.text =
         _editProfileController.member?.member?.whichsampradaya ?? "";
-
+    dikshaGuru.text = _editProfileController.member?.member?.dikshaGuru ?? "";
     if (_editProfileController.member?.member?.iskonType ==
         "Already Connected with ISKCON") {
       iskon_type = 1;
@@ -181,6 +181,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                 cityTemple.text.toString().trim(),
                 whichSampraya.text.toString().trim(),
                 getSelectedHobbies(),
+                dikshaGuru.text.toString().trim(),
                 true);
           }
 
@@ -266,7 +267,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
             Column(
               children: [
                 CustomTextField(
-                  controller: whichSampraya,
+                  controller: dikshaGuru,
                   labelText: "Name of Spirtual Master (Diksha Guru)",
                   //   controller: nameTemple,
                   hintText: "Enter Name of Spirtual Master (Diksha Guru)",
@@ -298,10 +299,10 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
               style: FontConstant.styleRegular(
                   fontSize: 16, color: AppColors.black),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               height: 250,
               child: ScrollbarTheme(
                 data: ScrollbarThemeData(

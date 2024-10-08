@@ -1,6 +1,7 @@
 import 'package:devotee/constants/widget/dialog.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -24,12 +25,14 @@ class CustomDrawer extends StatelessWidget {
             Container(
               //   height: 170,
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 16,
                 left: 10,
                 right: 10,
                 bottom: 10,
               ),
+              decoration:
+                  const BoxDecoration(color: AppColors.drawerbackground),
               child: Obx(() {
                 return Stack(
                   children: [
@@ -44,19 +47,14 @@ class CustomDrawer extends StatelessWidget {
                             children: [
                               Stack(children: [
                                 editProfileController.member == null
-                                    ? SizedBox()
+                                    ? const SizedBox()
                                     : ProfileImage(
                                         size: 71,
-                                        url: editProfileController
-                                                    .member!.member!.photo1 !=
-                                                null
-                                            ? "http://devoteematrimony.aks.5g.in/${editProfileController.member!.member!.photo1}"
-                                            : editProfileController.member!
-                                                        .member!.gender ==
-                                                    "Male"
-                                                ? "https://devoteematrimony.aks.5g.in/public/images/nophoto.png"
-                                                : "https://devoteematrimony.aks.5g.in/public/images/nophotof.jpg",
-                                      ),
+                                        url: CommanClass.photo(
+                                            editProfileController
+                                                .member?.member?.photo1,
+                                            editProfileController
+                                                .member?.member?.gender)),
                                 Container(
                                   width: 70.0,
                                   height: 70.0,
@@ -64,7 +62,7 @@ class CustomDrawer extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: () => {Get.toNamed("/profileEdit")},
                                     child: Container(
-                                        decoration: BoxDecoration(
+                                        decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: AppColors.primaryColor),
                                         child: SvgPicture.asset(
@@ -72,16 +70,16 @@ class CustomDrawer extends StatelessWidget {
                                   ),
                                 )
                               ]),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     editProfileController.member == null
-                                        ? SizedBox()
+                                        ? const SizedBox()
                                         : Text(
-                                            " ${editProfileController.member!.member!.name} ${editProfileController.member!.member!.surename} ",
+                                            " ${editProfileController.member?.member?.name} ${editProfileController.member?.member?.surename} ",
                                             overflow: TextOverflow.ellipsis,
                                             style: FontConstant.styleMedium(
                                                 fontSize: 15,
@@ -89,29 +87,29 @@ class CustomDrawer extends StatelessWidget {
                                           ),
                                     Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                                "assets/images/Protect.png"),
-                                            Text(
-                                              "Verified",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.constColor),
-                                            ),
-                                          ],
-                                        ),
-                                        if (editProfileController
-                                                .member?.member?.accountType ==
-                                            1)
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                left: 4, right: 4),
-                                            height: 15,
-                                            width: 1,
-                                            color: AppColors.grey,
-                                          ),
+                                        // Row(
+                                        //   children: [
+                                        //     Image.asset(
+                                        //         "assets/images/Protect.png"),
+                                        //     Text(
+                                        //       "Verified",
+                                        //       overflow: TextOverflow.ellipsis,
+                                        //       style: FontConstant.styleMedium(
+                                        //           fontSize: 12,
+                                        //           color: AppColors.constColor),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // if (editProfileController
+                                        //         .member?.member?.accountType ==
+                                        //     1)
+                                        //   Container(
+                                        //     margin: EdgeInsets.only(
+                                        //         left: 4, right: 4),
+                                        //     height: 15,
+                                        //     width: 1,
+                                        //     color: AppColors.grey,
+                                        //   ),
                                         if (editProfileController
                                                 .member?.member?.accountType ==
                                             1)
@@ -139,7 +137,7 @@ class CustomDrawer extends StatelessWidget {
                                   onTap: () =>
                                       {scaffoldKey.currentState?.closeDrawer()},
                                   child: Container(
-                                      padding: EdgeInsets.all(3),
+                                      padding: const EdgeInsets.all(3),
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                           border: Border.all(
@@ -156,8 +154,8 @@ class CustomDrawer extends StatelessWidget {
                                 Expanded(
                                   child: Stack(children: [
                                     Container(
-                                      padding:
-                                          EdgeInsets.only(left: 5, right: 5),
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
                                       height: 15,
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(
@@ -174,8 +172,8 @@ class CustomDrawer extends StatelessWidget {
                                     ),
                                     Container(
                                         height: 15,
-                                        padding:
-                                            EdgeInsets.only(left: 15, right: 5),
+                                        padding: const EdgeInsets.only(
+                                            left: 15, right: 5),
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           "Profile Status - ${editProfileController.member?.profilePercentage ?? ""}%",
@@ -196,7 +194,7 @@ class CustomDrawer extends StatelessWidget {
                         ],
                       ),
                     if (editProfileController.isLoading.value)
-                      Center(
+                      const Center(
                         child: CircularProgressIndicator(
                           color: AppColors.primaryColor,
                         ),
@@ -204,7 +202,6 @@ class CustomDrawer extends StatelessWidget {
                   ],
                 );
               }),
-              decoration: BoxDecoration(color: AppColors.drawerbackground),
             ),
             Expanded(
               child: ListView(
@@ -229,7 +226,8 @@ class CustomDrawer extends StatelessWidget {
                         "assets/images/icons/wallet.svg", "My Wallet", 18, 16),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Discover Your Matches",
@@ -257,7 +255,8 @@ class CustomDrawer extends StatelessWidget {
                         "My Shortlist Profiles", 22, 22),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Options & Settings",
@@ -280,9 +279,10 @@ class CustomDrawer extends StatelessWidget {
                         "Partner Preferences", 22, 22),
                   ),
                   ExpansionTile(
-                      tilePadding: EdgeInsets.only(
+                      tilePadding: const EdgeInsets.only(
                         right: 18,
                       ),
+                      // ignore: sort_child_properties_last
                       children: [
                         GestureDetector(
                             onTap: () => {Get.toNamed("/whoAreYou")},
@@ -304,17 +304,15 @@ class CustomDrawer extends StatelessWidget {
                             child: expansionOption("Our Social Media Handles")),
                       ],
                       title: Container(
-                        padding: EdgeInsets.only(left: 18),
+                        padding: const EdgeInsets.only(left: 18),
                         child: Row(
                           children: [
-                            Container(
-                              child: SvgPicture.asset(
-                                "assets/images/icons/about.svg",
-                                width: 22, // Set the desired width
-                                height: 22, // Set the desired height
-                              ),
+                            SvgPicture.asset(
+                              "assets/images/icons/about.svg",
+                              width: 22, // Set the desired width
+                              height: 22, // Set the desired height
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Expanded(
@@ -375,9 +373,10 @@ class CustomDrawer extends StatelessWidget {
                         "Collaborate With Us", 22, 22),
                   ),
                   ExpansionTile(
-                      tilePadding: EdgeInsets.only(
+                      tilePadding: const EdgeInsets.only(
                         right: 18,
                       ),
+                      // ignore: sort_child_properties_last
                       children: [
                         GestureDetector(
                             onTap: () => {Get.toNamed("/feedback")},
@@ -390,19 +389,17 @@ class CustomDrawer extends StatelessWidget {
                             child: expansionOption("Complaint")),
                       ],
                       title: Container(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 18,
                         ),
                         child: Row(
                           children: [
-                            Container(
-                              child: SvgPicture.asset(
-                                "assets/images/icons/fsc.svg",
-                                width: 22, // Set the desired width
-                                height: 22, // Set the desired height
-                              ),
+                            SvgPicture.asset(
+                              "assets/images/icons/fsc.svg",
+                              width: 22, // Set the desired width
+                              height: 22, // Set the desired height
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Expanded(
@@ -445,7 +442,7 @@ class CustomDrawer extends StatelessWidget {
                     child: buildoption(
                         "assets/images/icons/logout.svg", "Logout", 22, 22),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   )
                 ],
@@ -462,17 +459,15 @@ Widget buildoption(
     String imagepath, String tittle, double height, double width) {
   return Container(
     color: AppColors.drawerbackground,
-    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+    padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
     child: Row(
       children: [
-        Container(
-          child: SvgPicture.asset(
-            imagepath,
-            width: width, // Set the desired width
-            height: height, // Set the desired height
-          ),
+        SvgPicture.asset(
+          imagepath,
+          width: width, // Set the desired width
+          height: height, // Set the desired height
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         Expanded(
@@ -492,7 +487,7 @@ Widget expansionOption(String tittle) {
     color: AppColors.drawerbackground,
     width: double.infinity,
     alignment: Alignment.centerLeft,
-    padding: EdgeInsets.only(left: 60, top: 6, bottom: 6, right: 18),
+    padding: const EdgeInsets.only(left: 60, top: 6, bottom: 6, right: 18),
     child: Text(
       tittle,
       style:

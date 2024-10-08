@@ -350,6 +350,7 @@ class Member {
   dynamic peHeight2Key;
   dynamic spiritualCounselerConnected;
   dynamic whichsampradaya;
+  dynamic dikshaGuru;
 
   Member(
       {this.id,
@@ -668,7 +669,8 @@ class Member {
       this.heightKey,
       this.peHeightKey,
       this.peHeight2Key,
-      this.whichsampradaya});
+      this.whichsampradaya,
+      this.dikshaGuru});
 
   Member.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -992,6 +994,7 @@ class Member {
     peHeightKey = json['PE_HeightKey'];
     peHeight2Key = json['PE_Height2Key'];
     whichsampradaya = json['which_sampradaya_you_belogn_to'];
+    dikshaGuru = json['name_of_spiritual_master_diksha_guru'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1317,10 +1320,11 @@ class Member {
     data['PE_HeightKey'] = this.peHeightKey;
     data['PE_Height2Key'] = this.peHeight2Key;
     data['which_sampradaya_you_belogn_to'] = this.whichsampradaya;
+    data['name_of_spiritual_master_diksha_guru'] = this.dikshaGuru;
     return data;
   }
 }
-
+   
 class MemberImages {
   dynamic id;
   dynamic memberId;

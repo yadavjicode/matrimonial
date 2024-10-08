@@ -515,6 +515,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       .member?.member?.iskonType ??
                                   "Not Mentioned"),
                           _buildText(
+                              "Name of spiritual master",
+                              _editProfileController
+                                      .member?.member?.dikshaGuru ??
+                                  "Not Mentioned"),
+                          _buildText(
                               "Name of temple",
                               _editProfileController
                                       .member?.member?.nameOfTemple ??

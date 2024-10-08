@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/comman_class_method.dart';
+
 class UpdatePhoto extends StatefulWidget {
   const UpdatePhoto({super.key});
 
@@ -19,7 +21,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
       Get.put(EditProfileController());
   final EditProfilePhotoController editProfilePhotoController =
       Get.put(EditProfilePhotoController());
-    final Map<String, dynamic> arguments = Get.arguments;
+  final Map<String, dynamic> arguments = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,12 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
-        title: Text("Update Photo"),
+        title: Text("Update Photo",
+            style:
+                FontConstant.styleSemiBold(fontSize: 18, color: Colors.white)),
         actions: [
           IconButton(
             icon: const Icon(
@@ -46,42 +49,47 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
         ],
       ),
       body: Obx(() {
-      final double screenWidth = MediaQuery.of(context).size.width;
-      final double screenHeight = MediaQuery.of(context).size.height;
+        final double screenWidth = MediaQuery.of(context).size.width;
+        final double screenHeight = MediaQuery.of(context).size.height;
 
         String image = editProfilePhotoController.selectedImage.value != null
             ? editProfilePhotoController.selectedImage.value!.path
-            : (editProfileController.member!.member!.photo1 != null
-                ? imageurl
-                : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg");
+            : CommanClass.photoURl(
+                imageurl, editProfileController.member?.member?.gender);
 
         return Column(
           children: [
             Container(
-              width: screenWidth*1,
-              height:(screenWidth*1)*(5/4) ,
+              width: screenWidth * 1,
+              height: (screenWidth * 1) * (5 / 4),
               color: AppColors.constColor,
               child: editProfilePhotoController.selectedImage.value != null
                   ? Image.file(editProfilePhotoController.selectedImage.value!,
                       fit: BoxFit.fill)
-                  : Image.network(image, fit: BoxFit.cover,width: screenWidth*1,
-              height:(screenWidth*1)*(5/4) ,),
+                  : Image.network(
+                      image,
+                      fit: BoxFit.cover,
+                      width: screenWidth * 1,
+                      height: (screenWidth * 1) * (5 / 4),
+                    ),
             ),
             GestureDetector(
               onTap: () {
                 if (editProfilePhotoController.selectedImage.value != null) {
-                  editProfilePhotoController.profileCompleteFill(context,values);
+                  editProfilePhotoController.profileCompleteFill(
+                      context, values);
                 } else {
-                 
-                   Dialogs.showSnackbar(context, 'Please select an image before updating.');
+                  Dialogs.showSnackbar(
+                      context, 'Please select an image before updating.');
                 }
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: const BoxDecoration(
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(15))),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.center,
                 child: Text(
                   "Update Photo",
@@ -99,7 +107,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
       ),
       builder: (BuildContext context) {
@@ -113,7 +121,8 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => editProfilePhotoController.pickImageFromGallery(),
+                    onTap: () =>
+                        editProfilePhotoController.pickImageFromGallery(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -131,7 +140,8 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => editProfilePhotoController.pickImageFromCamera(),
+                    onTap: () =>
+                        editProfilePhotoController.pickImageFromCamera(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -150,7 +160,6 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
                   )
                 ],
               ),
-              
             ],
           ),
         );
