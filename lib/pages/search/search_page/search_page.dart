@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
-
+import '../../../constants/widget/Snackbar.dart';
 import '../../../constants/widget/dialog.dart';
 
 class SearchPage extends StatefulWidget {
@@ -33,19 +33,21 @@ class _SearchPageState extends State<SearchPage> {
   bool selectprofileB = false;
   bool selectprofileC = false;
 
-  SearchsController searchController = Get.put(SearchsController());
-  HeightController heightController = Get.put(HeightController());
-  NumberController numberController = Get.put(NumberController());
-  AgeController ageController = Get.put(AgeController());
-  MaritalController maritalController = Get.put(MaritalController());
-  ReligionsController religionsController = Get.put(ReligionsController());
-  CastController castController = Get.put(CastController());
-  CountryController countryController = Get.put(CountryController());
-  StateControllerPermanent stateControllerPermanent =
+  final SearchsController searchController = Get.put(SearchsController());
+  final HeightController heightController = Get.put(HeightController());
+  final NumberController numberController = Get.put(NumberController());
+  final AgeController ageController = Get.put(AgeController());
+  final MaritalController maritalController = Get.put(MaritalController());
+  final ReligionsController religionsController =
+      Get.put(ReligionsController());
+  final CastController castController = Get.put(CastController());
+  final CountryController countryController = Get.put(CountryController());
+  final StateControllerPermanent stateControllerPermanent =
       Get.put(StateControllerPermanent());
-  CityControllerPermanent cityControllerPermanent =
+  final CityControllerPermanent cityControllerPermanent =
       Get.put(CityControllerPermanent());
-  EducationController educationController = Get.put(EducationController());
+  final EducationController educationController =
+      Get.put(EducationController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
 
@@ -68,6 +70,38 @@ class _SearchPageState extends State<SearchPage> {
       return "Female";
     } else {
       return "";
+    }
+  }
+
+  String checkString(String? data) {
+    if (data != null) {
+      if (data == 'Prefer Not To Say') {
+        return "";
+      } else {
+        return data;
+      }
+    } else {
+      return "";
+    }
+  }
+
+  bool valodation() {
+    if (selectAgeFrom != null && selectAgeFrom != 'Prefer Not To Say' ||
+        selectAgeTo != null && selectAgeTo != 'Prefer Not To Say' ||
+        selectHeightFromKey != null &&
+            selectHeightFromKey != 'Prefer Not To Say' ||
+        selectHeightToKey != null && selectHeightToKey != 'Prefer Not To Say' ||
+        selectMaritalStatus != null &&
+            selectMaritalStatus != 'Prefer Not To Say' ||
+        selectReligion != null && selectReligion != 'Prefer Not To Say' ||
+        selectCaste != null && selectCaste != 'Prefer Not To Say' ||
+        selectCountry != null && selectCountry != 'Prefer Not To Say' ||
+        selectState != null && selectState != 'Prefer Not To Say' ||
+        selectCity != null && selectCity != 'Prefer Not To Say' ||
+        selectEducation != null && selectEducation != 'Prefer Not To Say') {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -184,7 +218,7 @@ class _SearchPageState extends State<SearchPage> {
                         Expanded(
                           child: buildDropdownWithSearch(
                             '',
-                            AgeController.AgeTypes(),
+                            ['Prefer Not To Say', ...AgeController.AgeTypes()],
                             (value) {
                               setState(() {
                                 selectAgeFrom = value; // Update the state
@@ -195,13 +229,13 @@ class _SearchPageState extends State<SearchPage> {
                             hintText: 'select',
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Expanded(
                           child: buildDropdownWithSearch(
                             '',
-                            AgeController.AgeTypes(),
+                            ['Prefer Not To Say', ...AgeController.AgeTypes()],
                             (value) {
                               setState(() {
                                 selectAgeTo = value; // Update the state
@@ -283,13 +317,16 @@ class _SearchPageState extends State<SearchPage> {
                                 } else {
                                   return buildDropdownWithSearch(
                                     'Height',
-                                    heightController.HeightLists,
+                                    [
+                                      'Prefer Not To Say',
+                                      ...heightController.HeightLists
+                                    ],
                                     (value) {
                                       setState(() {
-                                        selectHeightFromKey = heightController
-                                            .getHeightList()
-                                            .indexOf(value!)
-                                            .toString();
+                                        selectHeightFromKey = value;
+                                        // .getHeightList()
+                                        // .indexOf(value!)
+                                        // .toString();
                                       });
                                       heightController.selectItem(value);
                                     },
@@ -298,7 +335,7 @@ class _SearchPageState extends State<SearchPage> {
                                 }
                               }),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Expanded(
@@ -318,13 +355,16 @@ class _SearchPageState extends State<SearchPage> {
                                 } else {
                                   return buildDropdownWithSearch(
                                     ' ',
-                                    heightController.HeightLists,
+                                    [
+                                      'Prefer Not To Say',
+                                      ...heightController.HeightLists
+                                    ],
                                     (value) {
                                       setState(() {
-                                        selectHeightToKey = heightController
-                                            .getHeightList()
-                                            .indexOf(value!)
-                                            .toString();
+                                        selectHeightToKey = value;
+                                        // .getHeightList()
+                                        // .indexOf(value!)
+                                        // .toString();
                                       });
                                       heightController.selectItem(
                                           value); // Call the controller method
@@ -358,7 +398,10 @@ class _SearchPageState extends State<SearchPage> {
                           } else {
                             return buildDropdownWithSearch(
                               'Martial Status',
-                              maritalController.maritalLists,
+                              [
+                                'Prefer Not To Say',
+                                ...maritalController.maritalLists
+                              ],
                               (value) {
                                 setState(() {
                                   selectMaritalStatus =
@@ -390,7 +433,10 @@ class _SearchPageState extends State<SearchPage> {
                           } else {
                             return buildDropdownWithSearch(
                               'Religion',
-                              religionsController.getReligionNames(),
+                              [
+                                'Prefer Not To Say',
+                                ...religionsController.getReligionNames()
+                              ],
                               (value) {
                                 setState(() {
                                   selectReligion = value; // Update the state
@@ -422,7 +468,10 @@ class _SearchPageState extends State<SearchPage> {
                           } else {
                             return buildDropdownWithSearch(
                               'Caste',
-                              castController.getCastNames(),
+                              [
+                                'Prefer Not To Say',
+                                ...castController.getCastNames()
+                              ],
                               (value) {
                                 setState(() {
                                   // selectCast = castController.castLists
@@ -455,7 +504,10 @@ class _SearchPageState extends State<SearchPage> {
                           } else {
                             return buildDropdownWithSearch(
                               'Country',
-                              countryController.getCountryList(),
+                              [
+                                'Prefer Not To Say',
+                                ...countryController.getCountryList()
+                              ],
                               (value) {
                                 setState(() {
                                   selectCountry = value; // Update the state
@@ -489,7 +541,10 @@ class _SearchPageState extends State<SearchPage> {
                             } else {
                               return buildDropdownWithSearch(
                                 'State',
-                                stateControllerPermanent.stateLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...stateControllerPermanent.stateLists
+                                ],
                                 (value) {
                                   setState(() {
                                     selectState = value; // Update the state
@@ -521,7 +576,10 @@ class _SearchPageState extends State<SearchPage> {
                             } else {
                               return buildDropdownWithSearch(
                                 'District/City',
-                                cityControllerPermanent.cityLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...cityControllerPermanent.cityLists
+                                ],
                                 (value) {
                                   setState(() {
                                     selectCity = value; // Update the state
@@ -552,7 +610,10 @@ class _SearchPageState extends State<SearchPage> {
                             } else {
                               return buildDropdownWithSearch(
                                 'Education',
-                                educationController.EducationLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...educationController.EducationLists
+                                ],
                                 (value) {
                                   setState(() {
                                     selectEducation = value; // Update the state
@@ -625,26 +686,32 @@ class _SearchPageState extends State<SearchPage> {
                           if (userProfileController
                                   .member?.member?.accountType ==
                               1) {
-                            Get.toNamed('/searchresult', arguments: {
-                              "ageFrom":
-                                  searchController.getAge(selectAgeFrom ?? ""),
-                              "ageTo":
-                                  searchController.getAge(selectAgeTo ?? ""),
-                              // "heightFrom":
-                              //     searchController.convertToFeetAndInches(
-                              //         double.parse(_heightFrom ?? "3.0")),
-                              // "heightTo": searchController.convertToFeetAndInches(
-                              //     double.parse(_heightTo ?? "7.0")),
-                              "heightFrom": selectHeightFromKey ?? "",
-                              "heightTo": selectHeightToKey ?? "",
-                              "maritalStatus": selectMaritalStatus ?? "",
-                              "religion": selectReligion ?? "",
-                              "caste": selectCaste ?? "",
-                              "country": selectCountry ?? "",
-                              "state": selectState ?? "",
-                              "city": selectCity ?? "",
-                              "education": selectEducation ?? ""
-                            });
+                            if (valodation()) {
+                              Get.toNamed('/searchresult', arguments: {
+                                "ageFrom": searchController
+                                    .getAge(checkString(selectAgeFrom)),
+                                "ageTo": searchController
+                                    .getAge(checkString(selectAgeTo)),
+                                // "heightFrom":
+                                //     searchController.convertToFeetAndInches(
+                                //         double.parse(_heightFrom ?? "3.0")),
+                                // "heightTo": searchController.convertToFeetAndInches(
+                                //     double.parse(_heightTo ?? "7.0")),
+                                "heightFrom": checkString(selectHeightFromKey),
+                                "heightTo": checkString(selectHeightToKey),
+                                "maritalStatus":
+                                    checkString(selectMaritalStatus),
+                                "religion": checkString(selectReligion),
+                                "caste": checkString(selectCaste),
+                                "country": checkString(selectCountry),
+                                "state": checkString(selectState),
+                                "city": checkString(selectCity),
+                                "education": checkString(selectEducation)
+                              });
+                            } else {
+                              Dialogs.showSnackbar(context,
+                                  "Please choose a filter option to proceed with your search!");
+                            }
                           } else {
                             DialogConstant.packageDialog(
                                 context, 'search feature');

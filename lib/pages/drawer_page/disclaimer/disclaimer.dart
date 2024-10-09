@@ -37,17 +37,16 @@ class _DisclaimerState extends State<Disclaimer> {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
+                    DrawerCommanCode().buildTextBold("Hare Krishna!\n"),
                     DrawerCommanCode().buildText(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.\n"),
+                        "With the blessing of Senior Vaishnavas, we are trying to do our best so that you can meet with your devotional match and take your journey to a Higher level with your Life Partner, but still on a safer side, we are suggesting you to before finalising any person as your life time partner, please verify the details at your end, discuss the matter with your seniors and then proceed ahead.\n"),
                     DrawerCommanCode().buildText(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.\n"),
+                        "Disclaimer: As we are living in the age of kaliyug and it is an age of disagreement, so we are not responsible for any mishappening (if any) before or after the marriage.\n"),
                     DrawerCommanCode().buildText(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.\n"),
-                    DrawerCommanCode().buildText(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.")
+                        "And yes needless to say, we always pray to krishna for a Happy and Devotional Married Life for each and every couple.\n"),
                   ],
                 ),
               )

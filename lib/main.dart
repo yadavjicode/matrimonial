@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
       title: 'matrimony',
       home: const SplashScreen(),
       initialRoute: AppRoutes.splash,
-
       getPages: AppRoutes.routes,
 
       // initialBinding: MyBindings(),

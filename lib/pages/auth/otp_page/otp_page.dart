@@ -177,7 +177,7 @@ class _OTPScreenState extends State<OTPScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 30),
                         child: CustomButton(
-                          text: 'SUMBIT OTP',
+                          text: 'SUBMIT OTP',
                           onPressed: () {
                             //   login(widget.mobileNumber, otp);
                             if (otp.length == 4) {

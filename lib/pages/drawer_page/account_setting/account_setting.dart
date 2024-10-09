@@ -1,12 +1,10 @@
 import 'package:devotee/chat/api/apis.dart';
-import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/account_setting_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../constants/widget/dialog.dart';
 
 class AccountSetting extends StatefulWidget {
@@ -1079,7 +1077,7 @@ class _AccountSettingState extends State<AccountSetting> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double fontsize = MediaQuery.textScaleFactorOf(context);
     return GestureDetector(
-      onDoubleTap: () {
+      onDoubleTap: (){
         setState(() {
           if (them == value) {
             them = 0; // Unselect if already selected
