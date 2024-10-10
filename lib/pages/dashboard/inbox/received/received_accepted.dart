@@ -133,7 +133,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                   "8",
                                   "9",
                                   "10",
-                                  "11"
+                                  "11",
+                                  "12"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -286,7 +287,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                                 "8",
                                                 "9",
                                                 "10",
-                                                "11"
+                                                "11",
+                                                "12"
                                               ]);
                                             } else {
                                               DialogConstant.packageDialog(

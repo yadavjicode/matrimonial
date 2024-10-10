@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../controller/buy_package_controller.dart';
+import '../../../controller/package_Controller.dart';
 import '../../../model/coupons_model.dart';
 
 class MembershipPackages extends StatefulWidget {
@@ -20,11 +22,16 @@ class _MembershipPackagesState extends State<MembershipPackages> {
   final CouponsController couponsController = Get.put(CouponsController());
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
+  final PackageController packageController = Get.put(PackageController());
+  final BuyPackageController buyPackageController =
+      Get.put(BuyPackageController());
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       couponsController.coupons(context);
+      packageController.package(context);
     });
   }
 
@@ -37,7 +44,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "Membership Packages",
+          "Package Information",
           style: FontConstant.styleSemiBold(
               fontSize: 18, color: AppColors.constColor),
         ),
@@ -52,12 +59,13 @@ class _MembershipPackagesState extends State<MembershipPackages> {
             return Stack(children: [
               SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         alignment: Alignment.center,
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
                           "Hare Krishna!",
                           textAlign: TextAlign.center,
@@ -69,7 +77,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                         alignment: Alignment.center,
                         child: Text(
                           "With the blessings of Senior Vaisnavas, we are maintaining this application to serve the devotee community, to generate super profits is not the purpose behind this application. But still to maintain this application and to promote it within the devotee community, we also need some funds. So, for that purpose we are keeping a very nominal charge to get register on this application and from time to time we also come up with some offers so that devotee community can take advantage of such offers, you can check that offers in the Coupons/ Offers Section.\n",
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.justify,
                           style: FontConstant.styleRegular(
                               fontSize: 14, color: AppColors.black),
                         ),
@@ -88,10 +96,10 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(right: 5),
+                              margin: const EdgeInsets.only(right: 5),
                               height: 7,
                               width: 7,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: AppColors.primaryColor,
                               ),
@@ -108,7 +116,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                               margin: EdgeInsets.only(left: 5),
                               height: 7,
                               width: 7,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: AppColors.primaryColor,
                               ),
@@ -127,43 +135,19 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           : editProfileController.member!.member!.accountType),
                       Text(
                         "\nIf we compare this application with other commercial matrimonial application, then it is more than 85% cheaper than such commercial applications. We are not having multiple kind of packages to confuse the public, we have only 2 versions. One is Free Version and Other one is Premium Version.\n",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.justify,
                         style: FontConstant.styleRegular(
                             fontSize: 14, color: AppColors.black),
                       ),
-                      CustomButton(
-                          text: "View Details & Compare Pack",
-                          onPressed: () => {Get.toNamed("/package")},
-                          color: AppColors.primaryColor,
-                          textStyle: FontConstant.styleRegular(
-                              fontSize: 16, color: AppColors.constColor)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 25),
-                        child: Column(
-                          children: [
-                            Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Discount Coupons",
-                                  style: FontConstant.styleMedium(
-                                      fontSize: 17, color: AppColors.black),
-                                )),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: _buildDiscount(
-                                context,
-                                couponsController.member?.data ?? [],
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
+                      if (packageController.isLoading.value == false)
+                        packageDetails()
                     ],
                   ),
                 ),
               ),
-              if (couponsController.isLoading.value)
-                Center(
+              if (couponsController.isLoading.value ||
+                  packageController.isLoading.value)
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -172,6 +156,172 @@ class _MembershipPackagesState extends State<MembershipPackages> {
           })
         ],
       ),
+    );
+  }
+
+  Widget packageDetails() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              width: 79,
+              // color: AppColors.darkblue,
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    height: 38,
+                    width: 38,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: AppColors.constColor),
+                    child: Image.asset(
+                      "assets/images/usergrey.png",
+                    ),
+                  ),
+                  Text(
+                    "Free",
+                    overflow: TextOverflow.ellipsis,
+                    style: FontConstant.styleBold(
+                        fontSize: 14, color: AppColors.black),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              // color: AppColors.darkblue,
+              width: 79,
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Container(
+                    height: 38,
+                    width: 38,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: AppColors.constColor),
+                    child: Image.asset(
+                      "assets/images/Crown.png",
+                    ),
+                  ),
+                  Text(
+                    "Premium",
+                    overflow: TextOverflow.ellipsis,
+                    style: FontConstant.styleBold(
+                        fontSize: 14, color: AppColors.black),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        _packageSelect(
+            "Able to see photos uploaded on others Profile",
+            packageController
+                .member!.data!.free!.ableToSeePhotosOnOthersProfile!
+                .toInt(),
+            packageController
+                .member!.data!.premium!.ableToSeePhotosOnOthersProfile!
+                .toInt()),
+        _packageSelect("Using Shortlist Feature", 1, 1),
+        _packageSelect(
+            "Use Filter/ Sorting Feature",
+            packageController.member!.data!.free!.useFilterSortingFeature!
+                .toInt(),
+            packageController.member!.data!.premium!.useFilterSortingFeature!
+                .toInt()),
+        _packageSelect(
+            "View Full Profile of Others",
+            packageController.member!.data!.free!.viewFullProfileOfOthers!
+                .toInt(),
+            packageController.member!.data!.premium!.viewFullProfileOfOthers!
+                .toInt()),
+        _packageSelect(
+            "Using Search Feature",
+            packageController.member!.data!.free!.usingSearchFeature!.toInt(),
+            packageController.member!.data!.premium!.usingSearchFeature!
+                .toInt()),
+        _packageSelect(
+            "Chat Box",
+            packageController.member!.data!.free!.chat!.toInt(),
+            packageController.member!.data!.premium!.chat!.toInt()),
+        _packageSelect(
+            "See Contact No.s",
+            packageController.member!.data!.free!.seeContactNumbers!.toInt(),
+            packageController.member!.data!.premium!.seeContactNumbers!
+                .toInt()),
+        _packageSelect("Using Privacy Features", 0, 1),
+        _packageSelect("Respond to received Interest", 0, 1),
+        Row(
+          children: [
+            Expanded(
+                child: Text(
+              "Send Interest",
+              style: FontConstant.styleRegular(
+                  fontSize: 12, color: AppColors.black),
+            )),
+            Container(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                width: 79,
+                // height: 81,
+                alignment: Alignment.center,
+                child: Text(
+                  "${packageController.member!.data!.free!.sendInterest!.toInt()} Per Day",
+                  style: FontConstant.styleBold(
+                      fontSize: 12, color: AppColors.green),
+                )),
+            Container(
+                width: 79,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 2),
+                color: AppColors.constColor,
+                alignment: Alignment.center,
+                child: Text(
+                  "${packageController.member!.data!.premium!.sendInterest!.toInt()} Per Day",
+                  style: FontConstant.styleBold(
+                      fontSize: 12, color: AppColors.green),
+                ))
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: [
+              // Container(
+              //     alignment: Alignment.centerLeft,
+              //     child: Text(
+              //       "Discount Coupons",
+              //       style: FontConstant.styleMedium(
+              //           fontSize: 17, color: AppColors.black),
+              //     )),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: _buildDiscount(
+                  context,
+                  couponsController.member?.data ?? [],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 30),
+          child: CustomButton(
+              text: "Buy Premium Pack Now",
+              onPressed: () => {
+                    buyPackageController.buyPackage(context)
+                    //  Get.toNamed("/package")
+                  },
+              color: AppColors.primaryColor,
+              textStyle: FontConstant.styleRegular(
+                  fontSize: 16, color: AppColors.constColor)),
+        ),
+      ],
     );
   }
 }
@@ -184,183 +334,180 @@ Widget _buildPack(int package) {
         Expanded(
           child: Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
                 color: package != 1
                     ? AppColors.constColor
                     : AppColors.primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: AppColors.primaryColor)),
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: Text(
-                      "Free Pack",
-                      textAlign: TextAlign.start,
-                      style: FontConstant.styleSemiBold(
-                        fontSize: 16,
-                        color: package != 1
-                            ? AppColors.black
-                            : AppColors.constColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Text(
+                    "Free Pack",
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start,
+                    style: FontConstant.styleSemiBold(
+                      fontSize: 16,
+                      color:
+                          package != 1 ? AppColors.black : AppColors.constColor,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:
+                          package != 1 ? AppColors.grey : AppColors.constColor,
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            height: 20,
+                            width: 20,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: package == 1
+                                  ? AppColors.grey
+                                  : AppColors.primaryColor,
+                            ),
+                            child: package != 1
+                                ? SvgPicture.asset(
+                                    "assets/images/icons/correct.svg")
+                                : Container(),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              package != 1 ? "Current Pack" : "Select Pack",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 12,
+                                  color: package != 1
+                                      ? AppColors.constColor
+                                      : AppColors.black),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: package != 1
-                            ? AppColors.grey
-                            : AppColors.constColor,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
-                              height: 20,
-                              width: 20,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: package == 1
-                                    ? AppColors.grey
-                                    : AppColors.primaryColor,
-                              ),
-                              child: package != 1
-                                  ? SvgPicture.asset(
-                                      "assets/images/icons/correct.svg")
-                                  : Container(),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Expanded(
-                              child: Text(
-                                textAlign: TextAlign.center,
-                                package != 1 ? "Current Pack" : "Select Pack",
-                                style: FontConstant.styleRegular(
-                                    fontSize: 12,
-                                    color: package != 1
-                                        ? AppColors.constColor
-                                        : AppColors.black),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 15,
         ),
         Expanded(
           child: Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             decoration: BoxDecoration(
                 color: package == 1
                     ? AppColors.constColor
                     : AppColors.primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: AppColors.primaryColor)),
-            child: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          "assets/images/Crown.png",
-                          height: 20,
-                          width: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "assets/images/Crown.png",
+                        height: 20,
+                        width: 20,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Premium Pack",
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
+                          style: FontConstant.styleSemiBold(
+                              fontSize: 16,
+                              color: package == 1
+                                  ? AppColors.black
+                                  : AppColors.constColor),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                          child: Text(
-                            "Premium Pack",
-                            textAlign: TextAlign.start,
-                            style: FontConstant.styleSemiBold(
-                                fontSize: 16,
-                                color: package == 1
-                                    ? AppColors.black
-                                    : AppColors.constColor),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color:
+                          package == 1 ? AppColors.grey : AppColors.constColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    ),
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              height: 20,
+                              width: 20,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: package != 1
+                                    ? AppColors.grey
+                                    : AppColors.primaryColor,
+                              ),
+                              child: package == 1
+                                  ? SvgPicture.asset(
+                                      "assets/images/icons/correct.svg")
+                                  : Container()),
+                          const SizedBox(
+                            width: 5,
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              package == 1 ? "Current Pack" : "Select Pack",
+                              style: FontConstant.styleRegular(
+                                  fontSize: 12,
+                                  color: package == 1
+                                      ? AppColors.constColor
+                                      : AppColors.black),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: package == 1
-                            ? AppColors.grey
-                            : AppColors.constColor,
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                                margin: EdgeInsets.symmetric(horizontal: 5),
-                                height: 20,
-                                width: 20,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: package != 1
-                                      ? AppColors.grey
-                                      : AppColors.primaryColor,
-                                ),
-                                child: package == 1
-                                    ? SvgPicture.asset(
-                                        "assets/images/icons/correct.svg")
-                                    : Container()),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Expanded(
-                              child: Text(
-                                textAlign: TextAlign.center,
-                                package == 1 ? "Current Pack" : "Select Pack",
-                                style: FontConstant.styleRegular(
-                                    fontSize: 12,
-                                    color: package == 1
-                                        ? AppColors.constColor
-                                        : AppColors.black),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
@@ -373,10 +520,10 @@ Widget _buildDiscount(BuildContext context, List<Data> list) {
   return Column(
     children: list.map((data) {
       return Container(
-        margin: EdgeInsets.symmetric(vertical: 5),
+        margin: const EdgeInsets.symmetric(vertical: 5),
         height: 80,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           color: AppColors.constColor,
           border: Border.all(color: Colors.grey.shade300),
           boxShadow: [
@@ -458,8 +605,8 @@ Widget _buildDiscount(BuildContext context, List<Data> list) {
             ),
             Container(
               height: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: const BoxDecoration(
                   color: AppColors.darkblue,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(10),
@@ -493,5 +640,79 @@ Widget _buildDiscount(BuildContext context, List<Data> list) {
         ),
       );
     }).toList(),
+  );
+}
+
+Widget _packageSelect(String tittle, int free, int premium) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          Expanded(
+              child: Text(
+            tittle,
+            style:
+                FontConstant.styleRegular(fontSize: 12, color: AppColors.black),
+          )),
+          Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              alignment: Alignment.center,
+              child: free == 1
+                  ? Container(
+                      height: 19,
+                      width: 19,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.green,
+                      ),
+                      child:
+                          SvgPicture.asset("assets/images/icons/correct.svg"))
+                  : Container(
+                      height: 19,
+                      width: 19,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: AppColors.red),
+                      child: const Icon(
+                        Icons.close,
+                        size: 17,
+                        color: AppColors.constColor,
+                      ),
+                    )),
+          Container(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              color: AppColors.constColor,
+              alignment: Alignment.center,
+              child: premium == 1
+                  ? Container(
+                      height: 19,
+                      width: 19,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.green,
+                      ),
+                      child:
+                          SvgPicture.asset("assets/images/icons/correct.svg"))
+                  : Container(
+                      height: 19,
+                      width: 19,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: AppColors.red),
+                      child: const Icon(
+                        Icons.close,
+                        size: 17,
+                        color: AppColors.constColor,
+                      ),
+                    ))
+        ],
+      ),
+      Container(
+        height: 1,
+        color: AppColors.grey,
+      )
+    ],
   );
 }

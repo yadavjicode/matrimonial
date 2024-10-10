@@ -12,6 +12,7 @@ import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/pages/dashboard/home/home_body.dart';
+import 'package:devotee/utils/test/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -53,8 +54,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: _scaffoldKey,
@@ -97,7 +96,12 @@ class _HomeState extends State<Home> {
                             // ),
                             GestureDetector(
                               onTap: () => {
-                                // {Get.toNamed('/myWallet')}
+                                // {Get.toNamed('/partner')}
+                                
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyWidget()),
+            )
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),

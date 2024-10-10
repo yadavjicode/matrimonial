@@ -46,24 +46,6 @@ class _SearchResultState extends State<SearchResult> {
   final DirectChatController directChatController =
       Get.put(DirectChatController());
 
-  Future<void> _fetchUser(String userId) async {
-    ChatUser? _chatUser;
-    ChatUser? user = await directChatController.getUserById(userId);
-    setState(() {
-      _chatUser = user;
-    });
-    if (_chatUser != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(user: _chatUser!),
-        ),
-      );
-    } else {
-      Dialogs.showSnackbar(context, 'unable to fetch data');
-    }
-  }
-
   @override
   void initState() {
     final String ageFrom = arguments['ageFrom'];
@@ -77,12 +59,37 @@ class _SearchResultState extends State<SearchResult> {
     final String state = arguments['state'];
     final String city = arguments['city'];
     final String education = arguments['education'];
+    final String profilePer = arguments['profilePer'];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      searchController.reset(context, ageFrom, ageTo, heightFrom, heightTo,
-          maritalStatus, religion, caste, country, state, city, education);
-      searchController.Search(context, ageFrom, ageTo, heightFrom, heightTo,
-          maritalStatus, religion, caste, country, state, city, education);
+      searchController.reset(
+          context,
+          ageFrom,
+          ageTo,
+          heightFrom,
+          heightTo,
+          maritalStatus,
+          religion,
+          caste,
+          country,
+          state,
+          city,
+          education,
+          profilePer);
+      searchController.Search(
+          context,
+          ageFrom,
+          ageTo,
+          heightFrom,
+          heightTo,
+          maritalStatus,
+          religion,
+          caste,
+          country,
+          state,
+          city,
+          education,
+          profilePer);
     });
 
     _scrollController.addListener(() {
@@ -102,7 +109,8 @@ class _SearchResultState extends State<SearchResult> {
             country,
             state,
             city,
-            education); // Load next page
+            education,
+            profilePer); // Load next page
       }
     });
     super.initState();
@@ -123,6 +131,7 @@ class _SearchResultState extends State<SearchResult> {
     final String state = arguments['state'];
     final String city = arguments['city'];
     final String education = arguments['education'];
+    final String profilePer = arguments['profilePer'];
 
     int selectedIndex = -1;
     return Scaffold(
@@ -335,7 +344,8 @@ class _SearchResultState extends State<SearchResult> {
                                                     country,
                                                     state,
                                                     city,
-                                                    education
+                                                    education,
+                                                    profilePer
                                                   ])
                                                 }
                                               else
@@ -385,7 +395,7 @@ class _SearchResultState extends State<SearchResult> {
                                                             width: screenWidth *
                                                                 0.06,
                                                             decoration:
-                                                                BoxDecoration(
+                                                                const BoxDecoration(
                                                                     shape: BoxShape
                                                                         .circle,
                                                                     color: Colors
@@ -410,7 +420,7 @@ class _SearchResultState extends State<SearchResult> {
                                                             width: screenWidth *
                                                                 0.06,
                                                             decoration:
-                                                                BoxDecoration(
+                                                                const BoxDecoration(
                                                                     shape: BoxShape
                                                                         .circle,
                                                                     color: Colors
@@ -426,11 +436,13 @@ class _SearchResultState extends State<SearchResult> {
                                                                       0.028,
                                                             ),
                                                           ),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       width: 5,
                                                     ),
                                                     Text(
-                                                     data.interestStatus == 1?"Sent Interest":"Send Interest",
+                                                      data.interestStatus == 1
+                                                          ? "Sent Interest"
+                                                          : "Send Interest",
                                                       style: FontConstant
                                                           .styleMedium(
                                                               fontSize:
@@ -475,9 +487,9 @@ class _SearchResultState extends State<SearchResult> {
                                                   ),
                                                   if (data.accountType == 1)
                                                     Container(
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 5),
+                                                      margin: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 5),
                                                       width: 1,
                                                       height: 12,
                                                       color: AppColors.grey,
@@ -492,7 +504,7 @@ class _SearchResultState extends State<SearchResult> {
                                                               height: 15,
                                                               width: 15,
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               width: 3,
                                                             ),
                                                             Expanded(
@@ -579,7 +591,7 @@ class _SearchResultState extends State<SearchResult> {
                                     color: Colors.grey.shade200,
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(
+                                    padding: const EdgeInsets.only(
                                         left: 10,
                                         right: 10,
                                         top: 10,
@@ -619,7 +631,7 @@ class _SearchResultState extends State<SearchResult> {
                                                       : AppColors.primaryColor,
                                                   size: 20,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 3,
                                                 ),
                                                 Expanded(
@@ -655,7 +667,8 @@ class _SearchResultState extends State<SearchResult> {
                                                             context,
                                                             'User does not Exists!');
                                                       } else {
-                                                        _fetchUser(
+                                                        APIs.fetchUser(
+                                                          context,
                                                           data.matriID
                                                               .toString()
                                                               .trim(),
@@ -679,7 +692,7 @@ class _SearchResultState extends State<SearchResult> {
                                                   height: 20,
                                                   width: 20,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 3,
                                                 ),
                                                 Expanded(
@@ -716,7 +729,8 @@ class _SearchResultState extends State<SearchResult> {
                                                     country,
                                                     state,
                                                     city,
-                                                    education
+                                                    education,
+                                                    profilePer
                                                   ])
                                                 }
                                               else
@@ -733,7 +747,7 @@ class _SearchResultState extends State<SearchResult> {
                                                   height: 20,
                                                   width: 20,
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: 3,
                                                 ),
                                                 Expanded(
@@ -758,8 +772,8 @@ class _SearchResultState extends State<SearchResult> {
                         }).toList(),
                         if (searchController.isLoading
                             .value) // Progress indicator at the bottom
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 16),
                             child: Center(
                               child: CircularProgressIndicator(
                                 color: AppColors.primaryColor,
@@ -776,7 +790,7 @@ class _SearchResultState extends State<SearchResult> {
                 profileDetailsController.isLoading.value ||
                 sentInvitationController.isLoading.value ||
                 directChatController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

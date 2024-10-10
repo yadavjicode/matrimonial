@@ -871,7 +871,6 @@ class _AccountSettingState extends State<AccountSetting> {
 // End Profile bottomSheet=======================================================================================================================
 
 // Start Online bottomSheet=======================================================================================================================
-
   void _onlineStatusBottomSheet(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -1077,7 +1076,7 @@ class _AccountSettingState extends State<AccountSetting> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double fontsize = MediaQuery.textScaleFactorOf(context);
     return GestureDetector(
-      onDoubleTap: (){
+      onDoubleTap: () {
         setState(() {
           if (them == value) {
             them = 0; // Unselect if already selected

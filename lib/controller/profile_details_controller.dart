@@ -24,7 +24,7 @@ class ProfileDetailsController with ChangeNotifier {
 
     try {
       _member = await apiService.ProfileDetails(id);
-     
+
       if (_member != null) {
         // Navigate with the correct key name
         Get.toNamed('/profiledtls', arguments: {
@@ -39,7 +39,8 @@ class ProfileDetailsController with ChangeNotifier {
           "country": search[7] ?? "",
           "state": search[8] ?? "",
           "city": search[9] ?? "",
-          "education": search[10] ?? ""
+          "education": search[10] ?? "",
+          "profilePer": search[11] ?? ""
         });
       } else {
         throw Exception("Profile details not found.");
@@ -49,7 +50,7 @@ class ProfileDetailsController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     if (!connectivityService.isConnected.value) {
+      if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
         Dialogs.showSnackbar(context,

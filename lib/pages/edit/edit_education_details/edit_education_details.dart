@@ -30,7 +30,7 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
       Get.put(HighestQualController());
   final ProfessionQualController professionQualController =
       Get.put(ProfessionQualController());
-  bool show=false;
+  bool show = false;
 
   @override
   void initState() {
@@ -39,11 +39,11 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
       _editProfileController.userDetails(context);
     });
     selectedHighestQualifaction =
-        _editProfileController.member!.member!.education ;
+        _editProfileController.member?.member?.education;
     selectedProfessionalQualifaction =
-        _editProfileController.member!.member!.professionalQualification ;
+        _editProfileController.member?.member?.professionalQualification;
     describeController.text =
-        _editProfileController.member!.member!.otherQualification ?? "";
+        _editProfileController.member?.member?.otherQualification ?? "";
   }
 
   @override
@@ -62,11 +62,9 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
         body: Obx(() {
           return Stack(children: [
             educationContent(),
-            if (_educationController.isLoading.value ||
-                _editProfileController.isLoading.value ||
-                highestQualController.isLoading.value ||
-                professionQualController.isLoading.value)
-              Center(
+            if (_editProfileController.isLoading.value ||
+                _educationController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -129,11 +127,7 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
                         setState(() => selectedHighestQualifaction = value),
                         isHighestQualifaction = true
                       },
-                      borderColor:show==true&& selectedHighestQualifaction == null
-                          ? Colors.red
-                          : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please Select Highest Qualification",
-                      errorshow:show==true&& selectedHighestQualifaction==null?true:false,
+
                       selectedItem: selectedHighestQualifaction,
                       hintText: 'Select Highest Qualification',
                     );
@@ -173,7 +167,7 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
                   maxline: 7,
                   hintText: "Enter Other Qualifications",
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 25),
                 _buildContinueButton(),
               ],
             ),
@@ -189,19 +183,14 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-          setState(() {
-            show=true;
-          });
-          if (selectedHighestQualifaction != null) {
-            _educationController.educationDetails(
-                context,
-                selectedHighestQualifaction ?? "",
-                selectedProfessionalQualifaction ?? "",
-                describeController.text.toString().trim(),
-                true);
+          _educationController.educationDetails(
+              context,
+              selectedHighestQualifaction ?? "",
+              selectedProfessionalQualifaction ?? "",
+              describeController.text.toString().trim(),
+              true);
 
-            //    Get.toNamed('/prof');
-          }
+          //    Get.toNamed('/prof');
         },
         color: AppColors.primaryColor,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.white),

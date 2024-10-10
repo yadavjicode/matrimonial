@@ -21,7 +21,8 @@ class _CustomPageState extends State<CustomPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
+      
+        margin: const EdgeInsets.symmetric(vertical: 10),
         child: SingleChildScrollView(
           child: Column(
             children: widget.customContent.map((data) {
@@ -40,8 +41,8 @@ class _CustomPageState extends State<CustomPage> {
 class pageContent {
   Widget dataContent(String title, String value) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.symmetric(vertical: 5),
+      decoration: const BoxDecoration(
           color: AppColors.constColor,
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Padding(
@@ -55,7 +56,7 @@ class pageContent {
               style: FontConstant.styleRegular(
                   fontSize: 13, color: AppColors.black),
             )),
-            Text(" : "),
+            const Text(" : "),
             Expanded(
                 child: Text("${value}",
                     style: FontConstant.styleRegular(

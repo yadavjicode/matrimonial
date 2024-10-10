@@ -32,7 +32,7 @@ class _EditContactDetailsState extends State<EditContactDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    instaController.text = _editProfileController.member!.member!.instagramId??"";
+    instaController.text = _editProfileController.member?.member?.instagramId??"";
   }
 
   @override
@@ -54,7 +54,7 @@ class _EditContactDetailsState extends State<EditContactDetails> {
             contactContent(),
             if (_contactDetailController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -103,7 +103,7 @@ class _EditContactDetailsState extends State<EditContactDetails> {
                     controller: instaController,
                     hintText: "Enter Instagram ID",
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: CustomButton(

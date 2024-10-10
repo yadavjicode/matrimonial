@@ -48,27 +48,10 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
 
   bool validation() {
     if (getCounsellor() != null) {
-      if (getCounsellor() == "Yes") {
-        if (_formKey.currentState!.validate() &&
-            selectedState != null &&
-            selectedCity != null) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
+      return true;
     } else {
       return false;
     }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // stateController.fetchStateList();
   }
 
   @override
@@ -85,7 +68,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/devotion');
             },
@@ -102,7 +85,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                 SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 35, left: 22, right: 22, bottom: 100),
+                        top: 35, left: 22, right: 22, bottom: 20),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -114,7 +97,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 height: 92,
                                 width: 92,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Text(
@@ -139,7 +122,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 style: FontConstant.styleRegular(
                                     fontSize: 16, color: AppColors.black),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Radio(
@@ -161,7 +144,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                           ),
                           if (show == true && getCounsellor() == null)
                             Container(
-                                margin: EdgeInsets.only(bottom: 5),
+                                margin: const EdgeInsets.only(bottom: 5),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   "are you connected with any Spiritual Counsellor",
@@ -175,33 +158,21 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   padding: const EdgeInsets.only(top: 15),
                                   child: CustomTextField(
                                     labelText:
-                                        "Name of the Counsellor for my Spiritual Path",
+                                        "Name of the Counsellor for my Spiritual Path *",
                                     hintText:
                                         "Enter Name of the Counsellor for my Spiritual Path",
                                     controller: nameCounselor,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter name of the Counsellor';
-                                      }
-                                      return null;
-                                    },
                                   ),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 15),
                                   child: CustomTextField(
                                     labelText:
-                                        "Connected with my Counsellor Since (Year)",
+                                        "Connected with my Counsellor Since (Year) *",
                                     controller: connectCounselor,
                                     keyboardType: TextInputType.number,
                                     hintText:
                                         "Enter Connected with my Counsellor Since (Year)",
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter connected with Counsellor Since';
-                                      }
-                                      return null;
-                                    },
                                     maxlength: 4,
                                   ),
                                 ),
@@ -209,16 +180,10 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   padding: const EdgeInsets.only(top: 15),
                                   child: CustomTextField(
                                     labelText:
-                                        "With which temple your Counsellor is connected to?",
+                                        "With which temple your Counsellor is connected to? *",
                                     controller: templeCounselor,
                                     hintText:
                                         "Enter With which temple your Counsellor is connected to?",
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter temple your Counsellor';
-                                      }
-                                      return null;
-                                    },
                                   ),
                                 ),
                                 const SizedBox(
@@ -240,7 +205,10 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   } else {
                                     return buildDropdownWithSearch(
                                       'Counsellor residing in State *',
-                                      stateController.getStateList(),
+                                      [
+                                        'Prefer Not To Say',
+                                        ...stateController.getStateList()
+                                      ],
                                       //  stateControllerPermanent.selectedItem,
                                       (value) {
                                         setState(() {
@@ -252,15 +220,6 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                             value); // Call the controller method
                                       },
                                       hintText: 'Select State',
-                                      borderColor:
-                                          show == true && selectedCity == null
-                                              ? Colors.red
-                                              : Colors.black.withOpacity(0.5),
-                                      errorMessage: "Please select state",
-                                      errorshow:
-                                          show == true && selectedState == null
-                                              ? true
-                                              : false,
                                     );
                                   }
                                 }),
@@ -283,7 +242,10 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   } else {
                                     return buildDropdownWithSearch(
                                       'Counsellor residing in City *',
-                                      cityController.cityLists,
+                                      [
+                                        'Prefer Not To Say',
+                                        ...cityController.cityLists
+                                      ],
                                       // cityControllerPermanent.selectedItem,
                                       (value) {
                                         setState(() {
@@ -294,15 +256,6 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                             value); // Call the controller method
                                       },
                                       hintText: 'Select City',
-                                      borderColor:
-                                          show == true && selectedCity == null
-                                              ? Colors.red
-                                              : Colors.black.withOpacity(0.5),
-                                      errorMessage: "Please select City",
-                                      errorshow:
-                                          show == true && selectedCity == null
-                                              ? true
-                                              : false,
                                     );
                                   }
                                 }),
@@ -312,14 +265,8 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                     hintText:
                                         "Enter Something more about the Counsellor",
                                     labelText:
-                                        "Something more about the Counsellor",
+                                        "Something more about the Counsellor *",
                                     maxline: 5,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter about the Counsellor';
-                                      }
-                                      return null;
-                                    },
                                     controller: somethingCounselor,
                                   ),
                                 ),
@@ -336,7 +283,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                   if (validation()) {
                                     spiritualController.spiritualDetails(
                                         context,
-                                        getCounsellor()!,
+                                        getCounsellor()??"",
                                         getCounsellor() == "Yes"
                                             ? nameCounselor.text
                                                 .toString()
@@ -372,23 +319,7 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
                                 textStyle: FontConstant.styleRegular(
                                     fontSize: 20, color: AppColors.constColor)),
                           ),
-                          GestureDetector(
-                            onTap: () => {
-                              // Get.offAndToNamed('/family')
-                              // flowController.Flow(context, 8)
-
-                              skipController.skip(context, "step_8", 8)
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10),
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                "SKIP",
-                                style: FontConstant.styleRegular(
-                                    fontSize: 20, color: AppColors.black),
-                              ),
-                            ),
-                          )
+                          _buildSkipButton()
                         ],
                       ),
                     ),
@@ -399,12 +330,29 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
             if (spiritualController.isLoading.value ||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
               )
           ]);
         }));
+  }
+
+  Widget _buildSkipButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: CustomButton(
+        text: 'SKIP',
+        onPressed: () {
+          // Get.offAndToNamed('/family')
+          // flowController.Flow(context, 8)
+
+          skipController.skip(context, "step_8", 8);
+        },
+        color: Colors.transparent,
+        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+      ),
+    );
   }
 }

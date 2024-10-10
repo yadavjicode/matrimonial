@@ -79,7 +79,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                 sentInvitationController.isLoading.value ||
                 profileDetailsController.isLoading.value ||
                 directChatController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -155,7 +155,8 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   "8",
                                   "9",
                                   "10",
-                                  "11"
+                                  "11",
+                                  "12"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -255,7 +256,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   if (data.accountType == 1)
                                     Container(
                                       margin:
-                                          EdgeInsets.symmetric(horizontal: 5),
+                                          const EdgeInsets.symmetric(horizontal: 5),
                                       width: 1,
                                       height: 12,
                                       color: AppColors.grey,
@@ -270,7 +271,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                               height: 15,
                                               width: 15,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 3,
                                             ),
                                             Expanded(
@@ -337,13 +338,13 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
+                    margin: const EdgeInsets.only(left: 10, right: 10),
                     height: 1,
                     width: double.infinity,
                     color: Colors.grey.shade200,
                   ),
                   Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 10),
                     child: Row(
                       children: [
@@ -372,7 +373,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                       : AppColors.primaryColor,
                                   size: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Expanded(
@@ -424,7 +425,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   height: 20,
                                   width: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Expanded(
@@ -456,7 +457,8 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   "8",
                                   "9",
                                   "10",
-                                  "11"
+                                  "11",
+                                  "12"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -470,7 +472,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   height: 20,
                                   width: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Expanded(
@@ -493,8 +495,8 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
           }).toList(),
           if (matchesController
               .isLoading.value) // Progress indicator at the bottom
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
               child: Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,

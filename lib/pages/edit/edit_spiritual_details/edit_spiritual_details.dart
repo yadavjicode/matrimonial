@@ -33,7 +33,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
   String? selectedState;
   String? selectedCity;
   int? counsellor;
-  bool show=false;
+  bool show = false;
 
   String? getCounsellor() {
     if (counsellor == 1) {
@@ -47,17 +47,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
 
   bool validation() {
     if (getCounsellor() != null) {
-      if (getCounsellor() == "Yes") {
-        if (_formKey.currentState!.validate() &&
-            selectedState != null &&
-            selectedCity != null) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
+      return true;
     } else {
       return false;
     }
@@ -69,31 +59,32 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    if (_editProfileController.member!.member!.spiritualCounselerConnected ==
+    if (_editProfileController.member?.member?.spiritualCounselerConnected ==
         "Yes") {
       counsellor = 1;
     } else if (_editProfileController
-            .member!.member!.spiritualCounselerConnected ==
+            .member?.member?.spiritualCounselerConnected ==
         "No") {
       counsellor = 2;
     }
     nameCounselor.text = _editProfileController
-            .member!.member!.nameOfTheCounselorOfMySpiritualPath ??
+            .member?.member?.nameOfTheCounselorOfMySpiritualPath ??
         "";
     connectCounselor.text =
-        _editProfileController.member!.member!.connectedWithMyCounselerSince ??
+        _editProfileController.member?.member?.connectedWithMyCounselerSince ??
             "";
     templeCounselor.text = _editProfileController
-            .member!.member!.withWhichTempleYourCounselorIsConnectedTo ??
+            .member?.member?.withWhichTempleYourCounselorIsConnectedTo ??
         "";
     somethingCounselor.text =
-        _editProfileController.member!.member!.somethingAboutMoreCounselor ??
+        _editProfileController.member?.member?.somethingAboutMoreCounselor ??
             "";
     selectedState =
-        _editProfileController.member!.member!.counselorResidingInState;
+        _editProfileController.member?.member?.counselorResidingInState;
     selectedCity =
-        _editProfileController.member!.member!.counselorResidingInCity;
-    stateController.selectItem(_editProfileController.member!.member!.counselorResidingInState);
+        _editProfileController.member?.member?.counselorResidingInCity;
+    stateController.selectItem(
+        _editProfileController.member?.member?.counselorResidingInState);
   }
 
   @override
@@ -122,9 +113,8 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
               ],
             ),
             if (spiritualController.isLoading.value ||
-                _editProfileController.isLoading.value
-                )
-              Center(
+                _editProfileController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -137,7 +127,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
     return SingleChildScrollView(
       child: Padding(
         padding:
-            const EdgeInsets.only(top: 35, left: 22, right: 22, bottom: 100),
+            const EdgeInsets.only(top: 35, left: 22, right: 22, bottom: 30),
         child: Form(
           key: _formKey,
           child: Column(
@@ -149,7 +139,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                     height: 92,
                     width: 92,
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Text(
@@ -174,7 +164,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                     style: FontConstant.styleRegular(
                         fontSize: 16, color: AppColors.black),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Radio(
@@ -194,7 +184,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                   )
                 ],
               ),
-              if (show==true&&getCounsellor() == null)
+              if (show == true && getCounsellor() == null)
                 Container(
                     margin: EdgeInsets.only(bottom: 5),
                     alignment: Alignment.centerLeft,
@@ -212,29 +202,19 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                         labelText:
                             "Name of the Counsellor for my Spiritual Path *",
                         controller: nameCounselor,
-                        hintText: "Enter Name of the Counsellor for my Spiritual Path",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter name of the Counsellor';
-                          }
-                          return null;
-                        },
+                        hintText:
+                            "Enter Name of the Counsellor for my Spiritual Path",
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
                       child: CustomTextField(
-                        labelText: "Connected with my Counsellor Since (Year) *",
+                        labelText:
+                            "Connected with my Counsellor Since (Year) *",
                         controller: connectCounselor,
                         keyboardType: TextInputType.number,
                         maxlength: 4,
                         hintText: "Enter Connected with my Counsellor Since",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter connected with Counsellor Since';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                     Padding(
@@ -243,13 +223,8 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                         labelText:
                             "With which temple your Counsellor is connected to? *",
                         controller: templeCounselor,
-                        hintText: "Enter With which temple your Counsellor is connected to",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter temple your Counsellor';
-                          }
-                          return null;
-                        },
+                        hintText:
+                            "Enter With which temple your Counsellor is connected to",
                       ),
                     ),
                     const SizedBox(
@@ -271,7 +246,10 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                       } else {
                         return buildDropdownWithSearch(
                           'Counsellor residing in State *',
-                          stateController.getStateList(),
+                          [
+                            'Prefer Not To Say',
+                            ...stateController.getStateList()
+                          ],
                           //  stateControllerPermanent.selectedItem,
                           (value) {
                             setState(() {
@@ -282,15 +260,11 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                                 value); // Call the controller method
                           },
                           hintText: 'Select State',
-                          borderColor:show==true&& selectedCity == null
-                              ? Colors.red
-                              : Colors.black.withOpacity(0.5),
-                          errorMessage: "Please Select State",
-                          errorshow:show==true&&  selectedState == null ? true : false,
+
                           selectedItem: selectedState,
                         );
                       }
-                    }),  
+                    }),
                     const SizedBox(
                       height: 15,
                     ),
@@ -310,7 +284,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                       } else {
                         return buildDropdownWithSearch(
                           'Counsellor residing in City *',
-                          cityController.cityLists,
+                          ['Prefer Not To Say', ...cityController.cityLists],
                           // cityControllerPermanent.selectedItem,
                           (value) {
                             setState(() {
@@ -320,11 +294,7 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                                 value); // Call the controller method
                           },
                           hintText: 'Select City',
-                          borderColor:show==true&&  selectedCity == null
-                              ? Colors.red
-                              : Colors.black.withOpacity(0.5),
-                          errorMessage: "Please Select City",
-                          errorshow:show==true&&  selectedCity == null ? true : false,
+
                           selectedItem: selectedCity,
                         );
                       }
@@ -336,12 +306,6 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                         maxline: 5,
                         hintText: "Enter Something more about the Counsellor",
                         controller: somethingCounselor,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter about the Counsellor';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                   ],
@@ -351,25 +315,31 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
                 child: CustomButton(
                     text: "CONTINUE",
                     onPressed: () {
-                           setState(() {
-                             show=true;
-                           });
-                          if (validation())
-                            {
-                              spiritualController.spiritualDetails(
-                                  context,
-                                  getCounsellor()!,
-                                 getCounsellor()=="Yes"? nameCounselor.text.toString().trim():"",
-                                 getCounsellor()=="Yes"?  connectCounselor.text.toString().trim():"",
-                                 getCounsellor()=="Yes"?  templeCounselor.text.toString().trim():"",
-                                 getCounsellor()=="Yes"?  selectedState ?? "":"",
-                                 getCounsellor()=="Yes"?  selectedCity ?? "":"",
-                                 getCounsellor()=="Yes"?  somethingCounselor.text.toString().trim():"",
-                                  true);
-                            }
-
-                          //   Get.toNamed('/family')
-                        },
+                      setState(() {
+                        show = true;
+                      });
+                      if (validation()) {
+                        spiritualController.spiritualDetails(
+                            context,
+                            getCounsellor() ?? "",
+                            getCounsellor() == "Yes"
+                                ? nameCounselor.text.toString().trim()
+                                : "",
+                            getCounsellor() == "Yes"
+                                ? connectCounselor.text.toString().trim()
+                                : "",
+                            getCounsellor() == "Yes"
+                                ? templeCounselor.text.toString().trim()
+                                : "",
+                            getCounsellor() == "Yes" ? selectedState ?? "" : "",
+                            getCounsellor() == "Yes" ? selectedCity ?? "" : "",
+                            getCounsellor() == "Yes"
+                                ? somethingCounselor.text.toString().trim()
+                                : "",
+                            true);
+                      }
+                      //   Get.toNamed('/family')
+                    },
                     color: AppColors.primaryColor,
                     textStyle: FontConstant.styleRegular(
                         fontSize: 20, color: AppColors.constColor)),

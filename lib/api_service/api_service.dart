@@ -383,7 +383,7 @@ class ApiService {
         "city_of_the_temple": templeCity,
         "which_sampradaya_you_belogn_to": whichSampraya,
         "devotional_hobbies": devotionalHobbies,
-        "name_of_spiritual_master_diksha_guru":dikshaGuru
+        "name_of_spiritual_master_diksha_guru": dikshaGuru
       }),
     );
 
@@ -698,20 +698,20 @@ class ApiService {
 
 //==== Start Api Search ==========================================================================================
 
-  Future<SearchsModel> Search(
-    int page,
-    String ageFrom,
-    String ageTo,
-    String heightFrom,
-    String heightTo,
-    String maritalStatus,
-    String religion,
-    String caste,
-    String country,
-    String state,
-    String city,
-    String education,
-  ) async {
+  Future<SearchsModel> search(
+      int page,
+      String ageFrom,
+      String ageTo,
+      String heightFrom,
+      String heightTo,
+      String maritalStatus,
+      String religion,
+      String caste,
+      String country,
+      String state,
+      String city,
+      String education,
+      String profilePer) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final Map<String, dynamic> body = {};
@@ -728,6 +728,7 @@ class ApiService {
     if (state != null) body['State'] = state;
     if (city != null) body['City'] = city;
     if (education != null) body['Education'] = education;
+    if (profilePer != null) body['profile_percentage'] = profilePer;
 
     if (token == null) {
       throw Exception('Token is not available');

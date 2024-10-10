@@ -168,75 +168,12 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
     }
   }
 
-  bool fatherValidation() {
-    if (getFatherAlive() == "Yes") {
-      if (_formKeyFather.currentState!.validate() &&
-          selectedFatherOccupation != null &&
-          selectedFatherAnnualIncomeRange != null) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
-
-  bool motherValidation() {
-    if (getMotherAlive() == "Yes") {
-      if (_formKeyMother.currentState!.validate() &&
-          selectedMotherOccupation != null &&
-          selectedMotherAnnualIncomeRange != null) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
-
-  bool brotherValidation() {
-    if (getBrother() == "Yes") {
-      if (selectedNoBrother != null) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
-
-  bool sisterValidation() {
-    if (getSister() == "Yes") {
-      if (selectedNoSister != null) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
-
   bool validation() {
-    if (selectedReligionName != null &&
-        selectedCastName != null &&
-        getLanguageKnown(selectedLanguage ?? []) != "" &&
-        selectedMothertongue != null &&
-        getFatherAlive() != null &&
+    if (getFatherAlive() != null &&
         getMotherAlive() != null &&
         getSister() != null &&
         getBrother() != null) {
-      if (fatherValidation() &&
-          motherValidation() &&
-          sisterValidation() &&
-          brotherValidation()) {
-        return true;
-      } else {
-        return false;
-      }
+      return true;
     } else {
       return false;
     }
@@ -260,75 +197,75 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
     selectedLanguage ??= []; // Initialize if null
     selectedLanguage!.addAll(languages);
 
-    selectedMothertongue = _editProfileController.member!.member!.motherTongue;
+    selectedMothertongue = _editProfileController.member?.member?.motherTongue;
     fathernameController.text =
-        _editProfileController.member!.member!.fathername ?? "";
+        _editProfileController.member?.member?.fathername ?? "";
     selectedFatherOccupation =
-        _editProfileController.member!.member!.fathersoccupation;
+        _editProfileController.member?.member?.fathersoccupation;
     fatherbusinessController.text =
-        _editProfileController.member!.member!.fatherBussness ?? "";
+        _editProfileController.member?.member?.fatherBussness ?? "";
     selectedFatherAnnualIncomeRange =
-        _editProfileController.member!.member!.fatherAnnualIncome;
+        _editProfileController.member?.member?.fatherAnnualIncome;
     mothernameController.text =
-        _editProfileController.member!.member!.mothersname ?? "";
+        _editProfileController.member?.member?.mothersname ?? "";
     selectedMotherOccupation =
-        _editProfileController.member!.member!.mothersoccupation;
+        _editProfileController.member?.member?.mothersoccupation;
     selectedMotherAnnualIncomeRange =
-        _editProfileController.member!.member!.motherAnnualIncome;
-    selectedNoSister = _editProfileController.member!.member!.noofsisters;
-    selectedNoBrother = _editProfileController.member!.member!.noofbrothers;
+        _editProfileController.member?.member?.motherAnnualIncome;
+    selectedNoSister = _editProfileController.member?.member?.noofsisters;
+    selectedNoBrother = _editProfileController.member?.member?.noofbrothers;
 
-    if (_editProfileController.member!.member!.fatherlivingstatus == "Yes") {
+    if (_editProfileController.member?.member?.fatherlivingstatus == "Yes") {
       fatherAlive = 1;
-    } else if (_editProfileController.member!.member!.fatherlivingstatus ==
+    } else if (_editProfileController.member?.member?.fatherlivingstatus ==
         "No") {
       fatherAlive = 2;
     }
 
-    if (_editProfileController.member!.member!.motherlivingstatus == "Yes") {
+    if (_editProfileController.member?.member?.motherlivingstatus == "Yes") {
       motherAlive = 1;
-    } else if (_editProfileController.member!.member!.motherlivingstatus ==
+    } else if (_editProfileController.member?.member?.motherlivingstatus ==
         "No") {
       motherAlive = 2;
     }
 
-    if (_editProfileController.member!.member!.sister == "Yes") {
+    if (_editProfileController.member?.member?.sister == "Yes") {
       sister = 1;
-    } else if (_editProfileController.member!.member!.sister == "No") {
+    } else if (_editProfileController.member?.member?.sister == "No") {
       sister = 2;
     }
 
-    if (_editProfileController.member!.member!.brother == "Yes") {
+    if (_editProfileController.member?.member?.brother == "Yes") {
       brother = 1;
-    } else if (_editProfileController.member!.member!.brother == "No") {
+    } else if (_editProfileController.member?.member?.brother == "No") {
       brother = 2;
     }
 
-    if (_editProfileController.member!.member!.familyType == "Joint") {
+    if (_editProfileController.member?.member?.familyType == "Joint") {
       familytype = 1;
-    } else if (_editProfileController.member!.member!.familyType == "Nuclear") {
+    } else if (_editProfileController.member?.member?.familyType == "Nuclear") {
       familytype = 2;
     }
 
-    if (_editProfileController.member!.member!.familyvalues == "Traditional") {
+    if (_editProfileController.member?.member?.familyvalues == "Traditional") {
       familyValue = 1;
-    } else if (_editProfileController.member!.member!.familyvalues ==
+    } else if (_editProfileController.member?.member?.familyvalues ==
         "Moderate") {
       familyValue = 2;
-    } else if (_editProfileController.member!.member!.familyvalues ==
+    } else if (_editProfileController.member?.member?.familyvalues ==
         "Liberal") {
       familyValue = 3;
     }
 
-    if (_editProfileController.member!.member!.familyStatus == "Affluent") {
+    if (_editProfileController.member?.member?.familyStatus == "Affluent") {
       affluenceLevel = 1;
-    } else if (_editProfileController.member!.member!.familyStatus ==
+    } else if (_editProfileController.member?.member?.familyStatus ==
         "Lower middle") {
       affluenceLevel = 2;
-    } else if (_editProfileController.member!.member!.familyStatus ==
+    } else if (_editProfileController.member?.member?.familyStatus ==
         "Middle class") {
       affluenceLevel = 3;
-    } else if (_editProfileController.member!.member!.familyStatus ==
+    } else if (_editProfileController.member?.member?.familyStatus ==
         "upper class") {
       affluenceLevel = 4;
     }
@@ -369,7 +306,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
             ),
             if (_familyDetailsController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -382,7 +319,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
     if (_editProfileController.isLoading.value == false) {
       religionController
           .selectItem(_editProfileController.member!.member!.religion);
-      castController..selectItem(_editProfileController.member!.member!.caste);
+      castController.selectItem(_editProfileController.member!.member!.caste);
     }
 
     return SingleChildScrollView(
@@ -390,12 +327,12 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
         children: [
           Padding(
             padding: const EdgeInsets.only(
-                left: 22.0, right: 22, top: 35, bottom: 100),
+                left: 22.0, right: 22, top: 35, bottom: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    padding: EdgeInsets.only(bottom: 30),
+                    padding: const EdgeInsets.only(bottom: 30),
                     alignment: Alignment.center,
                     child: Image.asset('assets/images/familyicon.png')),
                 Obx(() {
@@ -416,7 +353,10 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   } else {
                     return buildDropdownWithSearch(
                       'Religion *',
-                      religionController.getReligionNames(),
+                      [
+                        'Prefer Not To Say',
+                        ...religionController.getReligionNames()
+                      ],
                       (value) {
                         setState(() {
                           selectedReligion = religionController.religionsLists
@@ -430,13 +370,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         //  religionController.selectItem(value);
                       },
                       selectedItem: selectedReligionName,
-                      borderColor: show == true && selectedReligionName == null
-                          ? Colors.red
-                          : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please Select Religion",
-                      errorshow: show == true && selectedReligionName == null
-                          ? true
-                          : false,
                       hintText: 'Select Religion',
                     );
                   }
@@ -458,7 +391,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   } else {
                     return buildDropdownWithSearch(
                       'Caste *',
-                      castController.getCastNames(),
+                      ['Prefer Not To Say', ...castController.getCastNames()],
                       (value) {
                         setState(() {
                           selectedCast = castController.castLists.firstWhere(
@@ -469,13 +402,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         castController.selectItem(value);
                       },
                       selectedItem: selectedCastName,
-                      borderColor: show == true && selectedCastName == null
-                          ? Colors.red
-                          : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please Select Cast",
-                      errorshow: show == true && selectedCastName == null
-                          ? true
-                          : false,
                       hintText: 'Select Cast',
                     );
                   }
@@ -497,7 +423,10 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   } else {
                     return buildDropdownWithSearch(
                       'Subcaste',
-                      subCastController.getSubCastList(),
+                      [
+                        'Prefer Not To Say',
+                        ...subCastController.getSubCastList()
+                      ],
                       (value) {
                         setState(() {
                           selectedSubCastName =
@@ -516,7 +445,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   labelText: 'Gotra',
                   hintText: "Enter Gotra",
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Obx(() {
@@ -542,21 +471,13 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                           selectedLanguage = value; // Update the state
                         });
                       },
-                      borderColor: show == true &&
-                              getLanguageKnown(selectedLanguage ?? []) == ""
-                          ? Colors.red
-                          : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please Select Languages",
-                      errorshow: show == true &&
-                              getLanguageKnown(selectedLanguage ?? []) == ""
-                          ? true
-                          : false,
+
                       selectedItems: selectedLanguage,
                       hintText: 'Select Languages Known',
                     );
                   }
                 }),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Obx(() {
@@ -585,18 +506,11 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             .selectItem(value); // Call the controller method
                       },
                       selectedItem: selectedMothertongue,
-                      borderColor: show == true && selectedMothertongue == null
-                          ? Colors.red
-                          : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please Select Mother Tongue",
-                      errorshow: show == true && selectedMothertongue == null
-                          ? true
-                          : false,
                       hintText: 'Select Mother tongue',
                     );
                   }
                 }),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -604,7 +518,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   height: 1,
                   decoration: const BoxDecoration(color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -629,7 +543,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       style: FontConstant.styleRegular(
                           fontSize: 16, color: AppColors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Radio(
@@ -663,21 +577,15 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     key: _formKeyFather,
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         CustomTextField(
                           controller: fathernameController,
                           labelText: 'Full Name of Father *',
                           hintText: "Enter Name of Father",
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter name of father';
-                            }
-                            return null;
-                          },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Obx(() {
@@ -706,34 +614,19 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                                     value); // Call the controller method
                               },
                               selectedItem: selectedFatherOccupation,
-                              borderColor: show == true &&
-                                      selectedFatherOccupation == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
-                              errorMessage: "Please Select Occupation",
-                              errorshow: show == true &&
-                                      selectedFatherOccupation == null
-                                  ? true
-                                  : false,
                               hintText: 'Select Occupation',
                             );
                           }
                         }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         CustomTextField(
                           controller: fatherbusinessController,
                           labelText: 'What kind of business *',
                           hintText: "Enter kind of business",
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter kind of business';
-                            }
-                            return null;
-                          },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Obx(() {
@@ -763,22 +656,13 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                               },
                               selectedItem: selectedFatherAnnualIncomeRange,
                               hintText: 'Select Annual Income Range',
-                              borderColor: show == true &&
-                                      selectedFatherAnnualIncomeRange == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
-                              errorMessage: "Please select income range",
-                              errorshow: show == true &&
-                                      selectedFatherAnnualIncomeRange == null
-                                  ? true
-                                  : false,
                             );
                           }
                         }),
                       ],
                     ),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -852,14 +736,8 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                           controller: mothernameController,
                           labelText: 'Full Name of Mother *',
                           hintText: "Enter Full Name of Mother",
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter name of mother';
-                            }
-                            return null;
-                          },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Obx(() {
@@ -889,15 +767,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                               },
                               selectedItem: selectedMotherOccupation,
                               hintText: 'Select Occupation',
-                              borderColor: show == true &&
-                                      selectedMotherOccupation == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
-                              errorMessage: "Please Select Occupation",
-                              errorshow: show == true &&
-                                      selectedMotherOccupation == null
-                                  ? true
-                                  : false,
                             );
                           }
                         }),
@@ -931,22 +800,13 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                               },
                               selectedItem: selectedMotherAnnualIncomeRange,
                               hintText: 'Select Annual Income Range',
-                              borderColor: show == true &&
-                                      selectedMotherAnnualIncomeRange == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
-                              errorMessage: "Please select Annual income",
-                              errorshow: show == true &&
-                                      selectedMotherAnnualIncomeRange == null
-                                  ? true
-                                  : false,
                             );
                           }
                         }),
                       ],
                     ),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -954,7 +814,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   height: 1,
                   decoration: const BoxDecoration(color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -979,7 +839,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       style: FontConstant.styleRegular(
                           fontSize: 16, color: AppColors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Radio(
@@ -1016,7 +876,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       ),
                       buildDropdownWithSearch(
                         'Number of Sisters *',
-                        NumberController.NumberList(),
+                        ['Prefer Not To Say', ...NumberController.NumberList()],
                         (value) {
                           setState(() {
                             selectedNoSister = value; // Update the state
@@ -1025,13 +885,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedNoSister,
-                        borderColor: show == true && selectedNoSister == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Select No of Sister",
-                        errorshow: show == true && selectedNoSister == null
-                            ? true
-                            : false,
                         hintText: '0',
                       ),
                     ],
@@ -1106,7 +959,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       ),
                       buildDropdownWithSearch(
                         'Number of Brothers *',
-                        NumberController.NumberList(),
+                        ['Prefer Not To Say', ...NumberController.NumberList()],
                         (value) {
                           setState(() {
                             selectedNoBrother = value; // Update the state
@@ -1114,13 +967,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                           numberController
                               .selectItem(value); // Call the controller method
                         },
-                        borderColor: show == true && selectedNoBrother == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Select No of Brother",
-                        errorshow: show == true && selectedNoBrother == null
-                            ? true
-                            : false,
                         selectedItem: selectedNoBrother,
                         hintText: '0',
                       ),
@@ -1146,39 +992,61 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Flexible(
-                      child: RadioListTile<int>(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Joint'),
-                        activeColor: AppColors.primaryColor,
-                        value: 1,
-                        groupValue: familytype,
-                        onChanged: (int? value) {
-                          setState(
-                            () {
-                              familytype = value;
-                            },
-                          );
+                      child: GestureDetector(
+                        onDoubleTap: () {
+                          setState(() {
+                            if (familytype == 1) {
+                              familytype = 0;
+                            } else {
+                              familytype = 1;
+                            }
+                          });
                         },
+                        child: RadioListTile<int>(
+                          contentPadding: EdgeInsets.zero,
+                          title: const Text('Joint'),
+                          activeColor: AppColors.primaryColor,
+                          value: 1,
+                          groupValue: familytype,
+                          onChanged: (int? value) {
+                            setState(
+                              () {
+                                familytype = value;
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                     Flexible(
                       flex: 1,
-                      child: RadioListTile<int>(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Nuclear'),
-                        activeColor: AppColors.primaryColor,
-                        value: 2,
-                        groupValue: familytype,
-                        onChanged: (int? value) {
+                      child: GestureDetector(
+                        onDoubleTap: () {
                           setState(() {
-                            familytype = value;
+                            if (familytype == 2) {
+                              familytype = 0;
+                            } else {
+                              familytype = 2;
+                            }
                           });
                         },
+                        child: RadioListTile<int>(
+                          contentPadding: EdgeInsets.zero,
+                          title: const Text('Nuclear'),
+                          activeColor: AppColors.primaryColor,
+                          value: 2,
+                          groupValue: familytype,
+                          onChanged: (int? value) {
+                            setState(() {
+                              familytype = value;
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Column(
@@ -1193,55 +1061,88 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Flexible(
-                          child: RadioListTile<int>(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Traditional'),
-                            activeColor: AppColors.primaryColor,
-                            value: 1,
-                            groupValue: familyValue,
-                            onChanged: (int? value) {
-                              setState(
-                                () {
-                                  familyValue = value;
-                                },
-                              );
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                if (familyValue == 1) {
+                                  familyValue = 0;
+                                } else {
+                                  familyValue = 1;
+                                }
+                              });
                             },
+                            child: RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Traditional'),
+                              activeColor: AppColors.primaryColor,
+                              value: 1,
+                              groupValue: familyValue,
+                              onChanged: (int? value) {
+                                setState(
+                                  () {
+                                    familyValue = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                         Flexible(
                           flex: 1,
-                          child: RadioListTile<int>(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Moderate'),
-                            activeColor: AppColors.primaryColor,
-                            value: 2,
-                            groupValue: familyValue,
-                            onChanged: (int? value) {
-                              setState(
-                                () {
-                                  familyValue = value;
-                                },
-                              );
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                if (familyValue == 2) {
+                                  familyValue = 0;
+                                } else {
+                                  familyValue = 2;
+                                }
+                              });
                             },
+                            child: RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Moderate'),
+                              activeColor: AppColors.primaryColor,
+                              value: 2,
+                              groupValue: familyValue,
+                              onChanged: (int? value) {
+                                setState(
+                                  () {
+                                    familyValue = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
                     ),
                     Flexible(
                       flex: 0,
-                      child: RadioListTile<int>(
-                        contentPadding: EdgeInsets.zero,
-                        title: const Text('Liberal'),
-                        activeColor: AppColors.primaryColor,
-                        value: 3,
-                        groupValue: familyValue,
-                        onChanged: (int? value) {
-                          setState(
-                            () {
-                              familyValue = value;
-                            },
-                          );
+                      child: GestureDetector(
+                        onDoubleTap: () {
+                          setState(() {
+                            if (familyValue == 3) {
+                              familyValue = 0;
+                            } else {
+                              familyValue = 3;
+                            }
+                          });
                         },
+                        child: RadioListTile<int>(
+                          contentPadding: EdgeInsets.zero,
+                          title: const Text('Liberal'),
+                          activeColor: AppColors.primaryColor,
+                          value: 3,
+                          groupValue: familyValue,
+                          onChanged: (int? value) {
+                            setState(
+                              () {
+                                familyValue = value;
+                              },
+                            );
+                          },
+                        ),
                       ),
                     ),
                     Text(
@@ -1253,36 +1154,58 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Flexible(
-                          child: RadioListTile<int>(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Affluent'),
-                            activeColor: AppColors.primaryColor,
-                            value: 1,
-                            groupValue: affluenceLevel,
-                            onChanged: (int? value) {
-                              setState(
-                                () {
-                                  affluenceLevel = value;
-                                },
-                              );
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                if (affluenceLevel == 1) {
+                                  affluenceLevel = 0;
+                                } else {
+                                  affluenceLevel = 1;
+                                }
+                              });
                             },
+                            child: RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Affluent'),
+                              activeColor: AppColors.primaryColor,
+                              value: 1,
+                              groupValue: affluenceLevel,
+                              onChanged: (int? value) {
+                                setState(
+                                  () {
+                                    affluenceLevel = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                         Flexible(
                           flex: 1,
-                          child: RadioListTile<int>(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Lower middle'),
-                            activeColor: AppColors.primaryColor,
-                            value: 2,
-                            groupValue: affluenceLevel,
-                            onChanged: (int? value) {
-                              setState(
-                                () {
-                                  affluenceLevel = value;
-                                },
-                              );
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                if (affluenceLevel == 2) {
+                                  affluenceLevel = 0;
+                                } else {
+                                  affluenceLevel = 2;
+                                }
+                              });
                             },
+                            child: RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Lower middle'),
+                              activeColor: AppColors.primaryColor,
+                              value: 2,
+                              groupValue: affluenceLevel,
+                              onChanged: (int? value) {
+                                setState(
+                                  () {
+                                    affluenceLevel = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -1291,43 +1214,65 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Flexible(
-                          child: RadioListTile<int>(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Middle class'),
-                            activeColor: AppColors.primaryColor,
-                            value: 3,
-                            groupValue: affluenceLevel,
-                            onChanged: (int? value) {
-                              setState(
-                                () {
-                                  affluenceLevel = value;
-                                },
-                              );
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                if (affluenceLevel == 3) {
+                                  affluenceLevel = 0;
+                                } else {
+                                  affluenceLevel = 3;
+                                }
+                              });
                             },
+                            child: RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Middle class'),
+                              activeColor: AppColors.primaryColor,
+                              value: 3,
+                              groupValue: affluenceLevel,
+                              onChanged: (int? value) {
+                                setState(
+                                  () {
+                                    affluenceLevel = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                         Flexible(
                           flex: 1,
-                          child: RadioListTile<int>(
-                            contentPadding: EdgeInsets.zero,
-                            title: const Text('Upper class'),
-                            activeColor: AppColors.primaryColor,
-                            value: 4,
-                            groupValue: affluenceLevel,
-                            onChanged: (int? value) {
-                              setState(
-                                () {
-                                  affluenceLevel = value;
-                                },
-                              );
+                          child: GestureDetector(
+                            onDoubleTap: () {
+                              setState(() {
+                                if (affluenceLevel == 4) {
+                                  affluenceLevel = 0;
+                                } else {
+                                  affluenceLevel = 4;
+                                }
+                              });
                             },
+                            child: RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('Upper class'),
+                              activeColor: AppColors.primaryColor,
+                              value: 4,
+                              groupValue: affluenceLevel,
+                              onChanged: (int? value) {
+                                setState(
+                                  () {
+                                    affluenceLevel = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 25),
                 SizedBox(
                   height: 44,
                   child: CustomButton(
@@ -1354,7 +1299,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             gotra,
                             getLanguageKnown(selectedLanguage ?? []),
                             selectedMothertongue!,
-                            getFatherAlive()!,
+                            getFatherAlive() ?? "",
                             getFatherAlive() == "Yes" ? fathername : "",
                             getFatherAlive() == "Yes"
                                 ? selectedFatherOccupation ?? ""
@@ -1363,7 +1308,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             getFatherAlive() == "Yes"
                                 ? selectedFatherAnnualIncomeRange ?? ""
                                 : "",
-                            getMotherAlive()!,
+                            getMotherAlive() ?? "",
                             getMotherAlive() == "Yes" ? mothername : "",
                             getMotherAlive() == "Yes"
                                 ? selectedMotherOccupation ?? ""
@@ -1371,9 +1316,9 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             getMotherAlive() == "Yes"
                                 ? selectedMotherAnnualIncomeRange ?? ""
                                 : "",
-                            getSister()!,
+                            getSister() ?? "",
                             getSister() == "Yes" ? selectedNoSister ?? "" : "",
-                            getBrother()!,
+                            getBrother() ?? "",
                             getBrother() == "Yes"
                                 ? selectedNoBrother ?? ""
                                 : "",
@@ -1392,7 +1337,6 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                         fontSize: 18, color: Colors.white),
                   ),
                 ),
-                const SizedBox(height: 15),
               ],
             ),
           ),

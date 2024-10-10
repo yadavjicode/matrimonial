@@ -86,554 +86,584 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-// start basicDetails ========================================================================================================================================================================
+    return Column(
+      children: [
+        TabBar(
+          // tabAlignment: TabAlignment.start,
+          controller: tabController,
+          isScrollable: true,
+          indicatorColor: AppColors.primaryColor,
+          labelColor: AppColors.primaryColor,
+          tabs: const [
+            Tab(text: 'Basic Details'),
+            Tab(text: 'Contact Details'),
+            Tab(text: 'Location Details'),
+            Tab(text: 'Educational Details'),
+            Tab(text: 'Professional Details'),
+            Tab(text: 'Devotional Details'),
+            Tab(text: 'Spiritual Counsellor Details'),
+            Tab(text: 'Family & More Details'),
+            Tab(text: 'Horoscope Details'),
+            // Tab(text: "Partner's Desired Qualities"),
+            // Tab(text: 'Partner Preferences'),
+          ],
+        ),
+        SizedBox(
+          height: 300,
+          child: Obx(() {
+            // start basicDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> basicDetails = [
-      {
-        "title": "Name",
-        "value":
-            "${profileDetailsController.member?.data?.nameTitle ?? ""} ${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""}"
-      },
-      {
-        "title": "Initiated Name (Spiritual Name)",
-        "value":
-            "${profileDetailsController.member?.data?.spiritualName ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Marital Status",
-        "value":
-            "${profileDetailsController.member?.data?.maritalstatus ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Height",
-        "value":
-            "${profileDetailsController.member?.data?.height ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Weight",
-        "value":
-            "${profileDetailsController.member?.data?.weight != null ? "${profileDetailsController.member?.data?.weight} KG" : "Not Mentioned"}"
-      },
-      {
-        "title": "Date of Birth",
-        "value": CommanClass.dateFormat(
-                    profileDetailsController.member?.data?.dOB)
-                .isEmpty
-            ? "Not Mentioned"
-            : CommanClass.dateFormat(profileDetailsController.member?.data?.dOB)
-      },
-      {
-        "title": "Hobbies",
-        "value":
-            "${profileDetailsController.member?.data?.hobbies ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Diet",
-        "value":
-            "${profileDetailsController.member?.data?.diet ?? "Not Mentioned"}"
-      },
-      {
-        "title": "About ",
-        "value":
-            "${profileDetailsController.member?.data?.about ?? "Not Mentioned"}"
-      }
-    ];
+            List<Map<String, String>> basicDetails = [
+              {
+                "title": "Name",
+                "value":
+                    "${profileDetailsController.member?.data?.nameTitle ?? ""} ${profileDetailsController.member?.data?.name ?? ""} ${profileDetailsController.member?.data?.surename ?? ""}"
+              },
+              {
+                "title": "Initiated Name (Spiritual Name)",
+                "value":
+                    "${profileDetailsController.member?.data?.spiritualName ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Marital Status",
+                "value":
+                    "${profileDetailsController.member?.data?.maritalstatus ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Height",
+                "value":
+                    "${profileDetailsController.member?.data?.height ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Weight",
+                "value":
+                    "${profileDetailsController.member?.data?.weight != null ? "${profileDetailsController.member?.data?.weight} KG" : "Not Mentioned"}"
+              },
+              {
+                "title": "Date of Birth",
+                "value": CommanClass.dateFormat(
+                            profileDetailsController.member?.data?.dOB)
+                        .isEmpty
+                    ? "Not Mentioned"
+                    : CommanClass.dateFormat(
+                        profileDetailsController.member?.data?.dOB)
+              },
+              {
+                "title": "Hobbies",
+                "value":
+                    "${profileDetailsController.member?.data?.hobbies ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Diet",
+                "value":
+                    "${profileDetailsController.member?.data?.diet ?? "Not Mentioned"}"
+              },
+              {
+                "title": "About ",
+                "value":
+                    "${profileDetailsController.member?.data?.about ?? "Not Mentioned"}"
+              }
+            ];
 // End basicDetails ========================================================================================================================================================================
 
 // Start contactDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> contactDetails = [
-      {
-        "title": "Phone Number",
-        "value":
-            "${profileDetailsController.member?.data?.hidePhoneStatus == 1 ? "Phone Number Hidden" : profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Email Address",
-        "value":
-            "${profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Email Address Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Instagram ID",
-        "value":
-            "${profileDetailsController.member?.data?.instagramId ?? "Not Mentioned"}"
-      }
-    ];
+            List<Map<String, String>> contactDetails = [
+              {
+                "title": "Phone Number",
+                "value":
+                    "${profileDetailsController.member?.data?.hidePhoneStatus == 1 ? "Phone Number Hidden" : profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Email Address",
+                "value":
+                    "${profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Email Address Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Instagram ID",
+                "value":
+                    "${profileDetailsController.member?.data?.instagramId ?? "Not Mentioned"}"
+              }
+            ];
 // End contactDetails ========================================================================================================================================================================
 
 // Start locationDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> locationDetails = [
-      {
-        "title": "Nationality",
-        "value":
-            "${profileDetailsController.member?.data?.country ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Residence Type",
-        "value":
-            "${profileDetailsController.member?.data?.residencystatus ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Permanent House Type",
-        "value":
-            "${profileDetailsController.member?.data?.permanentHouseType ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Permanent State",
-        "value":
-            "${profileDetailsController.member?.data?.permanentState ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Permanent City",
-        "value":
-            "${profileDetailsController.member?.data?.permanentCity ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Permanent Pin Code/ ZIP Code",
-        "value":
-            "${profileDetailsController.member?.data?.permanentPincode ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Temporary State",
-        "value":
-            "${profileDetailsController.member?.data?.tempState ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Temporary City",
-        "value":
-            "${profileDetailsController.member?.data?.tempCity ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Temporary Pin Code/ ZIP Code",
-        "value":
-            "${profileDetailsController.member?.data?.tempPincode ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 1 Relation",
-        "value":
-            "${profileDetailsController.member?.data?.reference1Reletion ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 1 Name",
-        "value":
-            "${profileDetailsController.member?.data?.reference1Name ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 1 Email",
-        "value":
-            "${profileDetailsController.member?.data?.reference1Email ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 1 Mobile no",
-        "value":
-            "${profileDetailsController.member?.data?.reference1Mobile ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 2 Relation",
-        "value":
-            "${profileDetailsController.member?.data?.reference2Reletion ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 2 Name",
-        "value":
-            "${profileDetailsController.member?.data?.reference2Name ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 2 Email",
-        "value":
-            "${profileDetailsController.member?.data?.reference2Email ?? "Not Mentioned"}"
-      },
-      {
-        "title": "References 2 Mobile no",
-        "value":
-            "${profileDetailsController.member?.data?.reference2Mobile ?? "Not Mentioned"}"
-      },
-    ];
-    // End locationDetails ========================================================================================================================================================================
+            List<Map<String, String>> locationDetails = [
+              {
+                "title": "Nationality",
+                "value":
+                    "${profileDetailsController.member?.data?.country ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Residence Type",
+                "value":
+                    "${profileDetailsController.member?.data?.residencystatus ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Permanent House Type",
+                "value":
+                    "${profileDetailsController.member?.data?.permanentHouseType ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Permanent State",
+                "value":
+                    "${profileDetailsController.member?.data?.permanentState ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Permanent City",
+                "value":
+                    "${profileDetailsController.member?.data?.permanentCity ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Permanent Pin Code/ ZIP Code",
+                "value":
+                    "${profileDetailsController.member?.data?.permanentPincode ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Temporary State",
+                "value":
+                    "${profileDetailsController.member?.data?.tempState ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Temporary City",
+                "value":
+                    "${profileDetailsController.member?.data?.tempCity ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Temporary Pin Code/ ZIP Code",
+                "value":
+                    "${profileDetailsController.member?.data?.tempPincode ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 1 Relation",
+                "value":
+                    "${profileDetailsController.member?.data?.reference1Reletion ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 1 Name",
+                "value":
+                    "${profileDetailsController.member?.data?.reference1Name ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 1 Email",
+                "value":
+                    "${profileDetailsController.member?.data?.reference1Email ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 1 Mobile no",
+                "value":
+                    "${profileDetailsController.member?.data?.reference1Mobile ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 2 Relation",
+                "value":
+                    "${profileDetailsController.member?.data?.reference2Reletion ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 2 Name",
+                "value":
+                    "${profileDetailsController.member?.data?.reference2Name ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 2 Email",
+                "value":
+                    "${profileDetailsController.member?.data?.reference2Email ?? "Not Mentioned"}"
+              },
+              {
+                "title": "References 2 Mobile no",
+                "value":
+                    "${profileDetailsController.member?.data?.reference2Mobile ?? "Not Mentioned"}"
+              },
+            ];
+            // End locationDetails ========================================================================================================================================================================
 
-    // Start educationDetails ========================================================================================================================================================================
+            // Start educationDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> educationDetails = [
-      {
-        "title": "Highest Qualification",
-        "value":
-            "${profileDetailsController.member?.data?.education ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Professional Qualification",
-        "value":
-            "${profileDetailsController.member?.data?.professionalQualification ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Describe other qualifications (if any)",
-        "value":
-            "${profileDetailsController.member?.data?.otherProfrsionQualification ?? "Not Mentioned"}"
-      }
-    ];
-    // End educationDetails ========================================================================================================================================================================
+            List<Map<String, String>> educationDetails = [
+              {
+                "title": "Highest Qualification",
+                "value":
+                    "${profileDetailsController.member?.data?.education ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Professional Qualification",
+                "value":
+                    "${profileDetailsController.member?.data?.professionalQualification ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Describe other qualifications (if any)",
+                "value":
+                    "${profileDetailsController.member?.data?.otherProfrsionQualification ?? "Not Mentioned"}"
+              }
+            ];
+            // End educationDetails ========================================================================================================================================================================
 
-    // Start professionalDetails ========================================================================================================================================================================
+            // Start professionalDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> professionalDetails = [];
+            List<Map<String, String>> professionalDetails = [];
 
-    if (profileDetailsController.member?.data?.workingAnywhere == "Yes") {
-      professionalDetails.addAll([
-        {
-          "title": "Title of the Profession",
-          "value":
-              "${profileDetailsController.member?.data?.occupation ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Working anywhere",
-          "value":
-              "${profileDetailsController.member?.data?.workingAnywhere ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Employment",
-          "value":
-              "${profileDetailsController.member?.data?.employedin ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Working State",
-          "value":
-              "${profileDetailsController.member?.data?.workState ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Working City",
-          "value":
-              "${profileDetailsController.member?.data?.workCity ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Working Pin Code/ ZIP Code",
-          "value":
-              "${profileDetailsController.member?.data?.workPincode ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Annual Income Range",
-          "value":
-              "${profileDetailsController.member?.data?.annualincome ?? "Not Mentioned"}"
-        },
-      ]);
-    } else {
-      professionalDetails.addAll([
-        {
-          "title": "Title of the Profession",
-          "value":
-              "${profileDetailsController.member?.data?.occupation ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Working anywhere",
-          "value":
-              "${profileDetailsController.member?.data?.workingAnywhere ?? "Not Mentioned"}"
-        },
-      ]);
-    }
+            if (profileDetailsController.member?.data?.workingAnywhere ==
+                "Yes") {
+              professionalDetails.addAll([
+                {
+                  "title": "Title of the Profession",
+                  "value":
+                      "${profileDetailsController.member?.data?.occupation ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Working anywhere",
+                  "value":
+                      "${profileDetailsController.member?.data?.workingAnywhere ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Employment",
+                  "value":
+                      "${profileDetailsController.member?.data?.employedin ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Working State",
+                  "value":
+                      "${profileDetailsController.member?.data?.workState ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Working City",
+                  "value":
+                      "${profileDetailsController.member?.data?.workCity ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Working Pin Code/ ZIP Code",
+                  "value":
+                      "${profileDetailsController.member?.data?.workPincode ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Annual Income Range",
+                  "value":
+                      "${profileDetailsController.member?.data?.annualincome ?? "Not Mentioned"}"
+                },
+              ]);
+            } else {
+              professionalDetails.addAll([
+                {
+                  "title": "Title of the Profession",
+                  "value":
+                      "${profileDetailsController.member?.data?.occupation ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Working anywhere",
+                  "value":
+                      "${profileDetailsController.member?.data?.workingAnywhere ?? "Not Mentioned"}"
+                },
+              ]);
+            }
 
-    // End professionalDetails ========================================================================================================================================================================
+            // End professionalDetails ========================================================================================================================================================================
 
-    // Start devotionalDetails ========================================================================================================================================================================
+            // Start devotionalDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> devotionalDetails = [
-      {
-        "title": "Something about your Devotional Life",
-        "value":
-            "${profileDetailsController.member?.data?.somethingAboutYourDevotionalLife ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Iskcon Knowledge",
-        "value":
-            "${profileDetailsController.member?.data?.iskonType ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Name of spiritual master",
-        "value":
-            "${profileDetailsController.member?.data?.dikshaGuru ?? "Not Mentioned"}"
-      },
-      {
-        "title": "With which temple you are connected to",
-        "value":
-            "${profileDetailsController.member?.data?.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
-      },
-      {
-        "title": "City of temple",
-        "value":
-            "${profileDetailsController.member?.data?.cityOfTheTemple ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Which Sampradaya you belong to?",
-        "value":
-            "${profileDetailsController.member?.data?.whichsampradaya ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Devotional Hobbies",
-        "value":
-            "${profileDetailsController.member?.data?.devotionalHobbies ?? "Not Mentioned"}"
-      }
-    ];
+            List<Map<String, String>> devotionalDetails = [
+              {
+                "title": "Something about your Devotional Life",
+                "value":
+                    "${profileDetailsController.member?.data?.somethingAboutYourDevotionalLife ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Iskcon Knowledge",
+                "value":
+                    "${profileDetailsController.member?.data?.iskonType ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Name of spiritual master",
+                "value":
+                    "${profileDetailsController.member?.data?.dikshaGuru ?? "Not Mentioned"}"
+              },
+              {
+                "title": "With which temple you are connected to",
+                "value":
+                    "${profileDetailsController.member?.data?.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
+              },
+              {
+                "title": "City of temple",
+                "value":
+                    "${profileDetailsController.member?.data?.cityOfTheTemple ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Which Sampradaya you belong to?",
+                "value":
+                    "${profileDetailsController.member?.data?.whichsampradaya ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Devotional Hobbies",
+                "value":
+                    "${profileDetailsController.member?.data?.devotionalHobbies ?? "Not Mentioned"}"
+              }
+            ];
 
-    // End devotionalDetails ========================================================================================================================================================================
+            // End devotionalDetails ========================================================================================================================================================================
 
-    // Start spiritualDetails ========================================================================================================================================================================
+            // Start spiritualDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> spiritualDetails = [];
+            List<Map<String, String>> spiritualDetails = [];
 
-    if (profileDetailsController.member?.data?.spiritualConnected == "Yes") {
-      spiritualDetails.addAll([
-        {
-          "title": "connected with any Spirtual Counsellor",
-          "value":
-              "${profileDetailsController.member?.data?.spiritualConnected ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Name of the Counsellor for my Spiritual Path",
-          "value":
-              "${profileDetailsController.member?.data?.nameOfTheCounselorOfMySpiritualPath ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Connected with my Counsellor Since (Year)",
-          "value":
-              "${profileDetailsController.member?.data?.connectedWithMyCounselerSince ?? "Not Mentioned"}"
-        },
-        {
-          "title": "With which temple your Counsellor is connected to?",
-          "value":
-              "${profileDetailsController.member?.data?.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Counsellor residing in State",
-          "value":
-              "${profileDetailsController.member?.data?.counselorResidingInState ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Counsellor residing in City",
-          "value":
-              "${profileDetailsController.member?.data?.counselorResidingInCity ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Something more about the Counsellor",
-          "value":
-              "${profileDetailsController.member?.data?.somethingAboutMoreCounselor ?? "Not Mentioned"}"
-        }
-      ]);
-    } else {
-      spiritualDetails.addAll([
-        {
-          "title": "connected with any Spirtual Counsellor",
-          "value":
-              "${profileDetailsController.member?.data?.spiritualConnected ?? "Not Mentioned"}"
-        },
-      ]);
-    }
-    // End spiritualDetails ========================================================================================================================================================================
+            if (profileDetailsController.member?.data?.spiritualConnected ==
+                "Yes") {
+              spiritualDetails.addAll([
+                {
+                  "title": "connected with any Spirtual Counsellor",
+                  "value":
+                      "${profileDetailsController.member?.data?.spiritualConnected ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Name of the Counsellor for my Spiritual Path",
+                  "value":
+                      "${profileDetailsController.member?.data?.nameOfTheCounselorOfMySpiritualPath ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Connected with my Counsellor Since (Year)",
+                  "value":
+                      "${profileDetailsController.member?.data?.connectedWithMyCounselerSince ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "With which temple your Counsellor is connected to?",
+                  "value":
+                      "${profileDetailsController.member?.data?.withWhichTempleYourCounselorIsConnectedTo ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Counsellor residing in State",
+                  "value":
+                      "${profileDetailsController.member?.data?.counselorResidingInState ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Counsellor residing in City",
+                  "value":
+                      "${profileDetailsController.member?.data?.counselorResidingInCity ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Something more about the Counsellor",
+                  "value":
+                      "${profileDetailsController.member?.data?.somethingAboutMoreCounselor ?? "Not Mentioned"}"
+                }
+              ]);
+            } else {
+              spiritualDetails.addAll([
+                {
+                  "title": "connected with any Spirtual Counsellor",
+                  "value":
+                      "${profileDetailsController.member?.data?.spiritualConnected ?? "Not Mentioned"}"
+                },
+              ]);
+            }
+            // End spiritualDetails ========================================================================================================================================================================
 
-    // Start familyDetails ========================================================================================================================================================================
+            // Start familyDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> familyDetails = [
-      {
-        "title": "Religion",
-        "value":
-            "${profileDetailsController.member?.data?.religion ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Caste",
-        "value":
-            "${profileDetailsController.member?.data?.caste ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Subcaste",
-        "value":
-            "${profileDetailsController.member?.data?.subcaste ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Gotra",
-        "value":
-            "${profileDetailsController.member?.data?.gothram ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Languages Known",
-        "value":
-            "${profileDetailsController.member?.data?.language ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Mother Tongue",
-        "value":
-            "${profileDetailsController.member?.data?.pEMotherTongue ?? "Not Mentioned"}"
-      },
-    ];
-    if (profileDetailsController.member?.data?.fatherlivingstatus == "Yes") {
-      familyDetails.addAll([
-        {
-          "title": "Father Alive",
-          "value":
-              "${profileDetailsController.member?.data?.fatherlivingstatus ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Full Name of Father",
-          "value":
-              "${profileDetailsController.member?.data?.fathername ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Father Occupation",
-          "value":
-              "${profileDetailsController.member?.data?.fathersoccupation ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Father Business",
-          "value":
-              "${profileDetailsController.member?.data?.fatherBussness ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Father Annual Income Range",
-          "value":
-              "${profileDetailsController.member?.data?.fatherAnnualIncome ?? "Not Mentioned"}"
-        },
-      ]);
-    } else {
-      familyDetails.addAll([
-        {
-          "title": "Father Alive",
-          "value":
-              "${profileDetailsController.member?.data?.fatherlivingstatus ?? "Not Mentioned"}"
-        },
-      ]);
-    }
+            List<Map<String, String>> familyDetails = [
+              {
+                "title": "Religion",
+                "value":
+                    "${profileDetailsController.member?.data?.religion ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Caste",
+                "value":
+                    "${profileDetailsController.member?.data?.caste ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Subcaste",
+                "value":
+                    "${profileDetailsController.member?.data?.subcaste ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Gotra",
+                "value":
+                    "${profileDetailsController.member?.data?.gothram ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Languages Known",
+                "value":
+                    "${profileDetailsController.member?.data?.language ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Mother Tongue",
+                "value":
+                    "${profileDetailsController.member?.data?.pEMotherTongue ?? "Not Mentioned"}"
+              },
+            ];
+            if (profileDetailsController.member?.data?.fatherlivingstatus ==
+                "Yes") {
+              familyDetails.addAll([
+                {
+                  "title": "Father Alive",
+                  "value":
+                      "${profileDetailsController.member?.data?.fatherlivingstatus ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Full Name of Father",
+                  "value":
+                      "${profileDetailsController.member?.data?.fathername ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Father Occupation",
+                  "value":
+                      "${profileDetailsController.member?.data?.fathersoccupation ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Father Business",
+                  "value":
+                      "${profileDetailsController.member?.data?.fatherBussness ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Father Annual Income Range",
+                  "value":
+                      "${profileDetailsController.member?.data?.fatherAnnualIncome ?? "Not Mentioned"}"
+                },
+              ]);
+            } else {
+              familyDetails.addAll([
+                {
+                  "title": "Father Alive",
+                  "value":
+                      "${profileDetailsController.member?.data?.fatherlivingstatus ?? "Not Mentioned"}"
+                },
+              ]);
+            }
 
-    if (profileDetailsController.member?.data?.motherlivingstatus == "Yes") {
-      familyDetails.addAll([
-        {
-          "title": "Mother Alive",
-          "value":
-              "${profileDetailsController.member?.data?.motherlivingstatus ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Full Name of Mother",
-          "value":
-              "${profileDetailsController.member?.data?.mothersname ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Mother Occupation",
-          "value":
-              "${profileDetailsController.member?.data?.mothersoccupation ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Mother Annual Income Range",
-          "value":
-              "${profileDetailsController.member?.data?.motherAnnualIncome ?? "Not Mentioned"}"
-        },
-      ]);
-    } else {
-      familyDetails.addAll([
-        {
-          "title": "Mother Alive",
-          "value":
-              "${profileDetailsController.member?.data?.motherlivingstatus ?? "Not Mentioned"}"
-        },
-      ]);
-    }
+            if (profileDetailsController.member?.data?.motherlivingstatus ==
+                "Yes") {
+              familyDetails.addAll([
+                {
+                  "title": "Mother Alive",
+                  "value":
+                      "${profileDetailsController.member?.data?.motherlivingstatus ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Full Name of Mother",
+                  "value":
+                      "${profileDetailsController.member?.data?.mothersname ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Mother Occupation",
+                  "value":
+                      "${profileDetailsController.member?.data?.mothersoccupation ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Mother Annual Income Range",
+                  "value":
+                      "${profileDetailsController.member?.data?.motherAnnualIncome ?? "Not Mentioned"}"
+                },
+              ]);
+            } else {
+              familyDetails.addAll([
+                {
+                  "title": "Mother Alive",
+                  "value":
+                      "${profileDetailsController.member?.data?.motherlivingstatus ?? "Not Mentioned"}"
+                },
+              ]);
+            }
 
-    if (profileDetailsController.member?.data?.brother == "Yes") {
-      familyDetails.addAll([
-        {
-          "title": "Brother",
-          "value":
-              "${profileDetailsController.member?.data?.brother ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Number of Brother",
-          "value":
-              "${profileDetailsController.member?.data?.noofbrothers ?? "Not Mentioned"}"
-        },
-      ]);
-    } else {
-      familyDetails.addAll([
-        {
-          "title": "Brother",
-          "value":
-              "${profileDetailsController.member?.data?.brother ?? "Not Mentioned"}"
-        },
-      ]);
-    }
+            if (profileDetailsController.member?.data?.brother == "Yes") {
+              familyDetails.addAll([
+                {
+                  "title": "Brother",
+                  "value":
+                      "${profileDetailsController.member?.data?.brother ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Number of Brother",
+                  "value":
+                      "${profileDetailsController.member?.data?.noofbrothers ?? "Not Mentioned"}"
+                },
+              ]);
+            } else {
+              familyDetails.addAll([
+                {
+                  "title": "Brother",
+                  "value":
+                      "${profileDetailsController.member?.data?.brother ?? "Not Mentioned"}"
+                },
+              ]);
+            }
 
-    if (profileDetailsController.member?.data?.sister == "Yes") {
-      familyDetails.addAll([
-        {
-          "title": "Sister",
-          "value":
-              "${profileDetailsController.member?.data?.sister ?? "Not Mentioned"}"
-        },
-        {
-          "title": "Number of Sisters",
-          "value":
-              "${profileDetailsController.member?.data?.noofsisters ?? "Not Mentioned"}"
-        },
-      ]);
-    } else {
-      familyDetails.addAll([
-        {
-          "title": "Sister",
-          "value":
-              "${profileDetailsController.member?.data?.sister ?? "Not Mentioned"}"
-        },
-      ]);
-    }
+            if (profileDetailsController.member?.data?.sister == "Yes") {
+              familyDetails.addAll([
+                {
+                  "title": "Sister",
+                  "value":
+                      "${profileDetailsController.member?.data?.sister ?? "Not Mentioned"}"
+                },
+                {
+                  "title": "Number of Sisters",
+                  "value":
+                      "${profileDetailsController.member?.data?.noofsisters ?? "Not Mentioned"}"
+                },
+              ]);
+            } else {
+              familyDetails.addAll([
+                {
+                  "title": "Sister",
+                  "value":
+                      "${profileDetailsController.member?.data?.sister ?? "Not Mentioned"}"
+                },
+              ]);
+            }
 
-    familyDetails.addAll([
-      {
-        "title": "Family Type",
-        "value":
-            "${profileDetailsController.member?.data?.familyType ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Family Value",
-        "value":
-            "${profileDetailsController.member?.data?.familyvalues ?? "Not Mentioned"}"
-      },
-      {
-        "title": "Affluence Level",
-        "value":
-            "${profileDetailsController.member?.data?.familyStatus ?? "Not Mentioned"}"
-      },
-    ]);
+            familyDetails.addAll([
+              {
+                "title": "Family Type",
+                "value":
+                    "${profileDetailsController.member?.data?.familyType ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Family Value",
+                "value":
+                    "${profileDetailsController.member?.data?.familyvalues ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Affluence Level",
+                "value":
+                    "${profileDetailsController.member?.data?.familyStatus ?? "Not Mentioned"}"
+              },
+            ]);
 
-    // End familyDetails ========================================================================================================================================================================
+            // End familyDetails ========================================================================================================================================================================
 
-    // // Start aboutDetails ========================================================================================================================================================================
+            // // Start aboutDetails ========================================================================================================================================================================
 
-    // List<Map<String, String>> aboutDetails = [
-    //   {
-    //     "title":
-    //         "${profileDetailsController.member!.data!.gender == "Male" ? "About Bride" : "About Groom"}",
-    //     "value":
-    //         "${profileDetailsController.member!.data!.groomBride ?? "Not Mentioned"}"
-    //   },
-    //   {
-    //     "title": "Hobbies or Likings",
-    //     "value":
-    //         "${profileDetailsController.member!.data!.hobbies ?? "Not Mentioned"}"
-    //   },
-    // ];
-    // // End aboutDetails ========================================================================================================================================================================
+            // List<Map<String, String>> aboutDetails = [
+            //   {
+            //     "title":
+            //         "${profileDetailsController.member!.data!.gender == "Male" ? "About Bride" : "About Groom"}",
+            //     "value":
+            //         "${profileDetailsController.member!.data!.groomBride ?? "Not Mentioned"}"
+            //   },
+            //   {
+            //     "title": "Hobbies or Likings",
+            //     "value":
+            //         "${profileDetailsController.member!.data!.hobbies ?? "Not Mentioned"}"
+            //   },
+            // ];
+            // // End aboutDetails ========================================================================================================================================================================
 
-    // Start horoscopeDetails ========================================================================================================================================================================
+            // Start horoscopeDetails ========================================================================================================================================================================
 
-    List<Map<String, String>> horoscopeDetails = [
-      {
-        "title": "Time Of Birth",
-        "value":
-            "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.timeOfBirth ?? "Not Mentioned"}"
-      },
-      {
-        "title": "State of Birth",
-        "value":
-            "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.stateOfBirth ?? "Not Mentioned"}"
-      },
-      {
-        "title": "City of Birth",
-        "value":
-            "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.cityOfBirth ?? "Not Mentioned"}"
-      },
-    ];
+            List<Map<String, String>> horoscopeDetails = [
+              {
+                "title": "Time Of Birth",
+                "value":
+                    "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.timeOfBirth ?? "Not Mentioned"}"
+              },
+              {
+                "title": "State of Birth",
+                "value":
+                    "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.stateOfBirth ?? "Not Mentioned"}"
+              },
+              {
+                "title": "City of Birth",
+                "value":
+                    "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.cityOfBirth ?? "Not Mentioned"}"
+              },
+            ];
 // End horoscopeDetails ========================================================================================================================================================================
 
 // // Start preferencesDetails ========================================================================================================================================================================
@@ -731,47 +761,25 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
 //       },
 //     ];
 //     // End preferencesDetails ========================================================================================================================================================================
-
-    return Column(
-      children: [
-        TabBar(
-          // tabAlignment: TabAlignment.start,
-          controller: tabController,
-          isScrollable: true,
-          indicatorColor: AppColors.primaryColor,
-          labelColor: AppColors.primaryColor,
-          tabs: const [
-            Tab(text: 'Basic Details'),
-            Tab(text: 'Contact Details'),
-            Tab(text: 'Location Details'),
-            Tab(text: 'Educational Details'),
-            Tab(text: 'Professional Details'),
-            Tab(text: 'Devotional Details'),
-            Tab(text: 'Spiritual Counsellor Details'),
-            Tab(text: 'Family & More Details'),
-            Tab(text: 'Horoscope Details'),
-            // Tab(text: "Partner's Desired Qualities"),
-            // Tab(text: 'Partner Preferences'),
-          ],
-        ),
-        SizedBox(
-          height: 300,
-          child: TabBarView(
-            controller: tabController,
-            children: [
-              CustomPage(customContent: basicDetails),
-              CustomPage(customContent: contactDetails),
-              CustomPage(customContent: locationDetails),
-              CustomPage(customContent: educationDetails),
-              CustomPage(customContent: professionalDetails),
-              CustomPage(customContent: devotionalDetails),
-              CustomPage(customContent: spiritualDetails),
-              CustomPage(customContent: familyDetails),
-              CustomPage(customContent: horoscopeDetails),
-              // CustomPage(customContent: aboutDetails),
-              // CustomPage(customContent: preferencesDetails),
-            ],
-          ),
+            return profileDetailsController.isLoading.value == false
+                ? TabBarView(
+                    controller: tabController,
+                    children: [
+                      CustomPage(customContent: basicDetails),
+                      CustomPage(customContent: contactDetails),
+                      CustomPage(customContent: locationDetails),
+                      CustomPage(customContent: educationDetails),
+                      CustomPage(customContent: professionalDetails),
+                      CustomPage(customContent: devotionalDetails),
+                      CustomPage(customContent: spiritualDetails),
+                      CustomPage(customContent: familyDetails),
+                      CustomPage(customContent: horoscopeDetails),
+                      // CustomPage(customContent: aboutDetails),
+                      // CustomPage(customContent: preferencesDetails),
+                    ],
+                  )
+                : const SizedBox.shrink();
+          }),
         ),
       ],
     );

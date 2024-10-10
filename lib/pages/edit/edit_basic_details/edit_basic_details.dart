@@ -112,9 +112,9 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     });
     String mon =
         _basicDetailController.getMonthString(selectedMonth.toString());
-    aboutController.text = _editProfileController.member!.member!.about ?? "";
+    aboutController.text = _editProfileController.member?.member?.about ?? "";
 
-    String dob = _editProfileController.member!.member!.dOB ?? "";
+    String dob = _editProfileController.member?.member?.dOB ?? "";
     List<String> dateParts = dob.split('-');
 
     selectedYear = dateParts[0]; // "2005"
@@ -122,22 +122,19 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     selectedDay = dateParts[2];
     selectedMonth =
         _basicDetailController.getMonthString(month.toString()); // "01"
-    selectedHeight = _editProfileController.member!.member!.height;
+    selectedHeight = _editProfileController.member?.member?.height;
     selectedWeight = _editProfileController.member?.member?.weight != null
         ? "${_editProfileController.member?.member?.weight} KG"
         : "";
     selectedMaritalStatus =
-        _editProfileController.member!.member!.maritalstatus;
-    selectedDiet = _editProfileController.member!.member!.diet;
+        _editProfileController.member?.member?.maritalstatus;
+    selectedDiet = _editProfileController.member?.member?.diet;
     selectedHeightkey = _editProfileController.member?.member?.heightKey ?? "";
     selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
   }
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
@@ -155,7 +152,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
             basicContent(),
             if (_basicDetailController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -187,7 +184,8 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
             child: Image.asset('assets/images/profile.png'),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 150),
+            padding: const EdgeInsets.only(
+                left: 22, right: 22, top: 150, bottom: 30),
             child: Form(
               key: _formKey,
               child: Column(
@@ -299,27 +297,24 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                           ),
                           const SizedBox(width: 10),
                           Expanded(
-                            child: buildDropdownWithSearch(
-                                  'Weight *',
-                                  weightConsController.getWeight(),
-                                  (value) => {
-                                    setState(() => selectedWeight = value),
-                                    isWeightValidated = true
-                                  },
-                                  search: true,
-                                  borderColor:
-                                      show == true && selectedWeight == null
-                                          ? Colors.red
-                                          : Colors.black.withOpacity(0.5),
-                                  errorMessage: "Select Weight",
-                                  errorshow:
-                                      show == true && selectedWeight == null
-                                          ? true
-                                          : false,
-                                  selectedItem: selectedWeight,
-                                  hintText: 'Select',
-                                )
-                          ),
+                              child: buildDropdownWithSearch(
+                            'Weight *',
+                            weightConsController.getWeight(),
+                            (value) => {
+                              setState(() => selectedWeight = value),
+                              isWeightValidated = true
+                            },
+                            search: true,
+                            borderColor: show == true && selectedWeight == null
+                                ? Colors.red
+                                : Colors.black.withOpacity(0.5),
+                            errorMessage: "Select Weight",
+                            errorshow: show == true && selectedWeight == null
+                                ? true
+                                : false,
+                            selectedItem: selectedWeight,
+                            hintText: 'Select',
+                          )),
                         ],
                       ),
                     ],
@@ -444,7 +439,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                       )
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     child: CustomButton(
@@ -461,13 +456,13 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                           _basicDetailController.basicDetails(
                               context,
                               _editProfileController
-                                      .member!.member!.nameTitle ??
+                                      .member?.member?.nameTitle ??
                                   "",
-                              _editProfileController.member!.member!.name ?? "",
-                              _editProfileController.member!.member!.surename ??
+                              _editProfileController.member?.member?.name ?? "",
+                              _editProfileController.member?.member?.surename ??
                                   "",
                               _editProfileController
-                                      .member!.member!.spiritualName ??
+                                      .member?.member?.spiritualName ??
                                   "",
                               selectedMaritalStatus ?? "",
                               selectedHeightkey ?? "",
@@ -479,7 +474,7 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
                               "${selectedYear ?? year ?? "0000"}-${mon.isEmpty ? month : mon}-${selectedDay ?? day ?? "00"}",
                               getSelectedHobbies().isEmpty
                                   ? _editProfileController
-                                          .member!.member!.hobbies ??
+                                          .member?.member?.hobbies ??
                                       ""
                                   : getSelectedHobbies(),
                               selectedDiet ?? "",

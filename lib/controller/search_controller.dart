@@ -139,13 +139,14 @@ String convertToFeetAndInches(double value) {
     String country,
     String state,
     String city,
-    String education,) async {
+    String education,
+    String profilePer) async {
     if (isLoading.value || !hasMore.value) return; // Prevent duplicate requests
 
     isLoading.value = true;
     try {
       final response =
-          await apiService.Search(currentPage.value,
+          await apiService.search(currentPage.value,
           ageFrom,
           ageTo,
           heightFrom,
@@ -156,7 +157,8 @@ String convertToFeetAndInches(double value) {
           country,
           state,
           city,
-          education
+          education,
+          profilePer
           );
       final searchModel = response;
       _member = response;
@@ -200,7 +202,7 @@ String convertToFeetAndInches(double value) {
     String country,
     String state,
     String city,
-    String education,) {
+    String education,String profilePer) {
     if (hasMore.value) {
       currentPage.value++;
       Search(context,ageFrom,
@@ -213,7 +215,7 @@ String convertToFeetAndInches(double value) {
           country,
           state,
           city,
-          education);
+          education,profilePer);
     }
   }
 
@@ -228,7 +230,7 @@ String convertToFeetAndInches(double value) {
     String country,
     String state,
     String city,
-    String education,) {
+    String education,String profilePer) {
     searchs.clear();
     currentPage.value = 1;
     lastPage.value = 1;
@@ -243,6 +245,6 @@ String convertToFeetAndInches(double value) {
           country,
           state,
           city,
-          education);
+          education,profilePer);
   }
 }

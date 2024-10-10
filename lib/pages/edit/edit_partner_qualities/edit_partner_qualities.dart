@@ -24,7 +24,6 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
       Get.put(EditProfileController());
   // Define state variables for checkboxes
 
-
   Map<String, bool> characteristics = {
     "Independent": false,
     "Affectionate": false,
@@ -79,8 +78,6 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
         .join(", ");
   }
 
-  
-
   void selectHobbies(String selectedHobbies) {
     List<String> selectedList = selectedHobbies.split(', ');
 
@@ -88,24 +85,24 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
       hobbies[key] = selectedList.contains(key);
     });
   }
-   void selectQualities(String selectQualities) {
+
+  void selectQualities(String selectQualities) {
     List<String> selectedList = selectQualities.split(', ');
 
     characteristics.forEach((key, value) {
       characteristics[key] = selectedList.contains(key);
     });
   }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
 
-    selectHobbies(_editProfileController.member!.member!.GBHobbies);
-    selectQualities(_editProfileController.member!.member!.groomBride);
-
+    selectHobbies(_editProfileController.member?.member?.GBHobbies);
+    selectQualities(_editProfileController.member?.member?.groomBride);
   }
 
   @override
@@ -129,12 +126,12 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
                     width: double.infinity,
                     alignment: Alignment.topRight,
                     child: Image.asset("assets/images/background.png")),
-                PartnerQualitiesContent()
+                partnerQualitiesContent()
               ],
             ),
             if (aboutGroomBrideController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -143,15 +140,15 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
         }));
   }
 
-  Widget PartnerQualitiesContent() {
+  Widget partnerQualitiesContent() {
     return SingleChildScrollView(
       child: Padding(
         padding:
-            const EdgeInsets.only(top: 35, bottom: 100, left: 22, right: 22),
+            const EdgeInsets.only(top: 35, bottom: 30, left: 22, right: 22),
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 5),
+              margin: const EdgeInsets.only(bottom: 5),
               alignment: Alignment.center,
               child: Image.asset(
                 "assets/images/groombride.png",
@@ -159,7 +156,7 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
                 width: 114,
               ),
             ),
-            Container(
+            SizedBox(
               height: 250,
               child: ScrollbarTheme(
                 data: ScrollbarThemeData(
@@ -220,10 +217,10 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
               height: 1,
               color: Colors.grey.shade300,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Container(
+            SizedBox(
               height: 250,
               child: ScrollbarTheme(
                 data: ScrollbarThemeData(
@@ -271,14 +268,14 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 25, bottom: 15),
+              padding: const EdgeInsets.only(top: 25),
               child: CustomButton(
                 text: "CONTINUE",
                 onPressed: () {
                   String selectedCharacteristics = getSelectedCharacteristics();
                   String selectedHobbies = getSelectedHobbies();
                   aboutGroomBrideController.aboutGroomBride(
-                      context, selectedCharacteristics, selectedHobbies,true);
+                      context, selectedCharacteristics, selectedHobbies, true);
                   //   Get.toNamed('/horoscope');
                   print("Selected Characteristics: $selectedCharacteristics");
                   print("Selected Hobbies: $selectedHobbies");

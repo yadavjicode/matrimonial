@@ -40,24 +40,6 @@ class _HomeBodyState extends State<HomeBody> {
   final DirectChatController directChatController =
       Get.put(DirectChatController());
 
-  Future<void> _fetchUser(String userId) async {
-    ChatUser? _chatUser;
-    ChatUser? user = await directChatController.getUserById(userId);
-    setState(() {
-      _chatUser = user;
-    });
-    if (_chatUser != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChatScreen(user: _chatUser!),
-        ),
-      );
-    } else {
-      Dialogs.showSnackbar(context, 'unable to fetch data');
-    }
-  }
-
   @override
   void initState() {
     // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -111,7 +93,7 @@ class _HomeBodyState extends State<HomeBody> {
             "daily_recommendation",
             "Daily Recommendation",
             dashboardController.member!.responseData!.dailyRecommendation!),
-        SizedBox(
+        const SizedBox(
           height: 25,
         )
       ],
@@ -124,8 +106,8 @@ class _HomeBodyState extends State<HomeBody> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 10),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           child: Row(
             children: [
               Text(
@@ -133,7 +115,7 @@ class _HomeBodyState extends State<HomeBody> {
                 style: FontConstant.styleSemiBold(
                     fontSize: 17, color: AppColors.black),
               ),
-              Spacer(),
+              const Spacer(),
               GestureDetector(
                 onTap: () => {
                   Get.toNamed("/seeAll",
@@ -153,7 +135,7 @@ class _HomeBodyState extends State<HomeBody> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Row(
@@ -176,12 +158,13 @@ class _HomeBodyState extends State<HomeBody> {
 
                     return Container(
                       width: screenWidth * 0.65,
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                           top: 5, bottom: 10, left: 7, right: 7),
                       decoration: BoxDecoration(
                         color: AppColors.constColor,
                         border: Border.all(color: Colors.grey.shade200),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Stack(children: [
                         Column(
@@ -204,7 +187,8 @@ class _HomeBodyState extends State<HomeBody> {
                                     "8",
                                     "9",
                                     "10",
-                                    "11"
+                                    "11",
+                                    "12"
                                   ]);
                                 } else {
                                   DialogConstant.packageDialog(
@@ -215,7 +199,7 @@ class _HomeBodyState extends State<HomeBody> {
                                 width: screenWidth * 0.65,
                                 height: screenWidth * 0.65 * (5 / 4),
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(10),
                                       topRight: Radius.circular(10)),
                                   child: Image.network(
@@ -271,9 +255,9 @@ class _HomeBodyState extends State<HomeBody> {
                               right: 0,
                               top: 0,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 5, horizontal: 8),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: AppColors.constColor,
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(10),
@@ -285,14 +269,14 @@ class _HomeBodyState extends State<HomeBody> {
                                       height: 15,
                                       width: 15,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 3,
                                     ),
                                     Text(
                                       "Premium",
                                       style: FontConstant.styleMedium(
                                           fontSize: 12,
-                                          color: Color(0xFFF69506)),
+                                          color: const Color(0xFFF69506)),
                                     )
                                   ],
                                 ),
@@ -304,7 +288,7 @@ class _HomeBodyState extends State<HomeBody> {
                             alignment: Alignment.center,
                             height: 40,
                             width: 40,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 shape: BoxShape.circle, color: Colors.white),
                             child: GestureDetector(
                               onTap: () => {
@@ -337,7 +321,7 @@ class _HomeBodyState extends State<HomeBody> {
                     );
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
               ],
@@ -355,7 +339,7 @@ class _HomeBodyState extends State<HomeBody> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           child: Row(
             children: [
               Text(
@@ -363,7 +347,7 @@ class _HomeBodyState extends State<HomeBody> {
                 style: FontConstant.styleSemiBold(
                     fontSize: 17, color: AppColors.black),
               ),
-              Spacer(),
+              const Spacer(),
               GestureDetector(
                 onTap: () => {
                   Get.toNamed("/seeAll",
@@ -383,7 +367,7 @@ class _HomeBodyState extends State<HomeBody> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Row(
@@ -405,12 +389,13 @@ class _HomeBodyState extends State<HomeBody> {
                     String image = CommanClass.photo(data.Photo1, data.gender);
 
                     return Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                           top: 5, bottom: 10, left: 5, right: 5),
                       decoration: BoxDecoration(
                         color: AppColors.constColor,
                         border: Border.all(color: Colors.grey.shade200),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
                       ),
                       child: Stack(children: [
                         Column(
@@ -436,7 +421,8 @@ class _HomeBodyState extends State<HomeBody> {
                                           "8",
                                           "9",
                                           "10",
-                                          "11"
+                                          "11",
+                                          "12"
                                         ]);
                                       } else {
                                         DialogConstant.packageDialog(
@@ -500,14 +486,16 @@ class _HomeBodyState extends State<HomeBody> {
                               ],
                             ),
                             Container(
-                              padding: EdgeInsets.only(left: 10, right: 10),
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 10),
                               height: 1,
                               width: screenWidth * 0.8,
                               color: Colors.grey.shade200,
                             ),
                             Container(
                               width: screenWidth * 0.8,
-                              padding: EdgeInsets.only(top: 10, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -544,7 +532,7 @@ class _HomeBodyState extends State<HomeBody> {
                                                 : AppColors.primaryColor,
                                             size: 20,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 3,
                                           ),
                                           Expanded(
@@ -577,7 +565,8 @@ class _HomeBodyState extends State<HomeBody> {
                                                   Dialogs.showSnackbar(context,
                                                       'User does not Exists!');
                                                 } else {
-                                                  _fetchUser(
+                                                  APIs.fetchUser(
+                                                    context,
                                                     data.matriID
                                                         .toString()
                                                         .trim(),
@@ -601,7 +590,7 @@ class _HomeBodyState extends State<HomeBody> {
                                             height: 20,
                                             width: 20,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 3,
                                           ),
                                           Expanded(
@@ -639,7 +628,7 @@ class _HomeBodyState extends State<HomeBody> {
                                             height: 20,
                                             width: 20,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 3,
                                           ),
                                           Expanded(
@@ -666,9 +655,9 @@ class _HomeBodyState extends State<HomeBody> {
                               right: 0,
                               top: 0,
                               child: Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 5, horizontal: 8),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(10))),
                                 child: Row(
@@ -678,14 +667,14 @@ class _HomeBodyState extends State<HomeBody> {
                                       height: 15,
                                       width: 15,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 3,
                                     ),
                                     Text(
                                       "Premium",
                                       style: FontConstant.styleMedium(
                                           fontSize: 12,
-                                          color: Color(0xFFF69506)),
+                                          color: const Color(0xFFF69506)),
                                     )
                                   ],
                                 ),
@@ -694,7 +683,7 @@ class _HomeBodyState extends State<HomeBody> {
                     );
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
               ],
@@ -711,7 +700,7 @@ class _HomeBodyState extends State<HomeBody> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           alignment: Alignment.centerLeft,
           child: Text(
             "Discover matches based on",
@@ -725,7 +714,7 @@ class _HomeBodyState extends State<HomeBody> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Row(
@@ -743,20 +732,21 @@ class _HomeBodyState extends State<HomeBody> {
                               arguments: {"keys": keys})
                         },
                         child: Container(
-                          padding: EdgeInsets.only(left: 5, right: 5),
-                          margin: EdgeInsets.only(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          margin: const EdgeInsets.only(
                               top: 5, bottom: 10, left: 5, right: 5),
                           width: screenWidth * 0.4,
                           decoration: BoxDecoration(
                             color: AppColors.constColor,
                             border: Border.all(color: Colors.grey.shade200),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                           ),
                           child: Column(
                             children: [
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               ClipRRect(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(10),
                                     topRight: Radius.circular(10)),
                                 child: Image.asset(
@@ -795,7 +785,7 @@ class _HomeBodyState extends State<HomeBody> {
                     );
                   }).toList(),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
               ],
@@ -808,10 +798,10 @@ class _HomeBodyState extends State<HomeBody> {
 
   Widget profileStatus() {
     return Container(
-      margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 10),
-      padding: EdgeInsets.all(5),
+      margin: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 10),
+      padding: const EdgeInsets.all(5),
       width: double.infinity,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Color(0xffE7DDF6),
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Row(
@@ -836,13 +826,13 @@ class _HomeBodyState extends State<HomeBody> {
           GestureDetector(
             onTap: () => {Get.toNamed("/myProfile")},
             child: Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Text(
                 "Add Details",
                 style: FontConstant.styleMedium(
                     fontSize: 11, color: AppColors.constColor),
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Color(0xff583689),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
             ),

@@ -22,7 +22,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
-   final SkipController skipController = Get.put(SkipController());
+  final SkipController skipController = Get.put(SkipController());
   final HoroscopeDetailsController horoscopeDetailsController =
       Get.put(HoroscopeDetailsController());
 
@@ -30,17 +30,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedState;
   String? selectedCity;
-  bool isState = false;
-  bool isCity = false;
-  bool show = false;
-
-  bool validateDropDown() {
-    if (selectedState != null && selectedCity != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -53,12 +42,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
         time.text = formattedTime;
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    //stateController.fetchStateList();
   }
 
   @override
@@ -91,8 +74,8 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                     child: Image.asset("assets/images/background.png")),
                 SingleChildScrollView(
                   child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 35, left: 22, right: 22),
+                    padding: const EdgeInsets.only(
+                        top: 35, left: 22, right: 22, bottom: 20),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -104,7 +87,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                 height: 117,
                                 width: 109,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           CustomTextField(
@@ -116,12 +99,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                             controller: time,
                             hintText: "Select Time",
                             onTap: () => _selectTime(context),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please Select Time of Birth';
-                              }
-                              return null;
-                            },
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 15),
@@ -142,7 +119,10 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                               }
                               return buildDropdownWithSearch(
                                 'State of Birth *',
-                                stateController.getStateList(),
+                                [
+                                  'Prefer Not To Say',
+                                  ...stateController.getStateList()
+                                ],
                                 (value) {
                                   setState(() {
                                     selectedState = value;
@@ -152,14 +132,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                   stateController.selectItem(
                                       value); // Call the controller method
                                 },
-                                borderColor:
-                                    show == true && selectedState == null
-                                        ? Colors.red
-                                        : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please Select State of Birth",
-                                errorshow: show == true && selectedState == null
-                                    ? true
-                                    : false,
                                 selectedItem: selectedState,
                                 hintText: 'Select State',
                               );
@@ -183,7 +155,10 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                               } else {
                                 return buildDropdownWithSearch(
                                   'City of Birth *',
-                                  cityController.cityLists,
+                                  [
+                                    'Prefer Not To Say',
+                                    ...cityController.cityLists
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectedCity = value; // Update the state
@@ -192,15 +167,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                         value); // Call the controller method
                                   },
                                   hintText: 'Select City',
-                                  borderColor:
-                                      show == true && selectedCity == null
-                                          ? Colors.red
-                                          : Colors.black.withOpacity(0.5),
-                                  errorMessage: "Please Select City of Birth",
-                                  errorshow:
-                                      show == true && selectedCity == null
-                                          ? true
-                                          : false,
                                   selectedItem: selectedCity,
                                 );
                               }
@@ -211,18 +177,12 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                             child: CustomButton(
                                 text: "CONTINUE",
                                 onPressed: () {
-                                  setState(() {
-                                    show = true;
-                                  });
-                                  if (_formKey.currentState!.validate() &&
-                                      validateDropDown()) {
-                                    horoscopeDetailsController.horoscopeDetails(
-                                        context,
-                                        time.text.toString().trim(),
-                                        selectedState ?? "",
-                                        selectedCity ?? "",
-                                        false);
-                                  }
+                                  horoscopeDetailsController.horoscopeDetails(
+                                      context,
+                                      time.text.toString().trim(),
+                                      selectedState ?? "",
+                                      selectedCity ?? "",
+                                      false);
 
                                   //    Get.toNamed('/profile')
                                 },
@@ -230,23 +190,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                                 textStyle: FontConstant.styleRegular(
                                     fontSize: 20, color: AppColors.constColor)),
                           ),
-                          GestureDetector(
-                            onTap: () => {
-                              // Get.offAndToNamed('/profile')
-                              // flowController.Flow(context, 10)
-
-                              skipController.skip(context, "step_10", 10)
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 25, top: 10),
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                "SKIP",
-                                style: FontConstant.styleRegular(
-                                    fontSize: 20, color: AppColors.black),
-                              ),
-                            ),
-                          )
+                          _buildSkipButton()
                         ],
                       ),
                     ),
@@ -255,13 +199,31 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
               ],
             ),
             if (horoscopeDetailsController.isLoading.value ||
-                flowController.isLoading.value||skipController.isLoading.value)
-              Center(
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
               ),
           ]);
         }));
+  }
+   
+  Widget _buildSkipButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: CustomButton(
+        text: 'SKIP',
+        onPressed: () {
+          // Get.offAndToNamed('/profile')
+          // flowController.Flow(context, 10)
+
+          skipController.skip(context, "step_10", 10);
+        },
+        color: Colors.transparent,
+        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+      ),
+    );
   }
 }

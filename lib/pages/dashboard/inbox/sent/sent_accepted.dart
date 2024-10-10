@@ -132,7 +132,8 @@ class _SentAcceptedState extends State<SentAccepted> {
                                   "8",
                                   "9",
                                   "10",
-                                  "11"
+                                  "11",
+                                  "12"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -160,7 +161,7 @@ class _SentAcceptedState extends State<SentAccepted> {
                                         style: FontConstant.styleMedium(
                                             fontSize: 12,
                                             color: AppColors.darkgrey)),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Expanded(
@@ -286,7 +287,8 @@ class _SentAcceptedState extends State<SentAccepted> {
                                                 "8",
                                                 "9",
                                                 "10",
-                                                "11"
+                                                "11",
+                                                "12"
                                               ]);
                                             } else {
                                               DialogConstant.packageDialog(

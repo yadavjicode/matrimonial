@@ -41,8 +41,8 @@ class ProfileHeaderState extends State<ProfileHeader> {
       Get.put(ProfileDetailsController());
   int _currentIndex = 0;
 
-  List<String> getImageList() {   
-    List<String> imgList = [];  
+  List<String> getImageList() {
+    List<String> imgList = [];
 
     // Check each photo field and add to the list if it's not null
     if (profileDetailsController.member?.data?.photo1 != null) {
@@ -407,18 +407,20 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                 if (widget.value == "search")
                                   {
                                     searchController.reset(
-                                        context,
-                                        widget.search[0] ?? "",
-                                        widget.search[1] ?? "",
-                                        widget.search[2] ?? "",
-                                        widget.search[3] ?? "",
-                                        widget.search[4] ?? "",
-                                        widget.search[5] ?? "",
-                                        widget.search[6] ?? "",
-                                        widget.search[7] ?? "",
-                                        widget.search[8] ?? "",
-                                        widget.search[9] ?? "",
-                                        widget.search[10] ?? "")
+                                      context,
+                                      widget.search[0] ?? "",
+                                      widget.search[1] ?? "",
+                                      widget.search[2] ?? "",
+                                      widget.search[3] ?? "",
+                                      widget.search[4] ?? "",
+                                      widget.search[5] ?? "",
+                                      widget.search[6] ?? "",
+                                      widget.search[7] ?? "",
+                                      widget.search[8] ?? "",
+                                      widget.search[9] ?? "",
+                                      widget.search[10] ?? "",
+                                      widget.search[11] ?? "",
+                                    )
                                   }
                               },
                             );

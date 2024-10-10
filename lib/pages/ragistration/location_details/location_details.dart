@@ -59,21 +59,6 @@ class _LocationDetailsState extends State<LocationDetails> {
   String? selectedPermanentHouse;
   String? selectedRefeARelation;
   String? selectedRefeBRelation;
-  bool show = false;
-
-  bool validation() {
-    if (_formKey.currentState!.validate() &&
-        selectedCountry != null &&
-        selectedResidence != null &&
-        selectedPermanentState != null &&
-        selectedPermanentCity != null &&
-        selectedRefeARelation != null &&
-        selectedRefeBRelation != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +76,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/contact');
             },
@@ -108,7 +93,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                 SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 22, right: 22, bottom: 100, top: 35),
+                        left: 22, right: 22, bottom: 20, top: 35),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -141,7 +126,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                             } else {
                               return buildDropdownWithSearch(
                                 'Nationality *',
-                                countryController.getCountryList(),
+                                [
+                                  'Prefer Not To Say',
+                                  ...countryController.getCountryList()
+                                ],
                                 (String? value) {
                                   setState(() {
                                     selectedCountry = value;
@@ -155,15 +143,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedCountry,
-                                borderColor:
-                                    show == true && selectedCountry == null
-                                        ? Colors.red
-                                        : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please select nationality",
-                                errorshow:
-                                    show == true && selectedCountry == null
-                                        ? true
-                                        : false,
                                 hintText: 'Select Nationality',
                               );
                             }
@@ -198,15 +177,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                                 },
                                 search: false,
                                 selectedItem: selectedResidence,
-                                borderColor:
-                                    show == true && selectedResidence == null
-                                        ? Colors.red
-                                        : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please select residence type",
-                                errorshow:
-                                    show == true && selectedResidence == null
-                                        ? true
-                                        : false,
                                 hintText: 'Select Residence Type',
                               );
                             }
@@ -284,7 +254,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                             } else {
                               return buildDropdownWithSearch(
                                 'State *',
-                                stateControllerPermanent.stateLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...stateControllerPermanent.stateLists
+                                ],
                                 //  stateControllerPermanent.selectedItem,
                                 (value) {
                                   setState(() {
@@ -296,15 +269,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedPermanentState,
-                                borderColor: show == true &&
-                                        selectedPermanentState == null
-                                    ? Colors.red
-                                    : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please select state",
-                                errorshow: show == true &&
-                                        selectedPermanentState == null
-                                    ? true
-                                    : false,
                                 hintText: 'Select State',
                               );
                             }
@@ -332,7 +296,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                             } else {
                               return buildDropdownWithSearch(
                                 'City *',
-                                cityControllerPermanent.cityLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...cityControllerPermanent.cityLists
+                                ],
                                 // cityControllerPermanent.selectedItem,
                                 (value) {
                                   setState(() {
@@ -343,15 +310,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedPermanentCity,
-                                borderColor: show == true &&
-                                        selectedPermanentCity == null
-                                    ? Colors.red
-                                    : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please select city",
-                                errorshow: show == true &&
-                                        selectedPermanentCity == null
-                                    ? true
-                                    : false,
+
                                 hintText: 'Select City',
                               );
                             }
@@ -366,14 +325,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                             hintText: "Enter Pin Code/ ZIP Code",
                             maxlength: 6,
                             keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  value.length > 6) {
-                                return 'Please enter Pin Code/ ZIP Code';
-                              }
-                              return null;
-                            },
                           ),
                           const SizedBox(height: 30),
                           Text(
@@ -412,7 +363,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                             } else {
                               return buildDropdownWithSearch(
                                 'State',
-                                stateControllerTemporary.stateLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...stateControllerTemporary.stateLists
+                                ],
                                 // stateControllerTemporary.selectedItem,
                                 (value) {
                                   setState(() {
@@ -451,7 +405,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                             } else {
                               return buildDropdownWithSearch(
                                 'City',
-                                cityControllerTemporary.cityLists,
+                                [
+                                  'Prefer Not To Say',
+                                  ...cityControllerTemporary.cityLists
+                                ],
                                 //  cityControllerTemporary.selectedItem,
                                 (value) {
                                   setState(() {
@@ -521,15 +478,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedRefeARelation,
-                                borderColor: show == true &&
-                                        selectedRefeARelation == null
-                                    ? Colors.red
-                                    : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please select relation",
-                                errorshow: show == true &&
-                                        selectedRefeARelation == null
-                                    ? true
-                                    : false,
+
                                 hintText: 'Select Relation',
                               );
                             }
@@ -542,12 +491,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                             controller: refeAName,
                             labelText: 'Name *',
                             hintText: "Enter Name",
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter name';
-                              }
-                              return null;
-                            },
                           ),
                           const SizedBox(
                             height: 15,
@@ -575,6 +518,9 @@ class _LocationDetailsState extends State<LocationDetails> {
                             keyboardType: TextInputType.phone,
                             maxlength: 10,
                             validator: (value) {
+                              if (value!.isEmpty) {
+                                return null;
+                              }
                               return Validation.validatePhoneno(value);
                             },
                           ),
@@ -622,15 +568,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                                       value); // Call the controller method
                                 },
                                 selectedItem: selectedRefeBRelation,
-                                borderColor: show == true &&
-                                        selectedRefeBRelation == null
-                                    ? Colors.red
-                                    : Colors.black.withOpacity(0.5),
-                                errorMessage: "Please select relation",
-                                errorshow: show == true &&
-                                        selectedRefeBRelation == null
-                                    ? true
-                                    : false,
+
                                 hintText: 'Select Relation',
                               );
                             }
@@ -643,12 +581,6 @@ class _LocationDetailsState extends State<LocationDetails> {
                             controller: refeBName,
                             labelText: 'Name *',
                             hintText: "Enter Name",
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter name';
-                              }
-                              return null;
-                            },
                           ),
                           const SizedBox(
                             height: 15,
@@ -676,6 +608,9 @@ class _LocationDetailsState extends State<LocationDetails> {
                             keyboardType: TextInputType.phone,
                             maxlength: 10,
                             validator: (value) {
+                              if (value!.isEmpty) {
+                                return null;
+                              }
                               return Validation.validatePhoneno(value);
                             },
                           ),
@@ -685,10 +620,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                           CustomButton(
                             text: 'CONTINUE',
                             onPressed: () {
-                              setState(() {
-                                show = true;
-                              });
-                              if (validation()) {
+                              if (_formKey.currentState!.validate()) {
                                 _locationDetailsController.locationDetails(
                                     context,
                                     selectedCountry ?? "",
@@ -719,23 +651,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                               color: Colors.white,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () => {
-                              //flowController.Flow(context, 4)
-                              skipController.skip(context, "step_4", 4)
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              margin:
-                                  const EdgeInsets.only(bottom: 25, top: 10),
-                              padding: const EdgeInsets.all(5),
-                              child: Text(
-                                "SKIP",
-                                style: FontConstant.styleRegular(
-                                    fontSize: 20, color: AppColors.black),
-                              ),
-                            ),
-                          )
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          _buildSkipButton()
                         ],
                       ),
                     ),
@@ -752,5 +671,20 @@ class _LocationDetailsState extends State<LocationDetails> {
               ))
           ]);
         }));
+  }
+
+  Widget _buildSkipButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: CustomButton(
+        text: 'SKIP',
+        onPressed: () {
+          //flowController.Flow(context, 4)
+          skipController.skip(context, "step_4", 4);
+        },
+        color: Colors.transparent,
+        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+      ),
+    );
   }
 }

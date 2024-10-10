@@ -15,10 +15,8 @@ import '/constants/font_constant.dart';
 
 class EditLocationDetails extends StatefulWidget {
   const EditLocationDetails({super.key});
-
   @override
   State<EditLocationDetails> createState() => _EditLocationDetailsState();
-  
 }
 
 class _EditLocationDetailsState extends State<EditLocationDetails> {
@@ -26,20 +24,20 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
       Get.put(EditProfileController());
   final LocationDetailsController _locationDetailsController =
       Get.put(LocationDetailsController());
-  CountryController countryController = Get.put(CountryController());
-  StateControllerTemporary stateControllerTemporary =
+  final CountryController countryController = Get.put(CountryController());
+  final StateControllerTemporary stateControllerTemporary =
       Get.put(StateControllerTemporary());
-  StateControllerPermanent stateControllerPermanent =
+  final StateControllerPermanent stateControllerPermanent =
       Get.put(StateControllerPermanent());
-  CityControllerTemporary cityControllerTemporary =
+  final CityControllerTemporary cityControllerTemporary =
       Get.put(CityControllerTemporary());
-  CityControllerPermanent cityControllerPermanent =
+  final CityControllerPermanent cityControllerPermanent =
       Get.put(CityControllerPermanent());
-  ResidenceTypeController residenceTypeController =
+  final ResidenceTypeController residenceTypeController =
       Get.put(ResidenceTypeController());
-  PermanentTypeController permanentHouseTypeController =
+  final PermanentTypeController permanentHouseTypeController =
       Get.put(PermanentTypeController());
-  RelationController relationController = Get.put(RelationController());
+  final RelationController relationController = Get.put(RelationController());
   String? selectedCountry;
   String? selectedPermanentState;
   String? selectedTemporaryState;
@@ -59,70 +57,52 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
   final TextEditingController refeBPhoneno = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  bool show =false;
-
-  bool validation() {
-    if (_formKey.currentState!.validate() &&
-        selectedCountry != null &&
-        selectedResidence != null &&
-        selectedPermanentState != null &&
-        selectedPermanentCity != null &&
-        selectedRefeARelation != null &&
-        selectedRefeBRelation != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  bool show = false;
 
   @override
   void initState() {
-    //TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
 
-    selectedCountry = _editProfileController.member!.member!.country;
+    selectedCountry = _editProfileController.member?.member?.country;
 
-    selectedResidence =
-        _editProfileController.member!.member!.addressType;
+    selectedResidence = _editProfileController.member?.member?.addressType;
     selectedPermanentHouse =
-        _editProfileController.member!.member!.permanentHouseType;
+        _editProfileController.member?.member?.permanentHouseType;
     selectedPermanentState =
-        _editProfileController.member!.member!.permanentState ;
+        _editProfileController.member?.member?.permanentState;
     selectedPermanentCity =
-        _editProfileController.member!.member!.permanentCity ;
-    selectedTemporaryState =
-        _editProfileController.member!.member!.tempState ;
-    selectedTemporaryCity =
-        _editProfileController.member!.member!.tempCity;
+        _editProfileController.member?.member?.permanentCity;
+    selectedTemporaryState = _editProfileController.member?.member?.tempState;
+    selectedTemporaryCity = _editProfileController.member?.member?.tempCity;
     selectedRefeARelation =
-        _editProfileController.member!.member!.reference1Reletion;
+        _editProfileController.member?.member?.reference1Reletion;
     selectedRefeBRelation =
-        _editProfileController.member!.member!.reference2Reletion ;
+        _editProfileController.member?.member?.reference2Reletion;
     permanentPinCode.text =
-        _editProfileController.member!.member!.permanentPincode ?? "";
+        _editProfileController.member?.member?.permanentPincode ?? "";
     temporaryPinCode.text =
-        _editProfileController.member!.member!.tempPincode ?? "";
+        _editProfileController.member?.member?.tempPincode ?? "";
     refeAName.text =
-        _editProfileController.member!.member!.reference1Name ?? "";
+        _editProfileController.member?.member?.reference1Name ?? "";
     refeAEmail.text =
-        _editProfileController.member!.member!.reference1Email ?? "";
+        _editProfileController.member?.member?.reference1Email ?? "";
     refeAPhoneno.text =
-        _editProfileController.member!.member!.reference1Mobile ?? "";
+        _editProfileController.member?.member?.reference1Mobile ?? "";
     refeBName.text =
-        _editProfileController.member!.member!.reference2Name ?? "";
+        _editProfileController.member?.member?.reference2Name ?? "";
     refeBEmail.text =
-        _editProfileController.member!.member!.reference2Email ?? "";
+        _editProfileController.member?.member?.reference2Email ?? "";
     refeBPhoneno.text =
-        _editProfileController.member!.member!.reference2Mobile ?? "";
+        _editProfileController.member?.member?.reference2Mobile ?? "";
     countryController
-        .selectItem(_editProfileController.member!.member!.country ?? "");
+        .selectItem(_editProfileController.member?.member?.country ?? "");
     stateControllerPermanent.selectItem(
-        _editProfileController.member!.member!.permanentState ?? "");
+        _editProfileController.member?.member?.permanentState ?? "");
     stateControllerTemporary
-        .selectItem(_editProfileController.member!.member!.tempState ?? "");
+        .selectItem(_editProfileController.member?.member?.tempState ?? "");
   }
 
   @override
@@ -162,7 +142,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
         SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
-                left: 22, right: 22, bottom: 100, top: 35),
+                left: 22, right: 22, bottom:30, top: 35),
             child: Form(
               key: _formKey,
               child: Column(
@@ -195,7 +175,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     } else {
                       return buildDropdownWithSearch(
                         'Nationality *',
-                        countryController.getCountryList(),
+                        [
+                          'Prefer Not To Say',
+                          ...countryController.getCountryList()
+                        ],
                         (String? value) {
                           setState(() {
                             selectedCountry = value;
@@ -205,15 +188,9 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                             selectedTemporaryCity = null;
                             // Update the state
                           });
-                          countryController
-                              .selectItem(value); // Call the controller method
+                          countryController.selectItem(value);
                         },
                         selectedItem: selectedCountry,
-                        borderColor:show==true && selectedCountry == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please Select Nationality",
-                        errorshow:show==true &&  selectedCountry == null ? true : false,
                         hintText: 'Select Nationality',
                       );
                     }
@@ -247,11 +224,6 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                         },
                         search: false,
                         selectedItem: selectedResidence,
-                        borderColor:show==true &&  selectedResidence == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please Select Residence Type",
-                        errorshow:show==true &&  selectedResidence == null ? true : false,
                         hintText: 'Select Residence Type',
                       );
                     }
@@ -326,7 +298,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     } else {
                       return buildDropdownWithSearch(
                         'State *',
-                        stateControllerPermanent.stateLists,
+                        [
+                          'Prefer Not To Say',
+                          ...stateControllerPermanent.stateLists
+                        ],
                         //  stateControllerPermanent.selectedItem,
                         (value) {
                           setState(() {
@@ -337,12 +312,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedPermanentState,
-                        borderColor:show==true &&  selectedPermanentState == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please Select State",
-                        errorshow:show==true && 
-                            selectedPermanentState == null ? true : false,
+
                         hintText: 'Select State',
                       );
                     }
@@ -368,7 +338,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     } else {
                       return buildDropdownWithSearch(
                         'City *',
-                        cityControllerPermanent.cityLists,
+                        [
+                          'Prefer Not To Say',
+                          ...cityControllerPermanent.cityLists
+                        ],
                         // cityControllerPermanent.selectedItem,
                         (value) {
                           setState(() {
@@ -378,11 +351,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedPermanentCity,
-                        borderColor:show==true &&  selectedPermanentCity == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please Select City",
-                        errorshow:show==true &&  selectedPermanentCity == null ? true : false,
+
                         hintText: 'Select City',
                       );
                     }
@@ -397,12 +366,6 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     maxlength: 6,
                     keyboardType: TextInputType.number,
                     hintText: "Enter Pin Code/ ZIP Code",
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length > 6) {
-                        return 'Please Enter Pin Code/ ZIP Code';
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(height: 30),
                   Text(
@@ -439,7 +402,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     } else {
                       return buildDropdownWithSearch(
                         'State',
-                        stateControllerTemporary.stateLists,
+                        [
+                          'Prefer Not To Say',
+                          ...stateControllerTemporary.stateLists
+                        ],
                         // stateControllerTemporary.selectedItem,
                         (value) {
                           setState(() {
@@ -475,7 +441,10 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     } else {
                       return buildDropdownWithSearch(
                         'City',
-                        cityControllerTemporary.cityLists,
+                        [
+                          'Prefer Not To Say',
+                          ...cityControllerTemporary.cityLists
+                        ],
                         //  cityControllerTemporary.selectedItem,
                         (value) {
                           setState(() {
@@ -543,11 +512,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedRefeARelation,
-                        borderColor:show==true &&  selectedRefeARelation == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please Select Relation",
-                        errorshow:show==true &&  selectedRefeARelation == null ? true : false,
+
                         hintText: 'Select Relation',
                       );
                     }
@@ -560,12 +525,6 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     controller: refeAName,
                     labelText: 'Name *',
                     hintText: "Enter Name",
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter Name';
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -575,8 +534,8 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     controller: refeAEmail,
                     labelText: 'Email',
                     hintText: "Enter Email",
-                     validator: (value) {
-                      if(value!.isEmpty){
+                    validator: (value) {
+                      if (value!.isEmpty) {
                         return null;
                       }
                       return Validation.validateEmailEmpty(value);
@@ -593,6 +552,9 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     keyboardType: TextInputType.phone,
                     maxlength: 10,
                     validator: (value) {
+                      if (value!.isEmpty) {
+                        return null;
+                      }
                       return Validation.validatePhoneno(value);
                     },
                   ),
@@ -639,11 +601,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                               .selectItem(value); // Call the controller method
                         },
                         selectedItem: selectedRefeBRelation,
-                        borderColor:show==true &&  selectedRefeBRelation == null
-                            ? Colors.red
-                            : Colors.black.withOpacity(0.5),
-                        errorMessage: "Please Select Relation",
-                        errorshow:show==true &&  selectedRefeBRelation == null ? true : false,
+
                         hintText: 'Select Relation',
                       );
                     }
@@ -656,12 +614,6 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     controller: refeBName,
                     labelText: 'Name *',
                     hintText: "Enter Name",
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Enter Name';
-                      }
-                      return null;
-                    },
                   ),
                   const SizedBox(
                     height: 15,
@@ -672,7 +624,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     labelText: 'Email',
                     hintText: "Enter Email",
                     validator: (value) {
-                      if(value!.isEmpty){
+                      if (value!.isEmpty) {
                         return null;
                       }
                       return Validation.validateEmailEmpty(value);
@@ -689,41 +641,44 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
                     keyboardType: TextInputType.phone,
                     maxlength: 10,
                     validator: (value) {
+                      if (value!.isEmpty) {
+                        return null;
+                      }
                       return Validation.validatePhoneno(value);
                     },
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 25,  
                   ),
                   CustomButton(
                     text: 'CONTINUE',
                     onPressed: () {
                       setState(() {
-                        show=true;
+                        show = true;
                       });
-                      if(validation()){
-                          _locationDetailsController.locationDetails(
-                          context,
-                          selectedCountry ?? "",
-                          selectedResidence ?? "",
-                          selectedPermanentHouse ?? "",
-                          selectedPermanentState ?? "",
-                          selectedPermanentCity ?? "",
-                          permanentPinCode.text.toString().trim(),
-                          selectedTemporaryState ?? "",
-                          selectedTemporaryCity ?? "",
-                          temporaryPinCode.text.toString().trim(),
-                          selectedRefeARelation ?? "",
-                          refeAName.text.toLowerCase().trim(),
-                          refeAEmail.text.toString().trim(),
-                          refeAPhoneno.text.toString().trim(),
-                          selectedRefeBRelation ?? "",
-                          refeBName.text.toString().trim(),
-                          refeBEmail.text.toString().trim(),
-                          refeBPhoneno.text.toString().trim(),
-                          true);
+                      if (_formKey.currentState!.validate()) {
+                        _locationDetailsController.locationDetails(
+                            context,
+                            selectedCountry ?? "",
+                            selectedResidence ?? "",
+                            selectedPermanentHouse ?? "",
+                            selectedPermanentState ?? "",
+                            selectedPermanentCity ?? "",
+                            permanentPinCode.text.toString().trim(),
+                            selectedTemporaryState ?? "",
+                            selectedTemporaryCity ?? "",
+                            temporaryPinCode.text.toString().trim(),
+                            selectedRefeARelation ?? "",
+                            refeAName.text.toLowerCase().trim(),
+                            refeAEmail.text.toString().trim(),
+                            refeAPhoneno.text.toString().trim(),
+                            selectedRefeBRelation ?? "",
+                            refeBName.text.toString().trim(),
+                            refeBEmail.text.toString().trim(),
+                            refeBPhoneno.text.toString().trim(),
+                            true);
                       }
-                     
+
                       //  Get.toNamed('/education');
                     },
                     color: AppColors.primaryColor,

@@ -104,7 +104,7 @@ class AppRoutes {
   static const String inbox = '/inbox';
   static const String shortlistProfile = '/shortlistProfile';
   static const String chatHome = '/chatHome';
-
+   
   static const String whoAreYou = '/whoAreYou';
   static const String ourMission = '/ourMission';
   static const String ourVision = '/ourVision';

@@ -2,7 +2,6 @@ import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/custom_dropdown.dart';
 import 'package:devotee/constants/lists/age_list.dart';
 import 'package:devotee/constants/lists/catagory.dart';
-import 'package:devotee/constants/lists/education_list.dart';
 import 'package:devotee/constants/lists/heights_list.dart';
 import 'package:devotee/constants/lists/location_list.dart';
 import 'package:devotee/constants/lists/marital_list.dart';
@@ -13,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
+import '../../../constants/lists/highest_qualification_list.dart';
 import '../../../constants/widget/Snackbar.dart';
 import '../../../constants/widget/dialog.dart';
 
@@ -29,10 +29,6 @@ class _SearchPageState extends State<SearchPage> {
   String? _heightFrom;
   String? _heightTo;
 
-  bool selectprofileA = false;
-  bool selectprofileB = false;
-  bool selectprofileC = false;
-
   final SearchsController searchController = Get.put(SearchsController());
   final HeightController heightController = Get.put(HeightController());
   final NumberController numberController = Get.put(NumberController());
@@ -46,8 +42,8 @@ class _SearchPageState extends State<SearchPage> {
       Get.put(StateControllerPermanent());
   final CityControllerPermanent cityControllerPermanent =
       Get.put(CityControllerPermanent());
-  final EducationController educationController =
-      Get.put(EducationController());
+  final HighestQualController highestQualController =
+      Get.put(HighestQualController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
 
@@ -62,6 +58,7 @@ class _SearchPageState extends State<SearchPage> {
   String? selectState;
   String? selectCity;
   String? selectEducation;
+  int? profileFilter=0;
 
   String getLookingFor() {
     if (_selectedIndex == 0) {
@@ -85,6 +82,16 @@ class _SearchPageState extends State<SearchPage> {
     }
   }
 
+  String getProfilePercentage() {
+    if (profileFilter == 1) {
+      return "50-80";
+    } else if (profileFilter == 2) {
+      return "80-100";
+    } else {
+      return "";
+    }
+  }
+
   bool valodation() {
     if (selectAgeFrom != null && selectAgeFrom != 'Prefer Not To Say' ||
         selectAgeTo != null && selectAgeTo != 'Prefer Not To Say' ||
@@ -98,7 +105,8 @@ class _SearchPageState extends State<SearchPage> {
         selectCountry != null && selectCountry != 'Prefer Not To Say' ||
         selectState != null && selectState != 'Prefer Not To Say' ||
         selectCity != null && selectCity != 'Prefer Not To Say' ||
-        selectEducation != null && selectEducation != 'Prefer Not To Say') {
+        selectEducation != null && selectEducation != 'Prefer Not To Say' ||
+        getProfilePercentage().isNotEmpty) {
       return true;
     } else {
       return false;
@@ -132,7 +140,7 @@ class _SearchPageState extends State<SearchPage> {
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 22, right: 22, top: 30, bottom: 50),
+                      left: 22, right: 22, top: 30, bottom: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -595,7 +603,7 @@ class _SearchPageState extends State<SearchPage> {
                       Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: Obx(() {
-                            if (educationController.isLoading.value) {
+                            if (highestQualController.isLoading.value) {
                               return buildDropdownWithSearch(
                                 'Education',
                                 ['Loading...'],
@@ -610,75 +618,84 @@ class _SearchPageState extends State<SearchPage> {
                             } else {
                               return buildDropdownWithSearch(
                                 'Education',
-                                [
-                                  'Prefer Not To Say',
-                                  ...educationController.EducationLists
-                                ],
+                                highestQualController.HighestLists,
                                 (value) {
                                   setState(() {
                                     selectEducation = value; // Update the state
                                   });
-                                  educationController.selectItem(
+                                  highestQualController.selectItem(
                                       value); // Call the controller method
                                 },
                                 hintText: 'Select Education',
                               );
                             }
                           })),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 10),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Text(
-                      //         'Show Profile',
-                      //         style: FontConstant.styleRegular(
-                      //             fontSize: 16, color: Colors.black),
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           CustomCheckbox(
-                      //             value: selectprofileA!,
-                      //             onChanged: (value) {
-                      //               setState(() {
-                      //                 selectprofileA = value;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text("With Photo"),
-                      //           Spacer(),
-                      //           CustomCheckbox(
-                      //             value: selectprofileB!,
-                      //             onChanged: (value) {
-                      //               setState(() {
-                      //                 selectprofileB = value;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text("Online Right Now"),
-                      //           SizedBox(
-                      //             width: 10,
-                      //           )
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           CustomCheckbox(
-                      //             value: selectprofileC!,
-                      //             onChanged: (value) {
-                      //               setState(() {
-                      //                 selectprofileC = value;
-                      //               });
-                      //             },
-                      //           ),
-                      //           Text("Premium Members"),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Profile percentage',
+                                style: FontConstant.styleRegular(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                            ),
+                            RadioListTile<int>(
+                              contentPadding: EdgeInsets.zero,
+                              title: const Text('All'),
+                              activeColor: AppColors.primaryColor,
+                              value: 0,
+                              groupValue: profileFilter,
+                              onChanged: (int? value) {
+                                setState(() {
+                                  profileFilter = value;
+                                });
+                              },
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: RadioListTile<int>(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: const Text('50-80%'),
+                                    activeColor: AppColors.primaryColor,
+                                    value: 1,
+                                    groupValue: profileFilter,
+                                    onChanged: (int? value) {
+                                      setState(
+                                        () {
+                                          profileFilter = value;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 2,
+                                  child: RadioListTile<int>(
+                                    contentPadding: EdgeInsets.zero,
+                                    title: const Text('80-100%'),
+                                    activeColor: AppColors.primaryColor,
+                                    value: 2,
+                                    groupValue: profileFilter,
+                                    onChanged: (int? value) {
+                                      setState(() {
+                                        profileFilter = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(
-                        height: 30,
+                        height: 10,
                       ),
                       CustomButton(
                         text: 'Search',
@@ -706,7 +723,9 @@ class _SearchPageState extends State<SearchPage> {
                                 "country": checkString(selectCountry),
                                 "state": checkString(selectState),
                                 "city": checkString(selectCity),
-                                "education": checkString(selectEducation)
+                                "education": checkString(selectEducation),
+                                "profilePer":
+                                    checkString(getProfilePercentage())
                               });
                             } else {
                               Dialogs.showSnackbar(context,
@@ -723,9 +742,6 @@ class _SearchPageState extends State<SearchPage> {
                         textStyle: FontConstant.styleMedium(
                             fontSize: 18, color: Colors.white),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                     ],
                   ),
                 ),
@@ -733,7 +749,7 @@ class _SearchPageState extends State<SearchPage> {
             ],
           ),
           if (searchController.isLoading.value)
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ),

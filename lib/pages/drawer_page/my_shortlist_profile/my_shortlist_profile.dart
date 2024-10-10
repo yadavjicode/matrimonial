@@ -94,8 +94,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
       return Center(
           child: Text("No data available",
               style: FontConstant.styleMedium(
-                  fontSize: 15,
-                  color: AppColors.darkgrey)));
+                  fontSize: 15, color: AppColors.darkgrey)));
     }
 
     if (shortlistedListController.member!.responseData!.data!.isEmpty) {
@@ -109,8 +108,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
           alignment: Alignment.center,
           child: Text("No users found!",
               style: FontConstant.styleMedium(
-                  fontSize: 15,
-                  color: AppColors.darkgrey)));
+                  fontSize: 15, color: AppColors.darkgrey)));
     } else {
       return Padding(
         padding: EdgeInsets.only(
@@ -185,7 +183,8 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                         "8",
                                         "9",
                                         "10",
-                                        "11"
+                                        "11",
+                                        "12"
                                       ]);
                                     } else {
                                       DialogConstant.packageDialog(
@@ -222,8 +221,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                         children: [
                                           Text("ID: $Id",
                                               style: FontConstant.styleMedium(
-                                                  fontSize:
-                                                      12,
+                                                  fontSize: 12,
                                                   color: AppColors.darkgrey)),
                                           SizedBox(
                                             width:
@@ -235,8 +233,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                               textAlign: TextAlign.right,
                                               "Shortlist On: $date",
                                               style: FontConstant.styleMedium(
-                                                  fontSize:
-                                                     12,
+                                                  fontSize: 12,
                                                   color: AppColors.darkgrey),
                                             ),
                                           ),
@@ -246,8 +243,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                         name,
                                         overflow: TextOverflow.ellipsis,
                                         style: FontConstant.styleSemiBold(
-                                            fontSize:
-                                                13,
+                                            fontSize: 13,
                                             color: AppColors.primaryColor),
                                       ),
                                       Padding(
@@ -257,8 +253,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 3,
                                           style: FontConstant.styleMedium(
-                                              fontSize:
-                                                  12,
+                                              fontSize: 12,
                                               color: AppColors.darkgrey),
                                         ),
                                       ),
@@ -332,8 +327,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                           child: Text(
                                             "Remove",
                                             style: FontConstant.styleMedium(
-                                                fontSize:
-                                                    12,
+                                                fontSize: 12,
                                                 color: AppColors.black),
                                           ),
                                         ),
@@ -395,8 +389,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                           child: Text(
                                             "Chat Now",
                                             style: FontConstant.styleMedium(
-                                                fontSize:
-                                                    12,
+                                                fontSize: 12,
                                                 color: AppColors.black),
                                           ),
                                         ),
@@ -435,7 +428,8 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                                 "8",
                                                 "9",
                                                 "10",
-                                                "11"
+                                                "11",
+                                                "12"
                                               ]);
                                             } else {
                                               DialogConstant.packageDialog(
@@ -446,8 +440,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                           child: Text(
                                             "View Profile",
                                             style: FontConstant.styleMedium(
-                                                fontSize:
-                                                    12,
+                                                fontSize: 12,
                                                 color: AppColors.black),
                                           ),
                                         ),

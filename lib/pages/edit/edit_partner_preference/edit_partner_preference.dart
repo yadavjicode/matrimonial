@@ -34,24 +34,29 @@ class EditPartnerPreferences extends StatefulWidget {
 class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
   final PartnerPreferenceController _partnerPreferenceController =
       Get.put(PartnerPreferenceController());
-  AgeController ageController = Get.put(AgeController());
-  WeightConsController weightConsController = Get.put(WeightConsController());
-  HeightController heightController = Get.put(HeightController());
-  MaritalController maritalController = Get.put(MaritalController());
-  CountryController countryController = Get.put(CountryController());
-  StateControllerPermanent stateControllerPermanent =
+  final AgeController ageController = Get.put(AgeController());
+  final WeightConsController weightConsController =
+      Get.put(WeightConsController());
+  final HeightController heightController = Get.put(HeightController());
+  final MaritalController maritalController = Get.put(MaritalController());
+  final CountryController countryController = Get.put(CountryController());
+  final StateControllerPermanent stateControllerPermanent =
       Get.put(StateControllerPermanent());
-  HighestQualController highestQualController =
+  final HighestQualController highestQualController =
       Get.put(HighestQualController());
-  ProfessionQualController professionQualController =
+  final ProfessionQualController professionQualController =
       Get.put(ProfessionQualController());
-  ProfessionController professionsController = Get.put(ProfessionController());
-  IncomeController incomeController = Get.put(IncomeController());
-  ReligionsController religionsController = Get.put(ReligionsController());
-  CastController castController = Get.put(CastController());
-  DietController dietController = Get.put(DietController());
-  DrinkHabitController drinkHabitController = Get.put(DrinkHabitController());
-  SmokeHabitController smokeHabitController = Get.put(SmokeHabitController());
+  final ProfessionController professionsController =
+      Get.put(ProfessionController());
+  final IncomeController incomeController = Get.put(IncomeController());
+  final ReligionsController religionsController =
+      Get.put(ReligionsController());
+  final CastController castController = Get.put(CastController());
+  final DietController dietController = Get.put(DietController());
+  final DrinkHabitController drinkHabitController =
+      Get.put(DrinkHabitController());
+  final SmokeHabitController smokeHabitController =
+      Get.put(SmokeHabitController());
   final LanguageController languageController = Get.put(LanguageController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
@@ -125,22 +130,22 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    selectAgeFrom = _editProfileController.member!.member!.pEFromAge != null
-        ? "${_editProfileController.member!.member!.pEFromAge} Yrs"
+    selectAgeFrom = _editProfileController.member?.member?.pEFromAge != null
+        ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
         : null;
-    selectAgeTo = _editProfileController.member!.member!.pEToAge != null
-        ? "${_editProfileController.member!.member!.pEToAge} Yrs"
+    selectAgeTo = _editProfileController.member?.member?.pEToAge != null
+        ? "${_editProfileController.member?.member?.pEToAge} Yrs"
         : null;
     selectWeightFrom =
         _editProfileController.member?.member?.pEFromWeight != null
-            ? "${_editProfileController.member!.member!.pEFromWeight} KG"
+            ? "${_editProfileController.member?.member?.pEFromWeight} KG"
             : null;
-    selectWeightTo = _editProfileController.member!.member!.pEToWeight != null
-        ? "${_editProfileController.member!.member!.pEToWeight} KG"
+    selectWeightTo = _editProfileController.member?.member?.pEToWeight != null
+        ? "${_editProfileController.member?.member?.pEToWeight} KG"
         : null;
-    selectHeightFrom = _editProfileController.member!.member!.pEHeight;
+    selectHeightFrom = _editProfileController.member?.member?.pEHeight;
     selectHeightFromKey = _editProfileController.member?.member?.peHeightKey;
-    selectHeightTo = _editProfileController.member!.member!.pEHeight2;
+    selectHeightTo = _editProfileController.member?.member?.pEHeight2;
     selectHeightToKey = _editProfileController.member?.member?.peHeight2Key;
 
     selectedLanguage = CommanClass.addCommaSeparatedValuesToList(
@@ -156,31 +161,31 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
         _editProfileController.member?.member?.pEOccupation);
 
     selectMaritalStatus =
-        _editProfileController.member!.member!.pEMaritalStatus;
-    selectCountry = _editProfileController.member!.member!.pECountrylivingin;
-    selectIncome = _editProfileController.member!.member!.pEAnnualincome;
-    selectReligions = _editProfileController.member!.member!.pEReligion;
-    selectCaste = _editProfileController.member!.member!.pECaste;
-    selectDiet = _editProfileController.member!.member!.pEDiet;
-    selectDrinkHabit = _editProfileController.member!.member!.pEDrink;
-    selectSmokeHabit = _editProfileController.member!.member!.pESmoking;
+        _editProfileController.member?.member?.pEMaritalStatus;
+    selectCountry = _editProfileController.member?.member?.pECountrylivingin;
+    selectIncome = _editProfileController.member?.member?.pEAnnualincome;
+    selectReligions = _editProfileController.member?.member?.pEReligion;
+    selectCaste = _editProfileController.member?.member?.pECaste;
+    selectDiet = _editProfileController.member?.member?.pEDiet;
+    selectDrinkHabit = _editProfileController.member?.member?.pEDrink;
+    selectSmokeHabit = _editProfileController.member?.member?.pESmoking;
 
-    if (_editProfileController.member!.member!.familyType == "Joint") {
+    if (_editProfileController.member?.member?.familyType == "Joint") {
       familytype = 1;
-    } else if (_editProfileController.member!.member!.familyType == "Nuclear") {
+    } else if (_editProfileController.member?.member?.familyType == "Nuclear") {
       familytype = 2;
     }
-    if (_editProfileController.member!.member!.familyvalues == "Traditional") {
+    if (_editProfileController.member?.member?.familyvalues == "Traditional") {
       familyValue = 1;
-    } else if (_editProfileController.member!.member!.familyvalues ==
+    } else if (_editProfileController.member?.member?.familyvalues ==
         "Moderate") {
       familyValue = 2;
-    } else if (_editProfileController.member!.member!.familyvalues ==
+    } else if (_editProfileController.member?.member?.familyvalues ==
         "Liberal") {
       familyValue = 3;
     }
     countryController
-        .selectItem(_editProfileController.member!.member!.pECountrylivingin);
+        .selectItem(_editProfileController.member?.member?.pECountrylivingin);
   }
 
   ProfessionsController professionController = Get.put(ProfessionsController());
@@ -211,7 +216,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
             ),
             if (_partnerPreferenceController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ))
@@ -225,7 +230,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
         children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 22, right: 22, top: 15, bottom: 15),
+                const EdgeInsets.only(left: 22, right: 22, top: 15, bottom: 10),
             child: GestureDetector(
               onTap: () => {
                 setState(() {
@@ -271,7 +276,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                               children: [
                                 buildDropdownWithSearch(
                                   'Age Range From',
-                                  AgeController.AgeTypes(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...AgeController.AgeTypes()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectAgeFrom = value; // Update the state
@@ -283,12 +291,15 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                   selectedItem: selectAgeFrom,
                                   hintText: 'Select',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight From',
-                                  weightConsController.getWeight(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...weightConsController.getWeight()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectWeightFrom =
@@ -301,7 +312,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                   // professionController.selectedItem.call,
                                   hintText: 'Select',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Obx(() {
@@ -321,7 +332,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                   } else {
                                     return buildDropdownWithSearch(
                                       'Height Range From',
-                                      heightController.HeightLists,
+                                      [
+                                        'Prefer Not To Say',
+                                        ...heightController.HeightLists
+                                      ],
                                       (value) {
                                         setState(() {
                                           selectHeightFrom =
@@ -343,7 +357,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -351,7 +365,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                               children: [
                                 buildDropdownWithSearch(
                                   'Age Range To',
-                                  AgeController.AgeTypes(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...AgeController.AgeTypes()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectAgeTo = value; // Update the state
@@ -368,7 +385,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight To',
-                                  weightConsController.getWeight(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...weightConsController.getWeight()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectWeightTo =
@@ -381,7 +401,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                   // professionController.selectedItem.call,
                                   hintText: 'Select',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Obx(() {
@@ -401,7 +421,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                                   } else {
                                     return buildDropdownWithSearch(
                                       'Height Range To',
-                                      heightController.HeightLists,
+                                      [
+                                        'Prefer Not To Say',
+                                        ...heightController.HeightLists
+                                      ],
                                       (value) {
                                         setState(() {
                                           selectHeightTo =
@@ -455,7 +478,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                           );
                         }
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(() {
@@ -474,7 +497,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Marital Status',
-                            maritalController.maritalLists,
+                            [
+                              'Prefer Not To Say',
+                              ...maritalController.maritalLists
+                            ],
                             (value) {
                               setState(() {
                                 selectMaritalStatus = value; // Update the state
@@ -549,39 +575,61 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Flexible(
-                            child: RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title: const Text('Joint'),
-                              activeColor: AppColors.primaryColor,
-                              value: 1,
-                              groupValue: familytype,
-                              onChanged: (int? value) {
-                                setState(
-                                  () {
-                                    familytype = value;
-                                  },
-                                );
+                            child: GestureDetector(
+                              onDoubleTap: () {
+                                setState(() {
+                                  if (familytype == 1) {
+                                    familytype = 0;
+                                  } else {
+                                    familytype = 1;
+                                  }
+                                });
                               },
+                              child: RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title: const Text('Joint'),
+                                activeColor: AppColors.primaryColor,
+                                value: 1,
+                                groupValue: familytype,
+                                onChanged: (int? value) {
+                                  setState(
+                                    () {
+                                      familytype = value;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           Flexible(
                             flex: 2,
-                            child: RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title: const Text('Nuclear'),
-                              activeColor: AppColors.primaryColor,
-                              value: 2,
-                              groupValue: familytype,
-                              onChanged: (int? value) {
+                            child: GestureDetector(
+                              onDoubleTap: () {
                                 setState(() {
-                                  familytype = value;
+                                  if (familytype == 2) {
+                                    familytype = 0;
+                                  } else {
+                                    familytype = 2;
+                                  }
                                 });
                               },
+                              child: RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title: const Text('Nuclear'),
+                                activeColor: AppColors.primaryColor,
+                                value: 2,
+                                groupValue: familytype,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    familytype = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Column(
@@ -596,55 +644,88 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: RadioListTile<int>(
-                                    contentPadding: EdgeInsets.zero,
-                                    title: const Text('Traditional'),
-                                    activeColor: AppColors.primaryColor,
-                                    value: 1,
-                                    groupValue: familyValue,
-                                    onChanged: (int? value) {
-                                      setState(
-                                        () {
-                                          familyValue = value;
-                                        },
-                                      );
+                                  child: GestureDetector(
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        if (familyValue == 1) {
+                                          familyValue = 0;
+                                        } else {
+                                          familyValue = 1;
+                                        }
+                                      });
                                     },
+                                    child: RadioListTile<int>(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: const Text('Traditional'),
+                                      activeColor: AppColors.primaryColor,
+                                      value: 1,
+                                      groupValue: familyValue,
+                                      onChanged: (int? value) {
+                                        setState(
+                                          () {
+                                            familyValue = value;
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                                 Flexible(
                                   flex: 1,
-                                  child: RadioListTile<int>(
-                                    contentPadding: EdgeInsets.zero,
-                                    title: const Text('Moderate'),
-                                    activeColor: AppColors.primaryColor,
-                                    value: 2,
-                                    groupValue: familyValue,
-                                    onChanged: (int? value) {
-                                      setState(
-                                        () {
-                                          familyValue = value;
-                                        },
-                                      );
+                                  child: GestureDetector(
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        if (familyValue == 2) {
+                                          familyValue = 0;
+                                        } else {
+                                          familyValue = 2;
+                                        }
+                                      });
                                     },
+                                    child: RadioListTile<int>(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: const Text('Moderate'),
+                                      activeColor: AppColors.primaryColor,
+                                      value: 2,
+                                      groupValue: familyValue,
+                                      onChanged: (int? value) {
+                                        setState(
+                                          () {
+                                            familyValue = value;
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             Flexible(
                               flex: 0,
-                              child: RadioListTile<int>(
-                                contentPadding: EdgeInsets.zero,
-                                title: const Text('Liberal'),
-                                activeColor: AppColors.primaryColor,
-                                value: 3,
-                                groupValue: familyValue,
-                                onChanged: (int? value) {
-                                  setState(
-                                    () {
-                                      familyValue = value;
-                                    },
-                                  );
+                              child: GestureDetector(
+                                onDoubleTap: () {
+                                  setState(() {
+                                    if (familyValue == 3) {
+                                      familyValue = 0;
+                                    } else {
+                                      familyValue = 3;
+                                    }
+                                  });
                                 },
+                                child: RadioListTile<int>(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: const Text('Liberal'),
+                                  activeColor: AppColors.primaryColor,
+                                  value: 3,
+                                  groupValue: familyValue,
+                                  onChanged: (int? value) {
+                                    setState(
+                                      () {
+                                        familyValue = value;
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ])
@@ -712,7 +793,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Nationality',
-                            countryController.getCountryList(),
+                            [
+                              'Prefer Not To Say',
+                              ...countryController.getCountryList()
+                            ],
                             (value) {
                               setState(() {
                                 selectCountry = value; // Update the state
@@ -745,7 +829,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         } else {
                           return buildDropdownWithSearchMulti(
                             'State',
-                            stateControllerPermanent.stateLists,
+                            [
+                              'Prefer Not To Say',
+                              ...stateControllerPermanent.stateLists
+                            ],
                             (value) {
                               setState(() {
                                 selectedState = value;
@@ -992,7 +1079,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                           religionsController.selectItem(selectReligions);
                           return buildDropdownWithSearch(
                             'Religion',
-                            religionsController.getReligionNames(),
+                            [
+                              'Prefer Not To Say',
+                              ...religionsController.getReligionNames()
+                            ],
                             (value) {
                               setState(() {
                                 selectReligions = value;
@@ -1025,7 +1115,10 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Caste',
-                            castController.getCastNames(),
+                            [
+                              'Prefer Not To Say',
+                              ...castController.getCastNames()
+                            ],
                             (value) {
                               setState(() {
                                 selectCaste = value;
@@ -1101,7 +1194,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Diet Preference',
-                            dietController.dietLists,
+                            ['Prefer Not To Say', ...dietController.dietLists],
                             (value) {
                               setState(() {
                                 selectDiet = value; // Update the state
@@ -1115,7 +1208,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                           );
                         }
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(() {
@@ -1148,7 +1241,7 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                           );
                         }
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(() {
@@ -1190,9 +1283,6 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
                 ),
               ],
             ),
-          SizedBox(
-            height: 10,
-          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 25),
             child: CustomButton(
@@ -1238,9 +1328,6 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
               textStyle:
                   FontConstant.styleMedium(fontSize: 18, color: Colors.white),
             ),
-          ),
-          SizedBox(
-            height: 20,
           ),
         ],
       ),

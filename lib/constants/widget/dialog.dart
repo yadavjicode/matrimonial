@@ -29,7 +29,7 @@ class DialogConstant {
             ),
           ),
           TextButton(
-            onPressed: () => Get.toNamed("/package"),
+            onPressed: () => Get.toNamed("/membership"),
             child: Text(
               ' Upgrade',
               style: FontConstant.styleSemiBold(

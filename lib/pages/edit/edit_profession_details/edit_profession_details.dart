@@ -40,7 +40,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
   String? selectedCity;
 
   int? selectedRadioValue; // Add this line
-  bool show=false;
+  bool show = false;
 
   String? working() {
     if (selectedRadioValue == 1) {
@@ -53,20 +53,8 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
   }
 
   bool validation() {
-    if (working() != null && selectedProfession != null) {
-      if (working() == "Yes") {
-        if (_formKey.currentState!.validate() &&
-            selectedAnnualSalary != null &&
-            selectedEmpolyment != null &&
-            selectedState != null &&
-            selectedCity != null) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
+    if (working() != null) {
+      return true;
     } else {
       return false;
     }
@@ -74,23 +62,22 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    selectedProfession = _editProfileController.member!.member!.occupation;
-    selectedEmpolyment = _editProfileController.member!.member!.employedin;
-    selectedState = _editProfileController.member!.member!.workState;
-    selectedCity = _editProfileController.member!.member!.workCity;
-    selectedAnnualSalary = _editProfileController.member!.member!.annualincome;
+    selectedProfession = _editProfileController.member?.member?.occupation;
+    selectedEmpolyment = _editProfileController.member?.member?.employedin;
+    selectedState = _editProfileController.member?.member?.workState;
+    selectedCity = _editProfileController.member?.member?.workCity;
+    selectedAnnualSalary = _editProfileController.member?.member?.annualincome;
     pincodeController.text =
-        _editProfileController.member!.member!.workPincode ?? "";
+        _editProfileController.member?.member?.workPincode ?? "";
     stateController
-        .selectItem(_editProfileController.member!.member!.workState);
-    if (_editProfileController.member!.member!.workingAnywhere == "Yes") {
+        .selectItem(_editProfileController.member?.member?.workState);
+    if (_editProfileController.member?.member?.workingAnywhere == "Yes") {
       selectedRadioValue = 1;
-    } else if (_editProfileController.member!.member!.workingAnywhere == "No") {
+    } else if (_editProfileController.member?.member?.workingAnywhere == "No") {
       selectedRadioValue = 2;
     }
   }
@@ -121,12 +108,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
               professionalContent()
             ]),
             if (professionalDeatilsController.isLoading.value ||
-                _editProfileController.isLoading.value ||
-                professionController.isLoading.value ||
-                employmentController.isLoading.value ||
-                stateController.isLoading.value ||
-                cityController.isLoading.value ||
-                incomeController.isLoading.value)
+                _editProfileController.isLoading.value)
               const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -140,7 +122,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
     return SingleChildScrollView(
       child: Padding(
         padding:
-            const EdgeInsets.only(left: 22, right: 22, top: 35, bottom: 100),
+            const EdgeInsets.only(left: 22, right: 22, top: 35, bottom: 30),
         child: Form(
           key: _formKey,
           child: Column(
@@ -175,11 +157,6 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                     },
                     selectedItem: selectedProfession,
                     hintText: 'Select Profession',
-                    errorMessage: "Please Select Profession",
-                    errorshow:show==true&& selectedProfession == null ? true : false,
-                    borderColor:show==true&& selectedProfession == null
-                        ? Colors.red
-                        : Colors.black.withOpacity(0.5),
                   );
                 }
               }),
@@ -229,9 +206,9 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                   Spacer(),
                 ],
               ),
-              if (show==true&&working() == null)
+              if (show == true && working() == null)
                 Container(
-                    margin: EdgeInsets.only(bottom: 5),
+                    margin: const EdgeInsets.only(bottom: 5),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "are you Working anywhere",
@@ -268,13 +245,9 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                               employmentController.selectItem(
                                   value); // Call the controller method
                             },
-                            borderColor:show==true&& selectedEmpolyment == null
-                                ? Colors.red
-                                : Colors.black.withOpacity(0.5),
+
                             selectedItem: selectedEmpolyment,
-                            errorMessage: "Please Select Empolyment",
-                            errorshow:show==true&&
-                                selectedEmpolyment == null ? true : false,
+
                             hintText: 'Select Empolyment',
                           );
                         }
@@ -298,7 +271,10 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                         } else {
                           return buildDropdownWithSearch(
                             'Working State *',
-                            stateController.getStateList(),
+                            [
+                              'Prefer Not To Say',
+                              ...stateController.getStateList()
+                            ],
                             //  stateControllerPermanent.selectedItem,
                             (value) {
                               setState(() {
@@ -308,11 +284,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                               stateController.selectItem(
                                   value); // Call the controller method
                             },
-                            borderColor:show==true&& selectedState == null
-                                ? Colors.red
-                                : Colors.black.withOpacity(0.5),
-                            errorMessage: "Please Select Working State",
-                            errorshow:show==true&& selectedState == null ? true : false,
+
                             selectedItem: selectedState,
                             hintText: 'Select State',
                           );
@@ -337,7 +309,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                         } else {
                           return buildDropdownWithSearch(
                             'Working City *',
-                            cityController.cityLists,
+                            ['Prefer Not To Say', ...cityController.cityLists],
                             // cityControllerPermanent.selectedItem,
                             (value) {
                               setState(() {
@@ -346,11 +318,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                               cityController.selectItem(
                                   value); // Call the controller method
                             },
-                            borderColor:show==true&& selectedCity == null
-                                ? Colors.red
-                                : Colors.black.withOpacity(0.5),
-                            errorMessage: "Please Select Working City",
-                            errorshow:show==true&& selectedCity == null ? true : false,
+
                             selectedItem: selectedCity,
                             hintText: 'Select City',
                           );
@@ -365,12 +333,6 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                         keyboardType: TextInputType.number,
                         maxlength: 6,
                         hintText: "Enter Pin Code/ ZIP Code",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Pin Code/ ZIP Code';
-                          }
-                          return null;
-                        },
                       ),
                     ),
                     Padding(
@@ -399,13 +361,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                             incomeController.selectItem(
                                 value); // Call the controller method
                           },
-                              borderColor:show==true&& selectedAnnualSalary == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
                               selectedItem: selectedAnnualSalary,
-                              errorMessage: "Please Annual Income",
-                              errorshow:show==true&&
-                                  selectedAnnualSalary == null ? true : false,
                               hintText: 'Select Annual Income Range');
                         }
                       }),
@@ -413,35 +369,34 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                   ],
                 ),
               Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 15),
+                padding: const EdgeInsets.only(
+                  top: 25,
+                ),
                 child: CustomButton(
                     text: "CONTINUE",
                     onPressed: () {
                       setState(() {
-                        show=true;
+                        show = true;
                       });
-                          if (validation())
-                            {
-                              professionalDeatilsController.professionalDetails(
-                                  context,
-                                  selectedProfession ?? "",
-                                  working()!,
-                                  working() == "Yes"
-                                      ? selectedEmpolyment ?? ""
-                                      : "",
-                                  working() == "Yes" ? selectedState ?? "" : "",
-                                  working() == "Yes" ? selectedCity ?? "" : "",
-                                  working() == "Yes"
-                                      ? pincodeController.text.toString().trim()
-                                      : "",
-                                  working() == "Yes"
-                                      ? selectedAnnualSalary ?? ""
-                                      : "",
-                                  true);
-                            }
+                      if (validation()) {
+                        professionalDeatilsController.professionalDetails(
+                            context,
+                            selectedProfession ?? "",
+                            working()??"",
+                            working() == "Yes" ? selectedEmpolyment ?? "" : "",
+                            working() == "Yes" ? selectedState ?? "" : "",
+                            working() == "Yes" ? selectedCity ?? "" : "",
+                            working() == "Yes"
+                                ? pincodeController.text.toString().trim()
+                                : "",
+                            working() == "Yes"
+                                ? selectedAnnualSalary ?? ""
+                                : "",
+                            true);
+                      }
 
-                          //   Get.toNamed('/devotion')
-                        },
+                      //   Get.toNamed('/devotion')
+                    },
                     color: AppColors.primaryColor,
                     textStyle: FontConstant.styleRegular(
                         fontSize: 20, color: AppColors.constColor)),

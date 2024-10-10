@@ -21,21 +21,17 @@ class EducationDetails extends StatefulWidget {
 class _EducationDetailsState extends State<EducationDetails> {
   String? selectedHighestQualifaction;
   String? selectedProfessionalQualifaction;
-  bool isHighestQualifaction = false;
   final EducationDetailsController _educationController =
       Get.put(EducationDetailsController());
   final FlowController flowController = Get.put(FlowController());
   final TextEditingController describeController = TextEditingController();
   final SkipController skipController = Get.put(SkipController());
-  bool show = false;
-
+  final HighestQualController highestQualController =
+      Get.put(HighestQualController());
+  final ProfessionQualController professionQualController =
+      Get.put(ProfessionQualController());
   @override
   Widget build(BuildContext context) {
-    HighestQualController highestQualController =
-        Get.put(HighestQualController());
-    ProfessionQualController professionQualController =
-        Get.put(ProfessionQualController());
-
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -50,7 +46,7 @@ class _EducationDetailsState extends State<EducationDetails> {
             style: FontConstant.styleMedium(fontSize: 19, color: Colors.white),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/location');
             },
@@ -108,19 +104,7 @@ class _EducationDetailsState extends State<EducationDetails> {
                               (value) => {
                                 setState(
                                     () => selectedHighestQualifaction = value),
-                                isHighestQualifaction = true
                               },
-                              borderColor: show == true &&
-                                      selectedHighestQualifaction == null
-                                  ? Colors.red
-                                  : Colors.black.withOpacity(0.5),
-                              errorMessage:
-                                  "Please Select Highest Qualification",
-                              errorshow: show == true &&
-                                      selectedHighestQualifaction == null
-                                  ? true
-                                  : false,
-
                               hintText: 'Select Highest Qualification',
                             );
                           }
@@ -157,12 +141,12 @@ class _EducationDetailsState extends State<EducationDetails> {
                         CustomTextField(
                           controller: describeController,
                           labelText: "Describe other qualifications (if any)",
-                          hintText: "Enter other qualifications",
+                          hintText: "Enter Other Qualifications",
                           maxline: 7,
                         ),
                         const SizedBox(height: 30),
                         _buildContinueButton(),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 10),
                         _buildSkipButton(),
                       ],
                     ),
@@ -171,7 +155,8 @@ class _EducationDetailsState extends State<EducationDetails> {
               ),
             ),
             if (_educationController.isLoading.value ||
-                flowController.isLoading.value||skipController.isLoading.value)
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
               const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
@@ -187,19 +172,14 @@ class _EducationDetailsState extends State<EducationDetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-          setState(() {
-            show = true;
-          });
-          if (selectedHighestQualifaction != null) {
-            _educationController.educationDetails(
-                context,
-                selectedHighestQualifaction ?? "",
-                selectedProfessionalQualifaction ?? "",
-                describeController.text.toString().trim(),
-                false);
+          _educationController.educationDetails(
+              context,
+              selectedHighestQualifaction ?? "",
+              selectedProfessionalQualifaction ?? "",
+              describeController.text.toString().trim(),
+              false);
 
-            //    Get.toNamed('/prof');
-          }
+          //    Get.toNamed('/prof');
         },
         color: AppColors.primaryColor,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.white),
@@ -211,7 +191,7 @@ class _EducationDetailsState extends State<EducationDetails> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: CustomButton(
-        text: 'Skip',
+    text: 'SKIP',
         onPressed: () {
           // flowController.Flow(context, 5);
           // Get.offAndToNamed('/prof');

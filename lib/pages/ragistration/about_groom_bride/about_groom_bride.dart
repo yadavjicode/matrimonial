@@ -21,7 +21,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
   final AboutGroomBrideController aboutGroomBrideController =
       Get.put(AboutGroomBrideController());
   final FlowController flowController = Get.put(FlowController());
-   final SkipController skipController = Get.put(SkipController());
+  final SkipController skipController = Get.put(SkipController());
   // Define state variables for checkboxes
   Map<String, bool> characteristics = {
     "Independent": false,
@@ -107,11 +107,11 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                 SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 35, bottom: 100, left: 22, right: 22),
+                        top: 35, bottom: 20, left: 22, right: 22),
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(bottom: 5),
+                          margin: const EdgeInsets.only(bottom: 5),
                           alignment: Alignment.center,
                           child: Image.asset(
                             "assets/images/groombride.png",
@@ -119,7 +119,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                             width: 114,
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 250,
                           child: ScrollbarTheme(
                             data: ScrollbarThemeData(
@@ -129,7 +129,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                                     .primaryLight), // Change track color here
                                 trackBorderColor: MaterialStateProperty.all(
                                     AppColors.primaryLight),
-                                radius: Radius.circular(
+                                radius: const Radius.circular(
                                     10) // Change track border color here
                                 ),
                             child: Scrollbar(
@@ -168,8 +168,8 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                           ),
                         ),
                         Container(
-                          margin:
-                              EdgeInsets.only(left: 12, top: 20, bottom: 10),
+                          margin: const EdgeInsets.only(
+                              left: 12, top: 20, bottom: 10),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "Hobbies or Likings",
@@ -182,10 +182,10 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                           height: 1,
                           color: Colors.grey.shade300,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        SizedBox(
                           height: 250,
                           child: ScrollbarTheme(
                             data: ScrollbarThemeData(
@@ -195,7 +195,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                                     .primaryLight), // Change track color here
                                 trackBorderColor: MaterialStateProperty.all(
                                     AppColors.primaryLight),
-                                radius: Radius.circular(
+                                radius: const Radius.circular(
                                     10) // Change track border color here
                                 ),
                             child: Scrollbar(
@@ -255,23 +255,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                                 fontSize: 20, color: AppColors.constColor),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () => {
-                            // Get.offAndToNamed('/partner')
-                            // flowController.Flow(context, 13)
-
-                           skipController.skip(context, "step_13", 13)
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              "SKIP",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 20, color: AppColors.black),
-                            ),
-                          ),
-                        )
+                        _buildSkipButton()
                       ],
                     ),
                   ),
@@ -279,13 +263,31 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
               ],
             ),
             if (aboutGroomBrideController.isLoading.value ||
-                flowController.isLoading.value||skipController.isLoading.value)
-              Center(
+                flowController.isLoading.value ||
+                skipController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
               ),
           ]);
         }));
+  }
+
+  Widget _buildSkipButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: CustomButton(
+        text: 'SKIP',
+        onPressed: () {
+          // Get.offAndToNamed('/partner')
+          // flowController.Flow(context, 13)
+
+          skipController.skip(context, "step_13", 13);
+        },
+        color: Colors.transparent,
+        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+      ),
+    );
   }
 }

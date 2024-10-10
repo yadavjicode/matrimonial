@@ -32,14 +32,6 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
   String? selectedCity;
   bool show = false;
 
-  bool validateDropDown() {
-    if (selectedState != null && selectedCity != null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -59,11 +51,11 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    time.text = _editProfileController.member!.member!.timeOfBirth ?? "";
-    selectedState = _editProfileController.member!.member!.stateOfBirth;
-    selectedCity = _editProfileController.member!.member!.cityOfBirth;
+    time.text = _editProfileController.member?.member?.timeOfBirth ?? "";
+    selectedState = _editProfileController.member?.member?.stateOfBirth;
+    selectedCity = _editProfileController.member?.member?.cityOfBirth;
     stateController
-        .selectItem(_editProfileController.member!.member!.stateOfBirth);
+        .selectItem(_editProfileController.member?.member?.stateOfBirth);
   }
 
   @override
@@ -93,7 +85,7 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
             ),
             if (horoscopeDetailsController.isLoading.value ||
                 _editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -117,23 +109,18 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                     height: 117,
                     width: 109,
                   )),
-              SizedBox(height: 30,),
+              const SizedBox(
+                height: 30,
+              ),
               CustomTextField(
                 labelText: "Time Of Birth *",
                 suffixIcon: Icon(
-                 
                   Icons.av_timer,
                   color: AppColors.black,
                 ),
                 controller: time,
                 hintText: "Select Time",
                 onTap: () => _selectTime(context),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please Select Time of Birth';
-                  }
-                  return null;
-                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15),
@@ -154,7 +141,7 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                   }
                   return buildDropdownWithSearch(
                     'State of Birth *',
-                    stateController.getStateList(),
+                    ['Prefer Not To Say', ...stateController.getStateList()],
                     (value) {
                       setState(() {
                         selectedState = value;
@@ -164,12 +151,6 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                       stateController
                           .selectItem(value); // Call the controller method
                     },
-                    borderColor: show == true && selectedState == null
-                        ? Colors.red
-                        : Colors.black.withOpacity(0.5),
-                    errorMessage: "Please Select State of Birth",
-                    errorshow:
-                        show == true && selectedState == null ? true : false,
                     selectedItem: selectedState,
                     hintText: 'Select State',
                   );
@@ -193,7 +174,7 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                   } else {
                     return buildDropdownWithSearch(
                       'City of Birth *',
-                      cityController.cityLists,
+                      ['Prefer Not To Say', ...cityController.cityLists],
                       (value) {
                         setState(() {
                           selectedCity = value; // Update the state
@@ -205,34 +186,26 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
                         print("index================${selectedIndex}");
                       },
                       hintText: 'Select City',
-                      borderColor: show == true && selectedCity == null
-                          ? Colors.red
-                          : Colors.black.withOpacity(0.5),
-                      errorMessage: "Please Select City of Birth",
-                      errorshow:
-                          show == true && selectedCity == null ? true : false,
                       selectedItem: selectedCity,
                     );
                   }
                 }),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 15),
+                padding: const EdgeInsets.only(top: 25, bottom: 30),
                 child: CustomButton(
                     text: "CONTINUE",
                     onPressed: () {
                       setState(() {
                         show = true;
                       });
-                      if (_formKey.currentState!.validate() &&
-                          validateDropDown()) {
-                        horoscopeDetailsController.horoscopeDetails(
-                            context,
-                            time.text.toString().trim(),
-                            selectedState ?? "",
-                            selectedCity ?? "",
-                            true);
-                      }
+
+                      horoscopeDetailsController.horoscopeDetails(
+                          context,
+                          time.text.toString().trim(),
+                          selectedState ?? "",
+                          selectedCity ?? "",
+                          true);
 
                       //    Get.toNamed('/profile')
                     },

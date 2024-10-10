@@ -16,8 +16,9 @@ class BuyPackageController with ChangeNotifier {
   String? _error;
   BuyPackageModel? get member => _member;
   String? get error => _error;
-final EditProfileController editProfileController=Get.put(EditProfileController());
-final ConnectivityService connectivityService =
+  final EditProfileController editProfileController =
+      Get.put(EditProfileController());
+  final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
   Future<void> buyPackage(BuildContext context) async {
@@ -27,22 +28,22 @@ final ConnectivityService connectivityService =
 
     try {
       _member = await apiService.BuyPackage();
-  
+
       // ignore: use_build_context_synchronously
       CustomDialog.show(
         context,
         '${member!.title}',
         '${member!.message}',
         dialogType: DialogType.success,
-       btnOkOnPress: () => {
-        editProfileController.userDetails(context),
-        Get.toNamed("/package")
-       },
+        btnOkOnPress: () => {
+          editProfileController.userDetails(context),
+          Get.toNamed("/membership")
+        },
       );
     } catch (e) {
       _error = e.toString();
       print(_error);
-       if (!connectivityService.isConnected.value) {
+      if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
         Dialogs.showSnackbar(context,

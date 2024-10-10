@@ -32,7 +32,7 @@ class PartnerPreferences extends StatefulWidget {
 }
 
 class _PartnerPreferencesState extends State<PartnerPreferences> {
-  PartnerPreferenceController _partnerPreferenceController =
+  final PartnerPreferenceController _partnerPreferenceController =
       Get.put(PartnerPreferenceController());
   AgeController ageController = Get.put(AgeController());
   WeightConsController weightConsController = Get.put(WeightConsController());
@@ -132,7 +132,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/aboutgroom');
             },
@@ -151,7 +151,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
             ),
             if (_partnerPreferenceController.isLoading.value ||
                 flowController.isLoading.value)
-              Center(
+              const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ))
@@ -179,7 +179,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                     style: FontConstant.styleMedium(
                         fontSize: 18, color: AppColors.primaryColor),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Image.asset(
                     selectBasicDetails
                         ? "assets/images/arrow_up.png"
@@ -211,7 +211,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               children: [
                                 buildDropdownWithSearch(
                                   'Age Range From',
-                                  AgeController.AgeTypes(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...AgeController.AgeTypes()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectAgeFrom = value; // Update the state
@@ -223,12 +226,15 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
 
                                   hintText: 'Select',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight From',
-                                  weightConsController.getWeight(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...weightConsController.getWeight()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectWeightFrom = value;
@@ -240,7 +246,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   // professionController.selectedItem.call,
                                   hintText: 'Select',
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Obx(() {
@@ -260,7 +266,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   } else {
                                     return buildDropdownWithSearch(
                                       'Height Range From',
-                                      heightController.HeightLists,
+                                      [
+                                        'Prefer Not To Say',
+                                        ...heightController.HeightLists
+                                      ],
                                       (value) {
                                         setState(() {
                                           selectHeightFrom = value;
@@ -272,7 +281,6 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                         heightController.selectItem(
                                             value); // Call the controller method
                                       },
-
                                       // professionController.selectedItem.call,
                                       hintText: 'Select',
                                     );
@@ -281,7 +289,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -289,7 +297,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               children: [
                                 buildDropdownWithSearch(
                                   'Age Range To',
-                                  AgeController.AgeTypes(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...AgeController.AgeTypes()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectAgeTo = value; // Update the state
@@ -306,7 +317,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                 ),
                                 buildDropdownWithSearch(
                                   'Body Weight To',
-                                  weightConsController.getWeight(),
+                                  [
+                                    'Prefer Not To Say',
+                                    ...weightConsController.getWeight()
+                                  ],
                                   (value) {
                                     setState(() {
                                       selectWeightTo =
@@ -339,7 +353,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                                   } else {
                                     return buildDropdownWithSearch(
                                       'Height Range To',
-                                      heightController.HeightLists,
+                                      [
+                                        'Prefer Not To Say',
+                                        ...heightController.HeightLists
+                                      ],
                                       (value) {
                                         setState(() {
                                           selectHeightTo = value;
@@ -362,7 +379,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(() {
@@ -391,7 +408,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                           );
                         }
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(() {
@@ -410,7 +427,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Marital Status',
-                            maritalController.maritalLists,
+                            [
+                              'Prefer Not To Say',
+                              ...maritalController.maritalLists
+                            ],
                             (value) {
                               setState(() {
                                 selectMaritalStatus = value; // Update the state
@@ -449,7 +469,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                     style: FontConstant.styleMedium(
                         fontSize: 18, color: AppColors.primaryColor),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Image.asset(
                     selectFamilyDetails
                         ? "assets/images/arrow_up.png"
@@ -485,39 +505,61 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Flexible(
-                            child: RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title: const Text('Joint'),
-                              activeColor: AppColors.primaryColor,
-                              value: 1,
-                              groupValue: familytype,
-                              onChanged: (int? value) {
-                                setState(
-                                  () {
-                                    familytype = value;
-                                  },
-                                );
+                            child: GestureDetector(
+                              onDoubleTap: () {
+                                setState(() {
+                                  if (familytype == 1) {
+                                    familytype = 0;
+                                  } else {
+                                    familytype = 1;
+                                  }
+                                });
                               },
+                              child: RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title: const Text('Joint'),
+                                activeColor: AppColors.primaryColor,
+                                value: 1,
+                                groupValue: familytype,
+                                onChanged: (int? value) {
+                                  setState(
+                                    () {
+                                      familytype = value;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           Flexible(
                             flex: 2,
-                            child: RadioListTile<int>(
-                              contentPadding: EdgeInsets.zero,
-                              title: const Text('Nuclear'),
-                              activeColor: AppColors.primaryColor,
-                              value: 2,
-                              groupValue: familytype,
-                              onChanged: (int? value) {
+                            child: GestureDetector(
+                              onDoubleTap: () {
                                 setState(() {
-                                  familytype = value;
+                                  if (familytype == 2) {
+                                    familytype = 0;
+                                  } else {
+                                    familytype = 2;
+                                  }
                                 });
                               },
+                              child: RadioListTile<int>(
+                                contentPadding: EdgeInsets.zero,
+                                title: const Text('Nuclear'),
+                                activeColor: AppColors.primaryColor,
+                                value: 2,
+                                groupValue: familytype,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    familytype = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Column(
@@ -532,55 +574,88 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Flexible(
-                                  child: RadioListTile<int>(
-                                    contentPadding: EdgeInsets.zero,
-                                    title: const Text('Traditional'),
-                                    activeColor: AppColors.primaryColor,
-                                    value: 1,
-                                    groupValue: familyValue,
-                                    onChanged: (int? value) {
-                                      setState(
-                                        () {
-                                          familyValue = value;
-                                        },
-                                      );
+                                  child: GestureDetector(
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        if (familyValue == 1) {
+                                          familyValue = 0;
+                                        } else {
+                                          familyValue = 1;
+                                        }
+                                      });
                                     },
+                                    child: RadioListTile<int>(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: const Text('Traditional'),
+                                      activeColor: AppColors.primaryColor,
+                                      value: 1,
+                                      groupValue: familyValue,
+                                      onChanged: (int? value) {
+                                        setState(
+                                          () {
+                                            familyValue = value;
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                                 Flexible(
                                   flex: 1,
-                                  child: RadioListTile<int>(
-                                    contentPadding: EdgeInsets.zero,
-                                    title: const Text('Moderate'),
-                                    activeColor: AppColors.primaryColor,
-                                    value: 2,
-                                    groupValue: familyValue,
-                                    onChanged: (int? value) {
-                                      setState(
-                                        () {
-                                          familyValue = value;
-                                        },
-                                      );
+                                  child: GestureDetector(
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        if (familyValue == 2) {
+                                          familyValue = 0;
+                                        } else {
+                                          familyValue = 2;
+                                        }
+                                      });
                                     },
+                                    child: RadioListTile<int>(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: const Text('Moderate'),
+                                      activeColor: AppColors.primaryColor,
+                                      value: 2,
+                                      groupValue: familyValue,
+                                      onChanged: (int? value) {
+                                        setState(
+                                          () {
+                                            familyValue = value;
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             Flexible(
                               flex: 0,
-                              child: RadioListTile<int>(
-                                contentPadding: EdgeInsets.zero,
-                                title: const Text('Liberal'),
-                                activeColor: AppColors.primaryColor,
-                                value: 3,
-                                groupValue: familyValue,
-                                onChanged: (int? value) {
-                                  setState(
-                                    () {
-                                      familyValue = value;
-                                    },
-                                  );
+                              child: GestureDetector(
+                                onDoubleTap: () {
+                                  setState(() {
+                                    if (familyValue == 3) {
+                                      familyValue = 0;
+                                    } else {
+                                      familyValue = 3;
+                                    }
+                                  });
                                 },
+                                child: RadioListTile<int>(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: const Text('Liberal'),
+                                  activeColor: AppColors.primaryColor,
+                                  value: 3,
+                                  groupValue: familyValue,
+                                  onChanged: (int? value) {
+                                    setState(
+                                      () {
+                                        familyValue = value;
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ])
@@ -608,7 +683,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                     style: FontConstant.styleMedium(
                         fontSize: 18, color: AppColors.primaryColor),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Image.asset(
                     selectNationality
                         ? "assets/images/arrow_up.png"
@@ -648,7 +723,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Nationality',
-                            countryController.getCountryList(),
+                            [
+                              'Prefer Not To Say',
+                              ...countryController.getCountryList()
+                            ],
                             (value) {
                               setState(() {
                                 selectCountry = value; // Update the state
@@ -661,7 +739,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                           );
                         }
                       }),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Obx(() {
@@ -680,7 +758,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         } else {
                           return buildDropdownWithSearchMulti(
                             'State',
-                            stateControllerPermanent.stateLists,
+                            [
+                              'Prefer Not To Say',
+                              ...stateControllerPermanent.stateLists
+                            ],
                             //  stateControllerPermanent.selectedItem,
                             (value) {
                               setState(() {
@@ -929,7 +1010,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Religion',
-                            religionsController.getReligionNames(),
+                            [
+                              'Prefer Not To Say',
+                              ...religionsController.getReligionNames()
+                            ],
                             (value) {
                               setState(() {
                                 selectReligions = value;
@@ -961,7 +1045,10 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Caste',
-                            castController.getCastNames(),
+                            [
+                              'Prefer Not To Say',
+                              ...castController.getCastNames()
+                            ],
                             (value) {
                               setState(() {
                                 selectCaste = value;
@@ -1036,7 +1123,7 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                         } else {
                           return buildDropdownWithSearch(
                             'Diet Preference',
-                            dietController.dietLists,
+                            ['Prefer Not To Say', ...dietController.dietLists],
                             (value) {
                               setState(() {
                                 selectDiet = value; // Update the state
@@ -1122,11 +1209,11 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                 ),
               ],
             ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 15),
             child: CustomButton(
               text: "Save Changes",
               onPressed: () => {
@@ -1171,49 +1258,48 @@ class _PartnerPreferencesState extends State<PartnerPreferences> {
                   FontConstant.styleMedium(fontSize: 18, color: Colors.white),
             ),
           ),
-          GestureDetector(
-            onTap: () => {
-              // Get.offAndToNamed('/partner')
-              // flowController.Flow(context, 14)
-
-              _partnerPreferenceController.partnerPreference(
-                  context,
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  false)
-            },
-            child: Container(
-              padding: EdgeInsets.all(5),
-              child: Text(
-                "SKIP",
-                style: FontConstant.styleRegular(
-                    fontSize: 20, color: AppColors.black),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 40,
+          _buildSkipButton(),
+          const SizedBox(
+            height: 20,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSkipButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+      child: CustomButton(
+        text: 'SKIP',
+        onPressed: () {
+          _partnerPreferenceController.partnerPreference(
+              context,
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              false);
+        },
+        color: Colors.transparent,
+        textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
       ),
     );
   }

@@ -526,7 +526,7 @@ class _BasicDetailState extends State<BasicDetail> {
             ),
             if (_basicDetailController.isLoading.value ||
                 flowController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

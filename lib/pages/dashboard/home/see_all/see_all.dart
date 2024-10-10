@@ -17,7 +17,6 @@ import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
 import '../../../../constants/widget/dialog.dart';
 
-
 class SeeAll extends StatefulWidget {
   const SeeAll({super.key});
 
@@ -182,7 +181,8 @@ class _SeeAllState extends State<SeeAll> {
                                         "8",
                                         "9",
                                         "10",
-                                        "11"
+                                        "11",
+                                        "12"
                                       ]);
                                     } else {
                                       DialogConstant.packageDialog(
@@ -232,7 +232,7 @@ class _SeeAllState extends State<SeeAll> {
                                                 alignment: Alignment.center,
                                                 height: screenWidth * 0.06,
                                                 width: screenWidth * 0.06,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     color: Colors.white),
                                                 child: SvgPicture.asset(
@@ -241,7 +241,7 @@ class _SeeAllState extends State<SeeAll> {
                                                   width: screenWidth * 0.028,
                                                 ),
                                               ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Text(
@@ -495,7 +495,8 @@ class _SeeAllState extends State<SeeAll> {
                                       "8",
                                       "9",
                                       "10",
-                                      "11"
+                                      "11",
+                                      "12"
                                     ]);
                                   } else {
                                     DialogConstant.packageDialog(
@@ -509,7 +510,7 @@ class _SeeAllState extends State<SeeAll> {
                                       height: screenWidth * 0.054,
                                       width: screenWidth * 0.054,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Expanded(
@@ -533,8 +534,8 @@ class _SeeAllState extends State<SeeAll> {
               }).toList(),
               if (matchesController
                   .isLoading.value) // Progress indicator at the bottom
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
                   child: Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryColor,

@@ -93,7 +93,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
             style: FontConstant.styleMedium(fontSize: 19, color: Colors.white),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/prof');
             },
@@ -125,7 +125,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                         top: screenHeight * 0.2,
                         left: 22,
                         right: 22,
-                        bottom: 100),
+                        bottom: 20),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -138,12 +138,6 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                             maxline: 5,
                             hintText:
                                 "Enter Something about your Devotional life",
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter Something about your Devotional life';
-                              }
-                              return null;
-                            },
                           ),
                           const SizedBox(height: 10),
                           Column(
@@ -293,9 +287,6 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                           _buildContinueButton(),
                           const SizedBox(height: 15),
                           _buildSkipButton(),
-                          const SizedBox(
-                            height: 25,
-                          ),
                         ],
                       ),
                     ),
@@ -321,18 +312,16 @@ class _DevotionDetailsState extends State<DevotionDetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            devotionalController.devotionalDetails(
-                context,
-                somethingAbout.text.toString().trim(),
-                getiskon(),
-                nameTemple.text.toString().trim(),
-                cityTemple.text,
-                whichSampraya.text..toString().trim(),
-                getSelectedHobbies(),
-                dikshaGuru.text.toString().trim(),
-                false);
-          }
+          devotionalController.devotionalDetails(
+              context,
+              somethingAbout.text.toString().trim(),
+              getiskon(),
+              nameTemple.text.toString().trim(),
+              cityTemple.text,
+              whichSampraya.text..toString().trim(),
+              getSelectedHobbies(),
+              dikshaGuru.text.toString().trim(),
+              false);
 
           //  Get.toNamed('/spiritual');
         },
@@ -346,7 +335,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: CustomButton(
-        text: 'Skip',
+      text: 'SKIP',
         onPressed: () {
           // Get.offAndToNamed('/spiritual');
           // flowController.Flow(context, 7);

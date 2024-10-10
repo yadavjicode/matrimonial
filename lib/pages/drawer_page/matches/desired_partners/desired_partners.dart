@@ -156,7 +156,8 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                   "8",
                                   "9",
                                   "10",
-                                  "11"
+                                  "11",
+                                  "12"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -457,7 +458,8 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                   "8",
                                   "9",
                                   "10",
-                                  "11"
+                                  "11",
+                                  "12"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(

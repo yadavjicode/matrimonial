@@ -96,7 +96,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
             .member?.member?.somethingAboutYourDevotionalLife ??
         "";
     nameTemple.text = _editProfileController.member?.member?.nameOfTemple ?? "";
-    cityTemple.text = _editProfileController.member?.member?.city ?? "";
+    cityTemple.text = _editProfileController.member?.member?.cityOfTheTemple ?? "";
     whichSampraya.text =
         _editProfileController.member?.member?.whichsampradaya ?? "";
     dikshaGuru.text = _editProfileController.member?.member?.dikshaGuru ?? "";
@@ -172,18 +172,16 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
       child: CustomButton(
         text: 'CONTINUE',
         onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            devotionalController.devotionalDetails(
-                context,
-                somethingAbout.text.toString().trim(),
-                getiskon(),
-                nameTemple.text.toString().trim(),
-                cityTemple.text.toString().trim(),
-                whichSampraya.text.toString().trim(),
-                getSelectedHobbies(),
-                dikshaGuru.text.toString().trim(),
-                true);
-          }
+          devotionalController.devotionalDetails(
+              context,
+              somethingAbout.text.toString().trim(),
+              getiskon(),
+              nameTemple.text.toString().trim(),
+              cityTemple.text.toString().trim(),
+              whichSampraya.text.toString().trim(),
+              getSelectedHobbies(),
+              dikshaGuru.text.toString().trim(),
+              true);
 
           //  Get.toNamed('/spiritual');
         },
@@ -198,7 +196,7 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
     final screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: EdgeInsets.only(
-          top: screenHeight * 0.2, left: 22, right: 22, bottom: 100),
+          top: screenHeight * 0.2, left: 22, right: 22, bottom: 30),
       child: Form(
         key: _formKey,
         child: Column(
@@ -210,12 +208,6 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
               labelText: "Something about your Devotional life *",
               maxline: 5,
               hintText: "Enter Something about your Devotional life",
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter Something about your Devotional life';
-                }
-                return null;
-              },
             ),
             const SizedBox(height: 10),
             Column(
@@ -349,11 +341,9 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 25),
             _buildContinueButton(),
-            const SizedBox(
-              height: 30,
-            ),
+           
           ],
         ),
       ),
