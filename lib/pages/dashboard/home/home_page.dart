@@ -97,11 +97,12 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () => {
                                 // {Get.toNamed('/partner')}
-                                
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MyWidget()),
-            )
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyWidget()),
+                                )
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),

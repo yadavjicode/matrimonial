@@ -176,7 +176,7 @@ class _HomeBodyState extends State<HomeBody> {
                                         .member?.member?.accountType ==
                                     1) {
                                   profileDetailsController.profileDetails(
-                                      context, data.matriID!, "", [
+                                      context, data.matriID!, "Matches", "", [
                                     "1",
                                     "2",
                                     "3",
@@ -410,7 +410,10 @@ class _HomeBodyState extends State<HomeBody> {
                                               .member?.member?.accountType ==
                                           1) {
                                         profileDetailsController.profileDetails(
-                                            context, data.matriID!, "", [
+                                            context,
+                                            data.matriID!,
+                                            "Matches",
+                                            "", [
                                           "1",
                                           "2",
                                           "3",

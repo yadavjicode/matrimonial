@@ -167,7 +167,7 @@ class _BasedMatchesState extends State<BasedMatches> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id, keys, [
+                                    context, id,"Matches", keys, [
                                   "1",
                                   "2",
                                   "3",
@@ -479,7 +479,7 @@ class _BasedMatchesState extends State<BasedMatches> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id, keys, [
+                                    context, id,"Matches", keys, [
                                   "1",
                                   "2",
                                   "3",

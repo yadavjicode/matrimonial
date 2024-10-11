@@ -144,7 +144,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id, "daily_recommendation", [
+                                    context, id,"daily_recommendation", "daily_recommendation", [
                                   "1",
                                   "2",
                                   "3",
@@ -446,7 +446,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id, "daily_recommendation", [
+                                    context, id,"daily_recommendation", "daily_recommendation", [
                                   "1",
                                   "2",
                                   "3",

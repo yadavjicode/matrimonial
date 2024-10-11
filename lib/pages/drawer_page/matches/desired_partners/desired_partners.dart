@@ -145,7 +145,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id, "matches", [
+                                    context, id,"Matches", "matches", [
                                   "1",
                                   "2",
                                   "3",
@@ -447,7 +447,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id, "matches", [
+                                    context, id,"Matches", "matches", [
                                   "1",
                                   "2",
                                   "3",

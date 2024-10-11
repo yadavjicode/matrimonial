@@ -44,7 +44,7 @@ class BasicDetails extends StatelessWidget {
               const SizedBox(width: 2),
               Expanded(
                 child: Text(
-                  'Last Login: ${MyDateUtil.getTimestampToDateFormat(context: context, timestamp: profileDetailsController.member!.data!.lastlogin)}',
+                  'Last Login: ${MyDateUtil.getTimestampToDateFormat(context: context, timestamp: profileDetailsController.member?.data?.lastlogin)}',
                   style: FontConstant.styleSemiBold(
                       fontSize: 12, color: Colors.black),
                 ),

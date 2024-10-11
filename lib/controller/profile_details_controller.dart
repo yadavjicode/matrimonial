@@ -16,14 +16,14 @@ class ProfileDetailsController with ChangeNotifier {
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> profileDetails(BuildContext context, String id, String keys,
+  Future<void> profileDetails(BuildContext context, String id,String type, String keys,
       List<dynamic>? search) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.ProfileDetails(id);
+      _member = await apiService.ProfileDetails(id,type);
 
       if (_member != null) {
         // Navigate with the correct key name

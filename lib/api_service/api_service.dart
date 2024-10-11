@@ -756,9 +756,7 @@ class ApiService {
 
 //==== Start Api Profile Details==========================================================================================
 
-  Future<ProfileDetailsModel> ProfileDetails(
-    String id,
-  ) async {
+  Future<ProfileDetailsModel> ProfileDetails(String id, String type) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -772,9 +770,7 @@ class ApiService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode({
-        "MatriID": id,
-      }),
+      body: jsonEncode({"MatriID": id, "list_for": type}),
     );
 
     if (response.statusCode == 200) {

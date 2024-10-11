@@ -7,6 +7,8 @@ import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
+import 'package:devotee/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -39,141 +41,46 @@ class ProfileHeaderState extends State<ProfileHeader> {
 
   ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-  int _currentIndex = 0;
 
+  final EditProfileController user = Get.put(EditProfileController());
   List<String> getImageList() {
     List<String> imgList = [];
 
-    // Check each photo field and add to the list if it's not null
     if (profileDetailsController.member?.data?.photo1 != null) {
-      imgList.add(profileDetailsController.member!.data!.photo1!);
+      imgList.add(profileDetailsController.member?.data?.photo1!);
     }
     if (profileDetailsController.member?.data?.photo2 != null) {
-      imgList.add(profileDetailsController.member!.data!.photo2!);
+      imgList.add(profileDetailsController.member?.data?.photo2!);
     }
     if (profileDetailsController.member?.data?.photo3 != null) {
-      imgList.add(profileDetailsController.member!.data!.photo3!);
+      imgList.add(profileDetailsController.member?.data?.photo3!);
     }
     if (profileDetailsController.member?.data?.photo4 != null) {
-      imgList.add(profileDetailsController.member!.data!.photo4!);
+      imgList.add(profileDetailsController.member?.data?.photo4!);
     }
     if (profileDetailsController.member?.data?.photo5 != null) {
-      imgList.add(profileDetailsController.member!.data!.photo5!);
+      imgList.add(profileDetailsController.member?.data?.photo5!);
     }
     return imgList;
   }
 
-  final EditProfileController user = Get.put(EditProfileController());
-  bool compare(dynamic a, dynamic b) {
-    if (a == null || b == null) {
-      return false;
-    }
-    if (a == b) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  int compareInt(dynamic a, dynamic b) {
-    if (a == null || b == null) {
-      return 0;
-    }
-    if (a == b) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-  int count() {
-    int age = profileDetailsController.member!.data!.pEFromAge != null &&
-            profileDetailsController.member!.data!.pEToAge != null &&
-            user.member!.member!.pEFromAge != null &&
-            user.member!.member!.pEToAge != null
-        ? compareInt(
-            compare(profileDetailsController.member!.data!.pEFromAge,
-                user.member!.member!.pEFromAge),
-            compare(profileDetailsController.member!.data!.pEToAge,
-                user.member!.member!.pEToAge))
-        : 0;
-    int height = profileDetailsController.member!.data!.pEHeight != null &&
-            profileDetailsController.member!.data!.pEHeight2 != null &&
-            user.member!.member!.pEHeight != null &&
-            user.member!.member!.pEHeight2 != null
-        ? compareInt(
-            compare(profileDetailsController.member!.data!.pEHeight,
-                user.member!.member!.pEHeight),
-            compare(profileDetailsController.member!.data!.pEHeight2,
-                user.member!.member!.pEHeight2))
-        : 0;
-    int marital =
-        profileDetailsController.member!.data!.pEMaritalStatus != null &&
-                user.member!.member!.pEMaritalStatus != null
-            ? compareInt(profileDetailsController.member!.data!.pEMaritalStatus,
-                user.member!.member!.pEMaritalStatus)
-            : 0;
-    int religion = profileDetailsController.member!.data!.pEReligion != null &&
-            user.member!.member!.pEReligion != null
-        ? compareInt(profileDetailsController.member!.data!.pEReligion,
-            user.member!.member!.pEReligion)
-        : 0;
-    int country =
-        profileDetailsController.member!.data!.pECountrylivingin != null &&
-                user.member!.member!.pECountrylivingin != null
-            ? compareInt(
-                profileDetailsController.member!.data!.pECountrylivingin,
-                user.member!.member!.pECountrylivingin)
-            : 0;
-    int state = profileDetailsController.member!.data!.pEState != null &&
-            user.member!.member!.pEState != null
-        ? compareInt(profileDetailsController.member!.data!.pEState,
-            user.member!.member!.pEState)
-        : 0;
-    int income =
-        profileDetailsController.member!.data!.pEAnnualincome != null &&
-                user.member!.member!.pEAnnualincome != null
-            ? compareInt(profileDetailsController.member!.data!.pEAnnualincome,
-                user.member!.member!.pEAnnualincome)
-            : 0;
-    return (age + height + marital + religion + country + state + income);
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<String> imgList = getImageList();
+    String profileImage = CommanClass.photo(
+        profileDetailsController.member?.data?.photo1,
+        profileDetailsController.member?.data?.gender);
     return Stack(
       children: [
         Column(
           children: [
             Stack(
               children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: false,
-                    enlargeCenterPage: true,
-                    padEnds: false,
-                    aspectRatio: 4 / 5,
-                    viewportFraction: 1.0,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                  ),
-                  items: imgList
-                      .map((item) => Container(
-                            width: double.infinity,
-                            child: ClipRRect(
-                              child: Image.network(
-                                "http://devoteematrimony.aks.5g.in/${item}",
-                                width: double.infinity,
-                                fit: BoxFit.fill,
-                                filterQuality: FilterQuality.high,
-                              ),
-                            ),
-                          ))
-                      .toList(),
+                Image.network(
+                  profileImage,
+                  width: SizeConfig.screenWidth,
+                  height: (SizeConfig.screenWidth * 1) * 5 / 4,
+                  fit: BoxFit.fill,
+                  filterQuality: FilterQuality.high,
                 ),
                 Positioned(
                   bottom: 0,
@@ -193,20 +100,20 @@ class ProfileHeaderState extends State<ProfileHeader> {
                   ),
                 ),
                 Positioned(
-                  bottom: 5,
+                  bottom: 8,
                   left: 18,
                   right: 60,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (profileDetailsController.member!.data!.accountType ==
+                      if (profileDetailsController.member?.data?.accountType ==
                           1)
                         Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 2),
                           alignment: Alignment.center,
                           width: 100,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: AppColors.constColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
@@ -218,7 +125,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                 height: 15,
                                 width: 15,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 3,
                               ),
                               Expanded(
@@ -231,23 +138,23 @@ class ProfileHeaderState extends State<ProfileHeader> {
                             ],
                           ),
                         ),
-                      if (profileDetailsController.member!.data!.accountType ==
+                      if (profileDetailsController.member?.data?.accountType ==
                           1)
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           profileDetailsController
-                                      .member!.data!.interestStatus ==
+                                      .member?.data?.interestStatus ==
                                   1
                               ? Container(
                                   // margin: EdgeInsets.only(top: 5),
                                   alignment: Alignment.center,
                                   height: 22,
                                   width: 22,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.green),
                                   child: SvgPicture.asset(
@@ -258,13 +165,13 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                   alignment: Alignment.center,
                                   height: 22,
                                   width: 22,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white),
                                   child: SvgPicture.asset(
                                       "assets/images/icons/pinkcorrect.svg"),
                                 ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Expanded(
@@ -279,7 +186,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
@@ -296,37 +203,49 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           color: Colors.white,
                         ),
                       ),
-                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom:
-                      5.0, // Position the indicator 10 pixels from the bottom
-                  left: 0.0,
-                  right: 0.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: imgList.map((url) {
-                      int index = imgList.indexOf(url);
-                      return Container(
-                        width: 8.0,
-                        height: 8.0,
-                        margin: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 2.0),
+                if (profileDetailsController.member?.data?.photo1 != null)
+                  Positioned(
+                    top: 10,
+                    right: 5,
+                    child: GestureDetector(
+                      onTap: () => {Get.toNamed("/viewAllphotos")},
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _currentIndex == index
-                              ? AppColors.primaryColor
-                              : AppColors.constColor,
+                          color: Colors.black.withOpacity(0.3),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          border:
+                              Border.all(color: Colors.white.withOpacity(0.3)),
                         ),
-                      );
-                    }).toList(),
+                        child: Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: Icon(
+                                Icons.camera_alt_rounded,
+                                color: AppColors.constColor,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Text(
+                                "${getImageList().length}",
+                                style: FontConstant.styleRegular(
+                                    fontSize: 12, color: AppColors.constColor),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
                 Positioned(
                     right: 5,
-                    bottom: 18,
+                    bottom: 8,
                     child: Column(
                       children: [
                         Container(
@@ -334,14 +253,15 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           width: 50,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.constColor),
-                              color: AppColors.purple),
+                              border: Border.all(
+                                  color: AppColors.constColor.withOpacity(0.3)),
+                              color: AppColors.black.withOpacity(0.3)),
                           child: Center(
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "${((count() * 100) / 7).toInt()} %",
+                                "${profileDetailsController.member?.matchData?.percentage}%",
                                 style: FontConstant.styleRegular(
                                     fontSize: 10, color: AppColors.constColor),
                               ),
@@ -374,22 +294,22 @@ class ProfileHeaderState extends State<ProfileHeader> {
                         //     ),
                         //   ),
                         // ),
-                        SizedBox(
-                          height: 5,
+                        const SizedBox(
+                          height: 8,
                         ),
                         GestureDetector(
                           onTap: () async {
                             setState(() {
                               profileDetailsController.member!.data!
                                   .shortlistStatus = profileDetailsController
-                                          .member!.data!.shortlistStatus ==
+                                          .member?.data?.shortlistStatus ==
                                       1
                                   ? 0
                                   : 1;
                             });
                             shortlistController.shortlist(
                               context,
-                              profileDetailsController.member!.data!.matriID,
+                              profileDetailsController.member?.data?.matriID,
                               btnOkOnPress: () => {
                                 dashboardController.dashboard(context),
                                 print("value=====${widget.value}"),
@@ -429,18 +349,19 @@ class ProfileHeaderState extends State<ProfileHeader> {
                             height: 50,
                             width: 50,
                             decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.3),
                                 shape: BoxShape.circle,
-                                border:
-                                    Border.all(color: AppColors.constColor)),
+                                border: Border.all(
+                                    color: Colors.white.withOpacity(0.3))),
                             child: Center(
                               child: Icon(
                                 profileDetailsController
-                                            .member!.data!.shortlistStatus ==
+                                            .member?.data?.shortlistStatus ==
                                         1
                                     ? (Icons.favorite)
                                     : Icons.favorite_border_rounded,
                                 color: profileDetailsController
-                                            .member!.data!.shortlistStatus ==
+                                            .member?.data?.shortlistStatus ==
                                         1
                                     ? Colors.red
                                     : AppColors.constColor,
@@ -450,7 +371,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                           ),
                         ),
                       ],
-                    ))
+                    )),
               ],
             ),
           ],
@@ -460,4 +381,3 @@ class ProfileHeaderState extends State<ProfileHeader> {
   }
 }
 // End Profile header page =================================================================================================================
-

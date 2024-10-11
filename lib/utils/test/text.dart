@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import '../../controller/edit_profile_controller.dart';
 import '../../controller/profile_details_controller.dart';
 
 class MyWidget extends StatefulWidget {
@@ -15,11 +12,7 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   final PageController _pageController =
       PageController(initialPage: 1000); // Start in the middle
-  final List<Widget> pages = [
-    Page1(),
-    Page2(),
-    Page3(),
-  ];
+  final List<Widget> pages = [Page1(), Page2(), Page3()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,34 +31,18 @@ class _MyWidgetState extends State<MyWidget> {
 }
 
 class Page1 extends StatefulWidget {
-
   @override
   State<Page1> createState() => _Page1State();
 }
 
 class _Page1State extends State<Page1> {
-   final ProfileDetailsController profileDetailsController =
+  final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-    @override
+
+  @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    profileDetailsController.profileDetails(
-                      context, "DM36282", "", [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12"
-                  ]);
-    });
+    
   }
 
   @override
@@ -88,37 +65,21 @@ class Page2 extends StatefulWidget {
 }
 
 class _Page2State extends State<Page2> {
-
-    final ProfileDetailsController profileDetailsController =
+  final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-    @override
+  @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-    profileDetailsController.profileDetails(
-                      context, "DM36287", "", [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12"
-                  ]);
-    });
+    
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.green,
       child: Center(
         child: Text(
-         'Page 1 ${profileDetailsController.member?.data?.name}',
+          'Page 1 ${profileDetailsController.member?.data?.name}',
           style: TextStyle(fontSize: 30, color: Colors.white),
         ),
       ),

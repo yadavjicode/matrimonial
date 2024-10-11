@@ -1,5 +1,4 @@
 //Start Compatibilty deatils ==================================================================================================================
-
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
@@ -44,28 +43,6 @@ class _CompatiblityState extends State<Compatiblity> {
     );
   }
 
-  bool compare(dynamic a, dynamic b) {
-    if (a == null || b == null) {
-      return false;
-    }
-    if (a == b) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  int compareInt(dynamic a, dynamic b) {
-    if (a == null || b == null) {
-      return 0;
-    }
-    if (a == b) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,65 +51,6 @@ class _CompatiblityState extends State<Compatiblity> {
       padding:
           const EdgeInsets.only(left: 18.0, right: 18, top: 10, bottom: 10),
       child: Obx(() {
-        int count() {
-          int age = profileDetailsController.member?.data?.pEFromAge != null &&
-                  profileDetailsController.member?.data?.pEToAge != null &&
-                  user.member?.member?.pEFromAge != null &&
-                  user.member?.member?.pEToAge != null
-              ? compareInt(
-                  compare(profileDetailsController.member?.data?.pEFromAge,
-                      user.member!.member!.pEFromAge),
-                  compare(profileDetailsController.member?.data?.pEToAge,
-                      user.member?.member?.pEToAge))
-              : 0;
-          int height = profileDetailsController.member?.data?.pEHeight !=
-                      null &&
-                  profileDetailsController.member?.data?.pEHeight2 != null &&
-                  user.member?.member?.pEHeight != null &&
-                  user.member?.member?.pEHeight2 != null
-              ? compareInt(
-                  compare(profileDetailsController.member?.data?.pEHeight,
-                      user.member?.member?.pEHeight),
-                  compare(profileDetailsController.member?.data?.pEHeight2,
-                      user.member?.member?.pEHeight2))
-              : 0;
-          int marital =
-              profileDetailsController.member?.data?.pEMaritalStatus != null &&
-                      user.member?.member?.pEMaritalStatus != null
-                  ? compareInt(
-                      profileDetailsController.member?.data?.pEMaritalStatus,
-                      user.member?.member?.pEMaritalStatus)
-                  : 0;
-          int religion =
-              profileDetailsController.member?.data?.pEReligion != null &&
-                      user.member?.member?.pEReligion != null
-                  ? compareInt(
-                      profileDetailsController.member?.data?.pEReligion,
-                      user.member?.member?.pEReligion)
-                  : 0;
-          int country =
-              profileDetailsController.member?.data?.pECountrylivingin !=
-                          null &&
-                      user.member?.member?.pECountrylivingin != null
-                  ? compareInt(
-                      profileDetailsController.member?.data?.pECountrylivingin,
-                      user.member?.member?.pECountrylivingin)
-                  : 0;
-          int state = profileDetailsController.member?.data?.pEState != null &&
-                  user.member?.member?.pEState != null
-              ? compareInt(profileDetailsController.member?.data?.pEState,
-                  user.member?.member?.pEState)
-              : 0;
-          int income =
-              profileDetailsController.member?.data?.pEAnnualincome != null &&
-                      user.member?.member?.pEAnnualincome != null
-                  ? compareInt(
-                      profileDetailsController.member?.data?.pEAnnualincome,
-                      user.member?.member?.pEAnnualincome)
-                  : 0;
-          return (age + height + marital + religion + country + state + income);
-        }
-
         String otherImage = CommanClass.photo(
             profileDetailsController.member?.data?.photo1,
             profileDetailsController.member?.data?.gender);
@@ -165,7 +83,7 @@ class _CompatiblityState extends State<Compatiblity> {
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 45.0),
                           child: Text(
-                            'You match ${count()}/7 of her preferences',
+                            'You match ${profileDetailsController.member?.matchData?.matchCount}/7 of her preferences',
                             textAlign: TextAlign.center,
                             style: FontConstant.styleMedium(
                                 fontSize: 14, color: const Color(0xff583789)),
@@ -196,24 +114,8 @@ class _CompatiblityState extends State<Compatiblity> {
                             //     : '${profileDetailsController.member!.data!.pEFromAge} to ${profileDetailsController.member!.data!.pEToAge}',
                             "",
                             false,
-                            profileDetailsController
-                                            .member?.data?.pEFromAge !=
-                                        null &&
-                                    profileDetailsController
-                                            .member?.data?.pEToAge !=
-                                        null &&
-                                    user.member?.member?.pEFromAge != null &&
-                                    user.member?.member?.pEToAge != null
-                                ? compare(
-                                    compare(
-                                        profileDetailsController
-                                            .member?.data?.pEFromAge,
-                                        user.member?.member?.pEFromAge),
-                                    compare(
-                                        profileDetailsController
-                                            .member?.data?.pEToAge,
-                                        user.member?.member?.pEToAge))
-                                : false),
+                            profileDetailsController.member?.matchData?.age ??
+                                false),
                         InfoRow(
                             'Height',
                             // profileDetailsController.member?.data?.pEHeight == null ||
@@ -223,92 +125,48 @@ class _CompatiblityState extends State<Compatiblity> {
                             //     : '${profileDetailsController.member!.data!.pEHeight} to ${profileDetailsController.member!.data!.pEHeight2}',
                             "",
                             true,
-                            profileDetailsController.member?.data?.pEHeight !=
-                                        null &&
-                                    profileDetailsController
-                                            .member?.data?.pEHeight2 !=
-                                        null &&
-                                    user.member?.member?.pEHeight != null &&
-                                    user.member?.member?.pEHeight2 != null
-                                ? compare(
-                                    compare(
-                                        profileDetailsController
-                                            .member?.data?.pEHeight,
-                                        user.member?.member?.pEHeight),
-                                    compare(
-                                        profileDetailsController
-                                            .member?.data?.pEHeight2,
-                                        user.member?.member?.pEHeight2))
-                                : false),
+                            profileDetailsController
+                                    .member?.matchData?.height ??
+                                false),
                         InfoRow(
                             'Marital Status',
                             // '${profileDetailsController.member!.data!.pEMaritalStatus ?? ""}',
                             "",
                             false,
                             profileDetailsController
-                                            .member?.data?.pEMaritalStatus !=
-                                        null &&
-                                    user.member?.member?.pEMaritalStatus != null
-                                ? compare(
-                                    profileDetailsController
-                                        .member?.data?.pEMaritalStatus,
-                                    user.member?.member?.pEMaritalStatus)
-                                : false),
+                                    .member?.matchData?.maritalStatus ??
+                                false),
                         InfoRow(
                             'Religion / Community',
                             // '${profileDetailsController.member!.data!.pEReligion ?? ""}',
                             "",
                             true,
-                            profileDetailsController.member?.data?.pEReligion !=
-                                        null &&
-                                    user.member?.member?.pEReligion != null
-                                ? compare(
-                                    profileDetailsController
-                                        .member?.data?.pEReligion,
-                                    user.member?.member?.pEReligion)
-                                : false),
+                            profileDetailsController
+                                    .member?.matchData?.religion ??
+                                false),
                         InfoRow(
                             'Country Living in',
                             // '${profileDetailsController.member?.data?.pECountrylivingin ?? ""}',
                             "",
                             false,
                             profileDetailsController
-                                            .member?.data?.pECountrylivingin !=
-                                        null &&
-                                    user.member?.member?.pECountrylivingin !=
-                                        null
-                                ? compare(
-                                    profileDetailsController
-                                        .member?.data?.pECountrylivingin,
-                                    user.member?.member?.pECountrylivingin)
-                                : false),
+                                    .member?.matchData?.country ??
+                                false),
                         InfoRow(
                             'State Living in',
                             // '${profileDetailsController.member?.data?.pEState ?? ""}',
                             "",
                             true,
-                            profileDetailsController.member?.data?.pEState !=
-                                        null &&
-                                    user.member?.member?.pEState != null
-                                ? compare(
-                                    profileDetailsController
-                                        .member?.data?.pEState,
-                                    user.member?.member?.pEState)
-                                : false),
+                            profileDetailsController.member?.matchData?.state ??
+                                false),
                         InfoRow(
                             'Annual Income',
                             // '${profileDetailsController.member?.data?.pEAnnualincome ?? ""}',
                             "",
                             false,
                             profileDetailsController
-                                            .member?.data?.pEAnnualincome !=
-                                        null &&
-                                    user.member?.member?.pEAnnualincome != null
-                                ? compare(
-                                    profileDetailsController
-                                        .member?.data?.pEAnnualincome,
-                                    user.member?.member?.pEAnnualincome)
-                                : false),
+                                    .member?.matchData?.income ??
+                                false),
                         const SizedBox(height: 16),
                       ],
                     ),
@@ -333,7 +191,7 @@ class InfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         color: backColor == true ? AppColors.constColor : Colors.grey.shade100,
       ),
       child: Padding(

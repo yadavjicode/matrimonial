@@ -1,12 +1,21 @@
 class ProfileDetailsModel {
   String? status;
   Data? data;
+  String? previous;
+  String? next;
+  MatchData? matchData;
 
-  ProfileDetailsModel({this.status, this.data});
+  ProfileDetailsModel(
+      {this.status, this.data, this.previous, this.next, this.matchData});
 
   ProfileDetailsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    previous = json['previous'];
+    next = json['next'];
+    matchData = json['match_data'] != null
+        ? new MatchData.fromJson(json['match_data'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -14,6 +23,11 @@ class ProfileDetailsModel {
     data['status'] = this.status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
+    }
+    data['previous'] = this.previous;
+    data['next'] = this.next;
+    if (this.matchData != null) {
+      data['match_data'] = this.matchData!.toJson();
     }
     return data;
   }
@@ -1351,6 +1365,55 @@ class ProfileImages {
     data['is_profile'] = this.isProfile;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class MatchData {
+  bool? age;
+  bool? height;
+  bool? maritalStatus;
+  bool? religion;
+  bool? country;
+  bool? state;
+  bool? income;
+  int? matchCount;
+  String? percentage;
+
+  MatchData(
+      {this.age,
+      this.height,
+      this.maritalStatus,
+      this.religion,
+      this.country,
+      this.state,
+      this.income,
+      this.matchCount,
+      this.percentage});
+
+  MatchData.fromJson(Map<String, dynamic> json) {
+    age = json['age'];
+    height = json['height'];
+    maritalStatus = json['marital_status'];
+    religion = json['religion'];
+    country = json['country'];
+    state = json['state'];
+    income = json['income'];
+    matchCount = json['match_count'];
+    percentage = json['percentage'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['age'] = this.age;
+    data['height'] = this.height;
+    data['marital_status'] = this.maritalStatus;
+    data['religion'] = this.religion;
+    data['country'] = this.country;
+    data['state'] = this.state;
+    data['income'] = this.income;
+    data['match_count'] = this.matchCount;
+    data['percentage'] = this.percentage;
     return data;
   }
 }

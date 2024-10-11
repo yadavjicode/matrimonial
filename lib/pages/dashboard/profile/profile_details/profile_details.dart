@@ -15,6 +15,7 @@ import 'package:devotee/pages/dashboard/profile/profile_details/compatiblity.dar
 import 'package:devotee/pages/dashboard/profile/profile_details/pages_details/pages_deatils.dart';
 import 'package:devotee/pages/dashboard/profile/profile_details/profile_header.dart';
 import 'package:devotee/pages/search/search_result/search_result.dart';
+import 'package:devotee/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -82,37 +83,43 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
             GestureDetector(
               onHorizontalDragEnd: (details) {
                 if (details.primaryVelocity! < 0) {
-                  profileDetailsController.profileDetails(
-                      context, "DM36282", "", [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12"
-                  ]);
+                  if (profileDetailsController.member != null &&
+                      profileDetailsController.member?.previous != null) {
+                    profileDetailsController.profileDetails(context,
+                        profileDetailsController.member?.previous ?? "","Matches", "", [
+                      "1",
+                      "2",
+                      "3",
+                      "4",
+                      "5",
+                      "6",
+                      "7",
+                      "8",
+                      "9",
+                      "10",
+                      "11",
+                      "12"
+                    ]);
+                  }
                 } else if (details.primaryVelocity! > 0) {
-                  profileDetailsController.profileDetails(
-                      context, "DM36287", "", [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                    "11",
-                    "12"
-                  ]);
+                  if (profileDetailsController.member != null &&
+                      profileDetailsController.member?.next != null) {
+                    profileDetailsController.profileDetails(context,
+                        profileDetailsController.member?.next ?? "","Matches", "", [
+                      "1",
+                      "2",
+                      "3",
+                      "4",
+                      "5",
+                      "6",
+                      "7",
+                      "8",
+                      "9",
+                      "10",
+                      "11",
+                      "12"
+                    ]);
+                  }
                 }
               },
               child: Column(
@@ -139,7 +146,6 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                 profilePer
                               ],
                             ),
-                            
                             BasicDetails(),
                             const SizedBox(
                               height: 10,
@@ -162,12 +168,12 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                 ? null
                                 : () async {
                                     if (profileDetailsController
-                                            .member!.data!.chatStatus ==
+                                            .member?.data?.chatStatus ==
                                         1) {
                                       directChatController.isLoading.value =
                                           true;
                                       if (profileDetailsController
-                                              .member!.data!.matriID!
+                                              .member?.data?.matriID!
                                               .trim()
                                               .isNotEmpty &&
                                           profileDetailsController
@@ -175,7 +181,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                               null) {
                                         await APIs.addChatUser(
                                                 profileDetailsController
-                                                    .member!.data!.matriID!)
+                                                    .member?.data?.matriID!)
                                             .then((value) {
                                           if (!value) {
                                             Dialogs.showSnackbar(context,
@@ -283,6 +289,109 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                 ],
               ),
             ),
+            if (profileDetailsController.member?.previous != null)
+              Positioned(
+                top: 0,
+                bottom: SizeConfig.screenHeight * 0.25,
+                left: 0,
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () => {
+                        profileDetailsController.profileDetails(
+                            context,
+                            profileDetailsController.member?.previous ?? "","Matches",
+                            "", [
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9",
+                          "10",
+                          "11",
+                          "12"
+                        ])
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.5),
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(30),
+                            bottomRight: Radius.circular(30),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              offset: Offset(2, 2),
+                              blurRadius: 5,
+                              spreadRadius: 1,
+                            ),
+                          ],
+                        ),
+                        alignment: Alignment.center,
+                        child: Icon(Icons.arrow_back_ios),
+                      ),
+                    )),
+              ),
+            if (profileDetailsController.member?.next != null)
+              Positioned(
+                top: 0,
+                bottom: SizeConfig.screenHeight *
+                    0.25, // Adjust this value as needed
+                right: 0,
+                child: Align(
+                  alignment: Alignment
+                      .centerRight, // Ensure the container is aligned properly
+                  child: GestureDetector(
+                    onTap: () => {
+                      profileDetailsController.profileDetails(context,
+                          profileDetailsController.member?.next ?? "","Matches", "", [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12"
+                      ])
+                    },
+                    child: Container(
+                      width: 30,
+                      height: 60,
+                      padding: EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.5),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            offset: Offset(2, 2),
+                            blurRadius: 5,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      alignment: Alignment
+                          .centerRight, // Center the arrow inside the container
+                      child: const Icon(Icons.arrow_forward_ios_outlined),
+                    ),
+                  ),
+                ),
+              ),
             if (sentInvitationController.isLoading.value ||
                 profileDetailsController.isLoading.value ||
                 shortlistController.isLoading.value ||

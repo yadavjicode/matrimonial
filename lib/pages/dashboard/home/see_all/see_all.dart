@@ -170,7 +170,7 @@ class _SeeAllState extends State<SeeAll> {
                                             .member?.member?.accountType ==
                                         1) {
                                       profileDetailsController.profileDetails(
-                                          context, id, keys, [
+                                          context, id,"Matches", keys, [
                                         "1",
                                         "2",
                                         "3",
@@ -484,7 +484,7 @@ class _SeeAllState extends State<SeeAll> {
                                           .member?.member?.accountType ==
                                       1) {
                                     profileDetailsController.profileDetails(
-                                        context, id, keys, [
+                                        context, id,"Matches", keys, [
                                       "1",
                                       "2",
                                       "3",

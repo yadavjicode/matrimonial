@@ -122,7 +122,7 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, mId, "", [
+                                    context, mId,"Matches", "", [
                                   "1",
                                   "2",
                                   "3",
@@ -276,7 +276,7 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                                 1) {
                                               profileDetailsController
                                                   .profileDetails(
-                                                      context, mId, "", [
+                                                      context, mId,"Matches", "", [
                                                 "1",
                                                 "2",
                                                 "3",

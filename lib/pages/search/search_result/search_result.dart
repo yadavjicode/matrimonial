@@ -333,7 +333,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 {
                                                   profileDetailsController
                                                       .profileDetails(context,
-                                                          id, "search", [
+                                                          id,"Search", "search", [
                                                     ageFrom,
                                                     ageTo,
                                                     heightFrom,
@@ -718,7 +718,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 {
                                                   profileDetailsController
                                                       .profileDetails(context,
-                                                          id, "search", [
+                                                          id,"Search", "search", [
                                                     ageFrom,
                                                     ageTo,
                                                     heightFrom,
