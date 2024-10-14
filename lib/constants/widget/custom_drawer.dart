@@ -420,6 +420,13 @@ class CustomDrawer extends StatelessWidget {
                         "Privacy Policy", 22, 22),
                   ),
                   GestureDetector(
+                    onTap: () => {
+                      // Get.toNamed("/privacy")
+                    },
+                    child: buildoption("assets/images/icons/refund.svg",
+                        "Refund Policy", 22, 22),
+                  ),
+                  GestureDetector(
                     onTap: () => {Get.toNamed("/testimonials")},
                     child: buildoption("assets/images/icons/testimonial.svg",
                         "Testimonial", 22, 22),

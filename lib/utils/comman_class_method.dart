@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CommanClass {
   static String commaString(List<String?> list) {
@@ -61,31 +62,37 @@ class CommanClass {
     }
   }
 
-
- static String hisHer(String? gender) {
+  static String hisHer(String? gender) {
     if (gender != null) {
-      if(gender=="Male"){
+      if (gender == "Male") {
         return "his";
-      }else if(gender=="Female"){
+      } else if (gender == "Female") {
         return "her";
-      }else{
+      } else {
         return "their";
       }
-    }else {
+    } else {
       return "their";
     }
   }
 
   // Method to convert a comma-separated string to a list and add to target list
- static List<String> addCommaSeparatedValuesToList(String? data) {
-    List<String> localList = data != null  ? data.split(',') : [];
+  static List<String> addCommaSeparatedValuesToList(String? data) {
+    List<String> localList = data != null ? data.split(',') : [];
     return localList;
   }
-  
 
 //method list to string
-   static   String listtoString(List<String> list) {
+  static String listtoString(List<String> list) {
     return list.join(', ');
   }
 
+  // Method to launch a URL
+  static Future<void> launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url'; // Consider logging this instead
+    }
+  }
 }

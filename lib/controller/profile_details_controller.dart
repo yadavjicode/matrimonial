@@ -16,18 +16,19 @@ class ProfileDetailsController with ChangeNotifier {
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> profileDetails(BuildContext context, String id,String type, String keys,
-      List<dynamic>? search) async {
+  Future<void> profileDetails(BuildContext context, String id, String type,
+      String keys, List<dynamic>? search) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.ProfileDetails(id,type);
+      _member = await apiService.ProfileDetails(id, type);
 
       if (_member != null) {
         // Navigate with the correct key name
         Get.toNamed('/profiledtls', arguments: {
+          "type": type,
           "keys": keys,
           "ageFrom": search![0] ?? "",
           "ageTo": search[1] ?? "",

@@ -12,7 +12,6 @@ import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
 import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:devotee/pages/dashboard/home/home_body.dart';
-import 'package:devotee/utils/test/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -72,7 +71,7 @@ class _HomeState extends State<Home> {
                   children: [
                     Stack(children: [
                       Container(
-                        padding: EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.only(top: 16),
                         height: 130,
                         decoration: const BoxDecoration(
                             color: AppColors.primaryColor,
@@ -97,12 +96,11 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () => {
                                 // {Get.toNamed('/partner')}
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyWidget()),
-                                )
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => MyWidget()),
+                                // )
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),

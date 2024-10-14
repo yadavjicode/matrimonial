@@ -7,7 +7,6 @@ class Validation {
     } else if (!emailRegExp.hasMatch(value)) {
       return 'Please enter a valid email address';
     }
-
     return null;
   }
 

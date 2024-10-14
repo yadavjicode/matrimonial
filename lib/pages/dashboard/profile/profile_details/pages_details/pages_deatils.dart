@@ -172,12 +172,12 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
               {
                 "title": "Phone Number",
                 "value":
-                    "${profileDetailsController.member?.data?.hidePhoneStatus == 1 ? "Phone Number Hidden" : profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.hidePhoneStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
               },
               {
                 "title": "Email Address",
                 "value":
-                    "${profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Email Address Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned"}"
               },
               {
                 "title": "Instagram ID",

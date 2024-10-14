@@ -123,11 +123,11 @@ class _AllMatchesState extends State<AllMatches> {
             String image = CommanClass.photo(data.photo1, data.gender);
 
             return Container(
-              margin: EdgeInsets.only(top: 5, bottom: 10),
+              margin: const EdgeInsets.only(top: 5, bottom: 10),
               decoration: BoxDecoration(
                 color: AppColors.constColor,
                 border: Border.all(color: Colors.grey.shade200),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Column(
                 children: [
@@ -144,7 +144,7 @@ class _AllMatchesState extends State<AllMatches> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id,"Matches", "matches", [
+                                    context, id, "Matches", "matches", [
                                   "1",
                                   "2",
                                   "3",
@@ -193,7 +193,7 @@ class _AllMatchesState extends State<AllMatches> {
                                             alignment: Alignment.center,
                                             height: screenWidth * 0.06,
                                             width: screenWidth * 0.06,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: Colors.green),
                                             child: SvgPicture.asset(
@@ -206,7 +206,7 @@ class _AllMatchesState extends State<AllMatches> {
                                             alignment: Alignment.center,
                                             height: screenWidth * 0.06,
                                             width: screenWidth * 0.06,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: Colors.white),
                                             child: SvgPicture.asset(
@@ -215,7 +215,7 @@ class _AllMatchesState extends State<AllMatches> {
                                               width: screenWidth * 0.028,
                                             ),
                                           ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Text(
@@ -255,8 +255,8 @@ class _AllMatchesState extends State<AllMatches> {
                                   ),
                                   if (data.accountType == 1)
                                     Container(
-                                      margin:
-                                          EdgeInsets.symmetric(horizontal: 5),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5),
                                       width: 1,
                                       height: 12,
                                       color: AppColors.grey,
@@ -271,7 +271,7 @@ class _AllMatchesState extends State<AllMatches> {
                                               height: 15,
                                               width: 15,
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 3,
                                             ),
                                             Expanded(
@@ -279,7 +279,8 @@ class _AllMatchesState extends State<AllMatches> {
                                                 "Premium",
                                                 style: FontConstant.styleMedium(
                                                     fontSize: 12,
-                                                    color: Color(0xFFF69506)),
+                                                    color: const Color(
+                                                        0xFFF69506)),
                                               ),
                                             )
                                           ],
@@ -338,13 +339,13 @@ class _AllMatchesState extends State<AllMatches> {
                     ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
+                    margin: const EdgeInsets.only(left: 10, right: 10),
                     height: 1,
                     width: double.infinity,
                     color: Colors.grey.shade200,
                   ),
                   Container(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 10),
                     child: Row(
                       children: [
@@ -446,7 +447,7 @@ class _AllMatchesState extends State<AllMatches> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id,"Matches", "matches", [
+                                    context, id, "Matches", "matches", [
                                   "1",
                                   "2",
                                   "3",

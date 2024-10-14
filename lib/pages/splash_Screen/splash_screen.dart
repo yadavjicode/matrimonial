@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:devotee/constants/color_constant.dart';
+import 'package:devotee/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../controller/flow_controller.dart';
 import '../../controller/splash_controller.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
- final SplashController splashController = Get.put(SplashController());
+  final SplashController splashController = Get.put(SplashController());
 
   @override
   void initState() {
@@ -23,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 2),
       () {
-          Get.offAndToNamed('/guruscreen');
+        Get.offAndToNamed('/guruscreen');
       },
     );
   }
@@ -32,18 +31,18 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Center(
-        child: Container(
-          width: 250,
-          height: 100,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'),
-              fit: BoxFit.cover,
-            ),
+      body: Stack(children: [
+        Container(
+            width: double.infinity,
+            alignment: Alignment.topRight,
+            child: Image.asset("assets/images/background.png")),
+        Center(
+          child: SizedBox(
+            width: SizeConfig.screenWidth * 1,
+            child: Image.asset('assets/images/splash_logo.png'),
           ),
         ),
-      ),
+      ]),
     );
   }
 }

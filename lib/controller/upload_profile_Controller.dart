@@ -34,7 +34,7 @@ class UploadProfileController extends GetxController {
           }
         });
         Get.offAndToNamed('/packageInfo');
-        // flowController.Flow(context, 11);  
+        // flowController.Flow(context, 11);
         Dialogs.showSnackbar(context, "Photo Upload Successfully!");
       } else {
         print('Photo Upload failed: ${response['message']}');

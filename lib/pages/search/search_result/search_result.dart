@@ -332,8 +332,11 @@ class _SearchResultState extends State<SearchResult> {
                                                   1)
                                                 {
                                                   profileDetailsController
-                                                      .profileDetails(context,
-                                                          id,"Search", "search", [
+                                                      .profileDetails(
+                                                          context,
+                                                          id,
+                                                          "Search",
+                                                          "search", [
                                                     ageFrom,
                                                     ageTo,
                                                     heightFrom,
@@ -584,8 +587,8 @@ class _SearchResultState extends State<SearchResult> {
                                     ],
                                   ),
                                   Container(
-                                    margin:
-                                        EdgeInsets.only(left: 10, right: 10),
+                                    margin: const EdgeInsets.only(
+                                        left: 10, right: 10),
                                     height: 1,
                                     width: double.infinity,
                                     color: Colors.grey.shade200,
@@ -717,8 +720,11 @@ class _SearchResultState extends State<SearchResult> {
                                                   1)
                                                 {
                                                   profileDetailsController
-                                                      .profileDetails(context,
-                                                          id,"Search", "search", [
+                                                      .profileDetails(
+                                                          context,
+                                                          id,
+                                                          "Search",
+                                                          "search", [
                                                     ageFrom,
                                                     ageTo,
                                                     heightFrom,

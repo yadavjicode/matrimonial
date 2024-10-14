@@ -1,6 +1,7 @@
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,7 +35,7 @@ class _OurSocialHandlesState extends State<OurSocialHandles> {
               child: Image.asset("assets/images/bg3.png")),
           Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child:
                     Image.asset("assets/images/social.png", fit: BoxFit.cover),
@@ -43,7 +44,7 @@ class _OurSocialHandlesState extends State<OurSocialHandles> {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     DrawerCommanCode().buildText(
@@ -54,78 +55,95 @@ class _OurSocialHandlesState extends State<OurSocialHandles> {
                           child: Column(
                             children: [
                               DrawerCommanCode().buildText("Instagram"),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 15),
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/images/icons/instagram.svg",
-                                      height: 60,
-                                      width: 60,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Devotee Matrimony",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12, color: AppColors.black),
-                                    )
-                                  ],
+                              GestureDetector(
+                                onTap: () => {
+                                  CommanClass.launchURL(
+                                      "https://www.instagram.com/devotee_matrimony")
+                                  // _launchURL('https://www.instagram.com/your_username')
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 15),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/images/icons/instagram.svg",
+                                        height: 60,
+                                        width: 60,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Devotee Matrimony",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: AppColors.black),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Expanded(
                           child: Column(
                             children: [
                               DrawerCommanCode().buildText("Facebook"),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 15),
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: SvgPicture.asset(
-                                          "assets/images/icons/facebook.svg",
-                                          height: 52,
-                                          width: 52),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Devotee Matrimony",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12, color: AppColors.black),
-                                    )
-                                  ],
+                              GestureDetector(
+                                onTap: () => {
+                                  CommanClass.launchURL(
+                                      "https://www.facebook.com/people/Devotee-Matrimony/61561864452226/?mibextid=rS40aB7S9Ucbxw6v")
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 5, vertical: 15),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: SvgPicture.asset(
+                                            "assets/images/icons/facebook.svg",
+                                            height: 52,
+                                            width: 52),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Devotee Matrimony",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 12,
+                                            color: AppColors.black),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             ],

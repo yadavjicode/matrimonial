@@ -172,7 +172,10 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                             .member?.member?.accountType ==
                                         1) {
                                       profileDetailsController.profileDetails(
-                                          context, data.matId!,"Matches", "", [
+                                          context,
+                                          data.matId!,
+                                          "short_list_profile",
+                                          "", [
                                         "1",
                                         "2",
                                         "3",
@@ -416,8 +419,11 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                                     ?.member?.accountType ==
                                                 1) {
                                               profileDetailsController
-                                                  .profileDetails(context,
-                                                      data.matId!,"Matches", "", [
+                                                  .profileDetails(
+                                                      context,
+                                                      data.matId!,
+                                                      "short_list_profile",
+                                                      "", [
                                                 "1",
                                                 "2",
                                                 "3",

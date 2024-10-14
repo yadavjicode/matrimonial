@@ -64,6 +64,7 @@ class _SeeAllState extends State<SeeAll> {
   @override
   Widget build(BuildContext context) {
     final String keys = arguments['keys'];
+     final String type = arguments['type'];
     final String appBarValue = arguments['appbar'];
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -93,7 +94,7 @@ class _SeeAllState extends State<SeeAll> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: allMatchesContent(keys),
+                child: allMatchesContent(keys,type),
               ),
               if (shortlistController.isLoading.value ||
                   sentInvitationController.isLoading.value ||
@@ -111,7 +112,7 @@ class _SeeAllState extends State<SeeAll> {
     );
   }
 
-  Widget allMatchesContent(String keys) {
+  Widget allMatchesContent(String keys,String type) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     final member = matchesController.member;
@@ -170,7 +171,7 @@ class _SeeAllState extends State<SeeAll> {
                                             .member?.member?.accountType ==
                                         1) {
                                       profileDetailsController.profileDetails(
-                                          context, id,"Matches", keys, [
+                                          context, id,type, keys, [
                                         "1",
                                         "2",
                                         "3",
@@ -484,7 +485,7 @@ class _SeeAllState extends State<SeeAll> {
                                           .member?.member?.accountType ==
                                       1) {
                                     profileDetailsController.profileDetails(
-                                        context, id,"Matches", keys, [
+                                        context, id,type, keys, [
                                       "1",
                                       "2",
                                       "3",

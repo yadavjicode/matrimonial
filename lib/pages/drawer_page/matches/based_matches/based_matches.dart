@@ -1,6 +1,4 @@
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/chat/models/chat_user.dart';
-import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
@@ -67,6 +65,7 @@ class _BasedMatchesState extends State<BasedMatches> {
   @override
   Widget build(BuildContext context) {
     final String keys = arguments['keys'];
+    final String type = arguments['type'];
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -95,13 +94,13 @@ class _BasedMatchesState extends State<BasedMatches> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16),
-                child: AllMatchesContent(keys),
+                child: AllMatchesContent(keys, type),
               ),
               if (shortlistController.isLoading.value ||
                   sentInvitationController.isLoading.value ||
                   profileDetailsController.isLoading.value ||
                   directChatController.isLoading.value)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -113,7 +112,7 @@ class _BasedMatchesState extends State<BasedMatches> {
     );
   }
 
-  Widget AllMatchesContent(String keys) {
+  Widget AllMatchesContent(String keys, String type) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     if (matchesController.isLoading.value == false &&
@@ -146,11 +145,11 @@ class _BasedMatchesState extends State<BasedMatches> {
             String image = CommanClass.photo(data.photo1, data.gender);
 
             return Container(
-              margin: EdgeInsets.only(top: 5, bottom: 10),
+              margin: const EdgeInsets.only(top: 5, bottom: 10),
               decoration: BoxDecoration(
                 color: AppColors.constColor,
                 border: Border.all(color: Colors.grey.shade200),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Column(
                 children: [
@@ -167,7 +166,7 @@ class _BasedMatchesState extends State<BasedMatches> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id,"Matches", keys, [
+                                    context, id, type, keys, [
                                   "1",
                                   "2",
                                   "3",
@@ -458,7 +457,7 @@ class _BasedMatchesState extends State<BasedMatches> {
                                   height: 20,
                                   width: 20,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Expanded(
@@ -479,7 +478,7 @@ class _BasedMatchesState extends State<BasedMatches> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id,"Matches", keys, [
+                                    context, id, type, keys, [
                                   "1",
                                   "2",
                                   "3",

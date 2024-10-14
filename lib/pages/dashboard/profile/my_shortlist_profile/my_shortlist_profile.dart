@@ -74,7 +74,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
             child: Image.asset("assets/images/background.png")),
         Obx(() {
           return Stack(
-            children: [    
+            children: [
               shortlistedContent(),
               if (shortlistedListController.isLoading.value ||
                   shortlistController.isLoading.value ||
@@ -102,8 +102,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
       return Center(
           child: Text("No data available",
               style: FontConstant.styleMedium(
-                  fontSize: 15,
-                  color: AppColors.darkgrey)));
+                  fontSize: 15, color: AppColors.darkgrey)));
     }
 
     if (shortlistedListController.member!.responseData!.data!.isEmpty) {
@@ -117,8 +116,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
           alignment: Alignment.center,
           child: Text("No users found!",
               style: FontConstant.styleMedium(
-                  fontSize: 15,
-                  color: AppColors.darkgrey)));
+                  fontSize: 15, color: AppColors.darkgrey)));
     } else {
       return Padding(
         padding: EdgeInsets.only(
@@ -182,7 +180,10 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                             .member?.member?.accountType ==
                                         1) {
                                       profileDetailsController.profileDetails(
-                                          context, data.matId!,"Matches", "", [
+                                          context,
+                                          data.matId!,
+                                          "short_list_profile",
+                                          "", [
                                         "1",
                                         "2",
                                         "3",
@@ -231,8 +232,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                         children: [
                                           Text("ID: $Id",
                                               style: FontConstant.styleMedium(
-                                                  fontSize:
-                                                      12,
+                                                  fontSize: 12,
                                                   color: AppColors.darkgrey)),
                                           SizedBox(
                                             width:
@@ -244,8 +244,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                               textAlign: TextAlign.right,
                                               "Shortlist On: $date",
                                               style: FontConstant.styleMedium(
-                                                  fontSize:
-                                                     12,
+                                                  fontSize: 12,
                                                   color: AppColors.darkgrey),
                                             ),
                                           ),
@@ -255,8 +254,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                         name,
                                         overflow: TextOverflow.ellipsis,
                                         style: FontConstant.styleSemiBold(
-                                            fontSize:
-                                                13,
+                                            fontSize: 13,
                                             color: AppColors.primaryColor),
                                       ),
                                       Padding(
@@ -266,8 +264,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 3,
                                           style: FontConstant.styleMedium(
-                                              fontSize:
-                                                  12,
+                                              fontSize: 12,
                                               color: AppColors.darkgrey),
                                         ),
                                       ),
@@ -341,8 +338,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                           child: Text(
                                             "Remove",
                                             style: FontConstant.styleMedium(
-                                                fontSize:
-                                                    12,
+                                                fontSize: 12,
                                                 color: AppColors.black),
                                           ),
                                         ),
@@ -404,8 +400,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                           child: Text(
                                             "Chat Now",
                                             style: FontConstant.styleMedium(
-                                                fontSize:
-                                                    12,
+                                                fontSize: 12,
                                                 color: AppColors.black),
                                           ),
                                         ),
@@ -432,8 +427,11 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                                     ?.member?.accountType ==
                                                 1) {
                                               profileDetailsController
-                                                  .profileDetails(context,
-                                                      data.matId!,"Matches", "", [
+                                                  .profileDetails(
+                                                      context,
+                                                      data.matId!,
+                                                      "short_list_profile",
+                                                      "", [
                                                 "1",
                                                 "2",
                                                 "3",
@@ -456,8 +454,7 @@ class _MyShorlistProfileState extends State<MyShorlistProfile> {
                                           child: Text(
                                             "View Profile",
                                             style: FontConstant.styleMedium(
-                                                fontSize:
-                                                    12,
+                                                fontSize: 12,
                                                 color: AppColors.black),
                                           ),
                                         ),

@@ -1,8 +1,6 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
-import 'package:devotee/chat/models/chat_user.dart';
-import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -54,20 +52,23 @@ class _HomeBodyState extends State<HomeBody> {
       [
         "assets/images/map_mark.png",
         "Near By",
-        "${dashboardController.member!.responseData!.matchesNearByCount ?? ""}",
-        "near_by_list"
+        "${dashboardController.member?.responseData?.matchesNearByCount ?? ""}",
+        "near_by_list",
+        "near_by"
       ],
       [
         "assets/images/education_b.png",
         "Education",
-        "${dashboardController.member!.responseData!.matchesEducationCount ?? ""}",
-        "education_list"
+        "${dashboardController.member?.responseData?.matchesEducationCount ?? ""}",
+        "education_list",
+        "education"
       ],
       [
         "assets/images/profession.png",
         "Profession",
-        "${dashboardController.member!.responseData!.matchesProfessionalCount ?? ""}",
-        "profession_list"
+        "${dashboardController.member?.responseData?.matchesProfessionalCount ?? ""}",
+        "profession_list",
+        "profession"
       ]
     ];
     return Column(
@@ -78,11 +79,13 @@ class _HomeBodyState extends State<HomeBody> {
             "Recently Joined",
             "See All",
             "recently_joined",
+            "recently_joined",
             "Recently Joined",
             dashboardController.member!.responseData!.recentlyJoined!),
         ridConatent(
             "Interested In You",
             "See All",
+            "intrested_in_you",
             "intrested_in_you",
             "Interested In You",
             dashboardController.member!.responseData!.intrestedInYou!),
@@ -90,6 +93,7 @@ class _HomeBodyState extends State<HomeBody> {
         ridConatent(
             "Daily Recommendation",
             "See All",
+            "daily_recommendation",
             "daily_recommendation",
             "Daily Recommendation",
             dashboardController.member!.responseData!.dailyRecommendation!),
@@ -118,8 +122,11 @@ class _HomeBodyState extends State<HomeBody> {
               const Spacer(),
               GestureDetector(
                 onTap: () => {
-                  Get.toNamed("/seeAll",
-                      arguments: {"keys": "matches", "appbar": "New Matches"})
+                  Get.toNamed("/seeAll", arguments: {
+                    "type": "Matches",
+                    "keys": "matches",
+                    "appbar": "New Matches"
+                  })
                 },
                 child: Text(
                   "See All",
@@ -332,8 +339,8 @@ class _HomeBodyState extends State<HomeBody> {
     );
   }
 
-  Widget ridConatent(String leftTittle, String rightTitle, String key,
-      String appBarTittle, List<DailyRecommendation> list) {
+  Widget ridConatent(String leftTittle, String rightTitle, String type,
+      String key, String appBarTittle, List<DailyRecommendation> list) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return Column(
@@ -350,8 +357,11 @@ class _HomeBodyState extends State<HomeBody> {
               const Spacer(),
               GestureDetector(
                 onTap: () => {
-                  Get.toNamed("/seeAll",
-                      arguments: {"keys": key, "appbar": appBarTittle})
+                  Get.toNamed("/seeAll", arguments: {
+                    "type": type,
+                    "keys": key,
+                    "appbar": appBarTittle
+                  })
                 },
                 child: Text(
                   rightTitle,
@@ -410,10 +420,7 @@ class _HomeBodyState extends State<HomeBody> {
                                               .member?.member?.accountType ==
                                           1) {
                                         profileDetailsController.profileDetails(
-                                            context,
-                                            data.matriID!,
-                                            "Matches",
-                                            "", [
+                                            context, data.matriID!, type, "", [
                                           "1",
                                           "2",
                                           "3",
@@ -726,13 +733,14 @@ class _HomeBodyState extends State<HomeBody> {
                     String name = entry.value[1];
                     String num = entry.value[2];
                     String keys = entry.value[3];
+                    String type = entry.value[4];
 
                     return GestureDetector(
                       onTap: () {},
                       child: GestureDetector(
                         onTap: () => {
                           Get.toNamed("/basedMatches",
-                              arguments: {"keys": keys})
+                              arguments: {"keys": keys, "type": type})
                         },
                         child: Container(
                           padding: const EdgeInsets.only(left: 5, right: 5),

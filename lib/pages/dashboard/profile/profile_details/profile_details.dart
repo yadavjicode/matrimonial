@@ -53,6 +53,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String type = arguments['type'];
     String keys = arguments['keys'];
     String ageFrom = arguments['ageFrom'];
     String ageTo = arguments['ageTo'];
@@ -85,8 +86,11 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                 if (details.primaryVelocity! < 0) {
                   if (profileDetailsController.member != null &&
                       profileDetailsController.member?.previous != null) {
-                    profileDetailsController.profileDetails(context,
-                        profileDetailsController.member?.previous ?? "","Matches", "", [
+                    profileDetailsController.profileDetails(
+                        context,
+                        profileDetailsController.member?.previous ?? "",
+                        type,
+                        "", [
                       "1",
                       "2",
                       "3",
@@ -105,7 +109,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                   if (profileDetailsController.member != null &&
                       profileDetailsController.member?.next != null) {
                     profileDetailsController.profileDetails(context,
-                        profileDetailsController.member?.next ?? "","Matches", "", [
+                        profileDetailsController.member?.next ?? "", type, "", [
                       "1",
                       "2",
                       "3",
@@ -163,127 +167,139 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: ElevatedButton(
-                            onPressed: directChatController.isLoading.value
-                                ? null
-                                : () async {
-                                    if (profileDetailsController
-                                            .member?.data?.chatStatus ==
-                                        1) {
-                                      directChatController.isLoading.value =
-                                          true;
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: ElevatedButton(
+                              onPressed: directChatController.isLoading.value
+                                  ? null
+                                  : () async {
                                       if (profileDetailsController
-                                              .member?.data?.matriID!
-                                              .trim()
-                                              .isNotEmpty &&
-                                          profileDetailsController
-                                                  .member?.data?.matriID !=
-                                              null) {
-                                        await APIs.addChatUser(
-                                                profileDetailsController
-                                                    .member?.data?.matriID!)
-                                            .then((value) {
-                                          if (!value) {
-                                            Dialogs.showSnackbar(context,
-                                                'User does not Exists!');
-                                          } else {
-                                            APIs.fetchUser(
-                                              context,
-                                              profileDetailsController
-                                                  .member!.data!.matriID
-                                                  .toString()
-                                                  .trim(),
-                                            );
-                                          }
-                                        });
-                                      }
-                                    } else {
-                                      Dialogs.showSnackbar(context,
-                                          'The user is not added in your list!');
-                                    }
-                                    //   directChatController.isLoading.value = false;
-                                  },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: AppColors.primaryColor,
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.message_outlined),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text('Chat NOW'),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: sentInvitationController.isLoading.value
-                                ? null
-                                : () async {
-                                    sentInvitationController.isLoading.value =
-                                        true;
-                                    print(
-                                        "${profileDetailsController.member?.data?.matriID}");
-                                    sentInvitationController.sentInvitation(
-                                      context,
-                                      profileDetailsController
-                                          .member?.data?.matriID,
-                                      btnOkOnPress: () => {
-                                        dashboardController.dashboard(context),
-                                        print("value=====${keys}"),
-                                        if (keys == "near_by_list" ||
-                                            keys == "education_list" ||
-                                            keys == "profession_list" ||
-                                            keys == "recently_joined" ||
-                                            keys == "intrested_in_you" ||
-                                            keys == "daily_recommendation" ||
-                                            keys == "matches")
-                                          {
-                                            matchesController.reset(
-                                                context, keys)
-                                          },
-                                        if (keys == "search")
-                                          {
-                                            searchController.reset(
+                                              .member?.data?.chatStatus ==
+                                          1) {
+                                        directChatController.isLoading.value =
+                                            true;
+                                        if (profileDetailsController
+                                                .member?.data?.matriID!
+                                                .trim()
+                                                .isNotEmpty &&
+                                            profileDetailsController
+                                                    .member?.data?.matriID !=
+                                                null) {
+                                          await APIs.addChatUser(
+                                                  profileDetailsController
+                                                      .member?.data?.matriID!)
+                                              .then((value) {
+                                            if (!value) {
+                                              Dialogs.showSnackbar(context,
+                                                  'User does not Exists!');
+                                            } else {
+                                              APIs.fetchUser(
                                                 context,
-                                                ageFrom,
-                                                ageTo,
-                                                heightFrom,
-                                                heightTo,
-                                                maritalStatus,
-                                                religion,
-                                                caste,
-                                                country,
-                                                state,
-                                                city,
-                                                education,
-                                                profilePer)
-                                          }
-                                      },
-                                    );
-                                    // sentInvitationController.isLoading.value=false;
-                                  },
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: const Color(0xff583789),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                    "assets/images/icons/interest.svg"),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                const Text('Send Interest'),
-                              ],
+                                                profileDetailsController
+                                                    .member!.data!.matriID
+                                                    .toString()
+                                                    .trim(),
+                                              );
+                                            }
+                                          });
+                                        }
+                                      } else {
+                                        Dialogs.showSnackbar(context,
+                                            'The user is not added in your list!');
+                                      }
+                                      //   directChatController.isLoading.value = false;
+                                    },
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.primaryColor,
+                              ),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.message_outlined),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text('Chat NOW'),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                        if (profileDetailsController.member?.data?.chatStatus !=
+                            1)
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: ElevatedButton(
+                                onPressed: sentInvitationController
+                                        .isLoading.value
+                                    ? null
+                                    : () async {
+                                        sentInvitationController
+                                            .isLoading.value = true;
+                                        print(
+                                            "${profileDetailsController.member?.data?.matriID}");
+                                        sentInvitationController.sentInvitation(
+                                          context,
+                                          profileDetailsController
+                                              .member?.data?.matriID,
+                                          btnOkOnPress: () => {
+                                            dashboardController
+                                                .dashboard(context),
+                                            print("value=====${keys}"),
+                                            if (keys == "near_by_list" ||
+                                                keys == "education_list" ||
+                                                keys == "profession_list" ||
+                                                keys == "recently_joined" ||
+                                                keys == "intrested_in_you" ||
+                                                keys ==
+                                                    "daily_recommendation" ||
+                                                keys == "matches")
+                                              {
+                                                matchesController.reset(
+                                                    context, keys)
+                                              },
+                                            if (keys == "search")
+                                              {
+                                                searchController.reset(
+                                                    context,
+                                                    ageFrom,
+                                                    ageTo,
+                                                    heightFrom,
+                                                    heightTo,
+                                                    maritalStatus,
+                                                    religion,
+                                                    caste,
+                                                    country,
+                                                    state,
+                                                    city,
+                                                    education,
+                                                    profilePer)
+                                              }
+                                          },
+                                        );
+                                        // sentInvitationController.isLoading.value=false;
+                                      },
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: const Color(0xff583789),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        "assets/images/icons/interest.svg"),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    const Text('Send Interest'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                 ],
@@ -300,7 +316,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                       onTap: () => {
                         profileDetailsController.profileDetails(
                             context,
-                            profileDetailsController.member?.previous ?? "","Matches",
+                            profileDetailsController.member?.previous ?? "",
+                            type,
                             "", [
                           "1",
                           "2",
@@ -350,8 +367,11 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                       .centerRight, // Ensure the container is aligned properly
                   child: GestureDetector(
                     onTap: () => {
-                      profileDetailsController.profileDetails(context,
-                          profileDetailsController.member?.next ?? "","Matches", "", [
+                      profileDetailsController.profileDetails(
+                          context,
+                          profileDetailsController.member?.next ?? "",
+                          type,
+                          "", [
                         "1",
                         "2",
                         "3",
