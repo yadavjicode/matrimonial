@@ -3,7 +3,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controller/flow_controller.dart';
 import '../../controller/splash_controller.dart';
 
 class SplashScreen extends StatefulWidget {

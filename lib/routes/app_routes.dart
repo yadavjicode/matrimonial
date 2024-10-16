@@ -1,5 +1,6 @@
 import 'package:devotee/chat/screens/chat_home_screen.dart';
 import 'package:devotee/pages/auth/login_page/login_page.dart';
+import 'package:devotee/pages/dashboard/home/music/music.dart';
 import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
@@ -64,6 +65,7 @@ import 'package:devotee/pages/search/search_result/search_result.dart';
 import 'package:devotee/pages/ragistration/spiritual_counsellor_details/spiritual_counsellor_details.dart';
 import 'package:devotee/pages/splash_Screen/guru_screen.dart';
 import 'package:get/get.dart';
+import '../pages/dashboard/home/music/music_player.dart';
 import '../pages/ragistration/package_information/package_information.dart';
 import '../pages/splash_Screen/splash_screen.dart';
 import 'package:devotee/pages/ragistration/education_page/education_page.dart';
@@ -166,6 +168,8 @@ class AppRoutes {
 
   static const String seeAll = '/seeAll';
   static const String viewAllphotos = '/viewAllphotos';
+  static const String music = '/music';
+  static const String musicPlayer = '/musicPlayer';
 
   static final List<GetPage> routes = [
     GetPage(
@@ -607,6 +611,18 @@ class AppRoutes {
     GetPage(
       name: viewAllphotos,
       page: () => const ViewAllPhotos(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: music,
+      page: () => const Music(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: musicPlayer,
+      page: () => const MusicPlayer(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

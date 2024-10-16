@@ -5,7 +5,6 @@ import 'package:devotee/model/partner_preference_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
-
 import '../utils/connection_check/connectivity_service.dart';
 
 class PartnerPreferenceController with ChangeNotifier {

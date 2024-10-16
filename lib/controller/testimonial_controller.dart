@@ -42,7 +42,7 @@ class TestimonialController with ChangeNotifier {
       if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
-        Dialogs.showSnackbar(context, "error: $_error");
+        Dialogs.showSnackbar(context, "Something went wrong while fetching data. Please try again later!");
       }
     } finally {
       isLoading.value = false;

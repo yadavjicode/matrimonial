@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
+import '../../../controller/edit_profile_controller.dart';
 
 class ContactDetails extends StatefulWidget {
   const ContactDetails({Key? key})
@@ -22,13 +23,22 @@ class _ContactDetailsState extends State<ContactDetails> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController instaController = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
-
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   final ContactDetailsController _contactDetailController =
       Get.put(ContactDetailsController());
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    phonecontroller.text = _editProfileController.member?.member?.mobile ?? "";
+    emailController.text =
+        _editProfileController.member?.member?.confirmEmail ?? "";
+    instaController.text =
+        _editProfileController.member?.member?.instagramId ?? "";
   }
 
   @override
@@ -143,8 +153,10 @@ class _ContactDetailsState extends State<ContactDetails> {
                 ],
               ),
             ),
-            if (_contactDetailController.isLoading.value)
-              Center(
+            if (_contactDetailController.isLoading.value ||
+                _editProfileController.isLoading.value ||
+                flowController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

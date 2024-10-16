@@ -1,6 +1,4 @@
 import 'package:devotee/chat/api/direct_chat_controller.dart';
-import 'package:devotee/chat/models/chat_user.dart';
-import 'package:devotee/chat/screens/chat_screen.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
@@ -17,7 +15,6 @@ import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../constants/widget/dialog.dart';
 
 class SearchResult extends StatefulWidget {

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
+import '../../../controller/edit_profile_controller.dart';
 import '../../../controller/skip_controller.dart';
 
 class DevotionDetails extends StatefulWidget {
@@ -25,7 +26,8 @@ class _DevotionDetailsState extends State<DevotionDetails> {
   final FlowController flowController = Get.put(FlowController());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final SkipController skipController = Get.put(SkipController());
-
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   final DevotionalDetailsController devotionalController =
       Get.put(DevotionalDetailsController());
   int? selectedValue = -1;
@@ -74,8 +76,45 @@ class _DevotionDetailsState extends State<DevotionDetails> {
         .join(", ");
   }
 
+  void selectHobbies(String selectedHobbies) {
+    List<String> selectedList = selectedHobbies.split(', ');
+
+    hobbies.forEach((key, value) {
+      hobbies[key] = selectedList.contains(key);
+    });
+  }
+
   String? selectedIskonOption;
   bool showTempleFields = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    somethingAbout.text = _editProfileController
+            .member?.member?.somethingAboutYourDevotionalLife ??
+        "";
+    nameTemple.text = _editProfileController.member?.member?.nameOfTemple ?? "";
+    cityTemple.text =
+        _editProfileController.member?.member?.cityOfTheTemple ?? "";
+    whichSampraya.text =
+        _editProfileController.member?.member?.whichsampradaya ?? "";
+    dikshaGuru.text = _editProfileController.member?.member?.dikshaGuru ?? "";
+    if (_editProfileController.member?.member?.iskonType ==
+        "Already Connected with ISKCON") {
+      iskon_type = 1;
+    } else if (_editProfileController.member?.member?.iskonType ==
+        "Only a Basic idea about ISKCON") {
+      iskon_type = 2;
+    } else if (_editProfileController.member?.member?.iskonType ==
+        "No idea about ISKCON") {
+      iskon_type = 3;
+    }
+    selectHobbies(
+        _editProfileController.member?.member?.devotionalHobbies ?? "");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,181 +159,12 @@ class _DevotionDetailsState extends State<DevotionDetails> {
                     right: screenWidth * 0.32,
                     child: Image.asset('assets/images/hands.png'),
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: screenHeight * 0.2,
-                        left: 22,
-                        right: 22,
-                        bottom: 20),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 8),
-                          CustomTextField(
-                            controller: somethingAbout,
-                            labelText: "Something about your Devotional life *",
-                            maxline: 5,
-                            hintText:
-                                "Enter Something about your Devotional life",
-                          ),
-                          const SizedBox(height: 10),
-                          Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              RadioListTile<int>(
-                                contentPadding: EdgeInsets.zero,
-                                title:
-                                    const Text('Already Connected with ISKCON'),
-                                activeColor: AppColors.primaryColor,
-                                value: 1,
-                                groupValue: iskon_type,
-                                onChanged: (int? value) {
-                                  setState(
-                                    () {
-                                      iskon_type = value;
-                                    },
-                                  );
-                                },
-                              ),
-                              RadioListTile<int>(
-                                contentPadding: EdgeInsets.zero,
-                                title: const Text(
-                                    'Only a Basic idea about ISKCON'),
-                                activeColor: AppColors.primaryColor,
-                                value: 2,
-                                groupValue: iskon_type,
-                                onChanged: (int? value) {
-                                  setState(() {
-                                    iskon_type = value;
-                                  });
-                                },
-                              ),
-                              RadioListTile<int>(
-                                contentPadding: EdgeInsets.zero,
-                                title: const Text('No idea about ISKCON'),
-                                activeColor: AppColors.primaryColor,
-                                value: 3,
-                                groupValue: iskon_type,
-                                onChanged: (int? value) {
-                                  setState(() {
-                                    iskon_type = value;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Column(
-                            children: [
-                              CustomTextField(
-                                controller: dikshaGuru,
-                                labelText:
-                                    "Name of Spirtual Master (Diksha Guru)",
-                                //   controller: nameTemple,
-                                hintText:
-                                    "Name of Spirtual Master (Diksha Guru)",
-                              ),
-                              const SizedBox(height: 15),
-                              CustomTextField(
-                                labelText:
-                                    "With which temple you are connected to?",
-                                controller: nameTemple,
-                                hintText: "Name of the Temple",
-                              ),
-                              const SizedBox(height: 10),
-                              CustomTextField(
-                                controller: cityTemple,
-                                hintText: "City of the Temple",
-                              ),
-                              const SizedBox(height: 15),
-                              CustomTextField(
-                                controller: whichSampraya,
-                                labelText: "Which Sampradaya you belong to?",
-                                //   controller: nameTemple,
-                                hintText:
-                                    "Enter Which Sampradaya you belong to",
-                              ),
-                              const SizedBox(height: 1),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: Text(
-                              "Devotional Hobbies",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 16, color: AppColors.black),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          SizedBox(
-                            height: 250,
-                            child: ScrollbarTheme(
-                              data: ScrollbarThemeData(
-                                  thumbColor: MaterialStateProperty.all(AppColors
-                                      .primaryColor), // Change thumb color here
-                                  trackColor: MaterialStateProperty.all(AppColors
-                                      .primaryLight), // Change track color here
-                                  trackBorderColor: MaterialStateProperty.all(
-                                      AppColors.primaryLight),
-                                  radius: const Radius.circular(
-                                      10) // Change track border color here
-                                  ),
-                              child: Scrollbar(
-                                isAlwaysShown: true,
-                                trackVisibility: true,
-                                interactive: true,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: hobbies.keys
-                                        .take(hobbies.length)
-                                        .map((key) => Row(
-                                              children: [
-                                                CustomCheckbox(
-                                                  value: hobbies[key]!,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      hobbies[key] = value;
-                                                    });
-                                                  },
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    key,
-                                                    style: FontConstant
-                                                        .styleRegular(
-                                                            fontSize: 15,
-                                                            color: AppColors
-                                                                .black),
-                                                  ),
-                                                )
-                                              ],
-                                            ))
-                                        .toList(),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          _buildContinueButton(),
-                          const SizedBox(height: 15),
-                          _buildSkipButton(),
-                        ],
-                      ),
-                    ),
-                  ),
+                  devotionalContent()
                 ],
               ),
             ),
             if (devotionalController.isLoading.value ||
+                _editProfileController.isLoading.value ||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
               const Center(
@@ -335,7 +205,7 @@ class _DevotionDetailsState extends State<DevotionDetails> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: CustomButton(
-      text: 'SKIP',
+        text: 'SKIP',
         onPressed: () {
           // Get.offAndToNamed('/spiritual');
           // flowController.Flow(context, 7);
@@ -344,6 +214,166 @@ class _DevotionDetailsState extends State<DevotionDetails> {
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+      ),
+    );
+  }
+
+  Widget devotionalContent() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: EdgeInsets.only(
+          top: screenHeight * 0.2, left: 22, right: 22, bottom: 20),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8),
+            CustomTextField(
+              controller: somethingAbout,
+              labelText: "Something about your Devotional life *",
+              maxline: 5,
+              hintText: "Enter Something about your Devotional life",
+            ),
+            const SizedBox(height: 10),
+            Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RadioListTile<int>(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Already Connected with ISKCON'),
+                  activeColor: AppColors.primaryColor,
+                  value: 1,
+                  groupValue: iskon_type,
+                  onChanged: (int? value) {
+                    setState(() {
+                      // Deselect if clicked again
+                      iskon_type = (iskon_type == value) ? null : value;
+                    });
+                  },
+                ),
+                RadioListTile<int>(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Only a Basic idea about ISKCON'),
+                  activeColor: AppColors.primaryColor,
+                  value: 2,
+                  groupValue: iskon_type,
+                  onChanged: (int? value) {
+                    setState(() {
+                      // Deselect if clicked again
+                      iskon_type = (iskon_type == value) ? null : value;
+                    });
+                  },
+                ),
+                RadioListTile<int>(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('No idea about ISKCON'),
+                  activeColor: AppColors.primaryColor,
+                  value: 3,
+                  groupValue: iskon_type,
+                  onChanged: (int? value) {
+                    setState(() {
+                      // Deselect if clicked again
+                      iskon_type = (iskon_type == value) ? null : value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Column(
+              children: [
+                CustomTextField(
+                  controller: dikshaGuru,
+                  labelText: "Name of Spirtual Master (Diksha Guru)",
+                  //   controller: nameTemple,
+                  hintText: "Enter Name of Spirtual Master (Diksha Guru)",
+                ),
+                const SizedBox(height: 15),
+                CustomTextField(
+                  labelText: "With which temple you are connected to?",
+                  controller: nameTemple,
+                  hintText: "Name of the Temple",
+                ),
+                const SizedBox(height: 10),
+                CustomTextField(
+                  controller: cityTemple,
+                  hintText: "City of the Temple",
+                ),
+                const SizedBox(height: 15),
+                CustomTextField(
+                  controller: whichSampraya,
+                  labelText: "Which Sampradaya you belong to?",
+                  //   controller: nameTemple,
+                  hintText: "Enter Which Sampradaya you belong to",
+                ),
+                const SizedBox(height: 1),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Text(
+              "Devotional Hobbies",
+              style: FontConstant.styleRegular(
+                  fontSize: 16, color: AppColors.black),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 250,
+              child: ScrollbarTheme(
+                data: ScrollbarThemeData(
+                    thumbColor: MaterialStateProperty.all(
+                        AppColors.primaryColor), // Change thumb color here
+                    trackColor: MaterialStateProperty.all(
+                        AppColors.primaryLight), // Change track color here
+                    trackBorderColor:
+                        MaterialStateProperty.all(AppColors.primaryLight),
+                    radius:
+                        Radius.circular(10) // Change track border color here
+                    ),
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  trackVisibility: true,
+                  interactive: true,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: hobbies.keys
+                          .take(hobbies.length)
+                          .map((key) => Row(
+                                children: [
+                                  CustomCheckbox(
+                                    value: hobbies[key]!,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        hobbies[key] = value;
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      key,
+                                      style: FontConstant.styleRegular(
+                                          fontSize: 15, color: AppColors.black),
+                                    ),
+                                  )
+                                ],
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            _buildContinueButton(),
+            const SizedBox(height: 15),
+            _buildSkipButton(),
+          ],
+        ),
       ),
     );
   }

@@ -111,15 +111,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 26, right: 26),
-                child: Text(
-                  textAlign: TextAlign.center,
-                  'Note: People living outside India can login with email.',
-                  style: FontConstant.styleRegular(
-                      fontSize: 18, color: AppColors.yellow),
-                ),
-              ),
+           
               const SizedBox(
                 height: 60,
               ),

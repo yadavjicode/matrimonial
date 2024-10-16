@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
+import '../../../controller/edit_profile_controller.dart';
 import '../../../controller/skip_controller.dart';
 
 class EducationDetails extends StatefulWidget {
@@ -26,10 +27,27 @@ class _EducationDetailsState extends State<EducationDetails> {
   final FlowController flowController = Get.put(FlowController());
   final TextEditingController describeController = TextEditingController();
   final SkipController skipController = Get.put(SkipController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   final HighestQualController highestQualController =
       Get.put(HighestQualController());
   final ProfessionQualController professionQualController =
       Get.put(ProfessionQualController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    selectedHighestQualifaction =
+        _editProfileController.member?.member?.education;
+    selectedProfessionalQualifaction =
+        _editProfileController.member?.member?.professionalQualification;
+    describeController.text =
+        _editProfileController.member?.member?.otherQualification ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -54,107 +72,8 @@ class _EducationDetailsState extends State<EducationDetails> {
         ),
         body: Obx(() {
           return Stack(children: [
-            SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Container(
-                    height: screenHeight * 0.4,
-                    width: screenWidth,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/bg3.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 25,
-                    left: screenWidth * 0.35,
-                    right: screenWidth * 0.35,
-                    child: Image.asset('assets/images/educationicon.png'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: screenHeight * 0.2,
-                      left: 22,
-                      right: 22,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        Obx(() {
-                          if (highestQualController.isLoading.value) {
-                            return buildDropdownWithSearch(
-                              'Highest Qualification*',
-                              ['Loading...'],
-                              (value) {
-                                setState(() {
-                                  selectedHighestQualifaction = null;
-                                });
-                              },
-                              selectedItem: 'Loading...',
-                              hintText: 'Select Highest Qualification',
-                            );
-                          } else {
-                            return buildDropdownWithSearch(
-                              // Add 'return' here
-                              'Highest Qualification*',
-                              highestQualController.getHighestList(),
-                              (value) => {
-                                setState(
-                                    () => selectedHighestQualifaction = value),
-                              },
-                              hintText: 'Select Highest Qualification',
-                            );
-                          }
-                        }),
-                        const SizedBox(height: 15),
-                        Obx(() {
-                          if (professionQualController.isLoading.value) {
-                            return buildDropdownWithSearch(
-                              'Professional Qualification',
-                              ['Loading...'],
-                              (value) {
-                                setState(() {
-                                  selectedProfessionalQualifaction = null;
-                                });
-                              },
-                              selectedItem: 'Loading...',
-                              hintText: 'Select Professional Qualification',
-                            );
-                          } else {
-                            return buildDropdownWithSearch(
-                                'Professional Qualification',
-                                professionQualController
-                                    .getProfessionQualList(),
-                                // qualificationController.selectedItem.call,
-                                (value) => {
-                                      setState(() =>
-                                          selectedProfessionalQualifaction =
-                                              value),
-                                    },
-                                hintText: 'Select Professional Qualification');
-                          }
-                        }),
-                        const SizedBox(height: 15),
-                        CustomTextField(
-                          controller: describeController,
-                          labelText: "Describe other qualifications (if any)",
-                          hintText: "Enter Other Qualifications",
-                          maxline: 7,
-                        ),
-                        const SizedBox(height: 30),
-                        _buildContinueButton(),
-                        const SizedBox(height: 10),
-                        _buildSkipButton(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (_educationController.isLoading.value ||
+            educationContent(),
+            if (_educationController.isLoading.value ||_editProfileController.isLoading.value||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
               const Center(
@@ -191,7 +110,7 @@ class _EducationDetailsState extends State<EducationDetails> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: CustomButton(
-    text: 'SKIP',
+        text: 'SKIP',
         onPressed: () {
           // flowController.Flow(context, 5);
           // Get.offAndToNamed('/prof');
@@ -199,6 +118,111 @@ class _EducationDetailsState extends State<EducationDetails> {
         },
         color: Colors.transparent,
         textStyle: FontConstant.styleRegular(fontSize: 20, color: Colors.black),
+      ),
+    );
+  }
+
+  Widget educationContent() {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          Container(
+            height: screenHeight * 0.4,
+            width: screenWidth,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/bg3.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 25,
+            left: screenWidth * 0.35,
+            right: screenWidth * 0.35,
+            child: Image.asset('assets/images/educationicon.png'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: screenHeight * 0.2,
+              left: 22,
+              right: 22,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 8),
+                Obx(() {
+                  if (highestQualController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Highest Qualification*',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedHighestQualifaction = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Highest Qualification',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      // Add 'return' here
+                      'Highest Qualification*',
+                      highestQualController.getHighestList(),
+                      (value) => {
+                        setState(() => selectedHighestQualifaction = value),
+                      },
+
+                      selectedItem: selectedHighestQualifaction,
+                      hintText: 'Select Highest Qualification',
+                    );
+                  }
+                }),
+                const SizedBox(height: 15),
+                Obx(() {
+                  if (professionQualController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Professional Qualification',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedProfessionalQualifaction = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Professional Qualification',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                        'Professional Qualification',
+                        professionQualController.getProfessionQualList(),
+                        // qualificationController.selectedItem.call,
+                        (value) => {
+                              setState(() =>
+                                  selectedProfessionalQualifaction = value),
+                            },
+                        selectedItem: selectedProfessionalQualifaction,
+                        hintText: 'Select Professional Qualification');
+                  }
+                }),
+                const SizedBox(height: 15),
+                CustomTextField(
+                  controller: describeController,
+                  labelText: "Describe other qualifications (if any)",
+                  maxline: 7,
+                  hintText: "Enter Other Qualifications",
+                ),
+                const SizedBox(height: 30),
+                _buildContinueButton(),
+                const SizedBox(height: 10),
+                _buildSkipButton(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

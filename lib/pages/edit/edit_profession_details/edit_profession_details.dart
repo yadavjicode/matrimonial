@@ -382,7 +382,7 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
                         professionalDeatilsController.professionalDetails(
                             context,
                             selectedProfession ?? "",
-                            working()??"",
+                            working() ?? "",
                             working() == "Yes" ? selectedEmpolyment ?? "" : "",
                             working() == "Yes" ? selectedState ?? "" : "",
                             working() == "Yes" ? selectedCity ?? "" : "",

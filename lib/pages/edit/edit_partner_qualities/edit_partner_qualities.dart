@@ -100,9 +100,8 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-
-    selectHobbies(_editProfileController.member?.member?.GBHobbies);
-    selectQualities(_editProfileController.member?.member?.groomBride);
+    selectHobbies(_editProfileController.member?.member?.GBHobbies ?? "");
+    selectQualities(_editProfileController.member?.member?.groomBride ?? "");
   }
 
   @override
@@ -112,6 +111,7 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: AppColors.primaryColor,
+          centerTitle: true,
           title: Text(
             "Partner's Desired Qualities",
             style: FontConstant.styleSemiBold(

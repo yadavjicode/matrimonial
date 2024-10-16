@@ -1,7 +1,6 @@
 import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/controller/contact_details_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
-import 'package:devotee/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constants/button_constant.dart';

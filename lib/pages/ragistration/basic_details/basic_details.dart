@@ -10,6 +10,7 @@ import 'package:devotee/controller/basic_details_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/constants/CustomTextFeild.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
@@ -29,14 +30,15 @@ class _BasicDetailState extends State<BasicDetail> {
   final TextEditingController initiatedNameController = TextEditingController();
   final TextEditingController aboutController = TextEditingController();
   final FlowController flowController = Get.put(FlowController());
-  WeightConsController weightConsController = Get.put(WeightConsController());
-
+  final WeightConsController weightConsController =
+      Get.put(WeightConsController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
   final BasicDetailsController _basicDetailController =
       Get.put(BasicDetailsController());
-  DietController dietController = Get.put(DietController());
-  MaritalController maritalController = Get.put(MaritalController());
+  final DietController dietController = Get.put(DietController());
+  final MaritalController maritalController = Get.put(MaritalController());
   HeightController heightController = Get.put(HeightController());
- // WeightController weightController = Get.put(WeightController());
 
   bool show = false;
 
@@ -49,6 +51,7 @@ class _BasicDetailState extends State<BasicDetail> {
   String? selectedMonth;
   String? selectedYear;
   String? selectedDiet;
+  String? selectedHeightkey;
 
   bool isTitleValidated = false;
   bool isHeightValidated = false;
@@ -57,17 +60,28 @@ class _BasicDetailState extends State<BasicDetail> {
   bool isMonthValidated = false;
   bool isYearValidated = false;
 
+  String? year;
+  String? month;
+  String? day;
+
+  void selectHobbies(String selectedHobbies) {
+    List<String> selectedList = selectedHobbies.split(', ');
+
+    hobbies.forEach((key, value) {
+      hobbies[key] = selectedList.contains(key);
+    });
+  }
+
   bool validateDropDown() {
     if (selectedTitle != null &&
         selectedMaritalStatus != null &&
         selectedHeight != null &&
         selectedWeight != null &&
         selectedDay != null &&
-        selectedMonth!=null&&
-        selectedYear!=null&&
-        getSelectedHobbies().isNotEmpty&&
-        selectedDiet != null
-        ) {
+        selectedMonth != null &&
+        selectedYear != null &&
+        getSelectedHobbies().isNotEmpty &&
+        selectedDiet != null) {
       return true;
     } else {
       return false;
@@ -77,10 +91,37 @@ class _BasicDetailState extends State<BasicDetail> {
   @override
   void initState() {
     super.initState();
-    nameController.clear();
-    surnameController.clear();
-    initiatedNameController.clear();
-    aboutController.clear();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+
+    nameController.text = _editProfileController.member?.member?.name ?? "";
+    surnameController.text =
+        _editProfileController.member?.member?.surename ?? "";
+    initiatedNameController.text =
+        _editProfileController.member?.member?.spiritualName ?? "";
+    selectedTitle = _editProfileController.member?.member?.nameTitle;
+    String mon =
+        _basicDetailController.getMonthString(selectedMonth.toString());
+    aboutController.text = _editProfileController.member?.member?.about ?? "";
+
+    String dob = _editProfileController.member?.member?.dOB ?? "";
+    List<String> dateParts = dob.split('-');
+
+    selectedYear = dateParts[0]; // "2005"
+    month = dateParts[1]; // "03"
+    selectedDay = dateParts[2];
+    selectedMonth =
+        _basicDetailController.getMonthString(month.toString()); // "01"
+    selectedHeight = _editProfileController.member?.member?.height;
+    selectedWeight = _editProfileController.member?.member?.weight != null
+        ? "${_editProfileController.member?.member?.weight} KG"
+        : "";
+    selectedMaritalStatus =
+        _editProfileController.member?.member?.maritalstatus;
+    selectedDiet = _editProfileController.member?.member?.diet;
+    selectedHeightkey = _editProfileController.member?.member?.heightKey ?? "";
+    selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
   }
 
   Map<String, bool> hobbies = {
@@ -151,8 +192,8 @@ class _BasicDetailState extends State<BasicDetail> {
                     child: Image.asset('assets/images/profile.png'),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 22, vertical: 150),
+                    padding: const EdgeInsets.only(
+                        left: 22, right: 22, bottom: 30, top: 150),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -185,6 +226,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                           ? Colors.red
                                           : Colors.black.withOpacity(0.5),
                                       search: false,
+                                      selectedItem: selectedTitle,
                                       errorMessage: "Select Title",
                                       errorshow:
                                           show == true && selectedTitle == null
@@ -258,6 +300,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                         maritalController.selectItem(
                                             value); // Call the controller method
                                       },
+                                      selectedItem: selectedMaritalStatus,
                                       search: true,
                                       borderColor: show == true &&
                                               selectedMaritalStatus == null
@@ -286,7 +329,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                           (value) {
                                             setState(() {
                                               selectedHeight = null;
-                                              selectedHeightKey=null;
+                                              selectedHeightkey = null;
                                             });
                                           },
                                           selectedItem: 'Loading...',
@@ -297,11 +340,14 @@ class _BasicDetailState extends State<BasicDetail> {
                                           'Height *',
                                           heightController.getHeightList(),
                                           (value) => {
-                                            setState(
-                                                () {
-                                                  selectedHeight = value;
-                                                  selectedHeightKey = heightController.getHeightList().indexOf(value!).toString();
-                                                } ),
+                                            setState(() {
+                                              selectedHeight = value;
+                                              selectedHeightkey =
+                                                  heightController
+                                                      .getHeightList()
+                                                      .indexOf(value!)
+                                                      .toString();
+                                            }),
                                             isHeightValidated = true
                                           },
                                           search: true,
@@ -314,6 +360,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                                   selectedHeight == null
                                               ? true
                                               : false,
+                                          selectedItem: selectedHeight,
                                           hintText: 'Select',
                                         );
                                       }
@@ -321,27 +368,26 @@ class _BasicDetailState extends State<BasicDetail> {
                                   ),
                                   const SizedBox(width: 10),
                                   Expanded(
-                                    child: buildDropdownWithSearch(
-                                          'Weight *',
-                                           weightConsController.getWeight(),
-                                          (value) => {
-                                            setState(
-                                                () => selectedWeight = value),
-                                            isWeightValidated = true
-                                          },
-                                          search: true,
-                                          borderColor: show == true &&
-                                                  selectedWeight == null
-                                              ? Colors.red
-                                              : Colors.black.withOpacity(0.5),
-                                          errorMessage: "Select Weight",
-                                          errorshow: show == true &&
-                                                  selectedWeight == null
-                                              ? true
-                                              : false,
-                                          hintText: 'Select',
-                                    )
-                                  ),
+                                      child: buildDropdownWithSearch(
+                                    'Weight *',
+                                    weightConsController.getWeight(),
+                                    (value) => {
+                                      setState(() => selectedWeight = value),
+                                      isWeightValidated = true
+                                    },
+                                    search: true,
+                                    selectedItem: selectedWeight,
+                                    borderColor:
+                                        show == true && selectedWeight == null
+                                            ? Colors.red
+                                            : Colors.black.withOpacity(0.5),
+                                    errorMessage: "Select Weight",
+                                    errorshow:
+                                        show == true && selectedWeight == null
+                                            ? true
+                                            : false,
+                                    hintText: 'Select',
+                                  )),
                                 ],
                               ),
                             ],
@@ -443,6 +489,7 @@ class _BasicDetailState extends State<BasicDetail> {
                                           value); // Call the controller method
                                     },
                                     search: true,
+                                    selectedItem: selectedDiet,
                                     borderColor:
                                         show == true && selectedDiet == null
                                             ? Colors.red
@@ -493,13 +540,13 @@ class _BasicDetailState extends State<BasicDetail> {
                                           .toString()
                                           .trim(),
                                       selectedMaritalStatus ?? "",
-                                      selectedHeightKey ?? "",
-                                     selectedWeight != null
-                                  ? weightConsController
-                                      .weightInt(selectedWeight!)
-                                      .toString()
-                                  : "",
-                                      "$selectedYear-$mon-$selectedDay",
+                                      selectedHeightkey ?? "",
+                                      selectedWeight != null
+                                          ? weightConsController
+                                              .weightInt(selectedWeight!)
+                                              .toString()
+                                          : "",
+                                      "${selectedYear ?? year ?? "0000"}-${mon.isEmpty ? month : mon}-${selectedDay ?? day ?? "00"}",
                                       getSelectedHobbies(),
                                       selectedDiet ?? "",
                                       aboutController.text.toString().trim(),
@@ -525,6 +572,7 @@ class _BasicDetailState extends State<BasicDetail> {
               ),
             ),
             if (_basicDetailController.isLoading.value ||
+                _editProfileController.isLoading.value ||
                 flowController.isLoading.value)
               const Center(
                 child: CircularProgressIndicator(
@@ -540,11 +588,10 @@ class _BasicDetailState extends State<BasicDetail> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Date Of Birth *',
+          'Date Of Birth*',
           style: FontConstant.styleRegular(fontSize: 16, color: Colors.black),
         ),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: buildDropdownWithSearch(
@@ -554,12 +601,13 @@ class _BasicDetailState extends State<BasicDetail> {
                   setState(() => selectedDay = value),
                   isDayValidated = true
                 },
-                search: true,
-                borderColor: show == true && selectedDay == null
+                borderColor: show == true && selectedDay == null && day == null
                     ? Colors.red
                     : Colors.black.withOpacity(0.5),
+                search: false,
                 errorMessage: "Select Day",
                 errorshow: show == true && selectedDay == null ? true : false,
+                selectedItem: selectedDay,
                 hintText: 'Day',
               ),
             ),
@@ -572,12 +620,14 @@ class _BasicDetailState extends State<BasicDetail> {
                   setState(() => selectedMonth = value),
                   isMonthValidated = true
                 },
-                search: true,
-                borderColor: show == true && selectedMonth == null
-                    ? Colors.red
-                    : Colors.black.withOpacity(0.5),
-                errorMessage: "Select Monthy",
+                borderColor:
+                    show == true && selectedMonth == null && month == null
+                        ? Colors.red
+                        : Colors.black.withOpacity(0.5),
+                search: false,
+                errorMessage: "Select Month",
                 errorshow: show == true && selectedMonth == null ? true : false,
+                selectedItem: selectedMonth,
                 hintText: 'Month',
               ),
             ),
@@ -590,12 +640,14 @@ class _BasicDetailState extends State<BasicDetail> {
                   setState(() => selectedYear = value),
                   isYearValidated = true
                 },
-                search: true,
-                borderColor: show == true && selectedYear == null
-                    ? Colors.red
-                    : Colors.black.withOpacity(0.5),
-                errorMessage: "Select Year",
+                borderColor:
+                    show == true && selectedYear == null && year == null
+                        ? Colors.red
+                        : Colors.black.withOpacity(0.5),
+                search: false,
+                errorMessage: "Select Month",
                 errorshow: show == true && selectedYear == null ? true : false,
+                selectedItem: selectedYear,
                 hintText: 'Year',
               ),
             ),
@@ -605,6 +657,3 @@ class _BasicDetailState extends State<BasicDetail> {
     );
   }
 }
-
-
-    
