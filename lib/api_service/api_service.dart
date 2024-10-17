@@ -40,6 +40,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/html_content_model.dart';
 import '../model/music_model.dart';
 import '../model/recommended_model.dart';
 import '../model/skip_model.dart';
@@ -1521,4 +1522,32 @@ class ApiService {
     }
   }
 //==== End Api music==========================================================================================
+
+//==== Start Api drawer content==========================================================================================
+  Future<HtmlContentModel> htmlContent() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.htmlContentUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return HtmlContentModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api drawer content==========================================================================================
 }

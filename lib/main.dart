@@ -15,21 +15,34 @@ import 'package:flutter_notification_channel/notification_importance.dart';
 import 'package:get/get.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 
+/// Local notification plugin instance
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Step 1: Firebase Initialization
   await _initializeFirebase();
+
+  // Step 2: Firebase Messaging for Background Handling
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // Initialize the notification channel
+
+  // Step 3: Initialize Local Notifications
   await _initializeLocalNotification();
-  Get.put(NotificationController()); // Initialize the NotificationController
+
+  // Step 4: Initialize GetX Controller for Notifications
+  Get.put(NotificationController());
+
+  // Step 5: Set System UI Overlay
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryColor,
   ));
 
-  await disableScreenshots(); //Disable screenshots for the entire app
+  // Step 6: Disable Screenshots
+  await disableScreenshots();
+
+  // Step 7: Run the App
   runApp(const MyApp());
 }
 
@@ -39,57 +52,74 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'matrimony',
       home: const SplashScreen(),
       initialRoute: AppRoutes.splash,
       getPages: AppRoutes.routes,
-
-      // initialBinding: MyBindings(),
     );
   }
 }
 
+/// Initialize Firebase
 Future<void> _initializeFirebase() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  var result = await FlutterNotificationChannel.registerNotificationChannel(
-      description: 'For Showing Message Notification',
-      id: 'chats',
-      importance: NotificationImportance.IMPORTANCE_HIGH,
-      name: 'Chats');
-  log('\nNotification Channel Result: $result');
+  try {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    var result = await FlutterNotificationChannel.registerNotificationChannel(
+        description: 'For Showing Message Notification',
+        id: 'chats',
+        importance: NotificationImportance.IMPORTANCE_HIGH,
+        name: 'Chats');
+    log('Notification Channel Result: $result');
+  } catch (e) {
+    log('Error initializing Firebase: $e');
+  }
 }
 
+/// Handle background Firebase messages
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print('Handling a background message: ${message.messageId}');
+  try {
+    await Firebase.initializeApp();
+    log('Handling a background message: ${message.messageId}');
+  } catch (e) {
+    log('Error handling background message: $e');
+  }
 }
 
+/// Disable screenshots and screen recording
 Future<void> disableScreenshots() async {
-  // This will prevent screenshots and screen recording for the whole app
-  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  try {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    log('Screenshots disabled.');
+  } catch (e) {
+    log('Error disabling screenshots: $e');
+  }
 }
 
-// Initialize the local notification plugin
+/// Initialize local notification settings
 Future<void> _initializeLocalNotification() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  // Define what happens when a notification is clicked
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
   );
 
-  // Initialize the plugin
-  await flutterLocalNotificationsPlugin.initialize(
-    initializationSettings,
-    onDidReceiveNotificationResponse:
-        (NotificationResponse notificationResponse) {
-      if (notificationResponse.payload != null) {
-        log('Notification Payload: ${notificationResponse.payload}');
-        // Handle the notification response here
-      }
-    },
-  );
+  try {
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse:
+          (NotificationResponse notificationResponse) {
+        if (notificationResponse.payload != null) {
+          log('Notification Payload: ${notificationResponse.payload}');
+        }
+      },
+    );
+    log('Local Notifications initialized.');
+  } catch (e) {
+    log('Error initializing local notifications: $e');
+  }
 }

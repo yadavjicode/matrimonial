@@ -88,41 +88,41 @@ class _BasicDetailState extends State<BasicDetail> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
-    });
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     _editProfileController.userDetails(context);
+  //   });
 
-    nameController.text = _editProfileController.member?.member?.name ?? "";
-    surnameController.text =
-        _editProfileController.member?.member?.surename ?? "";
-    initiatedNameController.text =
-        _editProfileController.member?.member?.spiritualName ?? "";
-    selectedTitle = _editProfileController.member?.member?.nameTitle;
-    String mon =
-        _basicDetailController.getMonthString(selectedMonth.toString());
-    aboutController.text = _editProfileController.member?.member?.about ?? "";
+  //   nameController.text = _editProfileController.member?.member?.name ?? "";
+  //   surnameController.text =
+  //       _editProfileController.member?.member?.surename ?? "";
+  //   initiatedNameController.text =
+  //       _editProfileController.member?.member?.spiritualName ?? "";
+  //   selectedTitle = _editProfileController.member?.member?.nameTitle;
+  //   String mon =
+  //       _basicDetailController.getMonthString(selectedMonth.toString());
+  //   aboutController.text = _editProfileController.member?.member?.about ?? "";
 
-    String dob = _editProfileController.member?.member?.dOB ?? "";
-    List<String> dateParts = dob.split('-');
+  //   String dob = _editProfileController.member?.member?.dOB ?? "";
+  //   List<String> dateParts = dob.split('-');
 
-    selectedYear = dateParts[0]; // "2005"
-    month = dateParts[1]; // "03"
-    selectedDay = dateParts[2];
-    selectedMonth =
-        _basicDetailController.getMonthString(month.toString()); // "01"
-    selectedHeight = _editProfileController.member?.member?.height;
-    selectedWeight = _editProfileController.member?.member?.weight != null
-        ? "${_editProfileController.member?.member?.weight} KG"
-        : "";
-    selectedMaritalStatus =
-        _editProfileController.member?.member?.maritalstatus;
-    selectedDiet = _editProfileController.member?.member?.diet;
-    selectedHeightkey = _editProfileController.member?.member?.heightKey ?? "";
-    selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
-  }
+  //   selectedYear = dateParts[0]; // "2005"
+  //   month = dateParts[1]; // "03"
+  //   selectedDay = dateParts[2];
+  //   selectedMonth =
+  //       _basicDetailController.getMonthString(month.toString()); // "01"
+  //   selectedHeight = _editProfileController.member?.member?.height;
+  //   selectedWeight = _editProfileController.member?.member?.weight != null
+  //       ? "${_editProfileController.member?.member?.weight} KG"
+  //       : "";
+  //   selectedMaritalStatus =
+  //       _editProfileController.member?.member?.maritalstatus;
+  //   selectedDiet = _editProfileController.member?.member?.diet;
+  //   selectedHeightkey = _editProfileController.member?.member?.heightKey ?? "";
+  //   selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
+  // }
 
   Map<String, bool> hobbies = {
     "Art / Handicraft": false,
@@ -157,7 +157,7 @@ class _BasicDetailState extends State<BasicDetail> {
         backgroundColor: AppColors.background,
         appBar: AppBar(
           centerTitle: true,
-          elevation: 0,
+          elevation: 0,   
           backgroundColor: AppColors.primaryColor,
           title: Text(
             "Basic Details",

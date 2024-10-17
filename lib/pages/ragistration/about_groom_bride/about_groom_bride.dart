@@ -8,6 +8,7 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/constants/font_constant.dart';
 
+import '../../../controller/edit_profile_controller.dart';
 import '../../../controller/skip_controller.dart';
 
 class AboutGroomBride extends StatefulWidget {
@@ -22,6 +23,9 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
       Get.put(AboutGroomBrideController());
   final FlowController flowController = Get.put(FlowController());
   final SkipController skipController = Get.put(SkipController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
+
   // Define state variables for checkboxes
   Map<String, bool> characteristics = {
     "Independent": false,
@@ -77,6 +81,32 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
         .join(", ");
   }
 
+  void selectHobbies(String selectedHobbies) {
+    List<String> selectedList = selectedHobbies.split(', ');
+
+    hobbies.forEach((key, value) {
+      hobbies[key] = selectedList.contains(key);
+    });
+  }
+
+  void selectQualities(String selectQualities) {
+    List<String> selectedList = selectQualities.split(', ');
+
+    characteristics.forEach((key, value) {
+      characteristics[key] = selectedList.contains(key);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    selectHobbies(_editProfileController.member?.member?.GBHobbies ?? "");
+    selectQualities(_editProfileController.member?.member?.groomBride ?? "");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,162 +134,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                     width: double.infinity,
                     alignment: Alignment.topRight,
                     child: Image.asset("assets/images/background.png")),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 35, bottom: 20, left: 22, right: 22),
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/groombride.png",
-                            height: 122,
-                            width: 114,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 250,
-                          child: ScrollbarTheme(
-                            data: ScrollbarThemeData(
-                                thumbColor: MaterialStateProperty.all(AppColors
-                                    .primaryColor), // Change thumb color here
-                                trackColor: MaterialStateProperty.all(AppColors
-                                    .primaryLight), // Change track color here
-                                trackBorderColor: MaterialStateProperty.all(
-                                    AppColors.primaryLight),
-                                radius: const Radius.circular(
-                                    10) // Change track border color here
-                                ),
-                            child: Scrollbar(
-                              isAlwaysShown: true,
-                              trackVisibility: true,
-                              interactive: true,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: characteristics.keys
-                                      .take(characteristics.length)
-                                      .map((key) => Row(
-                                            children: [
-                                              CustomCheckbox(
-                                                value: characteristics[key]!,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    characteristics[key] =
-                                                        value;
-                                                  });
-                                                },
-                                              ),
-                                              Text(
-                                                key,
-                                                style:
-                                                    FontConstant.styleRegular(
-                                                        fontSize: 15,
-                                                        color: AppColors.black),
-                                              )
-                                            ],
-                                          ))
-                                      .toList(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(
-                              left: 12, top: 20, bottom: 10),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Hobbies or Likings",
-                            style: FontConstant.styleMedium(
-                                fontSize: 18, color: AppColors.primaryColor),
-                          ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 1,
-                          color: Colors.grey.shade300,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 250,
-                          child: ScrollbarTheme(
-                            data: ScrollbarThemeData(
-                                thumbColor: MaterialStateProperty.all(AppColors
-                                    .primaryColor), // Change thumb color here
-                                trackColor: MaterialStateProperty.all(AppColors
-                                    .primaryLight), // Change track color here
-                                trackBorderColor: MaterialStateProperty.all(
-                                    AppColors.primaryLight),
-                                radius: const Radius.circular(
-                                    10) // Change track border color here
-                                ),
-                            child: Scrollbar(
-                              isAlwaysShown: true,
-                              trackVisibility: true,
-                              interactive: true,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: hobbies.keys
-                                      .take(hobbies.length)
-                                      .map((key) => Row(
-                                            children: [
-                                              CustomCheckbox(
-                                                value: hobbies[key]!,
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    hobbies[key] = value;
-                                                  });
-                                                },
-                                              ),
-                                              Text(
-                                                key,
-                                                style:
-                                                    FontConstant.styleRegular(
-                                                        fontSize: 15,
-                                                        color: AppColors.black),
-                                              )
-                                            ],
-                                          ))
-                                      .toList(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 25, bottom: 15),
-                          child: CustomButton(
-                            text: "CONTINUE",
-                            onPressed: () {
-                              String selectedCharacteristics =
-                                  getSelectedCharacteristics();
-                              String selectedHobbies = getSelectedHobbies();
-                              aboutGroomBrideController.aboutGroomBride(
-                                  context,
-                                  selectedCharacteristics,
-                                  selectedHobbies,
-                                  false);
-                              //   Get.toNamed('/horoscope');
-                              print(
-                                  "Selected Characteristics: $selectedCharacteristics");
-                              print("Selected Hobbies: $selectedHobbies");
-                            },
-                            color: AppColors.primaryColor,
-                            textStyle: FontConstant.styleRegular(
-                                fontSize: 20, color: AppColors.constColor),
-                          ),
-                        ),
-                        _buildSkipButton()
-                      ],
-                    ),
-                  ),
-                )
+                partnerQualitiesContent()
               ],
             ),
             if (aboutGroomBrideController.isLoading.value ||
@@ -272,6 +147,158 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
               ),
           ]);
         }));
+  }
+
+  Widget partnerQualitiesContent() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 35, bottom: 20, left: 22, right: 22),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 5),
+              alignment: Alignment.center,
+              child: Image.asset(
+                "assets/images/groombride.png",
+                height: 122,
+                width: 114,
+              ),
+            ),
+            SizedBox(
+              height: 250,
+              child: ScrollbarTheme(
+                data: ScrollbarThemeData(
+                    thumbColor: MaterialStateProperty.all(
+                        AppColors.primaryColor), // Change thumb color here
+                    trackColor: MaterialStateProperty.all(
+                        AppColors.primaryLight), // Change track color here
+                    trackBorderColor:
+                        MaterialStateProperty.all(AppColors.primaryLight),
+                    radius:
+                        Radius.circular(10) // Change track border color here
+                    ),
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  trackVisibility: true,
+                  interactive: true,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: characteristics.keys
+                          .take(characteristics.length)
+                          .map((key) => Row(
+                                children: [
+                                  CustomCheckbox(
+                                    value: characteristics[key]!,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        characteristics[key] = value;
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      key,
+                                      style: FontConstant.styleRegular(
+                                          fontSize: 15, color: AppColors.black),
+                                    ),
+                                  )
+                                ],
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 12, top: 20, bottom: 10),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Hobbies or Likings",
+                style: FontConstant.styleMedium(
+                    fontSize: 18, color: AppColors.primaryColor),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: Colors.grey.shade300,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: 250,
+              child: ScrollbarTheme(
+                data: ScrollbarThemeData(
+                    thumbColor: MaterialStateProperty.all(
+                        AppColors.primaryColor), // Change thumb color here
+                    trackColor: MaterialStateProperty.all(
+                        AppColors.primaryLight), // Change track color here
+                    trackBorderColor:
+                        MaterialStateProperty.all(AppColors.primaryLight),
+                    radius:
+                        Radius.circular(10) // Change track border color here
+                    ),
+                child: Scrollbar(
+                  isAlwaysShown: true,
+                  trackVisibility: true,
+                  interactive: true,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: hobbies.keys
+                          .take(hobbies.length)
+                          .map((key) => Row(
+                                children: [
+                                  CustomCheckbox(
+                                    value: hobbies[key]!,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        hobbies[key] = value;
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      key,
+                                      style: FontConstant.styleRegular(
+                                          fontSize: 15, color: AppColors.black),
+                                    ),
+                                  )
+                                ],
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25, bottom: 15),
+              child: CustomButton(
+                text: "CONTINUE",
+                onPressed: () {
+                  String selectedCharacteristics = getSelectedCharacteristics();
+                  String selectedHobbies = getSelectedHobbies();
+                  aboutGroomBrideController.aboutGroomBride(
+                      context, selectedCharacteristics, selectedHobbies, false);
+                  //   Get.toNamed('/horoscope');
+                  print("Selected Characteristics: $selectedCharacteristics");
+                  print("Selected Hobbies: $selectedHobbies");
+                },
+                color: AppColors.primaryColor,
+                textStyle: FontConstant.styleRegular(
+                    fontSize: 20, color: AppColors.constColor),
+              ),
+            ),
+            _buildSkipButton()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildSkipButton() {

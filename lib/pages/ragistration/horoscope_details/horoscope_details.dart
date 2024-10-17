@@ -9,6 +9,7 @@ import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/edit_profile_controller.dart';
 import '../../../controller/skip_controller.dart';
 
 class HoroscopeDetails extends StatefulWidget {
@@ -25,6 +26,8 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
   final SkipController skipController = Get.put(SkipController());
   final HoroscopeDetailsController horoscopeDetailsController =
       Get.put(HoroscopeDetailsController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
 
   final TextEditingController time = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -42,6 +45,19 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
         time.text = formattedTime;
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    time.text = _editProfileController.member?.member?.timeOfBirth ?? "";
+    selectedState = _editProfileController.member?.member?.stateOfBirth;
+    selectedCity = _editProfileController.member?.member?.cityOfBirth;
+    stateController
+        .selectItem(_editProfileController.member?.member?.stateOfBirth);
   }
 
   @override
@@ -72,133 +88,11 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                     width: double.infinity,
                     alignment: Alignment.topRight,
                     child: Image.asset("assets/images/background.png")),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 35, left: 22, right: 22, bottom: 20),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          Container(
-                              alignment: Alignment.center,
-                              child: Image.asset(
-                                "assets/images/horoscope.png",
-                                height: 117,
-                                width: 109,
-                              )),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CustomTextField(
-                            labelText: "Time Of Birth *",
-                            suffixIcon: Icon(
-                              Icons.av_timer,
-                              color: AppColors.black,
-                            ),
-                            controller: time,
-                            hintText: "Select Time",
-                            onTap: () => _selectTime(context),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: Obx(() {
-                              if (stateController.isLoading.value) {
-                                return buildDropdownWithSearch(
-                                  'State of Birth *',
-                                  ['Loading...'],
-                                  (value) {
-                                    setState(() {
-                                      selectedState = null;
-                                      selectedCity = null;
-                                    });
-                                  },
-                                  selectedItem: 'Loading...',
-                                  hintText: 'Select State',
-                                );
-                              }
-                              return buildDropdownWithSearch(
-                                'State of Birth *',
-                                [
-                                  'Prefer Not To Say',
-                                  ...stateController.getStateList()
-                                ],
-                                (value) {
-                                  setState(() {
-                                    selectedState = value;
-                                    // Reset city when state changes
-                                    selectedCity = null; // Update the state
-                                  });
-                                  stateController.selectItem(
-                                      value); // Call the controller method
-                                },
-                                selectedItem: selectedState,
-                                hintText: 'Select State',
-                              );
-                            }),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15),
-                            child: Obx(() {
-                              if (cityController.isLoading.value) {
-                                return buildDropdownWithSearch(
-                                  'City of Birth *',
-                                  ['Loading...'],
-                                  (value) {
-                                    setState(() {
-                                      selectedCity = null;
-                                    });
-                                  },
-                                  selectedItem: 'Loading...',
-                                  hintText: 'Select City',
-                                );
-                              } else {
-                                return buildDropdownWithSearch(
-                                  'City of Birth *',
-                                  [
-                                    'Prefer Not To Say',
-                                    ...cityController.cityLists
-                                  ],
-                                  (value) {
-                                    setState(() {
-                                      selectedCity = value; // Update the state
-                                    });
-                                    cityController.selectItem(
-                                        value); // Call the controller method
-                                  },
-                                  hintText: 'Select City',
-                                  selectedItem: selectedCity,
-                                );
-                              }
-                            }),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 25, bottom: 15),
-                            child: CustomButton(
-                                text: "CONTINUE",
-                                onPressed: () {
-                                  horoscopeDetailsController.horoscopeDetails(
-                                      context,
-                                      time.text.toString().trim(),
-                                      selectedState ?? "",
-                                      selectedCity ?? "",
-                                      false);
-
-                                  //    Get.toNamed('/profile')
-                                },
-                                color: AppColors.primaryColor,
-                                textStyle: FontConstant.styleRegular(
-                                    fontSize: 20, color: AppColors.constColor)),
-                          ),
-                          _buildSkipButton()
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                horoscopeContent()
               ],
             ),
             if (horoscopeDetailsController.isLoading.value ||
+                _editProfileController.isLoading.value ||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
               const Center(
@@ -209,7 +103,131 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
           ]);
         }));
   }
-   
+
+  Widget horoscopeContent() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding:
+            const EdgeInsets.only(top: 35, left: 22, right: 22, bottom: 20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    "assets/images/horoscope.png",
+                    height: 117,
+                    width: 109,
+                  )),
+              const SizedBox(
+                height: 30,
+              ),
+              CustomTextField(
+                labelText: "Time Of Birth *",
+                suffixIcon: Icon(
+                  Icons.av_timer,
+                  color: AppColors.black,
+                ),
+                controller: time,
+                hintText: "Select Time",
+                onTap: () => _selectTime(context),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Obx(() {
+                  if (stateController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'State of Birth *',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedState = null;
+                          selectedCity = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select State',
+                    );
+                  }
+                  return buildDropdownWithSearch(
+                    'State of Birth *',
+                    ['Prefer Not To Say', ...stateController.getStateList()],
+                    (value) {
+                      setState(() {
+                        selectedState = value;
+                        // Reset city when state changes
+                        selectedCity = null; // Update the state
+                      });
+                      stateController
+                          .selectItem(value); // Call the controller method
+                    },
+                    selectedItem: selectedState,
+                    hintText: 'Select State',
+                  );
+                }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Obx(() {
+                  if (cityController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'City of Birth *',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedCity = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select City',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'City of Birth *',
+                      ['Prefer Not To Say', ...cityController.cityLists],
+                      (value) {
+                        setState(() {
+                          selectedCity = value; // Update the state
+                        });
+                        cityController
+                            .selectItem(value); // Call the controller method
+                        int selectedIndex =
+                            cityController.cityLists.indexOf(value);
+                        print("index================${selectedIndex}");
+                      },
+                      hintText: 'Select City',
+                      selectedItem: selectedCity,
+                    );
+                  }
+                }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 25, bottom: 15),
+                child: CustomButton(
+                    text: "CONTINUE",
+                    onPressed: () {
+                      horoscopeDetailsController.horoscopeDetails(
+                          context,
+                          time.text.toString().trim(),
+                          selectedState ?? "",
+                          selectedCity ?? "",
+                          false);
+
+                      //    Get.toNamed('/profile')
+                    },
+                    color: AppColors.primaryColor,
+                    textStyle: FontConstant.styleRegular(
+                        fontSize: 20, color: AppColors.constColor)),
+              ),
+              _buildSkipButton()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildSkipButton() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5.0),

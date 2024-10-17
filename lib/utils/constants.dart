@@ -53,6 +53,7 @@ class ApiConstants {
   static const String deletePhotoUrl = "member/delete-photo";
   static const String recommendedUrl = "member/inspiration-list";
   static const String musicUrl = "member/songs-list";
+  static const String htmlContentUrl = "member/pages";
 }
 
 late Size mq;

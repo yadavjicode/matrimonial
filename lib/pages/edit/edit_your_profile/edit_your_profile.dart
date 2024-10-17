@@ -79,11 +79,11 @@ class _EditYourProfileState extends State<EditYourProfile> {
                 }
               },
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: const BoxDecoration(
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(15))),
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.center,
                 child: Text(
                   "Update Profile",

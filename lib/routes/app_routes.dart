@@ -50,6 +50,7 @@ import 'package:devotee/pages/edit/edit_profession_details/edit_profession_detai
 import 'package:devotee/pages/edit/edit_spiritual_details/edit_spiritual_details.dart';
 import 'package:devotee/pages/edit/edit_your_profile/edit_your_profile.dart';
 import 'package:devotee/pages/ragistration/about_groom_bride/about_groom_bride.dart';
+import 'package:devotee/pages/ragistration/upload_your_profile/add_photo.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/show_image.dart';
 import 'package:devotee/pages/ragistration/upload_your_profile/upload_your_profile.dart';
 import 'package:devotee/pages/ragistration/contact_page/contact_page.dart';
@@ -170,6 +171,7 @@ class AppRoutes {
   static const String viewAllphotos = '/viewAllphotos';
   static const String music = '/music';
   static const String musicPlayer = '/musicPlayer';
+  static const String addPhoto = '/addPhoto';
 
   static final List<GetPage> routes = [
     GetPage(
@@ -623,6 +625,12 @@ class AppRoutes {
     GetPage(
       name: musicPlayer,
       page: () => const MusicPlayer(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: addPhoto,
+      page: () => const AddPhoto(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

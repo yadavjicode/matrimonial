@@ -35,29 +35,29 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
       // if (_editProfileController.member!.member!.photo1 != null) {
       //   imgList.add([_editProfileController.member!.member!.photo1!, "Photo1"]);
       // }
-      if (_editProfileController.member!.member!.photo2 != null) {
+      if (_editProfileController.member?.member?.photo2 != null) {
         imgList.add(
-            [_editProfileController.member!.member!.photo2!, "Photo2", "1"]);
+            [_editProfileController.member?.member?.photo2!, "Photo2", "1"]);
       } else {
         imgList.add(
           [dummyphoto, "Photo2", "0"],
         );
       }
-      if (_editProfileController.member!.member!.photo3 != null) {
+      if (_editProfileController.member?.member?.photo3 != null) {
         imgList.add(
-            [_editProfileController.member!.member!.photo3!, "Photo3", "1"]);
+            [_editProfileController.member?.member?.photo3!, "Photo3", "1"]);
       } else {
         imgList.add([dummyphoto, "Photo3", "0"]);
       }
-      if (_editProfileController.member!.member!.photo4 != null) {
+      if (_editProfileController.member?.member?.photo4 != null) {
         imgList.add(
-            [_editProfileController.member!.member!.photo4!, "Photo4", "1"]);
+            [_editProfileController.member?.member?.photo4!, "Photo4", "1"]);
       } else {
         imgList.add([dummyphoto, "Photo4", "0"]);
       }
-      if (_editProfileController.member!.member!.photo5 != null) {
+      if (_editProfileController.member?.member?.photo5 != null) {
         imgList.add(
-            [_editProfileController.member!.member!.photo5!, "Photo5", "1"]);
+            [_editProfileController.member?.member?.photo5!, "Photo5", "1"]);
       } else {
         imgList.add([dummyphoto, "Photo5", "0"]);
       }
@@ -93,7 +93,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
         body: SingleChildScrollView(
           child: Obx(() {
             String dummyphoto =
-                _editProfileController.member?.member!.gender == "Male"
+                _editProfileController.member?.member?.gender == "Male"
                     ? "public/images/nophoto.png"
                     : "public/images/nophotof.jpg";
             final imgList = getImageListValues();
@@ -106,12 +106,12 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
                       height: screenWidth * 5 / 4,
                       color: AppColors.constColor,
                       child: _editProfileController.member != null &&
-                              _editProfileController.member!.member != null
+                              _editProfileController.member?.member != null
                           ? Stack(children: [
                               Image.network(
-                                _editProfileController.member!.member!.photo1 !=
+                                _editProfileController.member?.member?.photo1 !=
                                         null
-                                    ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.photo1}"
+                                    ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
                                     : "http://devoteematrimony.aks.5g.in/${dummyphoto}",
                                 fit: BoxFit.cover,
                                 width: screenWidth,
@@ -125,9 +125,9 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
                                     setState(() {
                                       Get.toNamed("/updatePhoto", arguments: {
                                         "imageUrl": _editProfileController
-                                                    .member!.member!.photo1 !=
+                                                    .member?.member?.photo1 !=
                                                 null
-                                            ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.photo1}"
+                                            ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
                                             : "http://devoteematrimony.aks.5g.in/${dummyphoto}",
                                         "value": "Photo1"
                                       });
@@ -159,7 +159,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
                                               shape: BoxShape.circle,
                                               border: Border.all(
                                                   color: AppColors.black)),
-                                          child: Center(
+                                          child: const Center(
                                             child: Icon(Icons.add),
                                           ),
                                         ),
@@ -246,7 +246,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
                                                       border: Border.all(
                                                           color:
                                                               AppColors.black)),
-                                                  child: Center(
+                                                  child: const Center(
                                                     child: Icon(Icons.add),
                                                   ),
                                                 ),
@@ -270,7 +270,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
                                                   shape: BoxShape.circle,
                                                   border: Border.all(
                                                       color: AppColors.red)),
-                                              child: Center(
+                                              child: const Center(
                                                   child: Icon(
                                                 Icons.delete_forever_outlined,
                                                 color: AppColors.red,
@@ -290,7 +290,7 @@ class _EditAllPhotoState extends State<EditAllPhoto> {
                 SizedBox(
                   width: screenWidth,
                   height: screenHeight * 0.8,
-                  child: Center(
+                  child: const Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryColor,
                     ),

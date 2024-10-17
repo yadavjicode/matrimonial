@@ -6,6 +6,7 @@ import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
 import '../../../constants/profile_constant.dart';
 import '../../../constants/widget/Snackbar.dart';
+import '../../../controller/edit_profile_controller.dart';
 
 class Profile1Page extends StatefulWidget {
   const Profile1Page({super.key});
@@ -21,6 +22,22 @@ class _Profile1PageState extends State<Profile1Page> {
   String selectedGender = '';
 
   final ProfileAController _profileAControllers = Get.put(ProfileAController());
+  final EditProfileController _editProfileController =
+      Get.put(EditProfileController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _editProfileController.userDetails(context);
+    });
+    _selectedIndex = _profileAControllers
+        .profileFor(_editProfileController.member?.member?.profileFor);
+    _selectedIndex1 = _profileAControllers
+        .gender(_editProfileController.member?.member?.gender);
+    selectedProfile = _editProfileController.member?.member?.profileFor ?? "";
+    selectedGender = _editProfileController.member?.member?.gender??"";
+  }
 
   Widget buildToggleItem(String text,
       {bool isGender = false, required int index}) {
@@ -42,7 +59,7 @@ class _Profile1PageState extends State<Profile1Page> {
             : AppColors.background,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             border: (isGender ? _selectedIndex1 : _selectedIndex) == index
                 ? Border.all(color: AppColors.primaryColor, width: 2)
                 : null,
@@ -129,7 +146,6 @@ class _Profile1PageState extends State<Profile1Page> {
                     ),
                   ),
                   Container(
-                    height: screenHeight,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 18.0, vertical: 18),
                     child: Column(
@@ -183,15 +199,14 @@ class _Profile1PageState extends State<Profile1Page> {
                                 if (selectedProfile == "Myself" ||
                                     selectedProfile == "My Relative" ||
                                     selectedProfile == "My Friend" ||
-                                    selectedProfile == "My Counselee" ) {
-                                      if(selectedGender.isNotEmpty){
-                                          _profileAControllers.profileA(
-                                      context, selectedProfile, selectedGender);
-                                      }else{
-
-                                          Dialogs.showSnackbar(context, 'Select Gender');
-                                      }
-                                  
+                                    selectedProfile == "My Counselee") {
+                                  if (selectedGender.isNotEmpty) {
+                                    _profileAControllers.profileA(context,
+                                        selectedProfile, selectedGender);
+                                  } else {
+                                    Dialogs.showSnackbar(
+                                        context, 'Select Gender');
+                                  }
                                 } else if (selectedProfile == "My Son" ||
                                     selectedProfile == "My Brother") {
                                   _profileAControllers.profileA(
@@ -201,18 +216,12 @@ class _Profile1PageState extends State<Profile1Page> {
                                   _profileAControllers.profileA(
                                       context, selectedProfile, "Female");
                                 }
-
-                                // Print selected data or pass it to the next screen
-                                print('Selected Data: $selectedData');
-                                print('Selected Data: $selectedProfile');
-                                print('Selected Data: $selectedGender');
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
+                                  const SnackBar(
                                       content: Text('Please select a profile')),
                                 );
                               }
-
                               //   Get.toNamed('/profile2');
                             },
                             color: AppColors.primaryColor,
@@ -226,8 +235,9 @@ class _Profile1PageState extends State<Profile1Page> {
                 ],
               ),
             ),
-            if (_profileAControllers.isLoading.value)
-              Center(
+            if (_profileAControllers.isLoading.value ||
+                _editProfileController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

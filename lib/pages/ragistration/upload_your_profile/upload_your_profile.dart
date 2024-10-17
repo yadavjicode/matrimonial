@@ -34,7 +34,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/horoscope');
             },
@@ -100,7 +100,8 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                                 child: CustomButton(
                                     text: "Add Photos",
                                     onPressed: () {
-                                      _showBottomSheet(context);
+                                      // _showBottomSheet(context);
+                                      Get.offAndToNamed("/addPhoto");
                                     },
                                     color: AppColors.primaryColor,
                                     textStyle: FontConstant.styleSemiBold(

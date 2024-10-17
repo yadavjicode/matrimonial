@@ -19,7 +19,6 @@ class EditPartnerQualites extends StatefulWidget {
 class _EditPartnerQualitesState extends State<EditPartnerQualites> {
   final AboutGroomBrideController aboutGroomBrideController =
       Get.put(AboutGroomBrideController());
-  final FlowController flowController = Get.put(FlowController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   // Define state variables for checkboxes

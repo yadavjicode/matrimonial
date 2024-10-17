@@ -38,7 +38,10 @@ class _SplashScreenState extends State<SplashScreen> {
         Center(
           child: SizedBox(
             width: SizeConfig.screenWidth * 1,
-            child: Image.asset('assets/images/splash_logo.png'),
+            child: Image.asset(
+              'assets/images/splash_logo.png',
+              fit: BoxFit.fill,
+            ),
           ),
         ),
       ]),

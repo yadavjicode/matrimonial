@@ -14,7 +14,7 @@ class Music extends StatefulWidget {
 
 class _MusicState extends State<Music> {
   final MusicController musicController = Get.put(MusicController());
-var player = AudioPlayer();
+  var player = AudioPlayer();
   @override
   void initState() {
     // TODO: implement initState

@@ -44,4 +44,45 @@ class ProfileAController with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  int profileFor(String? profile) {
+    if (profile != null) {
+      switch (profile) {
+        case "Myself":
+          return 0;
+        case "My Relative":
+          return 1;
+        case "My Son":
+          return 2;
+        case "My Daughter":
+          return 3;
+        case "My Brother":
+          return 4;
+        case "My Sister":
+          return 5;
+        case "My Friend":
+          return 6;
+        case "My Counselee":
+          return 7;
+        default:
+          return -1; // Return -1 if none of the cases match
+      }
+    } else {
+      return -1; // Return -1 if profile is null
+    }
+  }
+
+  int gender(String? gender) {
+    if (gender != null) {
+      if (gender == "Male") {
+        return 0;
+      } else if (gender == "Female") {
+        return 1;
+      } else {
+        return -1;
+      }
+    } else {
+      return -1;
+    }
+  }
 }
