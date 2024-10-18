@@ -95,4 +95,9 @@ class CommanClass {
       throw 'Could not launch $url'; // Consider logging this instead
     }
   }
+
+   String removePlusSign(String value) {
+  // Check if the input starts with a '+' and remove it
+  return value.replaceFirst(RegExp(r'^\+'), '');
+}
 }

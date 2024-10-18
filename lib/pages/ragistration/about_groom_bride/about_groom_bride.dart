@@ -83,7 +83,6 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
 
   void selectHobbies(String selectedHobbies) {
     List<String> selectedList = selectedHobbies.split(', ');
-
     hobbies.forEach((key, value) {
       hobbies[key] = selectedList.contains(key);
     });
@@ -101,10 +100,14 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((_) {
+        setState(() {
+          selectHobbies(_editProfileController.member?.member?.GBHobbies ?? "");
+          selectQualities(
+              _editProfileController.member?.member?.groomBride ?? "");
+        });
+      });
     });
-    selectHobbies(_editProfileController.member?.member?.GBHobbies ?? "");
-    selectQualities(_editProfileController.member?.member?.groomBride ?? "");
   }
 
   @override
@@ -213,7 +216,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 12, top: 20, bottom: 10),
+              margin: const EdgeInsets.only(left: 12, top: 20, bottom: 10),
               alignment: Alignment.centerLeft,
               child: Text(
                 "Hobbies or Likings",

@@ -24,7 +24,6 @@ class _AddPhotoState extends State<AddPhoto> {
   final PhotoDeleteController photoDeleteController =
       Get.put(PhotoDeleteController());
   final SkipController skipController = Get.put(SkipController());
-
   List<List<String>> getImageListValues() {
     List<List<String>> imgList = [];
 
@@ -34,9 +33,7 @@ class _AddPhotoState extends State<AddPhoto> {
           _editProfileController.member?.member!.gender == "Male"
               ? "public/images/nophoto.png"
               : "public/images/nophotof.jpg";
-      // if (_editProfileController.member!.member!.photo1 != null) {
-      //   imgList.add([_editProfileController.member!.member!.photo1!, "Photo1"]);
-      // }
+
       if (_editProfileController.member?.member?.photo2 != null) {
         imgList.add(
             [_editProfileController.member?.member?.photo2!, "Photo2", "1"]);
@@ -64,7 +61,6 @@ class _AddPhotoState extends State<AddPhoto> {
         imgList.add([dummyphoto, "Photo5", "0"]);
       }
     }
-
     return imgList;
   }
 
@@ -72,7 +68,11 @@ class _AddPhotoState extends State<AddPhoto> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((_) {
+        setState(() {
+          getImageListValues();
+        });
+      });
     });
   }
 
@@ -222,6 +222,7 @@ class _AddPhotoState extends State<AddPhoto> {
                                                                 "http://devoteematrimony.aks.5g.in/${data[0]}",
                                                             "value": data[1]
                                                           });
+
                                                       print(
                                                           "id============================================${data[1]}");
                                                     });

@@ -713,7 +713,8 @@ class ApiService {
       String state,
       String city,
       String education,
-      String profilePer) async {
+      String profilePer,
+      String sortby) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final Map<String, dynamic> body = {};
@@ -731,6 +732,7 @@ class ApiService {
     if (city != null) body['City'] = city;
     if (education != null) body['Education'] = education;
     if (profilePer != null) body['profile_percentage'] = profilePer;
+    if (sortby != null) body['sort_by'] = sortby;
 
     if (token == null) {
       throw Exception('Token is not available');

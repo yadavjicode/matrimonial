@@ -32,13 +32,17 @@ class _ContactDetailsState extends State<ContactDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((_) {
+        setState(() {
+          phonecontroller.text =
+              _editProfileController.member?.member?.mobile ?? "";
+          emailController.text =
+              _editProfileController.member?.member?.confirmEmail ?? "";
+          instaController.text =
+              _editProfileController.member?.member?.instagramId ?? "";
+        });
+      });
     });
-    phonecontroller.text = _editProfileController.member?.member?.mobile ?? "";
-    emailController.text =
-        _editProfileController.member?.member?.confirmEmail ?? "";
-    instaController.text =
-        _editProfileController.member?.member?.instagramId ?? "";
   }
 
   @override
@@ -58,7 +62,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                 FontConstant.styleSemiBold(fontSize: 18, color: Colors.white),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/profile2');
             },

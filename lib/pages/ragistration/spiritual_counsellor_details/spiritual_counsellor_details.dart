@@ -60,34 +60,38 @@ class _SpiritualDetailsState extends State<SpiritualDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((_) {
+        setState(() {
+          if (_editProfileController
+                  .member?.member?.spiritualCounselerConnected ==
+              "Yes") {
+            counsellor = 1;
+          } else if (_editProfileController
+                  .member?.member?.spiritualCounselerConnected ==
+              "No") {
+            counsellor = 2;
+          }
+          nameCounselor.text = _editProfileController
+                  .member?.member?.nameOfTheCounselorOfMySpiritualPath ??
+              "";
+          connectCounselor.text = _editProfileController
+                  .member?.member?.connectedWithMyCounselerSince ??
+              "";
+          templeCounselor.text = _editProfileController
+                  .member?.member?.withWhichTempleYourCounselorIsConnectedTo ??
+              "";
+          somethingCounselor.text = _editProfileController
+                  .member?.member?.somethingAboutMoreCounselor ??
+              "";
+          selectedState =
+              _editProfileController.member?.member?.counselorResidingInState;
+          selectedCity =
+              _editProfileController.member?.member?.counselorResidingInCity;
+          stateController.selectItem(
+              _editProfileController.member?.member?.counselorResidingInState);
+        });
+      });
     });
-    if (_editProfileController.member?.member?.spiritualCounselerConnected ==
-        "Yes") {
-      counsellor = 1;
-    } else if (_editProfileController
-            .member?.member?.spiritualCounselerConnected ==
-        "No") {
-      counsellor = 2;
-    }
-    nameCounselor.text = _editProfileController
-            .member?.member?.nameOfTheCounselorOfMySpiritualPath ??
-        "";
-    connectCounselor.text =
-        _editProfileController.member?.member?.connectedWithMyCounselerSince ??
-            "";
-    templeCounselor.text = _editProfileController
-            .member?.member?.withWhichTempleYourCounselorIsConnectedTo ??
-        "";
-    somethingCounselor.text =
-        _editProfileController.member?.member?.somethingAboutMoreCounselor ??
-            "";
-    selectedState =
-        _editProfileController.member?.member?.counselorResidingInState;
-    selectedCity =
-        _editProfileController.member?.member?.counselorResidingInCity;
-    stateController.selectItem(
-        _editProfileController.member?.member?.counselorResidingInState);
   }
 
   @override

@@ -110,18 +110,17 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _editProfileController.userDetails(context);
     });
-    String mon =
-        _basicDetailController.getMonthString(selectedMonth.toString());
+
     aboutController.text = _editProfileController.member?.member?.about ?? "";
 
-    String dob = _editProfileController.member?.member?.dOB ?? "";
-    List<String> dateParts = dob.split('-');
-
-    selectedYear = dateParts[0]; // "2005"
-    month = dateParts[1]; // "03"
-    selectedDay = dateParts[2];
-    selectedMonth =
-        _basicDetailController.getMonthString(month.toString()); // "01"
+    if (_editProfileController.member?.member?.dOB != null) {
+      String dob = _editProfileController.member?.member?.dOB ?? "";
+      List<String> dateParts = dob.split('-');
+      selectedYear = dateParts[0]; // "2005"
+      month = dateParts[1]; // "03"
+      selectedDay = dateParts[2];
+      selectedMonth = _basicDetailController.getMonthString(month.toString());
+    }
     selectedHeight = _editProfileController.member?.member?.height;
     selectedWeight = _editProfileController.member?.member?.weight != null
         ? "${_editProfileController.member?.member?.weight} KG"

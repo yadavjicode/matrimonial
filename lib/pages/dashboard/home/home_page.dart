@@ -95,8 +95,8 @@ class _HomeState extends State<Home> {
                             // ),
                             GestureDetector(
                               onTap: () => {
-                                {Get.toNamed('/music')}
-                                // {Get.toNamed('/profile1')}
+                                // {Get.toNamed('/music')}
+                                {Get.toNamed('/login')}
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5, left: 5),

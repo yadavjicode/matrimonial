@@ -12,8 +12,6 @@ import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlis
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-
-import '../../../constants/widget/Snackbar.dart';
 import '../../../constants/widget/dialog.dart';
 import '../../../utils/connection_check/connectivity_service.dart';
 

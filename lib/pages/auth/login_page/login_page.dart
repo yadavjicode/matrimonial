@@ -97,11 +97,29 @@ class _LoginPageState extends State<LoginPage> {
                 height: 30,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 26.0, right: 26),
+                padding: const EdgeInsets.only(
+                  left: 26.0,
+                  right: 26,
+                ),
                 child: CustomButton(
-                  text: 'Login with Mobile/Email',
+                  text: 'Login with Mobile',
                   onPressed: () {
                     Get.offAndToNamed('/mobile');
+                  },
+                  color: AppColors.constColor,
+                  textStyle: FontConstant.styleRegular(
+                      fontSize: 18, color: AppColors.primaryColor),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 26.0, right: 26),
+                child: CustomButton(
+                  text: 'Login with Email',
+                  onPressed: () {
+                    Get.offAndToNamed('/email');
                   },
                   color: AppColors.constColor,
                   textStyle: FontConstant.styleRegular(
@@ -111,7 +129,6 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 30,
               ),
-           
               const SizedBox(
                 height: 60,
               ),

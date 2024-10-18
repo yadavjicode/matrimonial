@@ -276,7 +276,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                     state,
                                                     city,
                                                     education,
-                                                    profilePer)
+                                                    profilePer,"")
                                               }
                                           },
                                         );

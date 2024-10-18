@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
@@ -327,20 +326,20 @@ class ProfileHeaderState extends State<ProfileHeader> {
                                 if (widget.value == "search")
                                   {
                                     searchController.reset(
-                                      context,
-                                      widget.search[0] ?? "",
-                                      widget.search[1] ?? "",
-                                      widget.search[2] ?? "",
-                                      widget.search[3] ?? "",
-                                      widget.search[4] ?? "",
-                                      widget.search[5] ?? "",
-                                      widget.search[6] ?? "",
-                                      widget.search[7] ?? "",
-                                      widget.search[8] ?? "",
-                                      widget.search[9] ?? "",
-                                      widget.search[10] ?? "",
-                                      widget.search[11] ?? "",
-                                    )
+                                        context,
+                                        widget.search[0] ?? "",
+                                        widget.search[1] ?? "",
+                                        widget.search[2] ?? "",
+                                        widget.search[3] ?? "",
+                                        widget.search[4] ?? "",
+                                        widget.search[5] ?? "",
+                                        widget.search[6] ?? "",
+                                        widget.search[7] ?? "",
+                                        widget.search[8] ?? "",
+                                        widget.search[9] ?? "",
+                                        widget.search[10] ?? "",
+                                        widget.search[11] ?? "",
+                                        "")
                                   }
                               },
                             );

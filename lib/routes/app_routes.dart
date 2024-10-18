@@ -1,5 +1,7 @@
 import 'package:devotee/chat/screens/chat_home_screen.dart';
+import 'package:devotee/pages/auth/email_page/email_page.dart';
 import 'package:devotee/pages/auth/login_page/login_page.dart';
+import 'package:devotee/pages/auth/otp_page/otp_page.dart';
 import 'package:devotee/pages/dashboard/home/music/music.dart';
 import 'package:devotee/pages/dashboard/home/see_all/see_all.dart';
 import 'package:devotee/pages/dashboard/inbox/inbox.dart';
@@ -82,6 +84,7 @@ class AppRoutes {
 
   static const String login = '/login';
   static const String mobile = '/mobile';
+  static const String email = '/email';
   static const String otp = '/otp';
 
   static const String profile = '/profile';
@@ -211,6 +214,18 @@ class AppRoutes {
     GetPage(
       name: mobile,
       page: () => const MobilePage(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: email,
+      page: () => const EmailPage(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: otp,
+      page: () => const OTPScreen(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

@@ -68,46 +68,50 @@ class _LocationDetailsState extends State<LocationDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((_) {
+        setState(() {
+          selectedCountry = _editProfileController.member?.member?.country;
+          selectedResidence =
+              _editProfileController.member?.member?.addressType;
+          selectedPermanentHouse =
+              _editProfileController.member?.member?.permanentHouseType;
+          selectedPermanentState =
+              _editProfileController.member?.member?.permanentState;
+          selectedPermanentCity =
+              _editProfileController.member?.member?.permanentCity;
+          selectedTemporaryState =
+              _editProfileController.member?.member?.tempState;
+          selectedTemporaryCity =
+              _editProfileController.member?.member?.tempCity;
+          selectedRefeARelation =
+              _editProfileController.member?.member?.reference1Reletion;
+          selectedRefeBRelation =
+              _editProfileController.member?.member?.reference2Reletion;
+          permanentPinCode.text =
+              _editProfileController.member?.member?.permanentPincode ?? "";
+          temporaryPinCode.text =
+              _editProfileController.member?.member?.tempPincode ?? "";
+          refeAName.text =
+              _editProfileController.member?.member?.reference1Name ?? "";
+          refeAEmail.text =
+              _editProfileController.member?.member?.reference1Email ?? "";
+          refeAPhoneno.text =
+              _editProfileController.member?.member?.reference1Mobile ?? "";
+          refeBName.text =
+              _editProfileController.member?.member?.reference2Name ?? "";
+          refeBEmail.text =
+              _editProfileController.member?.member?.reference2Email ?? "";
+          refeBPhoneno.text =
+              _editProfileController.member?.member?.reference2Mobile ?? "";
+          countryController
+              .selectItem(_editProfileController.member?.member?.country ?? "");
+          stateControllerPermanent.selectItem(
+              _editProfileController.member?.member?.permanentState ?? "");
+          stateControllerTemporary.selectItem(
+              _editProfileController.member?.member?.tempState ?? "");
+        });
+      });
     });
-
-    selectedCountry = _editProfileController.member?.member?.country;
-
-    selectedResidence = _editProfileController.member?.member?.addressType;
-    selectedPermanentHouse =
-        _editProfileController.member?.member?.permanentHouseType;
-    selectedPermanentState =
-        _editProfileController.member?.member?.permanentState;
-    selectedPermanentCity =
-        _editProfileController.member?.member?.permanentCity;
-    selectedTemporaryState = _editProfileController.member?.member?.tempState;
-    selectedTemporaryCity = _editProfileController.member?.member?.tempCity;
-    selectedRefeARelation =
-        _editProfileController.member?.member?.reference1Reletion;
-    selectedRefeBRelation =
-        _editProfileController.member?.member?.reference2Reletion;
-    permanentPinCode.text =
-        _editProfileController.member?.member?.permanentPincode ?? "";
-    temporaryPinCode.text =
-        _editProfileController.member?.member?.tempPincode ?? "";
-    refeAName.text =
-        _editProfileController.member?.member?.reference1Name ?? "";
-    refeAEmail.text =
-        _editProfileController.member?.member?.reference1Email ?? "";
-    refeAPhoneno.text =
-        _editProfileController.member?.member?.reference1Mobile ?? "";
-    refeBName.text =
-        _editProfileController.member?.member?.reference2Name ?? "";
-    refeBEmail.text =
-        _editProfileController.member?.member?.reference2Email ?? "";
-    refeBPhoneno.text =
-        _editProfileController.member?.member?.reference2Mobile ?? "";
-    countryController
-        .selectItem(_editProfileController.member?.member?.country ?? "");
-    stateControllerPermanent.selectItem(
-        _editProfileController.member?.member?.permanentState ?? "");
-    stateControllerTemporary
-        .selectItem(_editProfileController.member?.member?.tempState ?? "");
   }
 
   @override
@@ -133,7 +137,8 @@ class _LocationDetailsState extends State<LocationDetails> {
         body: Obx(() {
           return Stack(children: [
             loactionContent(),
-            if (_locationDetailsController.isLoading.value ||_editProfileController.isLoading.value||
+            if (_locationDetailsController.isLoading.value ||
+                _editProfileController.isLoading.value ||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
               const Center(

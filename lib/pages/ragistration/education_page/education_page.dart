@@ -38,14 +38,17 @@ class _EducationDetailsState extends State<EducationDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((_) {
+        setState(() {
+          selectedHighestQualifaction =
+              _editProfileController.member?.member?.education;
+          selectedProfessionalQualifaction =
+              _editProfileController.member?.member?.professionalQualification;
+          describeController.text =
+              _editProfileController.member?.member?.otherQualification ?? "";
+        });
+      });
     });
-    selectedHighestQualifaction =
-        _editProfileController.member?.member?.education;
-    selectedProfessionalQualifaction =
-        _editProfileController.member?.member?.professionalQualification;
-    describeController.text =
-        _editProfileController.member?.member?.otherQualification ?? "";
   }
 
   @override
@@ -73,7 +76,8 @@ class _EducationDetailsState extends State<EducationDetails> {
         body: Obx(() {
           return Stack(children: [
             educationContent(),
-            if (_educationController.isLoading.value ||_editProfileController.isLoading.value||
+            if (_educationController.isLoading.value ||
+                _editProfileController.isLoading.value ||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
               const Center(

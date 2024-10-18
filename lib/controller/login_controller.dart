@@ -12,31 +12,33 @@ class LoginController with ChangeNotifier {
   LoginModel? _member;
   var isLoading = false.obs;
   String? _error;
-  final TextEditingController mobileno = TextEditingController();
+  // final TextEditingController mobileno = TextEditingController();
   LoginModel? get member => _member;
   String? get error => _error;
-   final ConnectivityService connectivityService =
+  final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> login(BuildContext context) async {
+  Future<void> login(BuildContext context, String phoneEmail,String go) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.login(mobileno.text.toString().trim());
+      _member = await apiService.login(phoneEmail);
 
       print('${_member?.responseData?.data}');
 
       // ignore: use_build_context_synchronously
       Dialogs.showSnackbar(context, '${_member?.responseData?.data}');
-      Get.off(() => OTPScreen(mobileNumber: mobileno.text.toString().trim()));
+      // Get.off(() => OTPScreen(mobileNumber: phoneEmail));
+      Get.offAndToNamed("/otp",
+          arguments: {"phoneEmail": phoneEmail, "go": go});
 
       print("success");
     } catch (e) {
       _error = e.toString();
       print(_error);
-        if (!connectivityService.isConnected.value) {
+      if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
         Dialogs.showSnackbar(context,

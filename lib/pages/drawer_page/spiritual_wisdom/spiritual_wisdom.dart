@@ -2,6 +2,9 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
+import '../../../controller/html_content_controller.dart';
 
 class SpiritualWisdom extends StatefulWidget {
   const SpiritualWisdom({super.key});
@@ -11,6 +14,16 @@ class SpiritualWisdom extends StatefulWidget {
 }
 
 class _SpiritualWisdomState extends State<SpiritualWisdom> {
+  final HtmlContentController htmlContentController =
+      Get.put(HtmlContentController());
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch HTML content when the widget initializes
+    htmlContentController.htmlContent(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,32 +41,80 @@ class _SpiritualWisdomState extends State<SpiritualWisdom> {
       body: Stack(
         children: [
           Container(
-              width: double.infinity,
-              alignment: Alignment.topRight,
-              child: Image.asset("assets/images/bg3.png")),
-          Column(
-            children: [
-              Container(
-                width: double.infinity,
-                child: Image.asset("assets/images/spirituals.png",
-                    fit: BoxFit.cover),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
+            width: double.infinity,
+            alignment: Alignment.topRight,
+            child: Image.asset("assets/images/bg3.png"),
+          ),
+          Obx(() {
+            if (htmlContentController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+              );
+            } else {
+              String htmlContent =
+                  htmlContentController.member?.data?.wisdom ?? "";
+
+              // Check if the content is empty
+              if (htmlContent.isEmpty) {
+                return const Center(child: Text("No content available."));
+              }
+
+              return SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: 10,
+                      width: double.infinity,
+                      child: Image.asset(
+                        "assets/images/spirituals.png",
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    DrawerCommanCode().buildTextSemiBold(
-                        "Spiritual Wisdom Section for Happy Married Life\n"),
-                    DrawerCommanCode().buildText(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.\n")
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10),
+                          DrawerCommanCode().buildTextSemiBold(
+                              "Spiritual Wisdom Section for Happy Married Life"),
+                          const SizedBox(height: 10),
+                          Html(
+                            data: htmlContent,
+                            style: {
+                              "table": Style(
+                                backgroundColor:
+                                    Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                              ),
+                              "tr": Style(
+                                border: const Border(
+                                  bottom: BorderSide(color: Colors.grey),
+                                ),
+                              ),
+                              "th": Style(
+                                padding: HtmlPaddings.all(6),
+                                backgroundColor: Colors.grey,
+                              ),
+                              "td": Style(
+                                padding: HtmlPaddings.all(6),
+                                alignment: Alignment.topLeft,
+                              ),
+                              "h5": Style(
+                                maxLines: 2,
+                                textOverflow: TextOverflow.ellipsis,
+                              ),
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              )
-            ],
-          )
+              );
+            }
+          }),
         ],
       ),
     );

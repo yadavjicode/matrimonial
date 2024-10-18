@@ -13,9 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 
 class OTPScreen extends StatefulWidget {
-  final String mobileNumber;
-
-  const OTPScreen({required this.mobileNumber});
+  const OTPScreen();
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -27,6 +25,7 @@ class _OTPScreenState extends State<OTPScreen> {
   String otp = '';
   Telephony telephony = Telephony.instance;
   OtpFieldController otpbox = OtpFieldController();
+  final Map<String, dynamic> arguments = Get.arguments;
 
   // TextEditingController otpboxa = TextEditingController();
 
@@ -75,6 +74,8 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String phoneEmail = arguments['phoneEmail'];
+    final String go = arguments['go'];
     return Scaffold(
         backgroundColor: AppColors.primaryLight,
         appBar: AppBar(
@@ -82,7 +83,11 @@ class _OTPScreenState extends State<OTPScreen> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              Get.offAndToNamed('/mobile');
+              if (go == "mobile") {
+                Get.offAndToNamed('/mobile');
+              } else if (go == "email") {
+                Get.offAndToNamed('/email');
+              }
             },
           ),
           elevation: 0,
@@ -113,7 +118,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         padding: const EdgeInsets.only(top: 50, bottom: 20),
                         child: Center(
                           child: Text(
-                            'Code is sent to ${widget.mobileNumber.substring(0, 2)}******${widget.mobileNumber.substring(8, 10)}',
+                            'Code is sent to ${phoneEmail.substring(0, 2)}******${phoneEmail.substring(10, 12)}',
                             style: FontConstant.styleRegular(
                               fontSize: 16,
                               color: Colors.black,
@@ -184,7 +189,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               // _otpControllers.otpfill(context,
                               //     otpbox.toString(), widget.mobileNumber);
                               _memberController.otp(
-                                  widget.mobileNumber, otp.toString(), context);
+                                  phoneEmail, otp.toString(), context);
 
                               //   Get.toNamed('/profile1');
                             } else {

@@ -25,7 +25,6 @@ class _ComplaintState extends State<Complaint> {
   final TextEditingController email = TextEditingController();
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     complaint.clear();
   }
@@ -172,7 +171,7 @@ class _ComplaintState extends State<Complaint> {
               ],
             ),
             if (complaintController.isLoading.value)
-              Center(
+              const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.primaryColor,
               ))

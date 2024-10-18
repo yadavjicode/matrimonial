@@ -7,6 +7,7 @@ class ApiConstants {
   static const String countryUrl = "country-list";
   static const String stateurl = "state-list";
   static const String cityUrl = "city-list";
+  static const String countryCodeUrl = "country-code";
   static const String religionUrl = "get-religion";
   static const String castUrl = "cast-list";
   static const String subCastUrl = "sub-cast-list";

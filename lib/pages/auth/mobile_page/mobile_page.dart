@@ -1,10 +1,14 @@
-import 'package:devotee/pages/auth/otp_page/otp_page.dart';
+import 'package:devotee/constants/CustomTextFeild.dart';
+import 'package:devotee/constants/lists/location_list.dart';
+import 'package:devotee/utils/comman_class_method.dart';
+import 'package:devotee/utils/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/login_controller.dart';
+import '../../../constants/custom_dropdown.dart';
 
 class MobilePage extends StatefulWidget {
   const MobilePage({Key? key}) : super(key: key);
@@ -15,25 +19,17 @@ class MobilePage extends StatefulWidget {
 
 class _MobilePageState extends State<MobilePage> {
   final LoginController _loginController = Get.put(LoginController());
+  final CountryCodeController countryCodeController =
+      Get.put(CountryCodeController());
+  final TextEditingController mobileno = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? seletedCountryCode;
+  bool? show;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
-    String? validateInput(String? value) {
-      final phoneRegExp = RegExp(r'^\+?1?\d{10,10}$');
-      final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-
-      if (value == null || value.isEmpty) {
-        return 'Please enter a phone number or email address';
-      } else if (!phoneRegExp.hasMatch(value) && !emailRegExp.hasMatch(value)) {
-        return 'Please enter a valid phone number or email address';
-      }
-
-      return null;
-    }
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -74,7 +70,7 @@ class _MobilePageState extends State<MobilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            margin: EdgeInsets.only(top: 80, bottom: 20),
+                            margin: EdgeInsets.only(top: 90, bottom: 20),
                             alignment: Alignment.center,
                             child: Image.asset(
                               "assets/images/lock.png",
@@ -83,40 +79,105 @@ class _MobilePageState extends State<MobilePage> {
                             )),
                         Center(
                           child: Text(
-                            'Enter Mobile Number or Email ID',
+                            'Enter Mobile Number',
                             style: FontConstant.styleRegular(
                               fontSize: 16,
                               color: Colors.black,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: Form(
-                              key: _formKey,
-                              child: TextFormField(
-                                controller: _loginController.mobileno,
-                                validator: validateInput,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                    borderSide: const BorderSide(
-                                        color: AppColors.primaryColor),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(23),
-                                  ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 12),
+                        const SizedBox(height: 10),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        //   child: Container(
+                        //     decoration: BoxDecoration(),
+                        //     child: Form(
+                        //       key: _formKey,
+                        //       child: TextFormField(
+                        //         controller: _loginController.mobileno,
+                        //         validator: validateInput,
+                        //         textAlign: TextAlign.center,
+                        //         keyboardType: TextInputType.text,
+                        //         decoration: InputDecoration(
+                        //           fillColor: Colors.white,
+                        //           filled: true,
+                        //           focusedBorder: OutlineInputBorder(
+                        //             borderRadius: BorderRadius.circular(23),
+                        //             borderSide: const BorderSide(
+                        //                 color: AppColors.primaryColor),
+                        //           ),
+                        //           border: OutlineInputBorder(
+                        //             borderRadius: BorderRadius.circular(23),
+                        //           ),
+                        //           contentPadding: const EdgeInsets.symmetric(
+                        //               horizontal: 12),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 22),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 110,
+                                  child: Obx(() {
+                                    if (countryCodeController.isLoading.value) {
+                                      return buildDropdownWithSearch(
+                                        "",
+                                        ['Loading...'],
+                                        (value) {
+                                          setState(() {
+                                            seletedCountryCode = null;
+                                          });
+                                        },
+                                        selectedItem: 'Loading...',
+                                        hintText: '+00',
+                                      );
+                                    } else {
+                                      return buildDropdownWithSearch(
+                                        "",
+                                        countryCodeController
+                                            .getCountryCodeList(),
+                                        (value) {
+                                          setState(() {
+                                            seletedCountryCode = value;
+                                          });
+                                        },
+                                        borderColor: show == true &&
+                                                seletedCountryCode == null
+                                            ? Colors.red
+                                            : Colors.black.withOpacity(0.5),
+                                        errorMessage: "Country Code",
+                                        errorshow: show == true &&
+                                                seletedCountryCode == null
+                                            ? true
+                                            : false,
+                                        hintText: '+00',
+                                      );
+                                    }
+                                  }),
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Expanded(
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: CustomTextField(
+                                    controller: mobileno,
+                                    hintText: "Enter Mobile No",
+                                    validator: (value) {
+                                      return Validation()
+                                          .internationPhoneNo(value);
+                                    },
+                                  ),
+                                ))
+                              ],
                             ),
                           ),
                         ),
@@ -126,8 +187,17 @@ class _MobilePageState extends State<MobilePage> {
                           child: CustomButton(
                             text: 'SEND OTP',
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _loginController.login(context);
+                              setState(() {
+                                show = true;
+                              });
+                              if (seletedCountryCode != null &&
+                                  _formKey.currentState!.validate()) {
+                                String code = CommanClass()
+                                    .removePlusSign(seletedCountryCode ?? "");
+                                String phoneNo =
+                                    mobileno.text.toString().trim();
+                                _loginController.login(
+                                    context, "$code$phoneNo","mobile");
                               }
                             },
                             color: AppColors.primaryColor,
@@ -144,7 +214,7 @@ class _MobilePageState extends State<MobilePage> {
               ),
             ),
             if (_loginController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

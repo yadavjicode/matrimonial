@@ -1,7 +1,9 @@
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/html_content_controller.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class Disclaimer extends StatefulWidget {
   const Disclaimer({super.key});
@@ -11,6 +13,8 @@ class Disclaimer extends StatefulWidget {
 }
 
 class _DisclaimerState extends State<Disclaimer> {
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

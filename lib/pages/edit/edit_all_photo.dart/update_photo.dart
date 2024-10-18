@@ -76,8 +76,11 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
             GestureDetector(
               onTap: () {
                 if (editProfilePhotoController.selectedImage.value != null) {
-                  editProfilePhotoController.profileCompleteFill(
-                      context, values);
+                  editProfilePhotoController
+                      .profileCompleteFill(context, values);
+                      
+                    
+                  
                 } else {
                   Dialogs.showSnackbar(
                       context, 'Please select an image before updating.');

@@ -42,6 +42,17 @@ class _SearchResultState extends State<SearchResult> {
       Get.put(EditProfileController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
+  int sort = 0;
+
+  String getSort() {
+    if (sort == 1) {
+      return "shortlist";
+    } else if (sort == 2) {
+      return "interest";
+    } else {
+      return "";
+    }
+  }
 
   @override
   void initState() {
@@ -72,8 +83,9 @@ class _SearchResultState extends State<SearchResult> {
           state,
           city,
           education,
-          profilePer);
-      searchController.Search(
+          profilePer,
+          getSort());
+      searchController.search(
           context,
           ageFrom,
           ageTo,
@@ -86,9 +98,9 @@ class _SearchResultState extends State<SearchResult> {
           state,
           city,
           education,
-          profilePer);
+          profilePer,
+          getSort());
     });
-
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
               _scrollController.position.maxScrollExtent &&
@@ -107,7 +119,8 @@ class _SearchResultState extends State<SearchResult> {
             state,
             city,
             education,
-            profilePer); // Load next page
+            profilePer,
+            getSort()); // Load next page
       }
     });
     super.initState();
@@ -116,7 +129,6 @@ class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     final String ageFrom = arguments['ageFrom'];
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
@@ -142,17 +154,30 @@ class _SearchResultState extends State<SearchResult> {
           style: FontConstant.styleMedium(
               fontSize: 18, color: AppColors.constColor),
         ),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(
-        //       Icons.filter_list_alt,
-        //       color: Colors.white,
-        //     ),
-        //     onPressed: () {
-        //       // Add filter functionality
-        //     },
-        //   ),
-        // ],
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.sort_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _appThemeBottomSheet(
+                  context,
+                  ageFrom,
+                  ageTo,
+                  heightFrom,
+                  heightTo,
+                  maritalStatus,
+                  religion,
+                  caste,
+                  country,
+                  state,
+                  city,
+                  education,
+                  profilePer);
+            },
+          ),
+        ],
       ),
       body: Stack(children: [
         Container(
@@ -169,108 +194,6 @@ class _SearchResultState extends State<SearchResult> {
                           fontSize: 15, color: AppColors.darkgrey))),
             Column(
               children: [
-                // Container(
-                //   padding:
-                //       EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 5),
-                //   child: Row(
-                //     children: [
-                //       if (age && ageFrom != "" || age && ageTo != "")
-                //         Expanded(
-                //           child: Container(
-                //             padding: EdgeInsets.all(5),
-                //             decoration: BoxDecoration(
-                //               borderRadius:
-                //                   BorderRadius.all(Radius.circular(10)),
-                //               border: Border.all(color: Colors.grey.shade200),
-                //               color: Colors.white,
-                //             ),
-                //             child: Row(
-                //               children: [
-                //                 Expanded(
-                //                   child: Text(
-                //                     "Age ${ageFrom} Yrs - ${ageTo} Yrs",
-                //                     style: FontConstant.styleMedium(
-                //                         fontSize: 12,
-                //                         color: AppColors.primaryColor),
-                //                   ),
-                //                 ),
-                //                 SizedBox(width: 5),
-                //                 GestureDetector(
-                //                   onTap: () {
-                //                     setState(() {
-                //                       age =
-                //                           false; // Update state to hide container
-                //                     });
-                //                   },
-                //                   child: Container(
-                //                     alignment: Alignment.center,
-                //                     height: 20,
-                //                     width: 20,
-                //                     decoration: BoxDecoration(
-                //                         shape: BoxShape.circle,
-                //                         color:
-                //                             Color.fromARGB(255, 245, 134, 186)),
-                //                     child: Icon(
-                //                       Icons.close,
-                //                       color: AppColors.primaryColor,
-                //                       size: 15,
-                //                     ),
-                //                   ),
-                //                 )
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //       SizedBox(width: 10),
-                //       if (height)
-                //         Expanded(
-                //           child: Container(
-                //               padding: EdgeInsets.all(5),
-                //               decoration: BoxDecoration(
-                //                 borderRadius:
-                //                     BorderRadius.all(Radius.circular(10)),
-                //                 border: Border.all(color: Colors.grey.shade200),
-                //                 color: Colors.white,
-                //               ),
-                //               child: Row(
-                //                 children: [
-                //                   Expanded(
-                //                     child: Text(
-                //                       "Height: ${heightFrom} - ${heightTo}",
-                //                       style: FontConstant.styleMedium(
-                //                           fontSize: 12,
-                //                           color: AppColors.primaryColor),
-                //                     ),
-                //                   ),
-                //                   SizedBox(width: 5),
-                //                   GestureDetector(
-                //                     onTap: () {
-                //                       setState(() {
-                //                         height = false;
-                //                       });
-                //                     },
-                //                     child: Container(
-                //                       alignment: Alignment.center,
-                //                       height: 20,
-                //                       width: 20,
-                //                       decoration: BoxDecoration(
-                //                           shape: BoxShape.circle,
-                //                           color: Color.fromARGB(
-                //                               255, 245, 134, 186)),
-                //                       child: Icon(
-                //                         Icons.close,
-                //                         color: AppColors.primaryColor,
-                //                         size: 15,
-                //                       ),
-                //                     ),
-                //                   )
-                //                 ],
-                //               )),
-                //         )
-                //     ],
-                //   ),
-                // ),
-
                 Expanded(
                   child: Container(
                     child: SingleChildScrollView(
@@ -301,7 +224,7 @@ class _SearchResultState extends State<SearchResult> {
                               CommanClass.photo(data.photo1, data.gender);
 
                           return Container(
-                              margin: EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                   top: 5, bottom: 10, left: 16, right: 16),
                               //  width: 320,
                               decoration: BoxDecoration(
@@ -310,7 +233,7 @@ class _SearchResultState extends State<SearchResult> {
                                     : Colors.white,
                                 border: Border.all(color: Colors.grey.shade200),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                    const BorderRadius.all(Radius.circular(10)),
                               ),
                               child: Column(
                                 children: [
@@ -801,6 +724,182 @@ class _SearchResultState extends State<SearchResult> {
           ]);
         })
       ]),
+    );
+  }
+
+  void _appThemeBottomSheet(
+    BuildContext context,
+    String ageFrom,
+    String ageTo,
+    String heightFrom,
+    String heightTo,
+    String maritalStatus,
+    String religion,
+    String caste,
+    String country,
+    String state,
+    String city,
+    String education,
+    String profilePer,
+  ) async {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double fontsize = MediaQuery.textScaleFactorOf(context);
+
+    // Show modal bottom sheet and wait for the result
+    final int? selectedValue = await showModalBottomSheet<int>(
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.vertical(top: Radius.circular(screenWidth * 0.06)),
+      ),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.03,
+                  horizontal: screenWidth * 0.04),
+              child: Wrap(children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    header("Sort by"),
+                    Column(
+                      children: [
+                        buildThemeRadio(1, "Most Shortlisted", setState),
+                        buildThemeRadio(2, "Most Interest Sent", setState),
+                        buildThemeRadio(0, "None", setState),
+                        Text(
+                          "See profiles that have received the most interest or have been shortlisted the most by other users.",
+                          style: FontConstant.styleMedium(
+                              fontSize: screenWidth * 0.03 * fontsize,
+                              color: AppColors.darkgrey),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.005,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(
+                                    context); // Closes the bottom sheet
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth * 0.02,
+                                    vertical: screenHeight * 0.01),
+                                child: Text(
+                                  "Cancel",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: screenWidth * 0.04 * fontsize,
+                                      color: AppColors.primaryColor),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                searchController.reset(
+                                    context,
+                                    ageFrom,
+                                    ageTo,
+                                    heightFrom,
+                                    heightTo,
+                                    maritalStatus,
+                                    religion,
+                                    caste,
+                                    country,
+                                    state,
+                                    city,
+                                    education,
+                                    profilePer,
+                                    getSort());
+
+                                searchController.search(
+                                    context,
+                                    ageFrom,
+                                    ageTo,
+                                    heightFrom,
+                                    heightTo,
+                                    maritalStatus,
+                                    religion,
+                                    caste,
+                                    country,
+                                    state,
+                                    city,
+                                    education,
+                                    profilePer,
+                                    getSort());
+
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth * 0.02,
+                                    vertical: screenHeight * 0.01),
+                                child: Text(
+                                  "Ok",
+                                  style: FontConstant.styleMedium(
+                                      fontSize: screenWidth * 0.04 * fontsize,
+                                      color: AppColors.primaryColor),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ]),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget header(String tittle) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double fontsize = MediaQuery.textScaleFactorOf(context);
+    return Text(
+      tittle,
+      style: FontConstant.styleSemiBold(
+          fontSize: screenWidth * 0.045 * fontsize,
+          color: AppColors.primaryColor),
+    );
+  }
+
+  Widget buildThemeRadio(int value, String title, StateSetter setState) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double fontsize = MediaQuery.textScaleFactorOf(context);
+    return Row(
+      children: [
+        Radio(
+          activeColor: AppColors.primaryColor,
+          value: value,
+          groupValue: sort,
+          onChanged: (int? newValue) {
+            setState(() {
+              sort = newValue!;
+            });
+          },
+        ),
+        Expanded(
+          child: Text(
+            title,
+            style: FontConstant.styleMedium(
+                fontSize: screenWidth * 0.035 * fontsize,
+                color: AppColors.black),
+          ),
+        ),
+      ],
     );
   }
 }
