@@ -58,60 +58,68 @@ class _SpiritualWisdomState extends State<SpiritualWisdom> {
 
               // Check if the content is empty
               if (htmlContent.isEmpty) {
-                return const Center(child: Text("No content available."));
+                return Center(
+                    child: Text("No content available.",
+                        style: FontConstant.styleMedium(
+                            fontSize: 15, color: AppColors.darkgrey)));
               }
 
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: Image.asset(
-                        "assets/images/spirituals.png",
-                        fit: BoxFit.cover,
-                      ),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Image.asset(
+                      "assets/images/spirituals.png",
+                      fit: BoxFit.cover,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 15, right: 15, top: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10),
                           DrawerCommanCode().buildTextSemiBold(
                               "Spiritual Wisdom Section for Happy Married Life"),
-                          const SizedBox(height: 10),
-                          Html(
-                            data: htmlContent,
-                            style: {
-                              "table": Style(
-                                backgroundColor:
-                                    Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                          const SizedBox(height: 5),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Html(
+                                data: htmlContent,
+                                style: {
+                                  "table": Style(
+                                    backgroundColor:
+                                        Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                                  ),
+                                  "tr": Style(
+                                    border: const Border(
+                                      bottom: BorderSide(color: Colors.grey),
+                                    ),
+                                  ),
+                                  "th": Style(
+                                    padding: HtmlPaddings.all(6),
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  "td": Style(
+                                    padding: HtmlPaddings.all(6),
+                                    alignment: Alignment.topLeft,
+                                  ),
+                                  "h5": Style(
+                                    maxLines: 2,
+                                    textOverflow: TextOverflow.ellipsis,
+                                  ),
+                                },
                               ),
-                              "tr": Style(
-                                border: const Border(
-                                  bottom: BorderSide(color: Colors.grey),
-                                ),
-                              ),
-                              "th": Style(
-                                padding: HtmlPaddings.all(6),
-                                backgroundColor: Colors.grey,
-                              ),
-                              "td": Style(
-                                padding: HtmlPaddings.all(6),
-                                alignment: Alignment.topLeft,
-                              ),
-                              "h5": Style(
-                                maxLines: 2,
-                                textOverflow: TextOverflow.ellipsis,
-                              ),
-                            },
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             }
           }),

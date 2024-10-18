@@ -3,6 +3,7 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/html_content_controller.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 
 class Disclaimer extends StatefulWidget {
@@ -13,7 +14,15 @@ class Disclaimer extends StatefulWidget {
 }
 
 class _DisclaimerState extends State<Disclaimer> {
-  
+  final HtmlContentController htmlContentController =
+      Get.put(HtmlContentController());
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch HTML content when the widget initializes
+    htmlContentController.htmlContent(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,27 +44,56 @@ class _DisclaimerState extends State<Disclaimer> {
               width: double.infinity,
               alignment: Alignment.topRight,
               child: Image.asset("assets/images/bg3.png")),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    DrawerCommanCode().buildTextBold("Hare Krishna!\n"),
-                    DrawerCommanCode().buildText(
-                        "With the blessing of Senior Vaishnavas, we are trying to do our best so that you can meet with your devotional match and take your journey to a Higher level with your Life Partner, but still on a safer side, we are suggesting you to before finalising any person as your life time partner, please verify the details at your end, discuss the matter with your seniors and then proceed ahead.\n"),
-                    DrawerCommanCode().buildText(
-                        "Disclaimer: As we are living in the age of kaliyug and it is an age of disagreement, so we are not responsible for any mishappening (if any) before or after the marriage.\n"),
-                    DrawerCommanCode().buildText(
-                        "And yes needless to say, we always pray to krishna for a Happy and Devotional Married Life for each and every couple.\n"),
-                  ],
+          Obx(() {
+            if (htmlContentController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
                 ),
-              )
-            ],
-          )
+              );
+            } else {
+              String htmlContent =
+                  htmlContentController.member?.data?.disclaimer ?? "";
+
+              // Check if the content is empty
+              if (htmlContent.isEmpty) {
+                return Center(
+                    child: Text("No content available.",
+                        style: FontConstant.styleMedium(
+                            fontSize: 15, color: AppColors.darkgrey)));
+              }
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: SingleChildScrollView(
+                  child: Html(
+                    data: htmlContent,
+                    style: {
+                      "table": Style(
+                        backgroundColor: Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                      ),
+                      "tr": Style(
+                        border: const Border(
+                          bottom: BorderSide(color: Colors.grey),
+                        ),
+                      ),
+                      "th": Style(
+                        padding: HtmlPaddings.all(6),
+                        backgroundColor: Colors.grey,
+                      ),
+                      "td": Style(
+                        padding: HtmlPaddings.all(6),
+                        alignment: Alignment.topLeft,
+                      ),
+                      "h5": Style(
+                        maxLines: 2,
+                        textOverflow: TextOverflow.ellipsis,
+                      ),
+                    },
+                  ),
+                ),
+              );
+            }
+          })
         ],
       ),
     );

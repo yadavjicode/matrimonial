@@ -1,4 +1,4 @@
-class HtmlContentModel{
+class HtmlContentModel {
   String? status;
   Data? data;
 
@@ -25,6 +25,7 @@ class Data {
   String? suggestion;
   String? disclaimer;
   String? dowrySection;
+  String? privacyPolicy;
   String? createdAt;
   String? updatedAt;
 
@@ -35,7 +36,8 @@ class Data {
       this.disclaimer,
       this.dowrySection,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.privacyPolicy});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,6 +45,7 @@ class Data {
     suggestion = json['suggestion'];
     disclaimer = json['disclaimer'];
     dowrySection = json['dowry_section'];
+    privacyPolicy = json['privacy_policy'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -54,6 +57,7 @@ class Data {
     data['suggestion'] = this.suggestion;
     data['disclaimer'] = this.disclaimer;
     data['dowry_section'] = this.dowrySection;
+    data['privacy_policy'] = this.privacyPolicy;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

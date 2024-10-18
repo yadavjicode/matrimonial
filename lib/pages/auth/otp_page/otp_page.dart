@@ -12,8 +12,10 @@ import 'package:otp_text_field/style.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 
+import '../../../controller/login_controller.dart';
+
 class OTPScreen extends StatefulWidget {
-  const OTPScreen();
+  const OTPScreen({super.key});
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -21,6 +23,7 @@ class OTPScreen extends StatefulWidget {
 
 class _OTPScreenState extends State<OTPScreen> {
   final OtpController _memberController = Get.put(OtpController());
+  final LoginController _loginController = Get.put(LoginController());
   // final StateController stateController = Get.put(StateController());
   String otp = '';
   Telephony telephony = Telephony.instance;
@@ -161,7 +164,10 @@ class _OTPScreenState extends State<OTPScreen> {
                           ),
                           const SizedBox(width: 10),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              _loginController.login(
+                                  context, phoneEmail, go);
+                            },
                             child: Text(
                               "Send Again",
                               style: FontConstant.styleRegular(
@@ -209,8 +215,8 @@ class _OTPScreenState extends State<OTPScreen> {
                 ),
               ]),
             ),
-            if (_memberController.isLoading.value)
-              Center(
+            if (_memberController.isLoading.value||_loginController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

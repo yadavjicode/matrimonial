@@ -1,7 +1,7 @@
 import 'package:devotee/api_service/api_service.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/model/login_model.dart';
-import 'package:devotee/pages/auth/otp_page/otp_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +18,8 @@ class LoginController with ChangeNotifier {
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> login(BuildContext context, String phoneEmail,String go) async {
+  Future<void> login(
+      BuildContext context, String phoneEmail, String go) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -31,6 +32,7 @@ class LoginController with ChangeNotifier {
       // ignore: use_build_context_synchronously
       Dialogs.showSnackbar(context, '${_member?.responseData?.data}');
       // Get.off(() => OTPScreen(mobileNumber: phoneEmail));
+
       Get.offAndToNamed("/otp",
           arguments: {"phoneEmail": phoneEmail, "go": go});
 

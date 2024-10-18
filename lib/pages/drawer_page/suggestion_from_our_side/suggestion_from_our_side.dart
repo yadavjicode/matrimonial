@@ -1,7 +1,9 @@
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
+import '../../../controller/html_content_controller.dart';
 
 class SuggestionFromOurSide extends StatefulWidget {
   const SuggestionFromOurSide({super.key});
@@ -11,6 +13,16 @@ class SuggestionFromOurSide extends StatefulWidget {
 }
 
 class _SuggestionFromOurSideState extends State<SuggestionFromOurSide> {
+  final HtmlContentController htmlContentController =
+      Get.put(HtmlContentController());
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch HTML content when the widget initializes
+    htmlContentController.htmlContent(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,37 +43,68 @@ class _SuggestionFromOurSideState extends State<SuggestionFromOurSide> {
               width: double.infinity,
               alignment: Alignment.topRight,
               child: Image.asset("assets/images/bg3.png")),
-          Column(
-            children: [
-              Container(
-                width: double.infinity,
-                child: Image.asset("assets/images/suggestion.png",
-                    fit: BoxFit.cover),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    DrawerCommanCode().buildText(
-                        "We are very delighted to know that you are a devotional mood person and also looking for the same natured person to enter into Grihastha Ashram.\n"),
-                    DrawerCommanCode().buildText(
-                        "Also we are very thankful to you that you have choosen our application to find your devotional Match.\n"),
-                    DrawerCommanCode().buildText(
-                        "To find a perfect match, we have some basic suggestions for you:\n"),
-                    DrawerCommanCode().question("a",
-                        "Before finalising your match, please try to have a good discussion from your Diksha Guru/ Shiksha Guru/ Mentor/ Parents, and also try to have a meeting with the mentor of your Match.\n"),
-                    DrawerCommanCode().question("b",
-                        "It is not practically possible for us to verify each and every information of each and every created profile, so before finalizing the things you please try to verify the information of your match at your end.\n"),
-                    DrawerCommanCode().question("c",
-                        "For Profile of Girls, we are suggesting that if possible don't provide your Phone Number, it is suggested that you can provide contact number of your Parents/ Brother.")
-                  ],
+          Obx(() {
+            if (htmlContentController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
                 ),
-              )
-            ],
-          )
+              );
+            } else {
+              String htmlContent =
+                  htmlContentController.member?.data?.suggestion ?? "";
+
+              // Check if the content is empty
+              if (htmlContent.isEmpty) {
+                return Center(
+                    child: Text("No content available.",
+                        style: FontConstant.styleMedium(
+                            fontSize: 15, color: AppColors.darkgrey)));
+              }
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    child: Image.asset("assets/images/suggestion.png",
+                        fit: BoxFit.cover),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                    child: Expanded(
+                      child: SingleChildScrollView(
+                        child: Html(
+                          data: htmlContent,
+                          style: {
+                            "table": Style(
+                              backgroundColor:
+                                  Color.fromARGB(0x50, 0xee, 0xee, 0xee),
+                            ),
+                            "tr": Style(
+                              border: const Border(
+                                bottom: BorderSide(color: Colors.grey),
+                              ),
+                            ),
+                            "th": Style(
+                              padding: HtmlPaddings.all(6),
+                              backgroundColor: Colors.grey,
+                            ),
+                            "td": Style(
+                              padding: HtmlPaddings.all(6),
+                              alignment: Alignment.topLeft,
+                            ),
+                            "h5": Style(
+                              maxLines: 2,
+                              textOverflow: TextOverflow.ellipsis,
+                            ),
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          })
         ],
       ),
     );

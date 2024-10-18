@@ -79,7 +79,7 @@ class _MobilePageState extends State<MobilePage> {
                             )),
                         Center(
                           child: Text(
-                            'Enter Mobile Number',
+                            'Login With Mobile Number',
                             style: FontConstant.styleRegular(
                               fontSize: 16,
                               color: Colors.black,
@@ -87,35 +87,6 @@ class _MobilePageState extends State<MobilePage> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        //   child: Container(
-                        //     decoration: BoxDecoration(),
-                        //     child: Form(
-                        //       key: _formKey,
-                        //       child: TextFormField(
-                        //         controller: _loginController.mobileno,
-                        //         validator: validateInput,
-                        //         textAlign: TextAlign.center,
-                        //         keyboardType: TextInputType.text,
-                        //         decoration: InputDecoration(
-                        //           fillColor: Colors.white,
-                        //           filled: true,
-                        //           focusedBorder: OutlineInputBorder(
-                        //             borderRadius: BorderRadius.circular(23),
-                        //             borderSide: const BorderSide(
-                        //                 color: AppColors.primaryColor),
-                        //           ),
-                        //           border: OutlineInputBorder(
-                        //             borderRadius: BorderRadius.circular(23),
-                        //           ),
-                        //           contentPadding: const EdgeInsets.symmetric(
-                        //               horizontal: 12),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Form(
                           key: _formKey,
                           child: Padding(
@@ -170,7 +141,7 @@ class _MobilePageState extends State<MobilePage> {
                                   padding: const EdgeInsets.only(top: 8),
                                   child: CustomTextField(
                                     controller: mobileno,
-                                    hintText: "Enter Mobile No",
+                                    hintText: "Enter Your Mobile Number",
                                     validator: (value) {
                                       return Validation()
                                           .internationPhoneNo(value);
@@ -197,7 +168,7 @@ class _MobilePageState extends State<MobilePage> {
                                 String phoneNo =
                                     mobileno.text.toString().trim();
                                 _loginController.login(
-                                    context, "$code$phoneNo","mobile");
+                                    context, "$code$phoneNo", "mobile");
                               }
                             },
                             color: AppColors.primaryColor,

@@ -63,7 +63,7 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   url_launcher: ^6.1.14
   just_audio: ^0.9.37
-  just_audio_background: ^0.0.1-beta.13
+  # just_audio_background: ^0.0.1-beta.13
   audio_video_progress_bar: 2.0.2
 
 dev_dependencies:

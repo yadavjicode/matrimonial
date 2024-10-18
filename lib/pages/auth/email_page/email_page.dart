@@ -6,7 +6,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/login_controller.dart';
 
-
 class EmailPage extends StatefulWidget {
   const EmailPage({Key? key}) : super(key: key);
 
@@ -65,7 +64,7 @@ class _EmailPageState extends State<EmailPage> {
                           )),
                       Center(
                         child: Text(
-                          'Enter Email ID',
+                          'Login With Email ID',
                           style: FontConstant.styleRegular(
                             fontSize: 16,
                             color: Colors.black,
@@ -76,7 +75,7 @@ class _EmailPageState extends State<EmailPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Container(
-                          decoration: BoxDecoration(),
+                          decoration: const BoxDecoration(),
                           child: Form(
                             key: _formKey,
                             child: TextFormField(
@@ -87,6 +86,7 @@ class _EmailPageState extends State<EmailPage> {
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
+                                hintText: "Enter your email",
                                 fillColor: Colors.white,
                                 filled: true,
                                 focusedBorder: OutlineInputBorder(
