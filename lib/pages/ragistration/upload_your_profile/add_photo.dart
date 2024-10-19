@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/button_constant.dart';
+import '../../../controller/edit_profile_Photo_controller.dart';
 import '../../../controller/edit_profile_controller.dart';
 import '../../../controller/skip_controller.dart';
 
@@ -24,13 +25,15 @@ class _AddPhotoState extends State<AddPhoto> {
   final PhotoDeleteController photoDeleteController =
       Get.put(PhotoDeleteController());
   final SkipController skipController = Get.put(SkipController());
+  final EditProfilePhotoController editProfilePhotoController =
+      Get.put(EditProfilePhotoController());
   List<List<String>> getImageListValues() {
     List<List<String>> imgList = [];
 
     // Ensure member and member.member are not null
     if (_editProfileController.member?.member != null) {
       String dummyphoto =
-          _editProfileController.member?.member!.gender == "Male"
+          _editProfileController.member?.member?.gender == "Male"
               ? "public/images/nophoto.png"
               : "public/images/nophotof.jpg";
 
@@ -114,23 +117,27 @@ class _AddPhotoState extends State<AddPhoto> {
                                 Positioned(
                                   top: 10,
                                   right: 10,
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        Get.toNamed("/updatePhoto", arguments: {
-                                          "imageUrl": _editProfileController
-                                                      .member?.member?.photo1 !=
-                                                  null
-                                              ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
-                                              : "http://devoteematrimony.aks.5g.in/${dummyphoto}",
-                                          "value": "Photo1"
-                                        });
-                                      });
-                                    },
-                                    child: _editProfileController
-                                                .member!.member!.photo1 !=
-                                            null
-                                        ? Container(
+                                  child: _editProfileController
+                                              .member?.member?.photo1 !=
+                                          null
+                                      ? InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              Get.toNamed("/updatePhoto",
+                                                  arguments: {
+                                                    "imageUrl": _editProfileController
+                                                                .member
+                                                                ?.member
+                                                                ?.photo1 !=
+                                                            null
+                                                        ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
+                                                        : "http://devoteematrimony.aks.5g.in/${dummyphoto}",
+                                                    "value": "Photo1",
+                                                    "title": "Update Photo"
+                                                  });
+                                            });
+                                          },
+                                          child: Container(
                                             height: 30,
                                             width: 30,
                                             decoration: BoxDecoration(
@@ -146,8 +153,26 @@ class _AddPhotoState extends State<AddPhoto> {
                                                 height: 25,
                                               ),
                                             ),
-                                          )
-                                        : Container(
+                                          ),
+                                        )
+                                      : InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              Get.toNamed("/updatePhoto",
+                                                  arguments: {
+                                                    "imageUrl": _editProfileController
+                                                                .member
+                                                                ?.member
+                                                                ?.photo1 !=
+                                                            null
+                                                        ? "http://devoteematrimony.aks.5g.in/${_editProfileController.member?.member?.photo1}"
+                                                        : "http://devoteematrimony.aks.5g.in/${dummyphoto}",
+                                                    "value": "Photo1",
+                                                    "title": "Add Photo"
+                                                  });
+                                            });
+                                          },
+                                          child: Container(
                                             height: 30,
                                             width: 30,
                                             decoration: BoxDecoration(
@@ -158,7 +183,7 @@ class _AddPhotoState extends State<AddPhoto> {
                                               child: Icon(Icons.add),
                                             ),
                                           ),
-                                  ),
+                                        ),
                                 ),
                                 Positioned(
                                   top: 10,
@@ -220,11 +245,10 @@ class _AddPhotoState extends State<AddPhoto> {
                                                           arguments: {
                                                             "imageUrl":
                                                                 "http://devoteematrimony.aks.5g.in/${data[0]}",
-                                                            "value": data[1]
+                                                            "value": data[1],
+                                                            "title":
+                                                                "Update Photo"
                                                           });
-
-                                                      print(
-                                                          "id============================================${data[1]}");
                                                     });
                                                   },
                                                   child: Container(
@@ -254,10 +278,10 @@ class _AddPhotoState extends State<AddPhoto> {
                                                           arguments: {
                                                             "imageUrl":
                                                                 "http://devoteematrimony.aks.5g.in/${data[0]}",
-                                                            "value": data[1]
+                                                            "value": data[1],
+                                                            "title":
+                                                                "Update Photo"
                                                           });
-                                                      print(
-                                                          "id============================================${data[1]}");
                                                     });
                                                   },
                                                   child: Container(
@@ -273,7 +297,7 @@ class _AddPhotoState extends State<AddPhoto> {
                                                     ),
                                                   ),
                                                 ),
-                                          SizedBox(height: 15),
+                                          const SizedBox(height: 15),
                                           if (data[2] == "1")
                                             InkWell(
                                               onTap: () {
@@ -321,6 +345,7 @@ class _AddPhotoState extends State<AddPhoto> {
                 ),
                 if (_editProfileController.isLoading.value ||
                     photoDeleteController.isLoading.value ||
+                    editProfilePhotoController.isLoading.value ||
                     skipController.isLoading.value)
                   SizedBox(
                     width: screenWidth,

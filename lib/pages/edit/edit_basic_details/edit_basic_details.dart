@@ -108,28 +108,33 @@ class _EditBasicDetailsState extends State<EditBasicDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          aboutController.text =
+              _editProfileController.member?.member?.about ?? "";
+
+          if (_editProfileController.member?.member?.dOB != null) {
+            String dob = _editProfileController.member?.member?.dOB ?? "";
+            List<String> dateParts = dob.split('-');
+            selectedYear = dateParts[0]; // "2005"
+            month = dateParts[1]; // "03"
+            selectedDay = dateParts[2];
+            selectedMonth =
+                _basicDetailController.getMonthString(month.toString());
+          }
+          selectedHeight = _editProfileController.member?.member?.height;
+          selectedWeight = _editProfileController.member?.member?.weight != null
+              ? "${_editProfileController.member?.member?.weight} KG"
+              : "";
+          selectedMaritalStatus =
+              _editProfileController.member?.member?.maritalstatus;
+          selectedDiet = _editProfileController.member?.member?.diet;
+          selectedHeightkey =
+              _editProfileController.member?.member?.heightKey ?? "";
+          selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
+        });
+      });
     });
-
-    aboutController.text = _editProfileController.member?.member?.about ?? "";
-
-    if (_editProfileController.member?.member?.dOB != null) {
-      String dob = _editProfileController.member?.member?.dOB ?? "";
-      List<String> dateParts = dob.split('-');
-      selectedYear = dateParts[0]; // "2005"
-      month = dateParts[1]; // "03"
-      selectedDay = dateParts[2];
-      selectedMonth = _basicDetailController.getMonthString(month.toString());
-    }
-    selectedHeight = _editProfileController.member?.member?.height;
-    selectedWeight = _editProfileController.member?.member?.weight != null
-        ? "${_editProfileController.member?.member?.weight} KG"
-        : "";
-    selectedMaritalStatus =
-        _editProfileController.member?.member?.maritalstatus;
-    selectedDiet = _editProfileController.member?.member?.diet;
-    selectedHeightkey = _editProfileController.member?.member?.heightKey ?? "";
-    selectHobbies(_editProfileController.member?.member?.hobbies ?? "");
   }
 
   @override

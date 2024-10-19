@@ -1,6 +1,5 @@
 import 'package:devotee/controller/about_groombride_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
-import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -97,10 +96,14 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          selectHobbies(_editProfileController.member?.member?.GBHobbies ?? "");
+          selectQualities(
+              _editProfileController.member?.member?.groomBride ?? "");
+        });
+      });
     });
-    selectHobbies(_editProfileController.member?.member?.GBHobbies ?? "");
-    selectQualities(_editProfileController.member?.member?.groomBride ?? "");
   }
 
   @override

@@ -64,22 +64,29 @@ class _EditProfessionalDetailsState extends State<EditProfessionalDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          selectedProfession =
+              _editProfileController.member?.member?.occupation;
+          selectedEmpolyment =
+              _editProfileController.member?.member?.employedin;
+          selectedState = _editProfileController.member?.member?.workState;
+          selectedCity = _editProfileController.member?.member?.workCity;
+          selectedAnnualSalary =
+              _editProfileController.member?.member?.annualincome;
+          pincodeController.text =
+              _editProfileController.member?.member?.workPincode ?? "";
+          stateController
+              .selectItem(_editProfileController.member?.member?.workState);
+          if (_editProfileController.member?.member?.workingAnywhere == "Yes") {
+            selectedRadioValue = 1;
+          } else if (_editProfileController.member?.member?.workingAnywhere ==
+              "No") {
+            selectedRadioValue = 2;
+          }
+        });
+      });
     });
-    selectedProfession = _editProfileController.member?.member?.occupation;
-    selectedEmpolyment = _editProfileController.member?.member?.employedin;
-    selectedState = _editProfileController.member?.member?.workState;
-    selectedCity = _editProfileController.member?.member?.workCity;
-    selectedAnnualSalary = _editProfileController.member?.member?.annualincome;
-    pincodeController.text =
-        _editProfileController.member?.member?.workPincode ?? "";
-    stateController
-        .selectItem(_editProfileController.member?.member?.workState);
-    if (_editProfileController.member?.member?.workingAnywhere == "Yes") {
-      selectedRadioValue = 1;
-    } else if (_editProfileController.member?.member?.workingAnywhere == "No") {
-      selectedRadioValue = 2;
-    }
   }
 
   @override

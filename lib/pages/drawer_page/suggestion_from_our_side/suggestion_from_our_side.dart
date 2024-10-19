@@ -63,14 +63,15 @@ class _SuggestionFromOurSideState extends State<SuggestionFromOurSide> {
               }
               return Column(
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Image.asset("assets/images/suggestion.png",
                         fit: BoxFit.cover),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                    child: Expanded(
+                  Expanded(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 15, right: 15, top: 5),
                       child: SingleChildScrollView(
                         child: Html(
                           data: htmlContent,

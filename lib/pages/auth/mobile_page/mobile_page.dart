@@ -143,8 +143,8 @@ class _MobilePageState extends State<MobilePage> {
                                     controller: mobileno,
                                     hintText: "Enter Your Mobile Number",
                                     validator: (value) {
-                                      return Validation()
-                                          .internationPhoneNo(value);
+                                      return Validation.internationPhoneNo(
+                                          value);
                                     },
                                   ),
                                 ))

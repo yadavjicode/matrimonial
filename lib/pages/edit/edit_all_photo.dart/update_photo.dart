@@ -27,13 +27,14 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
   Widget build(BuildContext context) {
     final String imageurl = arguments['imageUrl'];
     final String values = arguments['value'];
+    final String title = arguments['title'];
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
         centerTitle: true,
-        title: Text("Update Photo",
+        title: Text(title,
             style:
                 FontConstant.styleSemiBold(fontSize: 18, color: Colors.white)),
         actions: [
@@ -76,11 +77,8 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
             GestureDetector(
               onTap: () {
                 if (editProfilePhotoController.selectedImage.value != null) {
-                  editProfilePhotoController
-                      .profileCompleteFill(context, values);
-                      
-                    
-                  
+                  editProfilePhotoController.profileCompleteFill(
+                      context, values);
                 } else {
                   Dialogs.showSnackbar(
                       context, 'Please select an image before updating.');
@@ -95,7 +93,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
                 padding: const EdgeInsets.all(10),
                 alignment: Alignment.center,
                 child: Text(
-                  "Update Photo",
+                  title,
                   style: FontConstant.styleRegular(
                       fontSize: 15, color: AppColors.constColor),
                 ),

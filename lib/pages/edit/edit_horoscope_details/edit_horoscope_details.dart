@@ -49,13 +49,16 @@ class _EditHoroscopeDetailsState extends State<EditHoroscopeDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          time.text = _editProfileController.member?.member?.timeOfBirth ?? "";
+          selectedState = _editProfileController.member?.member?.stateOfBirth;
+          selectedCity = _editProfileController.member?.member?.cityOfBirth;
+          stateController
+              .selectItem(_editProfileController.member?.member?.stateOfBirth);
+        });
+      });
     });
-    time.text = _editProfileController.member?.member?.timeOfBirth ?? "";
-    selectedState = _editProfileController.member?.member?.stateOfBirth;
-    selectedCity = _editProfileController.member?.member?.cityOfBirth;
-    stateController
-        .selectItem(_editProfileController.member?.member?.stateOfBirth);
   }
 
   @override

@@ -47,7 +47,7 @@ class Validation {
     return null;
   }
 
-  String? internationPhoneNo(String? value) {
+ static String? internationPhoneNo(String? value) {
     // Allow international phone numbers with 10 to 15 digits
     final phoneRegExp = RegExp(r'^\d{10,15}$');
     // Email validation remains the same

@@ -18,8 +18,7 @@ class LoginController with ChangeNotifier {
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> login(
-      BuildContext context, String phoneEmail, String go) async {
+  Future<void> login(BuildContext context, String phoneEmail, String go) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();

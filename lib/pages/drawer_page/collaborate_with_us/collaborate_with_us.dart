@@ -35,7 +35,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
   String? selectedCity;
   bool isState = false;
   bool isCity = false;
-  bool show=false;
+  bool show = false;
 
   bool validateDropDown() {
     if (isState == true && isCity == true) {
@@ -89,7 +89,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               DrawerCommanCode()
@@ -108,7 +108,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -122,12 +122,12 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                       keyboardType: TextInputType.phone,
                                       borderRadius: 5,
                                       validator: (value) {
-                                        return Validation.validatePhoneno(
+                                        return Validation.internationPhoneNo(
                                             value);
                                       },
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
@@ -143,7 +143,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -182,18 +182,22 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                             stateController.selectItem(
                                                 value); // Call the controller method
                                           },
-                                          borderColor:show==true&& isState == false &&
+                                          borderColor: show == true &&
+                                                  isState == false &&
                                                   selectedState == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
                                           errorMessage: "Please select city",
-                                          errorshow:show==true&& selectedState == null ? true : false,
+                                          errorshow: show == true &&
+                                                  selectedState == null
+                                              ? true
+                                              : false,
                                           hintText: 'Select State',
                                         );
                                       }
                                     }),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
@@ -226,12 +230,16 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                             cityController.selectItem(
                                                 value); // Call the controller method
                                           },
-                                          borderColor:show==true&& isCity == false &&
+                                          borderColor: show == true &&
+                                                  isCity == false &&
                                                   selectedCity == null
                                               ? Colors.red
                                               : Colors.black.withOpacity(0.5),
                                           errorMessage: "Please select city",
-                                          errorshow:show==true&& selectedCity == null ? true : false,
+                                          errorshow: show == true &&
+                                                  selectedCity == null
+                                              ? true
+                                              : false,
                                           hintText: 'Select City',
                                         );
                                       }
@@ -239,7 +247,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Container(
@@ -247,23 +255,21 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                   child: CustomDrawerButton(
                                     color: AppColors.primaryColor,
                                     text: "SUBMIT",
-                                    onPressed: ()  {
-                                        setState(() {
-                                          show=true;
-                                        });     
-
+                                    onPressed: () {
+                                      setState(() {
+                                        show = true;
+                                      });
 
                                       if (_formKey.currentState!.validate() &&
-                                          validateDropDown())
-                                        {
-                                          collaborateController.collaborate(
-                                              context,
-                                              name.text.toString().trim(),
-                                              phone.text.toString().trim(),
-                                              email.text.toString().trim(),
-                                              selectedCity.toString(),
-                                              selectedState.toString());
-                                        }
+                                          validateDropDown()) {
+                                        collaborateController.collaborate(
+                                            context,
+                                            name.text.toString().trim(),
+                                            phone.text.toString().trim(),
+                                            email.text.toString().trim(),
+                                            selectedCity.toString(),
+                                            selectedState.toString());
+                                      }
                                     },
                                     textStyle: FontConstant.styleRegular(
                                         fontSize: 14,

@@ -107,7 +107,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                             keyboardType: TextInputType.phone,
                             maxlength: 10,
                             validator: (value) {
-                              return Validation.validatePhoneno(value);
+                              return Validation.internationPhoneNo(value);
                             },
                           ),
                           const SizedBox(height: 15),

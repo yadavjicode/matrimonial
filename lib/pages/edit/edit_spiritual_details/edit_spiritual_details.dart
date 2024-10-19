@@ -12,11 +12,9 @@ import 'package:get/get.dart';
 
 class EditSpiritualDetails extends StatefulWidget {
   const EditSpiritualDetails({super.key});
-
   @override
   State<EditSpiritualDetails> createState() => _EditSpiritualDetailsState();
 }
-
 class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
   SpiritualDetailsController spiritualController =
       Get.put(SpiritualDetailsController());
@@ -57,34 +55,38 @@ class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          if (_editProfileController
+                  .member?.member?.spiritualCounselerConnected ==
+              "Yes") {
+            counsellor = 1;
+          } else if (_editProfileController
+                  .member?.member?.spiritualCounselerConnected ==
+              "No") {
+            counsellor = 2;
+          }
+          nameCounselor.text = _editProfileController
+                  .member?.member?.nameOfTheCounselorOfMySpiritualPath ??
+              "";
+          connectCounselor.text = _editProfileController
+                  .member?.member?.connectedWithMyCounselerSince ??
+              "";
+          templeCounselor.text = _editProfileController
+                  .member?.member?.withWhichTempleYourCounselorIsConnectedTo ??
+              "";
+          somethingCounselor.text = _editProfileController
+                  .member?.member?.somethingAboutMoreCounselor ??
+              "";
+          selectedState =
+              _editProfileController.member?.member?.counselorResidingInState;
+          selectedCity =
+              _editProfileController.member?.member?.counselorResidingInCity;
+          stateController.selectItem(
+              _editProfileController.member?.member?.counselorResidingInState);
+        });
+      });
     });
-    if (_editProfileController.member?.member?.spiritualCounselerConnected ==
-        "Yes") {
-      counsellor = 1;
-    } else if (_editProfileController
-            .member?.member?.spiritualCounselerConnected ==
-        "No") {
-      counsellor = 2;
-    }
-    nameCounselor.text = _editProfileController
-            .member?.member?.nameOfTheCounselorOfMySpiritualPath ??
-        "";
-    connectCounselor.text =
-        _editProfileController.member?.member?.connectedWithMyCounselerSince ??
-            "";
-    templeCounselor.text = _editProfileController
-            .member?.member?.withWhichTempleYourCounselorIsConnectedTo ??
-        "";
-    somethingCounselor.text =
-        _editProfileController.member?.member?.somethingAboutMoreCounselor ??
-            "";
-    selectedState =
-        _editProfileController.member?.member?.counselorResidingInState;
-    selectedCity =
-        _editProfileController.member?.member?.counselorResidingInCity;
-    stateController.selectItem(
-        _editProfileController.member?.member?.counselorResidingInState);
   }
 
   @override

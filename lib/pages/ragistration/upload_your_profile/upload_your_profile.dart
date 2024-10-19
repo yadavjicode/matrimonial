@@ -95,7 +95,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                                     style: FontConstant.styleRegular(
                                         fontSize: 15, color: Color(0xff0B0B0B)),
                                   )),
-                              Container(
+                              SizedBox(
                                 width: 200,
                                 child: CustomButton(
                                     text: "Add Photos",
@@ -115,7 +115,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
                                   skipController.skip(context, "step_11", 11)
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   alignment: Alignment.center,
                                   child: Text("SKIP",
                                       style: FontConstant.styleRegular(
@@ -141,7 +141,7 @@ class _UploadYourProfileState extends State<UploadYourProfile> {
             if (completeProfileController.isLoading.value ||
                 flowController.isLoading.value ||
                 skipController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),

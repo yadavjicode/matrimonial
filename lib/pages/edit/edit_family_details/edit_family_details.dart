@@ -183,92 +183,106 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          selectedReligionName =
+              _editProfileController.member?.member?.religion;
+          selectedCastName = _editProfileController.member?.member?.caste;
+          selectedSubCastName = _editProfileController.member?.member?.subcaste;
+          gotraController.text =
+              _editProfileController.member?.member?.gothram ?? "";
+
+          List<String> languages = CommanClass.addCommaSeparatedValuesToList(
+              _editProfileController.member?.member?.language);
+
+          // Step 2: Add to the selectedLanguage list
+          selectedLanguage ??= []; // Initialize if null
+          selectedLanguage!.addAll(languages);
+
+          selectedMothertongue =
+              _editProfileController.member?.member?.motherTongue;
+          fathernameController.text =
+              _editProfileController.member?.member?.fathername ?? "";
+          selectedFatherOccupation =
+              _editProfileController.member?.member?.fathersoccupation;
+          fatherbusinessController.text =
+              _editProfileController.member?.member?.fatherBussness ?? "";
+          selectedFatherAnnualIncomeRange =
+              _editProfileController.member?.member?.fatherAnnualIncome;
+          mothernameController.text =
+              _editProfileController.member?.member?.mothersname ?? "";
+          selectedMotherOccupation =
+              _editProfileController.member?.member?.mothersoccupation;
+          selectedMotherAnnualIncomeRange =
+              _editProfileController.member?.member?.motherAnnualIncome;
+          selectedNoSister = _editProfileController.member?.member?.noofsisters;
+          selectedNoBrother =
+              _editProfileController.member?.member?.noofbrothers;
+
+          if (_editProfileController.member?.member?.fatherlivingstatus ==
+              "Yes") {
+            fatherAlive = 1;
+          } else if (_editProfileController
+                  .member?.member?.fatherlivingstatus ==
+              "No") {
+            fatherAlive = 2;
+          }
+
+          if (_editProfileController.member?.member?.motherlivingstatus ==
+              "Yes") {
+            motherAlive = 1;
+          } else if (_editProfileController
+                  .member?.member?.motherlivingstatus ==
+              "No") {
+            motherAlive = 2;
+          }
+
+          if (_editProfileController.member?.member?.sister == "Yes") {
+            sister = 1;
+          } else if (_editProfileController.member?.member?.sister == "No") {
+            sister = 2;
+          }
+
+          if (_editProfileController.member?.member?.brother == "Yes") {
+            brother = 1;
+          } else if (_editProfileController.member?.member?.brother == "No") {
+            brother = 2;
+          }
+
+          if (_editProfileController.member?.member?.familyType == "Joint") {
+            familytype = 1;
+          } else if (_editProfileController.member?.member?.familyType ==
+              "Nuclear") {
+            familytype = 2;
+          }
+
+          if (_editProfileController.member?.member?.familyvalues ==
+              "Traditional") {
+            familyValue = 1;
+          } else if (_editProfileController.member?.member?.familyvalues ==
+              "Moderate") {
+            familyValue = 2;
+          } else if (_editProfileController.member?.member?.familyvalues ==
+              "Liberal") {
+            familyValue = 3;
+          }
+
+          if (_editProfileController.member?.member?.familyStatus ==
+              "Affluent") {
+            affluenceLevel = 1;
+          } else if (_editProfileController.member?.member?.familyStatus ==
+              "Lower middle") {
+            affluenceLevel = 2;
+          } else if (_editProfileController.member?.member?.familyStatus ==
+              "Middle class") {
+            affluenceLevel = 3;
+          } else if (_editProfileController.member?.member?.familyStatus ==
+              "upper class") {
+            affluenceLevel = 4;
+          }
+        });
+      });
     });
-    selectedReligionName = _editProfileController.member?.member?.religion;
-    selectedCastName = _editProfileController.member?.member?.caste;
-    selectedSubCastName = _editProfileController.member?.member?.subcaste;
-    gotraController.text = _editProfileController.member?.member?.gothram ?? "";
-
-    List<String> languages = CommanClass.addCommaSeparatedValuesToList(
-        _editProfileController.member?.member?.language);
-
-    // Step 2: Add to the selectedLanguage list
-    selectedLanguage ??= []; // Initialize if null
-    selectedLanguage!.addAll(languages);
-
-    selectedMothertongue = _editProfileController.member?.member?.motherTongue;
-    fathernameController.text =
-        _editProfileController.member?.member?.fathername ?? "";
-    selectedFatherOccupation =
-        _editProfileController.member?.member?.fathersoccupation;
-    fatherbusinessController.text =
-        _editProfileController.member?.member?.fatherBussness ?? "";
-    selectedFatherAnnualIncomeRange =
-        _editProfileController.member?.member?.fatherAnnualIncome;
-    mothernameController.text =
-        _editProfileController.member?.member?.mothersname ?? "";
-    selectedMotherOccupation =
-        _editProfileController.member?.member?.mothersoccupation;
-    selectedMotherAnnualIncomeRange =
-        _editProfileController.member?.member?.motherAnnualIncome;
-    selectedNoSister = _editProfileController.member?.member?.noofsisters;
-    selectedNoBrother = _editProfileController.member?.member?.noofbrothers;
-
-    if (_editProfileController.member?.member?.fatherlivingstatus == "Yes") {
-      fatherAlive = 1;
-    } else if (_editProfileController.member?.member?.fatherlivingstatus ==
-        "No") {
-      fatherAlive = 2;
-    }
-
-    if (_editProfileController.member?.member?.motherlivingstatus == "Yes") {
-      motherAlive = 1;
-    } else if (_editProfileController.member?.member?.motherlivingstatus ==
-        "No") {
-      motherAlive = 2;
-    }
-
-    if (_editProfileController.member?.member?.sister == "Yes") {
-      sister = 1;
-    } else if (_editProfileController.member?.member?.sister == "No") {
-      sister = 2;
-    }
-
-    if (_editProfileController.member?.member?.brother == "Yes") {
-      brother = 1;
-    } else if (_editProfileController.member?.member?.brother == "No") {
-      brother = 2;
-    }
-
-    if (_editProfileController.member?.member?.familyType == "Joint") {
-      familytype = 1;
-    } else if (_editProfileController.member?.member?.familyType == "Nuclear") {
-      familytype = 2;
-    }
-
-    if (_editProfileController.member?.member?.familyvalues == "Traditional") {
-      familyValue = 1;
-    } else if (_editProfileController.member?.member?.familyvalues ==
-        "Moderate") {
-      familyValue = 2;
-    } else if (_editProfileController.member?.member?.familyvalues ==
-        "Liberal") {
-      familyValue = 3;
-    }
-
-    if (_editProfileController.member?.member?.familyStatus == "Affluent") {
-      affluenceLevel = 1;
-    } else if (_editProfileController.member?.member?.familyStatus ==
-        "Lower middle") {
-      affluenceLevel = 2;
-    } else if (_editProfileController.member?.member?.familyStatus ==
-        "Middle class") {
-      affluenceLevel = 3;
-    } else if (_editProfileController.member?.member?.familyStatus ==
-        "upper class") {
-      affluenceLevel = 4;
-    }
   }
 
   @override
@@ -670,7 +684,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                   height: 1,
                   decoration: const BoxDecoration(color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -695,7 +709,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       style: FontConstant.styleRegular(
                           fontSize: 16, color: AppColors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Radio(
@@ -717,7 +731,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                 ),
                 if (show == true && getMotherAlive() == null)
                   Container(
-                      margin: EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(bottom: 5),
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Select mother alive",
@@ -729,7 +743,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                     key: _formKeyMother,
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         CustomTextField(
@@ -770,7 +784,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             );
                           }
                         }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Obx(() {

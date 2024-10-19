@@ -587,7 +587,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                       if (value!.isEmpty) {
                         return null;
                       }
-                      return Validation.validatePhoneno(value);
+                      return Validation.internationPhoneNo(value);
                     },
                   ),
                   const SizedBox(height: 30),
@@ -676,7 +676,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                       if (value!.isEmpty) {
                         return null;
                       }
-                      return Validation.validatePhoneno(value);
+                      return Validation.internationPhoneNo(value);
                     },
                   ),
                   const SizedBox(

@@ -36,14 +36,17 @@ class _EditEducationdetailsState extends State<EditEducationdetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          selectedHighestQualifaction =
+              _editProfileController.member?.member?.education;
+          selectedProfessionalQualifaction =
+              _editProfileController.member?.member?.professionalQualification;
+          describeController.text =
+              _editProfileController.member?.member?.otherQualification ?? "";
+        });
+      });
     });
-    selectedHighestQualifaction =
-        _editProfileController.member?.member?.education;
-    selectedProfessionalQualifaction =
-        _editProfileController.member?.member?.professionalQualification;
-    describeController.text =
-        _editProfileController.member?.member?.otherQualification ?? "";
   }
 
   @override

@@ -29,9 +29,13 @@ class _EditContactDetailsState extends State<EditContactDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          instaController.text =
+              _editProfileController.member?.member?.instagramId ?? "";
+        });
+      });
     });
-    instaController.text = _editProfileController.member?.member?.instagramId??"";
   }
 
   @override
@@ -61,7 +65,6 @@ class _EditContactDetailsState extends State<EditContactDetails> {
           ]);
         }));
   }
-
 
   Widget contactContent() {
     final screenWidth = MediaQuery.of(context).size.width;

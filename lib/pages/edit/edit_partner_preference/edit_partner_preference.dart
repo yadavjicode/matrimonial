@@ -128,64 +128,75 @@ class _EditPartnerPreferencesState extends State<EditPartnerPreferences> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          selectAgeFrom =
+              _editProfileController.member?.member?.pEFromAge != null
+                  ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
+                  : null;
+          selectAgeTo = _editProfileController.member?.member?.pEToAge != null
+              ? "${_editProfileController.member?.member?.pEToAge} Yrs"
+              : null;
+          selectWeightFrom =
+              _editProfileController.member?.member?.pEFromWeight != null
+                  ? "${_editProfileController.member?.member?.pEFromWeight} KG"
+                  : null;
+          selectWeightTo =
+              _editProfileController.member?.member?.pEToWeight != null
+                  ? "${_editProfileController.member?.member?.pEToWeight} KG"
+                  : null;
+          selectHeightFrom = _editProfileController.member?.member?.pEHeight;
+          selectHeightFromKey =
+              _editProfileController.member?.member?.peHeightKey;
+          selectHeightTo = _editProfileController.member?.member?.pEHeight2;
+          selectHeightToKey =
+              _editProfileController.member?.member?.peHeight2Key;
+
+          selectedLanguage = CommanClass.addCommaSeparatedValuesToList(
+              _editProfileController.member?.member?.pELanguage);
+          selectedState = CommanClass.addCommaSeparatedValuesToList(
+              _editProfileController.member?.member?.pEState);
+          selectedHighestQualification =
+              CommanClass.addCommaSeparatedValuesToList(
+                  _editProfileController.member?.member?.pEEducation);
+          selectedProfessionalQualification =
+              CommanClass.addCommaSeparatedValuesToList(
+                  _editProfileController.member?.member?.pEProfessional);
+          selectedOccupation = CommanClass.addCommaSeparatedValuesToList(
+              _editProfileController.member?.member?.pEOccupation);
+
+          selectMaritalStatus =
+              _editProfileController.member?.member?.pEMaritalStatus;
+          selectCountry =
+              _editProfileController.member?.member?.pECountrylivingin;
+          selectIncome = _editProfileController.member?.member?.pEAnnualincome;
+          selectReligions = _editProfileController.member?.member?.pEReligion;
+          selectCaste = _editProfileController.member?.member?.pECaste;
+          selectDiet = _editProfileController.member?.member?.pEDiet;
+          selectDrinkHabit = _editProfileController.member?.member?.pEDrink;
+          selectSmokeHabit = _editProfileController.member?.member?.pESmoking;
+
+          if (_editProfileController.member?.member?.familyType == "Joint") {
+            familytype = 1;
+          } else if (_editProfileController.member?.member?.familyType ==
+              "Nuclear") {
+            familytype = 2;
+          }
+          if (_editProfileController.member?.member?.familyvalues ==
+              "Traditional") {
+            familyValue = 1;
+          } else if (_editProfileController.member?.member?.familyvalues ==
+              "Moderate") {
+            familyValue = 2;
+          } else if (_editProfileController.member?.member?.familyvalues ==
+              "Liberal") {
+            familyValue = 3;
+          }
+          countryController.selectItem(
+              _editProfileController.member?.member?.pECountrylivingin);
+        });
+      });
     });
-    selectAgeFrom = _editProfileController.member?.member?.pEFromAge != null
-        ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
-        : null;
-    selectAgeTo = _editProfileController.member?.member?.pEToAge != null
-        ? "${_editProfileController.member?.member?.pEToAge} Yrs"
-        : null;
-    selectWeightFrom =
-        _editProfileController.member?.member?.pEFromWeight != null
-            ? "${_editProfileController.member?.member?.pEFromWeight} KG"
-            : null;
-    selectWeightTo = _editProfileController.member?.member?.pEToWeight != null
-        ? "${_editProfileController.member?.member?.pEToWeight} KG"
-        : null;
-    selectHeightFrom = _editProfileController.member?.member?.pEHeight;
-    selectHeightFromKey = _editProfileController.member?.member?.peHeightKey;
-    selectHeightTo = _editProfileController.member?.member?.pEHeight2;
-    selectHeightToKey = _editProfileController.member?.member?.peHeight2Key;
-
-    selectedLanguage = CommanClass.addCommaSeparatedValuesToList(
-        _editProfileController.member?.member?.pELanguage);
-    selectedState = CommanClass.addCommaSeparatedValuesToList(
-        _editProfileController.member?.member?.pEState);
-    selectedHighestQualification = CommanClass.addCommaSeparatedValuesToList(
-        _editProfileController.member?.member?.pEEducation);
-    selectedProfessionalQualification =
-        CommanClass.addCommaSeparatedValuesToList(
-            _editProfileController.member?.member?.pEProfessional);
-    selectedOccupation = CommanClass.addCommaSeparatedValuesToList(
-        _editProfileController.member?.member?.pEOccupation);
-
-    selectMaritalStatus =
-        _editProfileController.member?.member?.pEMaritalStatus;
-    selectCountry = _editProfileController.member?.member?.pECountrylivingin;
-    selectIncome = _editProfileController.member?.member?.pEAnnualincome;
-    selectReligions = _editProfileController.member?.member?.pEReligion;
-    selectCaste = _editProfileController.member?.member?.pECaste;
-    selectDiet = _editProfileController.member?.member?.pEDiet;
-    selectDrinkHabit = _editProfileController.member?.member?.pEDrink;
-    selectSmokeHabit = _editProfileController.member?.member?.pESmoking;
-
-    if (_editProfileController.member?.member?.familyType == "Joint") {
-      familytype = 1;
-    } else if (_editProfileController.member?.member?.familyType == "Nuclear") {
-      familytype = 2;
-    }
-    if (_editProfileController.member?.member?.familyvalues == "Traditional") {
-      familyValue = 1;
-    } else if (_editProfileController.member?.member?.familyvalues ==
-        "Moderate") {
-      familyValue = 2;
-    } else if (_editProfileController.member?.member?.familyvalues ==
-        "Liberal") {
-      familyValue = 3;
-    }
-    countryController
-        .selectItem(_editProfileController.member?.member?.pECountrylivingin);
   }
 
   ProfessionsController professionController = Get.put(ProfessionsController());

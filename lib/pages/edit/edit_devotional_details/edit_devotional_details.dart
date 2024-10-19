@@ -90,28 +90,34 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _editProfileController.userDetails(context);
+      _editProfileController.userDetails(context).then((value) {
+        setState(() {
+          somethingAbout.text = _editProfileController
+                  .member?.member?.somethingAboutYourDevotionalLife ??
+              "";
+          nameTemple.text =
+              _editProfileController.member?.member?.nameOfTemple ?? "";
+          cityTemple.text =
+              _editProfileController.member?.member?.cityOfTheTemple ?? "";
+          whichSampraya.text =
+              _editProfileController.member?.member?.whichsampradaya ?? "";
+          dikshaGuru.text =
+              _editProfileController.member?.member?.dikshaGuru ?? "";
+          if (_editProfileController.member?.member?.iskonType ==
+              "Already Connected with ISKCON") {
+            iskon_type = 1;
+          } else if (_editProfileController.member?.member?.iskonType ==
+              "Only a Basic idea about ISKCON") {
+            iskon_type = 2;
+          } else if (_editProfileController.member?.member?.iskonType ==
+              "No idea about ISKCON") {
+            iskon_type = 3;
+          }
+          selectHobbies(
+              _editProfileController.member?.member?.devotionalHobbies ?? "");
+        });
+      });
     });
-    somethingAbout.text = _editProfileController
-            .member?.member?.somethingAboutYourDevotionalLife ??
-        "";
-    nameTemple.text = _editProfileController.member?.member?.nameOfTemple ?? "";
-    cityTemple.text = _editProfileController.member?.member?.cityOfTheTemple ?? "";
-    whichSampraya.text =
-        _editProfileController.member?.member?.whichsampradaya ?? "";
-    dikshaGuru.text = _editProfileController.member?.member?.dikshaGuru ?? "";
-    if (_editProfileController.member?.member?.iskonType ==
-        "Already Connected with ISKCON") {
-      iskon_type = 1;
-    } else if (_editProfileController.member?.member?.iskonType ==
-        "Only a Basic idea about ISKCON") {
-      iskon_type = 2;
-    } else if (_editProfileController.member?.member?.iskonType ==
-        "No idea about ISKCON") {
-      iskon_type = 3;
-    }
-    selectHobbies(
-        _editProfileController.member?.member?.devotionalHobbies ?? "");
   }
 
   @override
@@ -343,7 +349,6 @@ class _EditDevotionDetailsState extends State<EditDevotionDetails> {
             ),
             const SizedBox(height: 25),
             _buildContinueButton(),
-           
           ],
         ),
       ),
