@@ -7,15 +7,13 @@ import '../../../../constants/font_constant.dart';
 
 class MusicPlayer extends StatefulWidget {
   const MusicPlayer({super.key});
-
   @override
   State<MusicPlayer> createState() => _MusicPlayerState();
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
   final Map<String, dynamic> arguments = Get.arguments;
-  String thumbnailImgUrl =
-      "https://i.pinimg.com/originals/c2/c5/78/c2c5784e73ad6998193ca3cb6b8a27d2.jpg";
+
   var player = AudioPlayer();
   bool loaded = false;
   bool playing = false;
@@ -83,14 +81,17 @@ class _MusicPlayerState extends State<MusicPlayer> {
               const Spacer(
                 flex: 2,
               ),
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    "assets/images/music.jpg",
-                    height: 350,
-                    width: 350,
-                    fit: BoxFit.cover,
-                  )),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      "assets/images/music.jpg",
+                      height: 350,
+                      width: 350,
+                      fit: BoxFit.cover,
+                    )),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(title,

@@ -15,6 +15,7 @@ class EditSpiritualDetails extends StatefulWidget {
   @override
   State<EditSpiritualDetails> createState() => _EditSpiritualDetailsState();
 }
+
 class _EditSpiritualDetailsState extends State<EditSpiritualDetails> {
   SpiritualDetailsController spiritualController =
       Get.put(SpiritualDetailsController());
