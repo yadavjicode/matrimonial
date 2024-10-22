@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:just_audio/just_audio.dart';
 import '../../../../constants/font_constant.dart';
+import 'dart:async'; // Add this line
+import 'package:just_audio_background/just_audio_background.dart';
 
 class MusicPlayer extends StatefulWidget {
   const MusicPlayer({super.key});
@@ -13,17 +15,33 @@ class MusicPlayer extends StatefulWidget {
 
 class _MusicPlayerState extends State<MusicPlayer> {
   final Map<String, dynamic> arguments = Get.arguments;
-
-  var player = AudioPlayer();
+  final player = AudioPlayerSingleton().player;
   bool loaded = false;
   bool playing = false;
+  late StreamSubscription<PlayerState> _playerStateSubscription;
 
   void loadMusic(String musicUrl) async {
     try {
-      await player.setUrl(musicUrl);
-      setState(() {
-        loaded = true;
-      });
+      final mediaItem = MediaItem(
+        id: musicUrl,
+        // album: "Album Name",
+        title: arguments['title'],
+        // artUri: Uri.parse(
+        //     "https://i.pinimg.com/originals/c2/c5/78/c2c5784e73ad6998193ca3cb6b8a27d2.jpg"),
+      );
+
+      await player.setAudioSource(
+        AudioSource.uri(
+          Uri.parse(musicUrl),
+          tag: mediaItem,
+        ),
+      );
+
+      if (mounted) {
+        setState(() {
+          loaded = true;
+        });
+      }
     } catch (e) {
       print("Error loading music: $e");
     }
@@ -31,9 +49,11 @@ class _MusicPlayerState extends State<MusicPlayer> {
 
   void playMusic() async {
     try {
-      setState(() {
-        playing = true;
-      });
+      if (mounted) {
+        setState(() {
+          playing = true;
+        });
+      }
       await player.play();
     } catch (e) {
       print("Error playing music: $e");
@@ -42,9 +62,11 @@ class _MusicPlayerState extends State<MusicPlayer> {
 
   void pauseMusic() async {
     try {
-      setState(() {
-        playing = false;
-      });
+      if (mounted) {
+        setState(() {
+          playing = false;
+        });
+      }
       await player.pause();
     } catch (e) {
       print("Error pausing music: $e");
@@ -53,16 +75,26 @@ class _MusicPlayerState extends State<MusicPlayer> {
 
   @override
   void initState() {
+    super.initState();
     final String url = arguments['url'];
-    String musicUrl = "https://devoteematrimony.aks.5g.in/${url}";
+    String musicUrl = "https://devoteematrimony.aks.5g.in/$url";
     loadMusic(musicUrl);
     playMusic();
-    super.initState();
+
+    // Listen to player state changes and update the UI
+    _playerStateSubscription = player.playerStateStream.listen((state) {
+      if (mounted && state.playing != playing) {
+        setState(() {
+          playing = state.playing;
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
-    player.dispose();
+    // Cancel the stream listener to avoid calling setState after dispose
+    _playerStateSubscription.cancel();
     super.dispose();
   }
 
@@ -71,11 +103,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
     final String title = arguments['title'];
     return Scaffold(
       backgroundColor: AppColors.background,
-      // appBar: AppBar(
-      //   title: const Text("Music Player"),
-      // ),
       body: SafeArea(
         child: Stack(children: [
+          Container(
+              width: double.infinity,
+              alignment: Alignment.topRight,
+              child: Image.asset("assets/images/background.png")),
           Column(
             children: [
               const Spacer(
@@ -227,5 +260,18 @@ class _MusicPlayerState extends State<MusicPlayer> {
         ]),
       ),
     );
+  }
+}
+
+class AudioPlayerSingleton {
+  static final AudioPlayerSingleton _instance =
+      AudioPlayerSingleton._internal();
+  factory AudioPlayerSingleton() => _instance;
+  AudioPlayerSingleton._internal();
+
+  final AudioPlayer player = AudioPlayer();
+
+  Future<void> dispose() async {
+    await player.dispose();
   }
 }

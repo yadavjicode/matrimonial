@@ -4,7 +4,7 @@ import 'package:just_audio/just_audio.dart';
 class MusicPlayerController extends GetxController {
   var player = AudioPlayer();
   var isPlaying = false.obs;
-  var isLoaded = false.obs;  // Tracks if music is loaded
+  var isLoaded = false.obs; // Tracks if music is loaded
   var currentMusicUrl = ''.obs; // Tracks the current music URL
 
   @override

@@ -218,8 +218,8 @@ class CustomDrawer extends StatelessWidget {
                     child: buildoption(
                         "assets/images/profile_icon.svg", "My Profile", 22, 22),
                   ),
-                  buildoption("assets/images/icons/mypackage.svg",
-                      "My Packages", 22, 22),
+                  // buildoption("assets/images/icons/mypackage.svg",
+                  //     "My Packages", 22, 22),
                   GestureDetector(
                     onTap: () => {Get.toNamed("/myWallet")},
                     child: buildoption(

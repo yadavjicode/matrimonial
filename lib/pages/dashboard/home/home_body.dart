@@ -137,202 +137,197 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
         ),
-        Container(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 8,
-                ),
-                Row(
-                  children: list.map((data) {
-                    String name = "${data.name ?? ""} ${data.surename ?? ""}";
-                    List<String?> haList = [
-                      data.Age != null ? "${data.Age} Yrs" : null,
-                      data.height,
-                    ];
-                    String haString = CommanClass.commaString(haList);
-                    List<String?> eoList = [data.occupation, data.education];
-                    String eoString = CommanClass.hyphenString(eoList);
-                    List<String?> rcList = [data.caste, data.religion];
-                    String rcString = CommanClass.commaString(rcList);
-                    List<String?> scList = [data.state, data.country];
-                    String scString = CommanClass.commaString(scList);
-                    List<String?> infoList = [rcString, scString];
-                    String infos = CommanClass.hyphenString(infoList);
-                    String image = CommanClass.photo(data.Photo1, data.gender);
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 8,
+              ),
+              Row(
+                children: list.map((data) {
+                  String name = "${data.name ?? ""} ${data.surename ?? ""}";
+                  List<String?> haList = [
+                    data.Age != null ? "${data.Age} Yrs" : null,
+                    data.height,
+                  ];
+                  String haString = CommanClass.commaString(haList);
+                  List<String?> eoList = [data.occupation, data.education];
+                  String eoString = CommanClass.hyphenString(eoList);
+                  List<String?> rcList = [data.caste, data.religion];
+                  String rcString = CommanClass.commaString(rcList);
+                  List<String?> scList = [data.state, data.country];
+                  String scString = CommanClass.commaString(scList);
+                  List<String?> infoList = [rcString, scString];
+                  String infos = CommanClass.hyphenString(infoList);
+                  String image = CommanClass.photo(data.Photo1, data.gender);
 
-                    return Container(
-                      width: screenWidth * 0.65,
-                      margin: const EdgeInsets.only(
-                          top: 5, bottom: 10, left: 7, right: 7),
-                      decoration: BoxDecoration(
-                        color: AppColors.constColor,
-                        border: Border.all(color: Colors.grey.shade200),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: Stack(children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (editProfileController
-                                        .member?.member?.accountType ==
-                                    1) {
-                                  profileDetailsController.profileDetails(
-                                      context, data.matriID!, "Matches", "", [
-                                    "1",
-                                    "2",
-                                    "3",
-                                    "4",
-                                    "5",
-                                    "6",
-                                    "7",
-                                    "8",
-                                    "9",
-                                    "10",
-                                    "11",
-                                    "12"
-                                  ]);
-                                } else {
-                                  DialogConstant.packageDialog(
-                                      context, 'view profile feature');
-                                }
-                              },
-                              child: Container(
-                                width: screenWidth * 0.65,
-                                height: screenWidth * 0.65 * (5 / 4),
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10)),
-                                  child: Image.network(
-                                    image,
-                                    width: screenWidth * 0.65,
-                                    height: screenWidth * 0.65 * (5 / 4),
-                                    filterQuality: FilterQuality.high,
-                                    fit: BoxFit.cover,
-                                  ),
+                  return Container(
+                    width: screenWidth * 0.65,
+                    margin: const EdgeInsets.only(
+                        top: 5, bottom: 10, left: 7, right: 7),
+                    decoration: BoxDecoration(
+                      color: AppColors.constColor,
+                      border: Border.all(color: Colors.grey.shade200),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Stack(children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              if (editProfileController
+                                      .member?.member?.accountType ==
+                                  1) {
+                                profileDetailsController.profileDetails(
+                                    context, data.matriID!, "Matches", "", [
+                                  "1",
+                                  "2",
+                                  "3",
+                                  "4",
+                                  "5",
+                                  "6",
+                                  "7",
+                                  "8",
+                                  "9",
+                                  "10",
+                                  "11",
+                                  "12"
+                                ]);
+                              } else {
+                                DialogConstant.packageDialog(
+                                    context, 'view profile feature');
+                              }
+                            },
+                            child: Container(
+                              width: screenWidth * 0.65,
+                              height: screenWidth * 0.65 * (5 / 4),
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10)),
+                                child: Image.network(
+                                  image,
+                                  width: screenWidth * 0.65,
+                                  height: screenWidth * 0.65 * (5 / 4),
+                                  filterQuality: FilterQuality.high,
+                                  fit: BoxFit.cover,
                                 ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10, right: 10, bottom: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    name,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleSemiBold(
-                                        fontSize: 17,
-                                        color: AppColors.primaryColor),
-                                  ),
-                                  Text(
-                                    eoString,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 14,
-                                        color: AppColors.darkgrey),
-                                  ),
-                                  Text(
-                                    haString,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 14,
-                                        color: AppColors.darkgrey),
-                                  ),
-                                  Text(
-                                    infos,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: FontConstant.styleMedium(
-                                        fontSize: 14, color: AppColors.black),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        if (data.accountType == 1)
-                          Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 8),
-                                decoration: const BoxDecoration(
-                                    color: AppColors.constColor,
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10))),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/Crown.png",
-                                      height: 15,
-                                      width: 15,
-                                    ),
-                                    const SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text(
-                                      "Premium",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12,
-                                          color: const Color(0xFFF69506)),
-                                    )
-                                  ],
-                                ),
-                              )),
-                        Positioned(
-                          top: (screenWidth * 0.65 * (5 / 4) - 20),
-                          right: screenWidth * 0.015,
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: GestureDetector(
-                              onTap: () => {
-                                setState(() {
-                                  shortlistController.shortlist(
-                                    context,
-                                    data.matriID!,
-                                    btnOkOnPress: () => {
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        dashboardController.dashboard(context);
-                                      })
-                                    },
-                                  );
-                                }),
-                              },
-                              child: Icon(
-                                data.shortlistStatus == 1
-                                    ? (Icons.favorite)
-                                    : Icons.favorite_border_rounded,
-                                color: data.shortlistStatus == 1
-                                    ? Colors.red
-                                    : AppColors.primaryColor,
-                                size: 30,
                               ),
                             ),
                           ),
-                        )
-                      ]),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-              ],
-            ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  name,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FontConstant.styleSemiBold(
+                                      fontSize: 17,
+                                      color: AppColors.primaryColor),
+                                ),
+                                Text(
+                                  eoString,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 14, color: AppColors.darkgrey),
+                                ),
+                                Text(
+                                  haString,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 14, color: AppColors.darkgrey),
+                                ),
+                                Text(
+                                  infos,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: FontConstant.styleMedium(
+                                      fontSize: 14, color: AppColors.black),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (data.accountType == 1)
+                        Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 8),
+                              decoration: BoxDecoration(
+                                  color: AppColors.black.withOpacity(0.5),
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10))),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Crown.png",
+                                    height: 15,
+                                    width: 15,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    "Premium",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 12,
+                                        color: const Color(0xFFF69506)),
+                                  )
+                                ],
+                              ),
+                            )),
+                      Positioned(
+                        top: (screenWidth * 0.65 * (5 / 4) - 20),
+                        right: screenWidth * 0.015,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 40,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                          child: GestureDetector(
+                            onTap: () => {
+                              setState(() {
+                                shortlistController.shortlist(
+                                  context,
+                                  data.matriID!,
+                                  btnOkOnPress: () => {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      dashboardController.dashboard(context);
+                                    })
+                                  },
+                                );
+                              }),
+                            },
+                            child: Icon(
+                              data.shortlistStatus == 1
+                                  ? (Icons.favorite)
+                                  : Icons.favorite_border_rounded,
+                              color: data.shortlistStatus == 1
+                                  ? Colors.red
+                                  : AppColors.primaryColor,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      )
+                    ]),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(
+                width: 8,
+              ),
+            ],
           ),
         ),
       ],
@@ -372,332 +367,323 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
         ),
-        Container(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                Row(
-                  children: list.map((data) {
-                    String name = "${data.name ?? ""} ${data.surename ?? ""}";
-                    List<String?> haList = [
-                      data.Age != null ? "${data.Age} Yrs" : null,
-                      data.height,
-                    ];
-                    String haString = CommanClass.commaString(haList);
-                    List<String?> eoList = [data.occupation, data.education];
-                    String eoString = CommanClass.hyphenString(eoList);
-                    List<String?> rcList = [data.caste, data.religion];
-                    String rcString = CommanClass.commaString(rcList);
-                    List<String?> scList = [data.state, data.country];
-                    String scString = CommanClass.commaString(scList);
-                    List<String?> infoList = [rcString, scString];
-                    String infos = CommanClass.hyphenString(infoList);
-                    String image = CommanClass.photo(data.Photo1, data.gender);
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Row(
+                children: list.map((data) {
+                  String name = "${data.name ?? ""} ${data.surename ?? ""}";
+                  List<String?> haList = [
+                    data.Age != null ? "${data.Age} Yrs" : null,
+                    data.height,
+                  ];
+                  String haString = CommanClass.commaString(haList);
+                  List<String?> eoList = [data.occupation, data.education];
+                  String eoString = CommanClass.hyphenString(eoList);
+                  List<String?> rcList = [data.caste, data.religion];
+                  String rcString = CommanClass.commaString(rcList);
+                  List<String?> scList = [data.state, data.country];
+                  String scString = CommanClass.commaString(scList);
+                  List<String?> infoList = [rcString, scString];
+                  String infos = CommanClass.hyphenString(infoList);
+                  String image = CommanClass.photo(data.Photo1, data.gender);
 
-                    return Container(
-                      margin: const EdgeInsets.only(
-                          top: 5, bottom: 10, left: 5, right: 5),
-                      decoration: BoxDecoration(
-                        color: AppColors.constColor,
-                        border: Border.all(color: Colors.grey.shade200),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: Stack(children: [
-                        Column(
-                          children: [
-                            Row(
+                  return Container(
+                    margin: const EdgeInsets.only(
+                        top: 5, bottom: 10, left: 5, right: 5),
+                    decoration: BoxDecoration(
+                      color: AppColors.constColor,
+                      border: Border.all(color: Colors.grey.shade200),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Stack(children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (editProfileController
+                                            .member?.member?.accountType ==
+                                        1) {
+                                      profileDetailsController.profileDetails(
+                                          context, data.matriID!, type, "", [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6",
+                                        "7",
+                                        "8",
+                                        "9",
+                                        "10",
+                                        "11",
+                                        "12"
+                                      ]);
+                                    } else {
+                                      DialogConstant.packageDialog(
+                                          context, 'view profile feature');
+                                    }
+                                  },
+                                  child: ProfileImage(
+                                    size: screenWidth * 0.2,
+                                    url: image,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: screenWidth * 0.6,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            name,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FontConstant.styleSemiBold(
+                                                fontSize: 15,
+                                                color: AppColors.primaryColor),
+                                          ),
+                                          Text(
+                                            eoString,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 12,
+                                                color: AppColors.darkgrey),
+                                          ),
+                                          Text(
+                                            haString,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 12,
+                                                color: AppColors.darkgrey),
+                                          ),
+                                          Text(
+                                            infos,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 12,
+                                                color: AppColors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            height: 1,
+                            width: screenWidth * 0.8,
+                            color: Colors.grey.shade200,
+                          ),
+                          Container(
+                            width: screenWidth * 0.8,
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                Expanded(
                                   child: GestureDetector(
                                     onTap: () {
+                                      shortlistController.shortlist(
+                                        context,
+                                        data.matriID!,
+                                        btnOkOnPress: () => {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            dashboardController
+                                                .dashboard(context);
+                                          })
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        // SvgPicture.asset(
+                                        //   "assets/images/like.svg",
+
+                                        //   height: 20,
+                                        //   width: 20,
+                                        // ),
+                                        Icon(
+                                          data.shortlistStatus == 1
+                                              ? (Icons.favorite)
+                                              : Icons.favorite_border_rounded,
+                                          color: data.shortlistStatus == 1
+                                              ? Colors.red
+                                              : AppColors.primaryColor,
+                                          size: 20,
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Shortlist",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 11,
+                                                color: AppColors.black),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () async {
                                       if (editProfileController
                                               .member?.member?.accountType ==
                                           1) {
-                                        profileDetailsController.profileDetails(
-                                            context, data.matriID!, type, "", [
-                                          "1",
-                                          "2",
-                                          "3",
-                                          "4",
-                                          "5",
-                                          "6",
-                                          "7",
-                                          "8",
-                                          "9",
-                                          "10",
-                                          "11",
-                                          "12"
-                                        ]);
-                                      } else {
-                                        DialogConstant.packageDialog(
-                                            context, 'view profile feature');
-                                      }
-                                    },
-                                    child: ProfileImage(
-                                      size: screenWidth * 0.2,
-                                      url: image,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: screenWidth * 0.6,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              name,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleSemiBold(
-                                                  fontSize: 15,
-                                                  color:
-                                                      AppColors.primaryColor),
-                                            ),
-                                            Text(
-                                              eoString,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.darkgrey),
-                                            ),
-                                            Text(
-                                              haString,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.darkgrey),
-                                            ),
-                                            Text(
-                                              infos,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 12,
-                                                  color: AppColors.black),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              height: 1,
-                              width: screenWidth * 0.8,
-                              color: Colors.grey.shade200,
-                            ),
-                            Container(
-                              width: screenWidth * 0.8,
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        shortlistController.shortlist(
-                                          context,
-                                          data.matriID!,
-                                          btnOkOnPress: () => {
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) {
-                                              dashboardController
-                                                  .dashboard(context);
-                                            })
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          // SvgPicture.asset(
-                                          //   "assets/images/like.svg",
-
-                                          //   height: 20,
-                                          //   width: 20,
-                                          // ),
-                                          Icon(
-                                            data.shortlistStatus == 1
-                                                ? (Icons.favorite)
-                                                : Icons.favorite_border_rounded,
-                                            color: data.shortlistStatus == 1
-                                                ? Colors.red
-                                                : AppColors.primaryColor,
-                                            size: 20,
-                                          ),
-                                          const SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "Shortlist",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 11,
-                                                  color: AppColors.black),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        if (editProfileController
-                                                .member?.member?.accountType ==
-                                            1) {
-                                          if (data.chatStatus == 1) {
-                                            if (data.matriID!
-                                                    .trim()
-                                                    .isNotEmpty &&
-                                                data.matriID != null) {
-                                              await APIs.addChatUser(
-                                                      data.matriID!)
-                                                  .then((value) {
-                                                if (!value) {
-                                                  Dialogs.showSnackbar(context,
-                                                      'User does not Exists!');
-                                                } else {
-                                                  APIs.fetchUser(
-                                                    context,
-                                                    data.matriID
-                                                        .toString()
-                                                        .trim(),
-                                                  );
-                                                }
-                                              });
-                                            }
-                                          } else {
-                                            Dialogs.showSnackbar(context,
-                                                'The user is not added in your list!');
+                                        if (data.chatStatus == 1) {
+                                          if (data.matriID!.trim().isNotEmpty &&
+                                              data.matriID != null) {
+                                            await APIs.addChatUser(
+                                                    data.matriID!)
+                                                .then((value) {
+                                              if (!value) {
+                                                Dialogs.showSnackbar(context,
+                                                    'User does not Exists!');
+                                              } else {
+                                                APIs.fetchUser(
+                                                  context,
+                                                  data.matriID
+                                                      .toString()
+                                                      .trim(),
+                                                );
+                                              }
+                                            });
                                           }
                                         } else {
-                                          DialogConstant.packageDialog(
-                                              context, 'chat feature');
+                                          Dialogs.showSnackbar(context,
+                                              'The user is not added in your list!');
                                         }
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/images/chat_d.svg",
-                                            height: 20,
-                                            width: 20,
+                                      } else {
+                                        DialogConstant.packageDialog(
+                                            context, 'chat feature');
+                                      }
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/images/chat_d.svg",
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "Chat Now",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 11,
+                                                color: AppColors.black),
                                           ),
-                                          const SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "Chat Now",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 11,
-                                                  color: AppColors.black),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        print("${data.matriID}");
-                                        sentInvitationController.sentInvitation(
-                                          context,
-                                          data.matriID!,
-                                          btnOkOnPress: () => {
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) {
-                                              dashboardController
-                                                  .dashboard(context);
-                                            })
-                                          },
-                                        );
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/images/send_icon.svg",
-                                            height: 20,
-                                            width: 20,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      print("${data.matriID}");
+                                      sentInvitationController.sentInvitation(
+                                        context,
+                                        data.matriID!,
+                                        btnOkOnPress: () => {
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            dashboardController
+                                                .dashboard(context);
+                                          })
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/images/send_icon.svg",
+                                          height: 20,
+                                          width: 20,
+                                        ),
+                                        const SizedBox(
+                                          width: 3,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            data.interestStatus == 1
+                                                ? "Sent Interest"
+                                                : "Send Interest",
+                                            style: FontConstant.styleMedium(
+                                                fontSize: 11,
+                                                color: AppColors.black),
                                           ),
-                                          const SizedBox(
-                                            width: 3,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              data.interestStatus == 1
-                                                  ? "Sent Interest"
-                                                  : "Send Interest",
-                                              style: FontConstant.styleMedium(
-                                                  fontSize: 11,
-                                                  color: AppColors.black),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      if (data.accountType == 1)
+                        Positioned(
+                            right: 0,
+                            top: 0,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 8),
+                              decoration: BoxDecoration(
+                                  color: AppColors.black.withOpacity(0.05),
+                                  borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(10))),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Crown.png",
+                                    height: 15,
+                                    width: 15,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    "Premium",
+                                    style: FontConstant.styleMedium(
+                                        fontSize: 12,
+                                        color: const Color(0xFFF69506)),
                                   )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                        if (data.accountType == 1)
-                          Positioned(
-                              right: 0,
-                              top: 0,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 8),
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(10))),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      "assets/images/Crown.png",
-                                      height: 15,
-                                      width: 15,
-                                    ),
-                                    const SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text(
-                                      "Premium",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 12,
-                                          color: const Color(0xFFF69506)),
-                                    )
-                                  ],
-                                ),
-                              ))
-                      ]),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
+                            ))
+                    ]),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
           ),
         ),
       ],
