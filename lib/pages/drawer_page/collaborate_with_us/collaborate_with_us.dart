@@ -118,7 +118,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                                       controller: phone,
                                       labelText: "Phone No.",
                                       hintText: "Enter phone no.",
-                                      maxlength: 10,
+                                    maxlength: 15,
                                       keyboardType: TextInputType.phone,
                                       borderRadius: 5,
                                       validator: (value) {

@@ -582,7 +582,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                     labelText: 'Mobile *',
                     hintText: "Enter Mobile No",
                     keyboardType: TextInputType.phone,
-                    maxlength: 10,
+                   maxlength: 15,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return null;
@@ -671,7 +671,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                     labelText: 'Mobile *',
                     hintText: "Enter Mobile No",
                     keyboardType: TextInputType.phone,
-                    maxlength: 10,
+                    maxlength: 15,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return null;

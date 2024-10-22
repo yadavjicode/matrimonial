@@ -105,7 +105,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                             hintText: "Enter Phone Number",
                             controller: phonecontroller,
                             keyboardType: TextInputType.phone,
-                            maxlength: 10,
+                            maxlength: 15,
                             validator: (value) {
                               return Validation.internationPhoneNo(value);
                             },

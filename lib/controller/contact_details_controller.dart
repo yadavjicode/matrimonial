@@ -5,7 +5,6 @@ import 'package:devotee/model/contact_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
-
 import '../utils/connection_check/connectivity_service.dart';
 
 class ContactDetailsController with ChangeNotifier {
@@ -15,7 +14,7 @@ class ContactDetailsController with ChangeNotifier {
   String? _error;
   ContactDetailsModel? get member => _member;
   String? get error => _error;
-  final FlowController flowController=Get.put(FlowController());
+  final FlowController flowController = Get.put(FlowController());
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   final ConnectivityService connectivityService =
@@ -25,22 +24,21 @@ class ContactDetailsController with ChangeNotifier {
       String email, String instaid, bool status) async {
     isLoading.value = true;
     _error = null;
-    notifyListeners();  
+    notifyListeners();
 
     try {
       _member = await apiService.contactDetails(mobileno, email, instaid);
-      if(status){
+      if (status) {
         _editProfileController.userDetails(context);
-       Navigator.pop(context);
-      }else{
+        Navigator.pop(context);
+      } else {
         flowController.Flow(context, 3);
       }
-      
+
       // Get.toNamed('/location');
     } catch (e) {
       _error = e.toString();
       print(_error);
-
       // Show error message using ScaffoldMessenger
       if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");

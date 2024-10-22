@@ -141,6 +141,7 @@ class _MobilePageState extends State<MobilePage> {
                                   padding: const EdgeInsets.only(top: 8),
                                   child: CustomTextField(
                                     controller: mobileno,
+                                    maxlength: 15,
                                     hintText: "Enter Your Mobile Number",
                                     validator: (value) {
                                       return Validation.internationPhoneNo(

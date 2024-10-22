@@ -24,8 +24,7 @@ class Flows with ChangeNotifier {
       print("Checking step $i with value ${steps[i]}");
       if (steps[i] == 0) {
         print("Navigating to step ${i + 1}");
-        // Get.off(getStepPage(i + 1));
-        Get.off(() => getStepPage(i + 1));
+        Get.off(getStepPage(i + 1));
         // Get.off(() => getStepPage(i + 1));
         return;
       }
