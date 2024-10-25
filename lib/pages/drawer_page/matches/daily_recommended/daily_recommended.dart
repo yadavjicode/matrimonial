@@ -1,8 +1,7 @@
 import 'package:devotee/chat/api/apis.dart';
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
-import 'package:devotee/chat/models/chat_user.dart';
-import 'package:devotee/chat/screens/chat_screen.dart';
+
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
@@ -144,7 +143,10 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id,"daily_recommendation", "daily_recommendation", [
+                                    context,
+                                    id,
+                                    "daily_recommendation",
+                                    "daily_recommendation", [
                                   "1",
                                   "2",
                                   "3",
@@ -156,7 +158,10 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   "9",
                                   "10",
                                   "11",
-                                  "12"
+                                  "12",
+                                  "13",
+                                  "14"
+                                  ,"15"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -255,8 +260,8 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   ),
                                   if (data.accountType == 1)
                                     Container(
-                                      margin:
-                                          const EdgeInsets.symmetric(horizontal: 5),
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5),
                                       width: 1,
                                       height: 12,
                                       color: AppColors.grey,
@@ -446,7 +451,10 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, id,"daily_recommendation", "daily_recommendation", [
+                                    context,
+                                    id,
+                                    "daily_recommendation",
+                                    "daily_recommendation", [
                                   "1",
                                   "2",
                                   "3",
@@ -458,7 +466,10 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                   "9",
                                   "10",
                                   "11",
-                                  "12"
+                                  "12",
+                                  "13",
+                                  "14"
+                                  ,"15"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(

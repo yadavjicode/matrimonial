@@ -762,44 +762,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                         "/editPartnerPreference",
                         Column(
                           children: [
-                            _buildText(
-                                "Age Range From",
-                                _editProfileController
-                                            .member?.member?.pEFromAge !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Age Range To",
-                                _editProfileController
-                                            .member?.member?.pEToAge !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEToAge} Yrs"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Body Weight From",
-                                _editProfileController
-                                            .member?.member?.pEFromWeight !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEFromWeight} KG"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Body Weight To",
-                                _editProfileController
-                                            .member?.member?.pEToWeight !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEToWeight} KG"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Height Range From",
-                                _editProfileController
-                                        .member?.member?.pEHeight ??
-                                    "Not Mentioned"),
-                            _buildText(
-                                "Height Range To",
-                                _editProfileController
-                                        .member?.member?.pEHeight2 ??
-                                    "Not Mentioned"),
+                            _buildText("Age Range",
+                                "${_editProfileController.member?.member?.pEFromAge != null ? "${_editProfileController.member?.member?.pEFromAge}" : "_"} To ${_editProfileController.member?.member?.pEToAge != null ? "${_editProfileController.member?.member?.pEToAge}" : "_"} Yrs"),
+                            _buildText("Body Weight Range",
+                                "${_editProfileController.member?.member?.pEFromWeight != null ? "${_editProfileController.member?.member?.pEFromWeight}" : "_"} To ${_editProfileController.member?.member?.pEToWeight != null ? "${_editProfileController.member?.member?.pEToWeight}" : "_"} KG"),
+                            _buildText("Height Range",
+                                "${_editProfileController.member?.member?.pEHeight ?? "_"} To ${_editProfileController.member?.member?.pEHeight2 ?? "_"}"),
                             _buildText(
                                 "Languages Known",
                                 _editProfileController
@@ -946,7 +914,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   color: AppColors.primaryColor,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               GestureDetector(
                 onTap: () {
                   Get.toNamed(move);
@@ -957,8 +925,10 @@ class _ProfileEditState extends State<ProfileEdit> {
           ),
         ),
         Container(
-          color: AppColors.constColor,
-          padding: EdgeInsets.only(
+          decoration: const BoxDecoration(
+              color: AppColors.constColor,
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          padding: const EdgeInsets.only(
             left: 15,
             right: 25,
             bottom: 15,

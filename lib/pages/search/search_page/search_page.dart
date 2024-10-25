@@ -12,7 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
+import '../../../constants/CustomTextFeild.dart';
 import '../../../constants/lists/highest_qualification_list.dart';
+import '../../../constants/lists/title_profession_list.dart';
 import '../../../constants/widget/Snackbar.dart';
 import '../../../constants/widget/dialog.dart';
 
@@ -46,6 +48,8 @@ class _SearchPageState extends State<SearchPage> {
       Get.put(HighestQualController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
+  final TextEditingController nameController = TextEditingController();
+  ProfessionController professionController = Get.put(ProfessionController());
 
   String? selectAgeFrom;
   String? selectAgeTo;
@@ -58,7 +62,8 @@ class _SearchPageState extends State<SearchPage> {
   String? selectState;
   String? selectCity;
   String? selectEducation;
-  int? profileFilter=0;
+  int? profileFilter = 0;
+  String? selectedProfession;
 
   String getLookingFor() {
     if (_selectedIndex == 0) {
@@ -93,7 +98,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   bool valodation() {
-    if (selectAgeFrom != null && selectAgeFrom != 'Prefer Not To Say' ||
+    if (selectAgeFrom != null && selectAgeFrom != 'Prefer Not To Say' ||  nameController.text.isNotEmpty||
         selectAgeTo != null && selectAgeTo != 'Prefer Not To Say' ||
         selectHeightFromKey != null &&
             selectHeightFromKey != 'Prefer Not To Say' ||
@@ -106,6 +111,8 @@ class _SearchPageState extends State<SearchPage> {
         selectState != null && selectState != 'Prefer Not To Say' ||
         selectCity != null && selectCity != 'Prefer Not To Say' ||
         selectEducation != null && selectEducation != 'Prefer Not To Say' ||
+        selectedProfession != null &&
+            selectedProfession != 'Prefer Not To Say' ||
         getProfilePercentage().isNotEmpty) {
       return true;
     } else {
@@ -115,9 +122,6 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: AppColors.primaryLight,
       appBar: AppBar(
@@ -140,83 +144,18 @@ class _SearchPageState extends State<SearchPage> {
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 22, right: 22, top: 30, bottom: 30),
+                      left: 22, right: 22, top: 20, bottom: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // CustomTextField(
-                      //   labelText: "Search Keywords",
-                      //   hintText: "e.g. by name, by ID etc.",
-                      // ),
-                      // SizedBox(
-                      //   height: 15,
-                      // ),
-                      // Text(
-                      //   'Looking For',
-                      //   style: FontConstant.styleRegular(
-                      //       fontSize: 16, color: Colors.black),
-                      // ),
-                      // const SizedBox(height: 10),
-                      // SizedBox(
-                      //   height: 50,
-                      //   width: double.infinity,
-                      //   child: GridView.builder(
-                      //     physics: const NeverScrollableScrollPhysics(),
-                      //     scrollDirection: Axis.vertical,
-                      //     gridDelegate:
-                      //         const SliverGridDelegateWithFixedCrossAxisCount(
-                      //       crossAxisCount: 2,
-                      //       crossAxisSpacing: 10,
-                      //       mainAxisSpacing: 1,
-                      //       childAspectRatio: 3.5,
-                      //     ),
-                      //     itemCount: looking.length,
-                      //     itemBuilder: (context, index) {
-                      //       return GestureDetector(
-                      //         onTap: () {
-                      //           setState(() {
-                      //             _selectedIndex = index;
-                      //           });
-                      //         },
-                      //         child: Card(
-                      //           color: _selectedIndex == index
-                      //               ? AppColors.constColor
-                      //               : AppColors.background,
-                      //           child: Container(
-                      //             decoration: BoxDecoration(
-                      //               borderRadius: BorderRadius.circular(10),
-                      //               border: _selectedIndex == index
-                      //                   ? Border.all(
-                      //                       color: AppColors.primaryColor,
-                      //                       width: 2)
-                      //                   : null,
-                      //             ),
-                      //             child: Row(
-                      //               mainAxisAlignment: MainAxisAlignment.center,
-                      //               children: [
-                      //                 CircleAvatar(
-                      //                   backgroundColor: Colors.transparent,
-                      //                   radius: 20,
-                      //                   child: looking[index].image,
-                      //                 ),
-                      //                 const SizedBox(height: 8),
-                      //                 Text(
-                      //                   looking[index].gender,
-                      //                   style: FontConstant.styleMedium(
-                      //                       fontSize: 14,
-                      //                       color: AppColors.primaryColor),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 10,
-                      // ),
+                      CustomTextField(
+                        controller: nameController,
+                        labelText: "Name",
+                        hintText: "By Name",
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         "Age",
                         style: FontConstant.styleRegular(
@@ -255,55 +194,6 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                         ),
                       ]),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(top: 10),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //       Text(
-                      //         'Height',
-                      //         style: FontConstant.styleRegular(
-                      //             fontSize: 16, color: Colors.black),
-                      //       ),
-                      //       RangeSlider(
-                      //         activeColor: AppColors.purple,
-                      //         values: _currentRangeValues,
-                      //         min: 3.0,
-                      //         max: 7.0,
-                      //         divisions:
-                      //             40, // 40 divisions for steps of 0.1 (e.g., (7-3)/0.1)
-                      //         labels: RangeLabels(
-                      //           _currentRangeValues.start.toStringAsFixed(1),
-                      //           _currentRangeValues.end.toStringAsFixed(1),
-                      //         ),
-                      //         onChanged: (RangeValues values) {
-                      //           setState(() {
-                      //             _currentRangeValues = values;
-                      //             _heightFrom = _currentRangeValues.start
-                      //                 .toStringAsFixed(1);
-                      //             _heightTo = _currentRangeValues.end
-                      //                 .toStringAsFixed(1);
-                      //           });
-                      //         },
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text(
-                      //             "3 feet",
-                      //             style: FontConstant.styleRegular(
-                      //                 fontSize: 15, color: AppColors.black),
-                      //           ),
-                      //           Spacer(),
-                      //           Text(
-                      //             "7 feet",
-                      //             style: FontConstant.styleRegular(
-                      //                 fontSize: 15, color: AppColors.black),
-                      //           )
-                      //         ],
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Row(
@@ -387,7 +277,6 @@ class _SearchPageState extends State<SearchPage> {
                           ],
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Obx(() {
@@ -632,6 +521,39 @@ class _SearchPageState extends State<SearchPage> {
                           })),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
+                        child: Obx(() {
+                          if (professionController.isLoading.value) {
+                            return buildDropdownWithSearch(
+                              'Title of the Profession *',
+                              ['Loading...'],
+                              (value) {
+                                setState(() {
+                                  selectedProfession = null;
+                                });
+                              },
+                              selectedItem: 'Loading...',
+                              hintText: 'Select Profession',
+                            );
+                          } else {
+                            return buildDropdownWithSearch(
+                              'Profession',
+                              professionController.getProfessionList(),
+                              (value) {
+                                setState(() {
+                                  selectedProfession =
+                                      value; // Update the state
+                                });
+                                professionController.selectItem(
+                                    value); // Call the controller method
+                              },
+                              selectedItem: selectedProfession,
+                              hintText: 'Select Profession',
+                            );
+                          }
+                        }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -705,6 +627,8 @@ class _SearchPageState extends State<SearchPage> {
                               1) {
                             if (valodation()) {
                               Get.toNamed('/searchresult', arguments: {
+                                "name": nameController.text.toString().trim(),
+                                "profession": checkString(selectedProfession),
                                 "ageFrom": searchController
                                     .getAge(checkString(selectAgeFrom)),
                                 "ageTo": searchController

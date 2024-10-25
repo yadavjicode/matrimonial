@@ -122,7 +122,7 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, mId,"Matches", "", [
+                                    context, mId, "Matches", "", [
                                   "1",
                                   "2",
                                   "3",
@@ -134,7 +134,10 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                   "9",
                                   "10",
                                   "11",
-                                  "12"
+                                  "12",
+                                  "13",
+                                  "14",
+                                  "15"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -275,8 +278,8 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                                     ?.member?.accountType ==
                                                 1) {
                                               profileDetailsController
-                                                  .profileDetails(
-                                                      context, mId,"Matches", "", [
+                                                  .profileDetails(context, mId,
+                                                      "Matches", "", [
                                                 "1",
                                                 "2",
                                                 "3",
@@ -288,7 +291,10 @@ class _ReceivedAcceptedState extends State<ReceivedAccepted> {
                                                 "9",
                                                 "10",
                                                 "11",
-                                                "12"
+                                                "12",
+                                                "13",
+                                                "14"
+                                                ,"15"
                                               ]);
                                             } else {
                                               DialogConstant.packageDialog(

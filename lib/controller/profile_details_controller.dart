@@ -30,18 +30,21 @@ class ProfileDetailsController with ChangeNotifier {
         Get.toNamed('/profiledtls', arguments: {
           "type": type,
           "keys": keys,
-          "ageFrom": search![0] ?? "",
-          "ageTo": search[1] ?? "",
-          "heightFrom": search[2] ?? "",
-          "heightTo": search[3] ?? "",
-          "maritalStatus": search[4] ?? "",
-          "religion": search[5] ?? "",
-          "caste": search[6] ?? "",
-          "country": search[7] ?? "",
-          "state": search[8] ?? "",
-          "city": search[9] ?? "",
-          "education": search[10] ?? "",
-          "profilePer": search[11] ?? ""
+          "name": search![0],
+          "profession": search![1],
+          "ageFrom": search![2] ?? "",
+          "ageTo": search[3] ?? "",
+          "heightFrom": search[4] ?? "",
+          "heightTo": search[5] ?? "",
+          "maritalStatus": search[6] ?? "",
+          "religion": search[7] ?? "",
+          "caste": search[8] ?? "",
+          "country": search[9] ?? "",
+          "state": search[10] ?? "",
+          "city": search[11] ?? "",
+          "education": search[12] ?? "",
+          "profilePer": search[13] ?? "",
+          "sort": search[14] ?? ""
         });
       } else {
         throw Exception("Profile details not found.");

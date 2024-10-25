@@ -4,7 +4,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../constants/widget/Snackbar.dart';
 import '../../constants/widget/dialog.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
@@ -30,6 +29,20 @@ class _ChatUserCardState extends State<ChatUserCard> {
   //last message info (if null --> no message)
   Message? _message;
   String? count;
+  bool isBlocked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkBlockStatus();
+  }
+
+  Future<void> _checkBlockStatus() async {
+    bool blocked = await APIs.isBlocked(widget.user.id);
+    setState(() {
+      isBlocked = blocked;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +96,8 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 child: Stack(children: [
                   ProfileImage(
                       size: screenHeight * .055, url: widget.user.image),
-                  if (userProfileController.member?.member?.accountType == 1)
+                  if (userProfileController.member?.member?.accountType == 1 &&
+                      !isBlocked)
                     onlineStatus(),
                 ]),
               ),

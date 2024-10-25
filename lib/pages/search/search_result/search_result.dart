@@ -56,6 +56,8 @@ class _SearchResultState extends State<SearchResult> {
 
   @override
   void initState() {
+    final String name = arguments['name'];
+    final String profession = arguments['profession'];
     final String ageFrom = arguments['ageFrom'];
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
@@ -72,6 +74,8 @@ class _SearchResultState extends State<SearchResult> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       searchController.reset(
           context,
+          name,
+          profession,
           ageFrom,
           ageTo,
           heightFrom,
@@ -87,6 +91,8 @@ class _SearchResultState extends State<SearchResult> {
           getSort());
       searchController.search(
           context,
+          name,
+          profession,
           ageFrom,
           ageTo,
           heightFrom,
@@ -108,6 +114,8 @@ class _SearchResultState extends State<SearchResult> {
           searchController.hasMore.value) {
         searchController.loadNextPage(
             context,
+            name,
+            profession,
             ageFrom,
             ageTo,
             heightFrom,
@@ -129,6 +137,8 @@ class _SearchResultState extends State<SearchResult> {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final String name = arguments['name'];
+    final String profession = arguments['profession'];
     final String ageFrom = arguments['ageFrom'];
     final String ageTo = arguments['ageTo'];
     final String heightFrom = arguments['heightFrom'];
@@ -163,6 +173,8 @@ class _SearchResultState extends State<SearchResult> {
             onPressed: () {
               _appThemeBottomSheet(
                   context,
+                  name,
+                  profession,
                   ageFrom,
                   ageTo,
                   heightFrom,
@@ -257,6 +269,8 @@ class _SearchResultState extends State<SearchResult> {
                                                           id,
                                                           "Search",
                                                           "search", [
+                                                    name,
+                                                    profession,
                                                     ageFrom,
                                                     ageTo,
                                                     heightFrom,
@@ -268,7 +282,8 @@ class _SearchResultState extends State<SearchResult> {
                                                     state,
                                                     city,
                                                     education,
-                                                    profilePer
+                                                    profilePer,
+                                                    getSort()
                                                   ])
                                                 }
                                               else
@@ -645,6 +660,8 @@ class _SearchResultState extends State<SearchResult> {
                                                           id,
                                                           "Search",
                                                           "search", [
+                                                    name,
+                                                    profession,
                                                     ageFrom,
                                                     ageTo,
                                                     heightFrom,
@@ -656,7 +673,8 @@ class _SearchResultState extends State<SearchResult> {
                                                     state,
                                                     city,
                                                     education,
-                                                    profilePer
+                                                    profilePer,
+                                                    getSort()
                                                   ])
                                                 }
                                               else
@@ -729,6 +747,8 @@ class _SearchResultState extends State<SearchResult> {
 
   void _appThemeBottomSheet(
     BuildContext context,
+    String name,
+    String profession,
     String ageFrom,
     String ageTo,
     String heightFrom,
@@ -807,6 +827,8 @@ class _SearchResultState extends State<SearchResult> {
                               onTap: () {
                                 searchController.reset(
                                     context,
+                                    name,
+                                    profession,
                                     ageFrom,
                                     ageTo,
                                     heightFrom,
@@ -823,6 +845,8 @@ class _SearchResultState extends State<SearchResult> {
 
                                 searchController.search(
                                     context,
+                                    name,
+                                    profession,
                                     ageFrom,
                                     ageTo,
                                     heightFrom,

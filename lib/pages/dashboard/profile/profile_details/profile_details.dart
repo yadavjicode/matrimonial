@@ -57,6 +57,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
   Widget build(BuildContext context) {
     String type = arguments['type'];
     String keys = arguments['keys'];
+    String name = arguments['name'];
+    String profession = arguments['profession'];
     String ageFrom = arguments['ageFrom'];
     String ageTo = arguments['ageTo'];
     String heightFrom = arguments['heightFrom'];
@@ -69,6 +71,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
     String city = arguments['city'];
     String education = arguments['education'];
     String profilePer = arguments['profilePer'];
+    String sort = arguments['sort'];
 
     return Scaffold(
         backgroundColor: AppColors.background,
@@ -104,7 +107,10 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                       "9",
                       "10",
                       "11",
-                      "12"
+                      "12",
+                      "13",
+                      "14",
+                      "15"
                     ]);
                   }
                 } else if (details.primaryVelocity! > 0) {
@@ -123,7 +129,10 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                       "9",
                       "10",
                       "11",
-                      "12"
+                      "12",
+                      "13",
+                      "14",
+                      "15"
                     ]);
                   }
                 }
@@ -138,6 +147,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                             ProfileHeader(
                               value: keys,
                               search: [
+                                name,
+                                profession,
                                 ageFrom,
                                 ageTo,
                                 heightFrom,
@@ -149,7 +160,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                 state,
                                 city,
                                 education,
-                                profilePer
+                                profilePer,
+                                sort
                               ],
                             ),
                             BasicDetails(),
@@ -274,6 +286,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                     {
                                                       searchController.reset(
                                                           context,
+                                                          name,
+                                                          profession,
                                                           ageFrom,
                                                           ageTo,
                                                           heightFrom,
@@ -286,7 +300,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                           city,
                                                           education,
                                                           profilePer,
-                                                          "")
+                                                          sort)
                                                     },
                                                   Navigator.of(context).pop()
                                                 },
@@ -345,6 +359,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                     {
                                                       searchController.reset(
                                                           context,
+                                                          name,
+                                                          profession,
                                                           ageFrom,
                                                           ageTo,
                                                           heightFrom,
@@ -357,7 +373,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                           city,
                                                           education,
                                                           profilePer,
-                                                          "")
+                                                          sort)
                                                     }
                                                 },
                                               );
@@ -413,7 +429,10 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                           "9",
                           "10",
                           "11",
-                          "12"
+                          "12",
+                          "13",
+                          "14",
+                           "15"
                         ])
                       },
                       child: Container(
@@ -466,7 +485,10 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                         "9",
                         "10",
                         "11",
-                        "12"
+                        "12",
+                        "13",
+                        "14"
+                        "15"
                       ])
                     },
                     child: Container(

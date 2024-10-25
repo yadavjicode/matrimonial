@@ -704,6 +704,8 @@ class ApiService {
 
   Future<SearchsModel> search(
       int page,
+      String name,
+      String profession,
       String ageFrom,
       String ageTo,
       String heightFrom,
@@ -722,6 +724,8 @@ class ApiService {
     final Map<String, dynamic> body = {};
 
     // Conditionally add parameters if they are not null
+    if (name != null) body['search_name'] = name;
+    if (profession != null) body['search_profession'] = profession;
     if (ageFrom != null) body['From_Age'] = ageFrom;
     if (ageTo != null) body['To_Age'] = ageTo;
     if (heightFrom != null) body['From_Height'] = heightFrom;

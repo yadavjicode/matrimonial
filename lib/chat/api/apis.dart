@@ -647,6 +647,8 @@ class APIs with ChangeNotifier {
   }
 
 //=======================================================================================================
+
+// Block user
   static Future<void> blockUser(String blockedUserId) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -662,9 +664,9 @@ class APIs with ChangeNotifier {
     }, SetOptions(merge: true));
   }
 
+// To get block status
   static Future<bool> isBlocked(String otherUserId) async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
     try {
       // Reference to the chat document
       String chatId = getConversationID(
@@ -684,7 +686,6 @@ class APIs with ChangeNotifier {
         if (blockedData != null) {
           String? blockedBy = blockedData['blockedBy']; // Nullable
           String? blockedUserId = blockedData['blockedUserId']; // Nullable
-
           // Check if the current user (myId) is either blocking or blocked
           return (blockedBy == myid || blockedUserId == myid);
         }

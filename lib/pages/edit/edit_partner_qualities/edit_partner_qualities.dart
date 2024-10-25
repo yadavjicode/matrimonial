@@ -78,7 +78,6 @@ class _EditPartnerQualitesState extends State<EditPartnerQualites> {
 
   void selectHobbies(String selectedHobbies) {
     List<String> selectedList = selectedHobbies.split(', ');
-
     hobbies.forEach((key, value) {
       hobbies[key] = selectedList.contains(key);
     });

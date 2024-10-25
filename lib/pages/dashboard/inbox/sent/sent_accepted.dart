@@ -61,7 +61,6 @@ class _SentAcceptedState extends State<SentAccepted> {
 
   Widget acceptedContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     final member = inboxSentController.member;
     if (member == null ||
         member.responseData == null ||
@@ -121,7 +120,7 @@ class _SentAcceptedState extends State<SentAccepted> {
                                       .member?.member?.accountType ==
                                   1) {
                                 profileDetailsController.profileDetails(
-                                    context, mId,"Matches", "", [
+                                    context, mId, "Matches", "", [
                                   "1",
                                   "2",
                                   "3",
@@ -133,7 +132,10 @@ class _SentAcceptedState extends State<SentAccepted> {
                                   "9",
                                   "10",
                                   "11",
-                                  "12"
+                                  "12",
+                                  "13",
+                                  "14",
+                                  "15"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -275,8 +277,8 @@ class _SentAcceptedState extends State<SentAccepted> {
                                                     ?.member?.accountType ==
                                                 1) {
                                               profileDetailsController
-                                                  .profileDetails(
-                                                      context, mId,"Matches", "", [
+                                                  .profileDetails(context, mId,
+                                                      "Matches", "", [
                                                 "1",
                                                 "2",
                                                 "3",
@@ -288,7 +290,10 @@ class _SentAcceptedState extends State<SentAccepted> {
                                                 "9",
                                                 "10",
                                                 "11",
-                                                "12"
+                                                "12",
+                                                "13",
+                                                "14",
+                                                "15"
                                               ]);
                                             } else {
                                               DialogConstant.packageDialog(

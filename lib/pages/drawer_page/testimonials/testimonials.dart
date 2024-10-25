@@ -107,7 +107,7 @@ class _TestimonialState extends State<Testimonial> {
             children: testimonialController.member!.data!.map((data) {
               String name = data.name ?? "";
               String profile = data.designation ?? "";
-              double rating = data.rating ?? 0.0;
+              double rating = data.rating * 1.0 ?? 0.0;
               String feedback = data.description ?? "";
               String image = data.image != null
                   ? "http://devoteematrimony.aks.5g.in/${data.image}"

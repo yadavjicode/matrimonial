@@ -6,6 +6,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../constants/widget/Snackbar.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -411,19 +412,25 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 //send message button
                 MaterialButton(
-                  onPressed: () {
-                    if (_textController.text.isNotEmpty) {
-                      if (_list.isEmpty) {
-                        //on first message (add user to my_user collection of chat user)
-                        APIs.sendFirstMessage(
-                            widget.user, _textController.text, Type.text);
-                      } else {
-                        //simply send message
+                  onPressed: () async {
+                    bool blocked = await APIs.isBlocked(widget.user.id);
+                    if (!blocked) {
+                      if (_textController.text.isNotEmpty) {
+                        if (_list.isEmpty) {
+                          //on first message (add user to my_user collection of chat user)
+                          APIs.sendFirstMessage(
+                              widget.user, _textController.text, Type.text);
+                        } else {
+                          //simply send message
 
-                        APIs.sendMessage(
-                            widget.user, _textController.text, Type.text);
+                          APIs.sendMessage(
+                              widget.user, _textController.text, Type.text);
+                        }
+                        _textController.text = '';
                       }
-                      _textController.text = '';
+                    } else {
+                      Dialogs.showSnackbar(
+                          context, "You cannot chat with this user.");
                     }
                   },
                   minWidth: 0,

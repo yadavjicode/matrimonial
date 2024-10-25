@@ -43,6 +43,8 @@ class SearchsController extends GetxController {
   // Function to fetch matches
   Future<void> search(
       BuildContext context,
+      String name,
+      String profession,
       String ageFrom,
       String ageTo,
       String heightFrom,
@@ -62,6 +64,8 @@ class SearchsController extends GetxController {
     try {
       final response = await apiService.search(
           currentPage.value,
+          name,
+          profession,
           ageFrom,
           ageTo,
           heightFrom,
@@ -113,6 +117,8 @@ class SearchsController extends GetxController {
   // Function to load the next page
   void loadNextPage(
       BuildContext context,
+      String name,
+      String profession,
       String ageFrom,
       String ageTo,
       String heightFrom,
@@ -128,14 +134,31 @@ class SearchsController extends GetxController {
       String sortby) {
     if (hasMore.value) {
       currentPage.value++;
-      search(context, ageFrom, ageTo, heightFrom, heightTo, maritalStatus,
-          religion, caste, country, state, city, education, profilePer, sortby);
+      search(
+          context,
+          name,
+          profession,
+          ageFrom,
+          ageTo,
+          heightFrom,
+          heightTo,
+          maritalStatus,
+          religion,
+          caste,
+          country,
+          state,
+          city,
+          education,
+          profilePer,
+          sortby);
     }
   }
 
   // Function to reset pagination and data
   void reset(
       BuildContext context,
+      String name,
+      String profession,
       String ageFrom,
       String ageTo,
       String heightFrom,
@@ -153,7 +176,22 @@ class SearchsController extends GetxController {
     currentPage.value = 1;
     lastPage.value = 1;
     hasMore.value = true;
-    search(context, ageFrom, ageTo, heightFrom, heightTo, maritalStatus,
-        religion, caste, country, state, city, education, profilePer, sortby);
+    search(
+        context,
+        name,
+        profession,
+        ageFrom,
+        ageTo,
+        heightFrom,
+        heightTo,
+        maritalStatus,
+        religion,
+        caste,
+        country,
+        state,
+        city,
+        education,
+        profilePer,
+        sortby);
   }
 }
