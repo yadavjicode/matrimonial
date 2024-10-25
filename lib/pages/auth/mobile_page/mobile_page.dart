@@ -23,7 +23,7 @@ class _MobilePageState extends State<MobilePage> {
       Get.put(CountryCodeController());
   final TextEditingController mobileno = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String? seletedCountryCode;
+  String? seletedCountryCode = "+91";
   bool? show;
 
   @override
@@ -119,6 +119,7 @@ class _MobilePageState extends State<MobilePage> {
                                             seletedCountryCode = value;
                                           });
                                         },
+                                        selectedItem: seletedCountryCode,
                                         borderColor: show == true &&
                                                 seletedCountryCode == null
                                             ? Colors.red

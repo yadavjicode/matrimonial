@@ -633,8 +633,8 @@ class APIs with ChangeNotifier {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ChatScreen(user: user), // Directly pass the fetched user
+            builder: (context) => ChatScreen(
+                user: user, block: false), // Directly pass the fetched user
           ),
         );
       } else {
@@ -647,4 +647,83 @@ class APIs with ChangeNotifier {
   }
 
 //=======================================================================================================
+  static Future<void> blockUser(String blockedUserId) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Reference to the chat document
+    String chatId = getConversationID(blockedUserId);
+
+    // Set block data in Firestore
+    await firestore.collection('chats').doc(chatId).set({
+      'blocked': {
+        'blockedBy': myid,
+        'blockedUserId': blockedUserId,
+      },
+    }, SetOptions(merge: true));
+  }
+
+  static Future<bool> isBlocked(String otherUserId) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      // Reference to the chat document
+      String chatId = getConversationID(
+          otherUserId); // Ensure this function returns the correct chat ID
+
+      DocumentSnapshot chatSnapshot =
+          await firestore.collection('chats').doc(chatId).get();
+
+      // Check if the chat document exists
+      if (chatSnapshot.exists) {
+        // Cast the data to Map<String, dynamic> for safe access
+        var data = chatSnapshot.data() as Map<String, dynamic>?;
+
+        // Safely access 'blocked' data
+        var blockedData = data?['blocked']
+            as Map<String, dynamic>?; // Cast to Map if it exists
+        if (blockedData != null) {
+          String? blockedBy = blockedData['blockedBy']; // Nullable
+          String? blockedUserId = blockedData['blockedUserId']; // Nullable
+
+          // Check if the current user (myId) is either blocking or blocked
+          return (blockedBy == myid || blockedUserId == myid);
+        }
+      }
+    } catch (e) {
+      print('Error checking block status: $e'); // Log any errors
+    }
+    return false; // Not blocked or an error occurred
+  }
+
+  // static Stream<bool> isBlock(String otherUserId) {
+  //   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  //   // Get the chat ID based on the conversation between two users
+  //   String chatId = getConversationID(otherUserId);
+
+  //   // Listen to real-time changes in the document
+  //   return firestore
+  //       .collection('chats')
+  //       .doc(chatId)
+  //       .snapshots()
+  //       .map((snapshot) {
+  //     if (snapshot.exists) {
+  //       // Safely access the data in the document
+  //       var data = snapshot.data() as Map<String, dynamic>?;
+
+  //       // Access the 'blocked' field in the document
+  //       var blockedData = data?['blocked'] as Map<String, dynamic>?;
+
+  //       if (blockedData != null) {
+  //         String? blockedBy = blockedData['blockedBy']; // Nullable
+  //         String? blockedUserId = blockedData['blockedUserId']; // Nullable
+
+  //         // Return true if the current user is involved in blocking or being blocked
+  //         return (blockedBy == myid || blockedUserId == myid);
+  //       }
+  //     }
+
+  //     return false; // Default to false if no blocking is found
+  //   });
+  // }
 }

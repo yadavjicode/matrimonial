@@ -55,7 +55,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
@@ -71,7 +71,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                     height: 38,
                                     width: 38,
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: AppColors.constColor),
                                     child: Image.asset(
@@ -96,7 +96,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                     height: 38,
                                     width: 38,
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: AppColors.constColor),
                                     child: Image.asset(
@@ -113,10 +113,11 @@ class _PackageDetailsState extends State<PackageDetails> {
                             )
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         _packageSelect(
+                            context,
                             "Able to see photos uploaded on others Profile",
                             packageController.member!.data!.free!
                                 .ableToSeePhotosOnOthersProfile!
@@ -125,6 +126,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 .ableToSeePhotosOnOthersProfile!
                                 .toInt()),
                         _packageSelect(
+                            context,
                             "Use Filter/ Sorting Feature",
                             packageController
                                 .member!.data!.free!.useFilterSortingFeature!
@@ -133,6 +135,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 .member!.data!.premium!.useFilterSortingFeature!
                                 .toInt()),
                         _packageSelect(
+                            context,
                             "View Full Profile of Others",
                             packageController
                                 .member!.data!.free!.viewFullProfileOfOthers!
@@ -141,6 +144,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 .member!.data!.premium!.viewFullProfileOfOthers!
                                 .toInt()),
                         _packageSelect(
+                            context,
                             "Using Search Feature",
                             packageController
                                 .member!.data!.free!.usingSearchFeature!
@@ -149,11 +153,13 @@ class _PackageDetailsState extends State<PackageDetails> {
                                 .member!.data!.premium!.usingSearchFeature!
                                 .toInt()),
                         _packageSelect(
+                            context,
                             "Chat",
                             packageController.member!.data!.free!.chat!.toInt(),
                             packageController.member!.data!.premium!.chat!
                                 .toInt()),
                         _packageSelect(
+                            context,
                             "See Contact No.s",
                             packageController
                                 .member!.data!.free!.seeContactNumbers!
@@ -202,12 +208,13 @@ class _PackageDetailsState extends State<PackageDetails> {
                               textStyle: FontConstant.styleRegular(
                                   fontSize: 16, color: AppColors.constColor)),
                         ),
+                        
                       ],
                     ),
                   ),
                 ),
               if (packageController.isLoading.value)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -220,7 +227,8 @@ class _PackageDetailsState extends State<PackageDetails> {
   }
 }
 
-Widget _packageSelect(String tittle, int free, int Premium) {
+Widget _packageSelect(
+    BuildContext context, String tittle, int free, int Premium) {
   return Column(
     children: [
       Row(
@@ -240,7 +248,7 @@ Widget _packageSelect(String tittle, int free, int Premium) {
                       height: 19,
                       width: 19,
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.green,
                       ),
@@ -250,9 +258,9 @@ Widget _packageSelect(String tittle, int free, int Premium) {
                       height: 19,
                       width: 19,
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: AppColors.red),
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         size: 17,
                         color: AppColors.constColor,
@@ -268,7 +276,7 @@ Widget _packageSelect(String tittle, int free, int Premium) {
                       height: 19,
                       width: 19,
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.green,
                       ),
@@ -278,9 +286,9 @@ Widget _packageSelect(String tittle, int free, int Premium) {
                       height: 19,
                       width: 19,
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           shape: BoxShape.circle, color: AppColors.red),
-                      child: Icon(
+                      child: const Icon(
                         Icons.close,
                         size: 17,
                         color: AppColors.constColor,

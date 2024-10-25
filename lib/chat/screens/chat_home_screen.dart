@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
-    
+
     //for updating user active status according to lifecycle events
     //resume -- active or online
     //pause  -- inactive or offline
@@ -197,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ));
-      
+
                 //if some or all data is loaded then show it
                 case ConnectionState.active:
                 case ConnectionState.done:
@@ -222,9 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ?.map((e) => ChatUser.fromJson(e.data()))
                                   .toList() ??
                               [];
-                          
-                          
-
 
                           if (_list.isNotEmpty) {
                             return ListView.builder(
@@ -234,6 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.only(top: 10),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
+                                  print("hii");
                                   return ChatUserCard(
                                       user: _isSearching
                                           ? _searchList[index]

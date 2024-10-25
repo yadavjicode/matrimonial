@@ -56,7 +56,7 @@ class _ComplaintState extends State<Complaint> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Image.asset("assets/images/complaint.png",
                               fit: BoxFit.cover),
@@ -65,14 +65,14 @@ class _ComplaintState extends State<Complaint> {
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               DrawerCommanCode()
                                   .buildTextBold("Hare Krishna!\n"),
                               DrawerCommanCode().buildText(
                                   "If you are facing any payment related problem or any technical problem, you can inform the same to us:\n"),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               CustomTextField(
@@ -87,7 +87,7 @@ class _ComplaintState extends State<Complaint> {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -97,23 +97,23 @@ class _ComplaintState extends State<Complaint> {
                                       controller: phone,
                                       labelText: "Phone No.",
                                       hintText: "Enter phone no.",
-                                      maxlength: 10,
+                                      maxlength: 15,
                                       keyboardType: TextInputType.phone,
                                       borderRadius: 5,
                                       validator: (value) {
-                                        return Validation.validatePhoneno(
+                                        return Validation.internationPhoneNo(
                                             value);
                                       },
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Expanded(
                                     child: CustomTextField(
                                       controller: email,
                                       labelText: "Email ID",
-                                       hintText: "Enter email ID",
+                                      hintText: "Enter email ID",
                                       borderRadius: 5,
                                       validator: (value) {
                                         return Validation.validateEmail(value);
@@ -122,7 +122,7 @@ class _ComplaintState extends State<Complaint> {
                                   )
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               CustomTextField(
@@ -138,7 +138,7 @@ class _ComplaintState extends State<Complaint> {
                                   return null;
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Container(

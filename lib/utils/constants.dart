@@ -55,6 +55,8 @@ class ApiConstants {
   static const String recommendedUrl = "member/inspiration-list";
   static const String musicUrl = "member/songs-list";
   static const String htmlContentUrl = "member/pages";
+  static const String blockUrl = "member/block-user";
+  static const String addTestimonialUrl = "member/save-testimonial";
 }
 
 late Size mq;

@@ -24,6 +24,13 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
   final Map<String, dynamic> arguments = Get.arguments;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    editProfilePhotoController.selectedImage.value = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final String imageurl = arguments['imageUrl'];
     final String values = arguments['value'];

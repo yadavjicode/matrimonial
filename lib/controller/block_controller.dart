@@ -7,40 +7,43 @@ import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
 
 import '../constants/widget/Snackbar.dart';
+import '../model/block_model.dart';
 import '../utils/connection_check/connectivity_service.dart';
-import 'flow_controller.dart';
 
-class BuyPackageController with ChangeNotifier {
+class BlockController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  BuyPackageModel? _member;
+  BlockModel? _member;
   var isLoading = false.obs;
   String? _error;
-  BuyPackageModel? get member => _member;
+  BlockModel? get member => _member;
   String? get error => _error;
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
-  final FlowController flowController = Get.put(FlowController());
 
-  Future<void> buyPackage(BuildContext context) async {
+  Future<void> block(
+    BuildContext context,
+    String id, {
+    VoidCallback? btnOkOnPress,
+  }) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
-      _member = await apiService.BuyPackage();
+      _member = await apiService.block(id);
 
       // ignore: use_build_context_synchronously
       CustomDialog.show(
         context,
-        '${member!.title}',
-        '${member!.message}',
+        'Blocked',
+        '${member?.message ?? ""}',
         dialogType: DialogType.success,
-        btnOkOnPress: () => {
-          // editProfileController.userDetails(context),
-          flowController.Flow(context, 12)
-        },
+        btnOkOnPress: btnOkOnPress ??
+            () {
+              // Navigator.of(context).pop(); // Default action if none is provided
+            },
       );
     } catch (e) {
       _error = e.toString();

@@ -1,6 +1,8 @@
+import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/testimonial_controller.dart';
+import 'package:devotee/model/testimonial_model.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -16,16 +18,17 @@ class Testimonial extends StatefulWidget {
 class _TestimonialState extends State<Testimonial> {
   String selectedText = "";
   int selectedIndex = -1;
-  
- final TestimonialController testimonialController=Get.put(TestimonialController()); 
- @override
+
+  final TestimonialController testimonialController =
+      Get.put(TestimonialController());
+  @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       testimonialController.testimonial(context);
-     
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,23 +56,32 @@ class _TestimonialState extends State<Testimonial> {
                 child: Image.asset("assets/images/testimonial.png",
                     fit: BoxFit.cover),
               ),
+              Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: CustomDrawerButton(
+                    color: AppColors.primaryColor,
+                    text: "Add Testimonial",
+                    onPressed: () => {Get.toNamed("/addTestimonials")},
+                    textStyle: FontConstant.styleRegular(
+                        fontSize: 14, color: AppColors.constColor),
+                  )),
               Obx(() {
-             return Expanded(
-               child: Stack(
-               children: [
-                if (testimonialController.isLoading.value == false)
-                testimonialContent(),
-             
-                if (testimonialController.isLoading.value)
-                  Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
+                return Expanded(
+                  child: Stack(
+                    children: [
+                      if (testimonialController.isLoading.value == false)
+                        testimonialContent(),
+                      if (testimonialController.isLoading.value)
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                    ],
                   ),
-                         ],
-                       ),
-             );
-        })
+                );
+              })
             ],
           )
         ],
@@ -77,8 +89,15 @@ class _TestimonialState extends State<Testimonial> {
     );
   }
 
-  Widget testimonialContent(){
-    
+  Widget testimonialContent() {
+    if (testimonialController.member == null ||
+        testimonialController.member?.data == null) {
+      return Center(
+        child: Text("No testimonials available",
+            style: FontConstant.styleMedium(
+                fontSize: 15, color: AppColors.darkgrey)),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: SingleChildScrollView(
@@ -86,14 +105,14 @@ class _TestimonialState extends State<Testimonial> {
           padding: const EdgeInsets.only(bottom: 20),
           child: Column(
             children: testimonialController.member!.data!.map((data) {
-              String name = data.name??"";
-              String profile = data.designation??"";
-              int rating = data.rating??"";
-              String feedback = data.description??"";
+              String name = data.name ?? "";
+              String profile = data.designation ?? "";
+              double rating = data.rating ?? 0.0;
+              String feedback = data.description ?? "";
               String image = data.image != null
-           ? "http://devoteematrimony.aks.5g.in/${data.image}"
-           : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
-      
+                  ? "http://devoteematrimony.aks.5g.in/${data.image}"
+                  : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
+
               return GestureDetector(
                 onTap: () {
                   // Get.toNamed('/profiledtls');
@@ -103,71 +122,57 @@ class _TestimonialState extends State<Testimonial> {
                   child: Column(
                     children: [
                       Row(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-              height: 70,
-              width: 70,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: AppColors.grey),
-              child: ClipOval(
-                  child: Image.network(
-                image,
-                fit: BoxFit.cover,
-              )),
-            ),
+                              height: 70,
+                              width: 70,
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.grey),
+                              child: ClipOval(
+                                  child: Image.network(
+                                image,
+                                fit: BoxFit.cover,
+                              )),
+                            ),
                           ),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     name,
-                                    style: FontConstant
-                                        .styleSemiBold(
-                                            fontSize: 14,
-                                            color: AppColors
-                                                .primaryColor),
+                                    style: FontConstant.styleSemiBold(
+                                        fontSize: 14,
+                                        color: AppColors.primaryColor),
                                   ),
-                                  SizedBox(width: 20),
+                                  const SizedBox(width: 20),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.only(
-                                            top: 2),
+                                    padding: const EdgeInsets.only(top: 2),
                                     child: Text(
                                       profile,
-                                      style: FontConstant
-                                          .styleMedium(
-                                              fontSize: 12,
-                                              color: AppColors
-                                                  .black),
+                                      style: FontConstant.styleMedium(
+                                          fontSize: 12, color: AppColors.black),
                                     ),
                                   ),
                                   RatingBar.builder(
                                     itemSize: 20,
-                                    initialRating: rating
-                                        .toDouble(), // Initial rating
-                                    minRating:
-                                        0, // Minimum rating
+                                    initialRating: rating, // Initial rating
+                                    minRating: 0, // Minimum rating
                                     direction: Axis
                                         .horizontal, // Direction of the rating bar
-                                    allowHalfRating:
-                                        true, // Allow half rating
-                                    itemCount:
-                                        rating, // Number of stars
+                                    allowHalfRating: true, // Allow half rating
+                                    itemCount: 5, // Number of stars
                                     // itemPadding: EdgeInsets.symmetric(
                                     //     horizontal:
                                     //         4.0), // Padding between stars
-                                    itemBuilder: (context, _) =>
-                                        Icon(
+                                    itemBuilder: (context, _) => const Icon(
                                       Icons.star,
                                       color: Color(
                                           0xffEDB118), // Color of the stars
@@ -185,12 +190,8 @@ class _TestimonialState extends State<Testimonial> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            left: 8,
-                            right: 8,
-                            top: 2,
-                            bottom: 10),
-                        child: DrawerCommanCode()
-                            .buildText(feedback),
+                            left: 8, right: 8, top: 2, bottom: 10),
+                        child: DrawerCommanCode().buildText(feedback),
                       ),
                     ],
                   ),

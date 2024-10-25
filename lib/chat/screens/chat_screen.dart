@@ -17,7 +17,8 @@ import 'view_profile_screen.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatUser user;
-  const ChatScreen({super.key, required this.user});
+  final bool block;
+  const ChatScreen({super.key, required this.user, required this.block});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -154,7 +155,7 @@ class _ChatScreenState extends State<ChatScreen> {
           elevation: 0,
           backgroundColor: AppColors.primaryColor,
           automaticallyImplyLeading: false,
-          flexibleSpace: _appBar(),
+          flexibleSpace: _appBar(context, widget.block),
         ),
 
         backgroundColor: AppColors.background,
@@ -199,7 +200,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             child: CircularProgressIndicator(strokeWidth: 2))),
 
                   //chat input filed
-                  _chatInput(),
+                  _chatInput(context, widget.block),
 
                   //show emojis on keyboard emoji button click & vice versa
                   if (_showEmoji)
@@ -247,7 +248,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // app bar widget
-  Widget _appBar() {
+  Widget _appBar(BuildContext context, bool block) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     return SafeArea(
@@ -299,17 +300,18 @@ class _ChatScreenState extends State<ChatScreen> {
                         const SizedBox(height: 2),
 
                         //last seen time of user
-                        Text(
-                          list.isNotEmpty
-                              ? _getStatusMessage(list[
-                                  0]) // Method to determine the status message
-                              : _getStatusMessage(widget
-                                  .user), // Fallback to the widget's user data
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: AppColors.constColor,
+                        if (!block)
+                          Text(
+                            list.isNotEmpty
+                                ? _getStatusMessage(list[
+                                    0]) // Method to determine the status message
+                                : _getStatusMessage(widget
+                                    .user), // Fallback to the widget's user data
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: AppColors.constColor,
+                            ),
                           ),
-                        ),
                       ],
                     )
                   ],
@@ -319,117 +321,126 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   // bottom chat input field
-  Widget _chatInput() {
+  Widget _chatInput(BuildContext context, bool block) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: screenHeight * .01, horizontal: screenWidth * .025),
-      child: Row(
-        children: [
-          //input field & buttons
-          Expanded(
-            child: Card(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
-              child: Row(
-                children: [
-                  //emoji button
-                  IconButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        setState(() => _showEmoji = !_showEmoji);
-                      },
-                      icon: const Icon(Icons.emoji_emotions,
-                          color: AppColors.primaryColor, size: 25)),
+    return !block
+        ? Padding(
+            padding: EdgeInsets.symmetric(
+                vertical: screenHeight * .01, horizontal: screenWidth * .025),
+            child: Row(
+              children: [
+                //input field & buttons
+                Expanded(
+                  child: Card(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Row(
+                      children: [
+                        //emoji button
+                        IconButton(
+                            onPressed: () {
+                              FocusScope.of(context).unfocus();
+                              setState(() => _showEmoji = !_showEmoji);
+                            },
+                            icon: const Icon(Icons.emoji_emotions,
+                                color: AppColors.primaryColor, size: 25)),
 
-                  Expanded(
-                      child: TextField(
-                    controller: _textController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    onTap: () {
-                      if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
-                    },
-                    decoration: const InputDecoration(
-                        hintText: 'Type Something...',
-                        hintStyle: TextStyle(color: AppColors.primaryColor),
-                        border: InputBorder.none),
-                  )),
+                        Expanded(
+                            child: TextField(
+                          controller: _textController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          onTap: () {
+                            if (_showEmoji)
+                              setState(() => _showEmoji = !_showEmoji);
+                          },
+                          decoration: const InputDecoration(
+                              hintText: 'Type Something...',
+                              hintStyle:
+                                  TextStyle(color: AppColors.primaryColor),
+                              border: InputBorder.none),
+                        )),
 
-                  //pick image from gallery button
-                  IconButton(
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
+                        //pick image from gallery button
+                        IconButton(
+                            onPressed: () async {
+                              final ImagePicker picker = ImagePicker();
 
-                        // Picking multiple images
-                        final List<XFile> images =
-                            await picker.pickMultiImage(imageQuality: 70);
+                              // Picking multiple images
+                              final List<XFile> images =
+                                  await picker.pickMultiImage(imageQuality: 70);
 
-                        // uploading & sending image one by one
-                        for (var i in images) {
-                          log('Image Path: ${i.path}');
-                          setState(() => _isUploading = true);
-                          await APIs.sendChatImage(widget.user, File(i.path));
-                          setState(() => _isUploading = false);
-                        }
-                      },
-                      icon: const Icon(Icons.image,
-                          color: AppColors.primaryColor, size: 26)),
+                              // uploading & sending image one by one
+                              for (var i in images) {
+                                log('Image Path: ${i.path}');
+                                setState(() => _isUploading = true);
+                                await APIs.sendChatImage(
+                                    widget.user, File(i.path));
+                                setState(() => _isUploading = false);
+                              }
+                            },
+                            icon: const Icon(Icons.image,
+                                color: AppColors.primaryColor, size: 26)),
 
-                  //take image from camera button
-                  IconButton(
-                      onPressed: () async {
-                        final ImagePicker picker = ImagePicker();
+                        //take image from camera button
+                        IconButton(
+                            onPressed: () async {
+                              final ImagePicker picker = ImagePicker();
 
-                        // Pick an image
-                        final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 70);
-                        if (image != null) {
-                          log('Image Path: ${image.path}');
-                          setState(() => _isUploading = true);
+                              // Pick an image
+                              final XFile? image = await picker.pickImage(
+                                  source: ImageSource.camera, imageQuality: 70);
+                              if (image != null) {
+                                log('Image Path: ${image.path}');
+                                setState(() => _isUploading = true);
 
-                          await APIs.sendChatImage(
-                              widget.user, File(image.path));
-                          setState(() => _isUploading = false);
-                        }
-                      },
-                      icon: const Icon(Icons.camera_alt_rounded,
-                          color: AppColors.primaryColor, size: 26)),
+                                await APIs.sendChatImage(
+                                    widget.user, File(image.path));
+                                setState(() => _isUploading = false);
+                              }
+                            },
+                            icon: const Icon(Icons.camera_alt_rounded,
+                                color: AppColors.primaryColor, size: 26)),
 
-                  //adding some space
-                  SizedBox(width: screenWidth * .02),
-                ],
-              ),
+                        //adding some space
+                        SizedBox(width: screenWidth * .02),
+                      ],
+                    ),
+                  ),
+                ),
+                //send message button
+                MaterialButton(
+                  onPressed: () {
+                    if (_textController.text.isNotEmpty) {
+                      if (_list.isEmpty) {
+                        //on first message (add user to my_user collection of chat user)
+                        APIs.sendFirstMessage(
+                            widget.user, _textController.text, Type.text);
+                      } else {
+                        //simply send message
+
+                        APIs.sendMessage(
+                            widget.user, _textController.text, Type.text);
+                      }
+                      _textController.text = '';
+                    }
+                  },
+                  minWidth: 0,
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 10, right: 5, left: 10),
+                  shape: const CircleBorder(),
+                  color: AppColors.primaryColor,
+                  child: const Icon(Icons.send, color: Colors.white, size: 28),
+                )
+              ],
             ),
-          ),
-
-          //send message button
-          MaterialButton(
-            onPressed: () {
-              if (_textController.text.isNotEmpty) {
-                if (_list.isEmpty) {
-                  //on first message (add user to my_user collection of chat user)
-                  APIs.sendFirstMessage(
-                      widget.user, _textController.text, Type.text);
-                } else {
-                  //simply send message
-
-                  APIs.sendMessage(
-                      widget.user, _textController.text, Type.text);
-                }
-                _textController.text = '';
-              }
-            },
-            minWidth: 0,
-            padding:
-                const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
-            shape: const CircleBorder(),
-            color: AppColors.primaryColor,
-            child: const Icon(Icons.send, color: Colors.white, size: 28),
           )
-        ],
-      ),
-    );
+        : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text("Conversation is blocked.",
+                style: FontConstant.styleMedium(
+                    fontSize: 15, color: AppColors.darkgrey)),
+          );
   }
 }

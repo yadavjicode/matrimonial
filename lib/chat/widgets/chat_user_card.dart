@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../constants/widget/Snackbar.dart';
 import '../../constants/widget/dialog.dart';
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
@@ -40,13 +43,23 @@ class _ChatUserCardState extends State<ChatUserCard> {
           borderRadius: BorderRadius.all(Radius.circular(15))),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
-        onTap: () {
+        onTap: () async {
           //for navigating to chat screen
           if (userProfileController.member?.member?.accountType == 1) {
+            //here i want to check block
+            bool blocked = await APIs.isBlocked(widget.user.id);
+            // if (!blocked) {
+            // ignore: use_build_context_synchronously
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => ChatScreen(user: widget.user)));
+                    builder: (_) => ChatScreen(
+                          user: widget.user,
+                          block: blocked,
+                        )));
+            // } else {
+            //   Dialogs.showSnackbar(context, "You cannot chat with this user.");
+            // }
           } else {
             DialogConstant.packageDialog(context, 'chat feature');
           }

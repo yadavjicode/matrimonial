@@ -134,7 +134,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                       // user email label
                       Text("${widget.user.name}",
-                          style: FontConstant.styleSemiBold(fontSize: 16, color: AppColors.black)),
+                          style: FontConstant.styleSemiBold(
+                              fontSize: 16, color: AppColors.black)),
 
                       // for adding some space
                       SizedBox(height: screenHeight * .03),
@@ -204,8 +205,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           }
                         },
                         icon: const Icon(Icons.edit, size: 24),
-                        label:  Text('UPDATE',
-                            style: FontConstant.styleRegular(fontSize:16 , color: AppColors.constColor)),
+                        label: Text('UPDATE',
+                            style: FontConstant.styleRegular(
+                                fontSize: 16, color: AppColors.constColor)),
                       )
                     ],
                   ),

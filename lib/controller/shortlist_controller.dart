@@ -22,23 +22,25 @@ class ShortlistController with ChangeNotifier {
     BuildContext context,
     String id, {
     VoidCallback? btnOkOnPress, // Optional btnOkOnPress function
-  }) async {
+  }
+  ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
       _member = await apiService.Shortlist(id);
+      // ignore: use_build_context_synchronously
       CustomDialog.show(
         context,
-        member?.message??"",
+        member?.message??"",  
         member?.title??"",
         dialogType: DialogType.success,
         btnOkOnPress: btnOkOnPress ??
             () {
               // Navigator.of(context).pop(); // Default action if none is provided
             },
-      );
+      );    
     } catch (e) {
       _error = e.toString();
       print(_error);

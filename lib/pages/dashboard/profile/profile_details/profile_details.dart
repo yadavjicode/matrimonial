@@ -4,6 +4,7 @@ import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
+import 'package:devotee/controller/block_controller.dart';
 import 'package:devotee/controller/dashboard_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -37,6 +38,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
 
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
+  final BlockController blockController = Get.put(BlockController());
 
   final Map<String, dynamic> arguments = Get.arguments;
 
@@ -220,86 +222,167 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text('Chat NOW'),
+                                  Text('CHAT NOW'),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        if (profileDetailsController.member?.data?.chatStatus !=
-                            1)
-                          Expanded(
-                            child: Padding(
+                        Expanded(
+                          child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
-                              child: ElevatedButton(
-                                onPressed: sentInvitationController
-                                        .isLoading.value
-                                    ? null
-                                    : () async {
-                                        sentInvitationController
-                                            .isLoading.value = true;
-                                        print(
-                                            "${profileDetailsController.member?.data?.matriID}");
-                                        sentInvitationController.sentInvitation(
-                                          context,
-                                          profileDetailsController
-                                              .member?.data?.matriID,
-                                          btnOkOnPress: () => {
-                                            dashboardController
-                                                .dashboard(context),
-                                            print("value=====${keys}"),
-                                            if (keys == "near_by_list" ||
-                                                keys == "education_list" ||
-                                                keys == "profession_list" ||
-                                                keys == "recently_joined" ||
-                                                keys == "intrested_in_you" ||
-                                                keys ==
-                                                    "daily_recommendation" ||
-                                                keys == "matches")
-                                              {
-                                                matchesController.reset(
-                                                    context, keys)
-                                              },
-                                            if (keys == "search")
-                                              {
-                                                searchController.reset(
-                                                    context,
-                                                    ageFrom,
-                                                    ageTo,
-                                                    heightFrom,
-                                                    heightTo,
-                                                    maritalStatus,
-                                                    religion,
-                                                    caste,
-                                                    country,
-                                                    state,
-                                                    city,
-                                                    education,
-                                                    profilePer,"")
-                                              }
-                                          },
-                                        );
-                                        // sentInvitationController.isLoading.value=false;
-                                      },
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  backgroundColor: const Color(0xff583789),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                        "assets/images/icons/interest.svg"),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    const Text('Send Interest'),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                              child: profileDetailsController
+                                          .member?.data?.chatStatus ==
+                                      1
+                                  ? ElevatedButton(
+                                      onPressed: blockController.isLoading.value
+                                          ? null
+                                          : () async {
+                                              blockController.isLoading.value =
+                                                  true;
+
+                                              blockController.block(
+                                                context,
+                                                profileDetailsController
+                                                    .member?.data?.matriID,
+                                                btnOkOnPress: () => {
+                                                  APIs.blockUser(
+                                                      profileDetailsController
+                                                          .member
+                                                          ?.data
+                                                          ?.matriID),
+                                                  dashboardController
+                                                      .dashboard(context),
+                                                  if (keys == "near_by_list" ||
+                                                      keys ==
+                                                          "education_list" ||
+                                                      keys ==
+                                                          "profession_list" ||
+                                                      keys ==
+                                                          "recently_joined" ||
+                                                      keys ==
+                                                          "intrested_in_you" ||
+                                                      keys ==
+                                                          "daily_recommendation" ||
+                                                      keys == "matches")
+                                                    {
+                                                      matchesController.reset(
+                                                          context, keys)
+                                                    },
+                                                  if (keys == "search")
+                                                    {
+                                                      searchController.reset(
+                                                          context,
+                                                          ageFrom,
+                                                          ageTo,
+                                                          heightFrom,
+                                                          heightTo,
+                                                          maritalStatus,
+                                                          religion,
+                                                          caste,
+                                                          country,
+                                                          state,
+                                                          city,
+                                                          education,
+                                                          profilePer,
+                                                          "")
+                                                    },
+                                                  Navigator.of(context).pop()
+                                                },
+                                              );
+                                            },
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor:
+                                            const Color(0xff583789),
+                                      ),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.block_outlined),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text("BLOCK"),
+                                        ],
+                                      ),
+                                    )
+                                  : ElevatedButton(
+                                      onPressed: sentInvitationController
+                                              .isLoading.value
+                                          ? null
+                                          : () async {
+                                              sentInvitationController
+                                                  .isLoading.value = true;
+
+                                              sentInvitationController
+                                                  .sentInvitation(
+                                                context,
+                                                profileDetailsController
+                                                    .member?.data?.matriID,
+                                                btnOkOnPress: () => {
+                                                  dashboardController
+                                                      .dashboard(context),
+                                                  if (keys == "near_by_list" ||
+                                                      keys ==
+                                                          "education_list" ||
+                                                      keys ==
+                                                          "profession_list" ||
+                                                      keys ==
+                                                          "recently_joined" ||
+                                                      keys ==
+                                                          "intrested_in_you" ||
+                                                      keys ==
+                                                          "daily_recommendation" ||
+                                                      keys == "matches")
+                                                    {
+                                                      matchesController.reset(
+                                                          context, keys)
+                                                    },
+                                                  if (keys == "search")
+                                                    {
+                                                      searchController.reset(
+                                                          context,
+                                                          ageFrom,
+                                                          ageTo,
+                                                          heightFrom,
+                                                          heightTo,
+                                                          maritalStatus,
+                                                          religion,
+                                                          caste,
+                                                          country,
+                                                          state,
+                                                          city,
+                                                          education,
+                                                          profilePer,
+                                                          "")
+                                                    }
+                                                },
+                                              );
+
+                                              // sentInvitationController.isLoading.value=false;
+                                            },
+                                      style: ElevatedButton.styleFrom(
+                                        foregroundColor: Colors.white,
+                                        backgroundColor:
+                                            const Color(0xff583789),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                              "assets/images/icons/interest.svg"),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text('SEND INTEREST'),
+                                        ],
+                                      ),
+                                    )),
+                        ),
                       ],
                     ),
                 ],
@@ -415,7 +498,8 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
             if (sentInvitationController.isLoading.value ||
                 profileDetailsController.isLoading.value ||
                 shortlistController.isLoading.value ||
-                directChatController.isLoading.value)
+                directChatController.isLoading.value ||
+                blockController.isLoading.value)
               const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
