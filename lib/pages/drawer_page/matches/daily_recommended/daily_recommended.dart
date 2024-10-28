@@ -6,7 +6,7 @@ import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -37,8 +37,8 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
   final ScrollController _scrollController = ScrollController();
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController =
+      Get.put(HomeController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
   final DirectChatController directChatController =
@@ -364,7 +364,7 @@ class _DailyRecommendedsState extends State<DailyRecommendeds> {
                                 context,
                                 id,
                                 btnOkOnPress: () =>
-                                    {dashboardController.dashboard(context)},
+                                    {homeController.dashboard(context)},
                               );
                             },
                             child: Row(

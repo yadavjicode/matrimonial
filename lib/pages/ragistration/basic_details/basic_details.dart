@@ -144,7 +144,6 @@ class _BasicDetailState extends State<BasicDetail> {
     "Reading Newspaper": false,
   };
 
-
   String getSelectedHobbies() {
     return hobbies.entries
         .where((entry) => entry.value)

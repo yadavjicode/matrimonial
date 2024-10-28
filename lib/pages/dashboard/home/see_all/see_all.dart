@@ -1,7 +1,7 @@
 import 'package:devotee/chat/api/direct_chat_controller.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +34,8 @@ class _SeeAllState extends State<SeeAll> {
       Get.put(ProfileDetailsController());
   final Map<String, dynamic> arguments = Get.arguments;
   final ScrollController _scrollController = ScrollController();
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController =
+      Get.put(HomeController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
   final EditProfileController userProfileController =
@@ -398,7 +398,7 @@ class _SeeAllState extends State<SeeAll> {
                                     context,
                                     id,
                                     btnOkOnPress: () => {
-                                      dashboardController.dashboard(context)
+                                      homeController.dashboard(context)
                                     },
                                   );
                                 },

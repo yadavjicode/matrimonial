@@ -4,7 +4,7 @@ import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -13,7 +13,6 @@ import 'package:devotee/controller/shortlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../constants/widget/dialog.dart';
 import '../../../../constants/widget/profile_image.dart';
 import '../../../../utils/comman_class_method.dart';
@@ -35,8 +34,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
       Get.put(SentInvitationController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController = Get.put(HomeController());
   final ScrollController _scrollController = ScrollController();
   final DirectChatController directChatController =
       Get.put(DirectChatController());
@@ -361,7 +359,7 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                 context,
                                 id,
                                 btnOkOnPress: () =>
-                                    {dashboardController.dashboard(context)},
+                                    {homeController.dashboard(context)},
                               );
                             },
                             child: Row(
@@ -462,8 +460,8 @@ class _DesiredPartnerState extends State<DesiredPartner> {
                                   "11",
                                   "12",
                                   "13",
-                                  "14"
-                                  ,"15"
+                                  "14",
+                                  "15"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(

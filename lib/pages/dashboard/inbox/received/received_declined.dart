@@ -8,6 +8,10 @@ import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../constants/widget/dialog.dart';
+import '../../../../controller/edit_profile_controller.dart';
+import '../../../../controller/profile_details_controller.dart';
+
 class ReceivedDeclined extends StatefulWidget {
   const ReceivedDeclined({super.key});
 
@@ -19,6 +23,10 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
   InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
   AcceptedController acceptedController = Get.put(AcceptedController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,8 +46,9 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                   acceptedController.isLoading.value == false)
                 declinedContent(),
               if (inboxReceivedController.isLoading.value ||
-                  acceptedController.isLoading.value)
-                Center(
+                  acceptedController.isLoading.value ||
+                  profileDetailsController.isLoading.value)
+                const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
                   ),
@@ -51,7 +60,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
 
   Widget declinedContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+
     final member = inboxReceivedController.member;
     if (member == null ||
         member.responseData == null ||
@@ -110,9 +119,38 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, top: 10, bottom: 10, right: 2),
-                            child: ProfileImage(
-                              size: screenWidth * 0.2,
-                              url: image,
+                            child: GestureDetector(
+                              onTap: () {
+                                if (userProfileController
+                                        .member?.member?.accountType ==
+                                    1) {
+                                  profileDetailsController.profileDetails(
+                                      context, mId, "Matches", "", [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11",
+                                    "12",
+                                    "13",
+                                    "14",
+                                    "15"
+                                  ]);
+                                } else {
+                                  DialogConstant.packageDialog(
+                                      context, 'view profile feature');
+                                }
+                              },
+                              child: ProfileImage(
+                                size: screenWidth * 0.2,
+                                url: image,
+                              ),
                             ),
                           ),
                           Expanded(
@@ -131,7 +169,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                                           style: FontConstant.styleMedium(
                                               fontSize: 12,
                                               color: AppColors.darkgrey)),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Expanded(
@@ -158,7 +196,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                                               color: AppColors.primaryColor),
                                         ),
                                       ),
-                                      SizedBox(width: 20),
+                                      const SizedBox(width: 20),
                                     ],
                                   ),
                                   Padding(
@@ -190,7 +228,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                                     fontSize: 12, color: AppColors.darkgrey),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
@@ -199,7 +237,7 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
                                   Container(
                                       height: 26,
                                       width: 26,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           color: Colors.green,
                                           shape: BoxShape.circle),
                                       alignment: Alignment.center,

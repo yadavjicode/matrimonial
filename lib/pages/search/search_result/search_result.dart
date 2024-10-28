@@ -5,7 +5,7 @@ import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
@@ -36,8 +36,7 @@ class _SearchResultState extends State<SearchResult> {
   bool height = true;
   final Map<String, dynamic> arguments = Get.arguments;
   final ScrollController _scrollController = ScrollController();
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController = Get.put(HomeController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
   final DirectChatController directChatController =
@@ -551,7 +550,7 @@ class _SearchResultState extends State<SearchResult> {
                                                 context,
                                                 id,
                                                 btnOkOnPress: () => {
-                                                  dashboardController
+                                                  homeController
                                                       .dashboard(context)
                                                 },
                                               );

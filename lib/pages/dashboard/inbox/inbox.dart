@@ -104,7 +104,7 @@ class _InboxState extends State<Inbox> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: firstContainerColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(15),
                             bottomLeft: Radius.circular(15),
                           ),
@@ -127,7 +127,7 @@ class _InboxState extends State<Inbox> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: secondContainerColor,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(15),
                             bottomRight: Radius.circular(15),
                           ),

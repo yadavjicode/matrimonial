@@ -8,6 +8,9 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
 
+import '../../../../constants/widget/dialog.dart';
+import '../../../../controller/profile_details_controller.dart';
+
 class SentPending extends StatefulWidget {
   const SentPending({super.key});
   @override
@@ -21,6 +24,8 @@ class _SentPendingState extends State<SentPending> {
       Get.put(WithdrawalController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
   @override
   void initState() {
     super.initState();
@@ -38,7 +43,8 @@ class _SentPendingState extends State<SentPending> {
             children: [
               if (inboxSentController.isLoading.value == false)
                 pendingContent(),
-              if (inboxSentController.isLoading.value)
+              if (inboxSentController.isLoading.value ||
+                  profileDetailsController.isLoading.value)
                 const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -49,10 +55,9 @@ class _SentPendingState extends State<SentPending> {
         }));
   }
 
-  
   Widget pendingContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+
     final member = inboxSentController.member;
     if (member == null ||
         member.responseData == null ||
@@ -106,9 +111,38 @@ class _SentPendingState extends State<SentPending> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, top: 8, bottom: 10, right: 2),
-                            child: ProfileImage(
-                              size: screenWidth * 0.2,
-                              url: image,
+                            child: GestureDetector(
+                              onTap: () {
+                                if (userProfileController
+                                        .member?.member?.accountType ==
+                                    1) {
+                                  profileDetailsController.profileDetails(
+                                      context, mId, "Matches", "", [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11",
+                                    "12",
+                                    "13",
+                                    "14",
+                                    "15"
+                                  ]);
+                                } else {
+                                  DialogConstant.packageDialog(
+                                      context, 'view profile feature');
+                                }
+                              },
+                              child: ProfileImage(
+                                size: screenWidth * 0.2,
+                                url: image,
+                              ),
                             ),
                           ),
                           Expanded(

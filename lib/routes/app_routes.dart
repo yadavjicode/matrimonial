@@ -23,7 +23,7 @@ import 'package:devotee/pages/drawer_page/my_profile/my_profile.dart';
 import 'package:devotee/pages/drawer_page/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/drawer_page/offering_your_gratitude/offering_gratitude.dart';
 import 'package:devotee/pages/drawer_page/our_mission/our_mission.dart';
-import 'package:devotee/pages/drawer_page/our_social_handles/Our_social_handles.dart';
+import 'package:devotee/pages/drawer_page/contact_us/contact_us.dart';
 import 'package:devotee/pages/drawer_page/our_vision/our_vision.dart';
 import 'package:devotee/pages/drawer_page/our_website/our_wesite.dart';
 import 'package:devotee/pages/drawer_page/package_details/package_details.dart';
@@ -118,7 +118,7 @@ class AppRoutes {
   static const String ourVision = '/ourVision';
   static const String requestSide = '/requestSide';
   static const String suggestionSide = '/suggestionSide';
-  static const String socialMedia = '/socialMedia';
+  static const String contactUs = '/contactUs';
 
   static const String feedback = '/feedback';
   static const String suggestion = '/suggestion';
@@ -346,8 +346,8 @@ class AppRoutes {
       transitionDuration: const Duration(milliseconds: 400),
     ),
     GetPage(
-      name: socialMedia,
-      page: () => const OurSocialHandles(),
+      name: contactUs,
+      page: () => const ContactUs(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

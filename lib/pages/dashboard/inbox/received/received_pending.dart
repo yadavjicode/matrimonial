@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../../constants/widget/dialog.dart';
+import '../../../../controller/profile_details_controller.dart';
 
 class ReceivedPending extends StatefulWidget {
   const ReceivedPending({super.key});
@@ -26,6 +27,8 @@ class _ReceivedPendingState extends State<ReceivedPending> {
   final DeclinedController declinedController = Get.put(DeclinedController());
   final EditProfileController userProfileController =
       Get.put(EditProfileController());
+  final ProfileDetailsController profileDetailsController =
+      Get.put(ProfileDetailsController());
 // "Accepted"
   @override
   void initState() {
@@ -33,6 +36,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       inboxReceivedController.inboxSent(context, "Pending");
     });
+   
   }
 
   @override
@@ -45,8 +49,9 @@ class _ReceivedPendingState extends State<ReceivedPending> {
             if (!inboxReceivedController.isLoading.value) pendingContent(),
             if (inboxReceivedController.isLoading.value ||
                 declinedController.isLoading.value ||
-                acceptedController.isLoading.value)
-              Center(
+                acceptedController.isLoading.value ||
+                profileDetailsController.isLoading.value)
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -59,7 +64,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
 
   Widget pendingContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+
     final member = inboxReceivedController.member;
     if (member == null ||
         member.responseData == null ||
@@ -116,9 +121,38 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 10, top: 10, bottom: 10, right: 2),
-                            child: ProfileImage(
-                              size: screenWidth * 0.2,
-                              url: image,
+                            child: GestureDetector(
+                              onTap: () {
+                                if (userProfileController
+                                        .member?.member?.accountType ==
+                                    1) {
+                                  profileDetailsController.profileDetails(
+                                      context, mId, "Matches", "", [
+                                    "1",
+                                    "2",
+                                    "3",
+                                    "4",
+                                    "5",
+                                    "6",
+                                    "7",
+                                    "8",
+                                    "9",
+                                    "10",
+                                    "11",
+                                    "12",
+                                    "13",
+                                    "14",
+                                    "15"
+                                  ]);
+                                } else {
+                                  DialogConstant.packageDialog(
+                                      context, 'view profile feature');
+                                }
+                              },
+                              child: ProfileImage(
+                                size: screenWidth * 0.2,
+                                url: image,
+                              ),
                             ),
                           ),
                           Expanded(
@@ -137,7 +171,7 @@ class _ReceivedPendingState extends State<ReceivedPending> {
                                           style: FontConstant.styleMedium(
                                               fontSize: 12,
                                               color: AppColors.darkgrey)),
-                                      SizedBox(width: 5),
+                                      const SizedBox(width: 5),
                                       Expanded(
                                         child: Container(
                                           child: Text(

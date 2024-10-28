@@ -50,11 +50,13 @@ class UserStatusWidget extends StatelessWidget {
   final String userId;
   final int onlineStatus;
   final int lastSeenStatus;
+  final Color? color;
   final LastOnline lastOnlineService = LastOnline();
   UserStatusWidget(
       {required this.userId,
       required this.onlineStatus,
-      required this.lastSeenStatus});
+      required this.lastSeenStatus,
+      this.color});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
@@ -65,14 +67,14 @@ class UserStatusWidget extends StatelessWidget {
           return Text(
             'Loading...',
             style: FontConstant.styleMedium(
-                fontSize: 13, color: AppColors.darkgrey),
+                fontSize: 13, color: color ?? AppColors.darkgrey),
           );
         } else if (snapshot.hasError) {
           // If an error occurred
           return Text(
             'Error: ${snapshot.error}',
             style: FontConstant.styleMedium(
-                fontSize: 13, color: AppColors.darkgrey),
+                fontSize: 13, color: color ?? AppColors.darkgrey),
           );
         } else if (snapshot.hasData) {
           // If the future returned a value
@@ -84,10 +86,10 @@ class UserStatusWidget extends StatelessWidget {
                 Container(
                   height: 10,
                   width: 10,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: AppColors.green, shape: BoxShape.circle),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 3,
                 ),
                 Text(
@@ -106,13 +108,13 @@ class UserStatusWidget extends StatelessWidget {
                   return Text(
                     'Loading...',
                     style: FontConstant.styleMedium(
-                        fontSize: 13, color: AppColors.darkgrey),
+                        fontSize: 13, color: color ?? AppColors.darkgrey),
                   );
                 } else if (snapshot.hasError) {
                   return Text(
                     'Error: ${snapshot.error}',
                     style: FontConstant.styleMedium(
-                        fontSize: 13, color: AppColors.darkgrey),
+                        fontSize: 13, color: color ?? AppColors.darkgrey),
                   );
                 } else {
                   return Row(
@@ -123,7 +125,7 @@ class UserStatusWidget extends StatelessWidget {
                         height: 10,
                         width: 10,
                         decoration: BoxDecoration(
-                            color: AppColors.grey, shape: BoxShape.circle),
+                            color:color?? AppColors.grey, shape: BoxShape.circle),
                       ),
                       SizedBox(
                         width: 3,
@@ -132,7 +134,7 @@ class UserStatusWidget extends StatelessWidget {
                         child: Text(
                           '${MyDateUtil.getLastActiveTime(context: context, lastActive: "${snapshot.data}")}',
                           style: FontConstant.styleMedium(
-                              fontSize: 13, color: AppColors.darkgrey),
+                              fontSize: 13, color: color ?? AppColors.darkgrey),
                         ),
                       ),
                     ],

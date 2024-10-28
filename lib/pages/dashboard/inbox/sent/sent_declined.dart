@@ -6,7 +6,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:get/get.dart';
 
-
 class SentDeclined extends StatefulWidget {
   const SentDeclined({super.key});
 
@@ -46,7 +45,7 @@ class _SentDeclinedState extends State<SentDeclined> {
 
   Widget declineContent() {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+
     final member = inboxSentController.member;
     if (member == null ||
         member.responseData == null ||

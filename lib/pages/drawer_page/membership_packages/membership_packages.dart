@@ -138,7 +138,8 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                         ),
                         if (editProfileController.isLoading.value == false)
                           _buildPack(editProfileController
-                              .member?.member?.accountType??0),
+                                  .member?.member?.accountType ??
+                              0),
                         Text(
                           "\nIf we compare this application with other commercial matrimonial application, then it is more than 85% cheaper than such commercial applications. We are not having multiple kind of packages to confuse the public, we have only 2 versions. One is Free Version and Other one is Premium Version.\n",
                           textAlign: TextAlign.justify,
@@ -298,15 +299,16 @@ class _MembershipPackagesState extends State<MembershipPackages> {
           ],
         ),
         editProfileController.member?.member?.accountType == 1
-            ? Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 25),
-                child: CustomButton(
-                    text: "Proceed to Next Page",
-                    onPressed: () => {flowController.Flow(context, 12)},
-                    color: AppColors.primaryColor,
-                    textStyle: FontConstant.styleRegular(
-                        fontSize: 16, color: AppColors.constColor)),
-              )
+            ? const SizedBox.shrink()
+            // ? Padding(
+            //     padding: const EdgeInsets.only(top: 20, bottom: 25),
+            //     child: CustomButton(
+            //         text: "Proceed to Next Page",
+            //         onPressed: () => {flowController.Flow(context, 12)},
+            //         color: AppColors.primaryColor,
+            //         textStyle: FontConstant.styleRegular(
+            //             fontSize: 16, color: AppColors.constColor)),
+            //   )
             : Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Column(

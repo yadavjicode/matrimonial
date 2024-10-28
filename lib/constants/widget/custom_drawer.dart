@@ -9,12 +9,17 @@ import 'package:devotee/constants/widget/logout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import '../../controller/dashboard_controller.dart';
 
+// ignore: must_be_immutable
 class CustomDrawer extends StatelessWidget {
   GlobalKey<ScaffoldState> scaffoldKey;
   CustomDrawer({super.key, required this.scaffoldKey});
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -209,7 +214,10 @@ class CustomDrawer extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   GestureDetector(
-                    onTap: () => {scaffoldKey.currentState?.closeDrawer()},
+                    onTap: () {
+                      dashboardController.navigateToPage(4);
+                      scaffoldKey.currentState?.closeDrawer();
+                    },
                     child: buildoption("assets/images/icons/dashboard.svg",
                         "Dashboard", 22, 22),
                   ),
@@ -300,8 +308,8 @@ class CustomDrawer extends StatelessWidget {
                             onTap: () => {Get.toNamed("/suggestionSide")},
                             child: expansionOption("Suggestion from Our Side")),
                         GestureDetector(
-                            onTap: () => {Get.toNamed("/socialMedia")},
-                            child: expansionOption("Our Social Media Handles")),
+                            onTap: () => {Get.toNamed("/contactUs")},
+                            child: expansionOption("Contact Us")),
                       ],
                       title: Container(
                         padding: const EdgeInsets.only(left: 18),

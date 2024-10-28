@@ -1,30 +1,30 @@
 import 'package:devotee/constants/widget/Snackbar.dart';
-import 'package:devotee/controller/flow_controller.dart';
+import 'package:devotee/model/dashboard_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
-import '../model/skip_model.dart';
+
 import '../utils/connection_check/connectivity_service.dart';
 
-class SkipController with ChangeNotifier {
+class HomeController with ChangeNotifier {
   final ApiService apiService = ApiService();
-  SkipModel? _member;
+  DashboardModel? _member;
   var isLoading = false.obs;
   String? _error;
-  SkipModel? get member => _member;
+  DashboardModel? get member => _member;
   String? get error => _error;
-  final FlowController flowController = Get.put(FlowController());
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> skip(BuildContext context, String step, int pageno) async {
+  Future<void> dashboard(
+    BuildContext context,
+  ) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
+
     try {
-      _member = await apiService.skip(step);
-      // ignore: use_build_context_synchronously
-      flowController.Flow(context, pageno);
+      _member = await apiService.Dashboard();
     } catch (e) {
       _error = e.toString();
       print(_error);

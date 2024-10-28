@@ -32,8 +32,7 @@ class MessageCard extends StatefulWidget {
 class _MessageCardState extends State<MessageCard> {
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+    
     bool shouldShowDate = MyDateUtil.shouldShowDate(
         widget.message.sent, widget.previousMessage?.sent);
     bool isMe = APIs.myid == widget.message.fromId;

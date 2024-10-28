@@ -5,14 +5,14 @@ import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OurSocialHandles extends StatefulWidget {
-  const OurSocialHandles({super.key});
+class ContactUs extends StatefulWidget {
+  const ContactUs({super.key});
 
   @override
-  State<OurSocialHandles> createState() => _OurSocialHandlesState();
+  State<ContactUs> createState() => _ContactUsState();
 }
 
-class _OurSocialHandlesState extends State<OurSocialHandles> {
+class _ContactUsState extends State<ContactUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class _OurSocialHandlesState extends State<OurSocialHandles> {
         centerTitle: true,
         elevation: 0,
         title: Text(
-          "Our Social Handles",
+          "Contact Us",
           style: FontConstant.styleSemiBold(
               fontSize: 18, color: AppColors.constColor),
         ),

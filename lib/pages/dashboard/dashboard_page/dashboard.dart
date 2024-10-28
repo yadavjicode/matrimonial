@@ -13,17 +13,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../../../constants/widget/dialog.dart';
+import '../../../controller/dashboard_controller.dart';
 import '../../../utils/connection_check/connectivity_service.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<Dashboard> createState() => DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
-  PageController controller = PageController(initialPage: 4);
+class DashboardState extends State<Dashboard> {
+  // PageController controller = PageController(initialPage: 4);
   var selected = 0;
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
@@ -31,20 +32,15 @@ class _DashboardState extends State<Dashboard> {
       Get.put(InboxSentController());
   final InboxReceivedController inboxReceivedController =
       Get.put(InboxReceivedController());
-  // final StateController stateController = Get.put(StateController());
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
+  final DashboardController dashboardController =
+      Get.put(DashboardController());
 
   void login() async {
     if (_editProfileController.member!.member!.matriID != null) {
-      print("===================================login chat");
       if (await APIs.userExists() && mounted) {
-        // ignore: use_build_context_synchronously
-        // _editProfileController.userDetails(context);
-        // APIs.updateUserImage("http://devoteematrimony.aks.5g.in/${_editProfileController.member!.member!.Photo1}");
       } else {
-        // ignore: use_build_context_synchronously
-        // _editProfileController.userDetails(context);
         await APIs.createUser().then((value) {});
       }
     } else {}
@@ -55,16 +51,14 @@ class _DashboardState extends State<Dashboard> {
     _editProfileController.userDetails(context).then((value) => login());
     inboxSentController.inboxSent(context, "Pending");
     inboxReceivedController.inboxSent(context, "Pending");
-    // stateController.fetchStateList();
-    //  login();
     super.initState();
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +71,8 @@ class _DashboardState extends State<Dashboard> {
             return shouldExit;
           },
           child: PageView(
-            controller: controller,
-            physics: NeverScrollableScrollPhysics(),
+            controller: dashboardController.pageController,
+            physics: const NeverScrollableScrollPhysics(),
             children: const [
               Inbox(),
               ProfileEdit(),
@@ -159,7 +153,7 @@ class _DashboardState extends State<Dashboard> {
           setState(() {
             selected = index;
 
-            controller.jumpToPage(index);
+            dashboardController.navigateToPage(index);
           });
         },
       ),
@@ -167,7 +161,7 @@ class _DashboardState extends State<Dashboard> {
         shape: const CircleBorder(),
         onPressed: () {
           setState(() {
-            controller.jumpToPage(4);
+            dashboardController.navigateToPage(4);
           });
         },
         backgroundColor: const Color(0xff583689),

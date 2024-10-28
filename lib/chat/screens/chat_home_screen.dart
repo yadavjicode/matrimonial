@@ -57,8 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       //for hiding keyboard when a tap is detected on screen
       onTap: FocusScope.of(context).unfocus,
@@ -264,7 +262,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // for adding new chat user
   void _addChatUserDialog() {
     String email = '';
-
     showDialog(
         context: context,
         builder: (_) => AlertDialog(

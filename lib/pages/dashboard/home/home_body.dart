@@ -4,7 +4,7 @@ import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
@@ -25,8 +25,7 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController = Get.put(HomeController());
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
   final ShortlistController shortlistController =
@@ -41,7 +40,7 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   void initState() {
     // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   dashboardController.dashboard(context);
+    //   HomeController.dashboard(context);
     // });
     super.initState();
   }
@@ -52,28 +51,28 @@ class _HomeBodyState extends State<HomeBody> {
       [
         "assets/images/map_mark.png",
         "Near By",
-        "${dashboardController.member?.responseData?.matchesNearByCount ?? ""}",
+        "${homeController.member?.responseData?.matchesNearByCount ?? ""}",
         "near_by_list",
         "near_by"
       ],
       [
         "assets/images/education_b.png",
         "Education",
-        "${dashboardController.member?.responseData?.matchesEducationCount ?? ""}",
+        "${homeController.member?.responseData?.matchesEducationCount ?? ""}",
         "education_list",
         "education"
       ],
       [
         "assets/images/profession.png",
         "Profession",
-        "${dashboardController.member?.responseData?.matchesProfessionalCount ?? ""}",
+        "${homeController.member?.responseData?.matchesProfessionalCount ?? ""}",
         "profession_list",
         "profession"
       ]
     ];
     return Column(
       children: [
-        newMathches(dashboardController.member!.responseData!.matches!),
+        newMathches(homeController.member?.responseData?.matches ?? []),
         discoverContent(discover),
         ridConatent(
             "Recently Joined",
@@ -81,14 +80,14 @@ class _HomeBodyState extends State<HomeBody> {
             "recently_joined",
             "recently_joined",
             "Recently Joined",
-            dashboardController.member!.responseData!.recentlyJoined!),
+            homeController.member?.responseData?.recentlyJoined ?? []),
         ridConatent(
             "Interested In You",
             "See All",
             "intrested_in_you",
             "intrested_in_you",
             "Interested In You",
-            dashboardController.member!.responseData!.intrestedInYou!),
+            homeController.member?.responseData?.intrestedInYou ?? []),
         profileStatus(),
         ridConatent(
             "Daily Recommendation",
@@ -96,7 +95,8 @@ class _HomeBodyState extends State<HomeBody> {
             "daily_recommendation",
             "daily_recommendation",
             "Daily Recommendation",
-            dashboardController.member!.responseData!.dailyRecommendation!),
+            homeController.member?.responseData?.dailyRecommendation ??
+                []),
         const SizedBox(
           height: 25,
         )
@@ -195,8 +195,8 @@ class _HomeBodyState extends State<HomeBody> {
                                   "11",
                                   "12",
                                   "13",
-                                  "14"
-                                  ,"15"
+                                  "14",
+                                  "15"
                                 ]);
                               } else {
                                 DialogConstant.packageDialog(
@@ -305,7 +305,7 @@ class _HomeBodyState extends State<HomeBody> {
                                   btnOkOnPress: () => {
                                     WidgetsBinding.instance
                                         .addPostFrameCallback((_) {
-                                      dashboardController.dashboard(context);
+                                      homeController.dashboard(context);
                                     })
                                   },
                                 );
@@ -430,8 +430,8 @@ class _HomeBodyState extends State<HomeBody> {
                                         "11",
                                         "12",
                                         "13",
-                                        "14"
-                                        ,"15"
+                                        "14",
+                                        "15"
                                       ]);
                                     } else {
                                       DialogConstant.packageDialog(
@@ -513,7 +513,7 @@ class _HomeBodyState extends State<HomeBody> {
                                         btnOkOnPress: () => {
                                           WidgetsBinding.instance
                                               .addPostFrameCallback((_) {
-                                            dashboardController
+                                            homeController
                                                 .dashboard(context);
                                           })
                                         },
@@ -617,7 +617,7 @@ class _HomeBodyState extends State<HomeBody> {
                                         btnOkOnPress: () => {
                                           WidgetsBinding.instance
                                               .addPostFrameCallback((_) {
-                                            dashboardController
+                                            homeController
                                                 .dashboard(context);
                                           })
                                         },

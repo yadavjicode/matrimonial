@@ -1,6 +1,6 @@
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -11,6 +11,8 @@ import 'package:devotee/utils/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../../chat/widgets/last_online.dart';
 
 // start profile Header page =================================================================================================================
 
@@ -28,8 +30,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
   bool isFavorite = false;
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController = Get.put(HomeController());
   final MatchesController matchesController = Get.put(MatchesController());
   final SearchsController searchController = Get.put(SearchsController());
   void toggleFavorite() {
@@ -84,7 +85,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                 Positioned(
                   bottom: 0,
                   child: Container(
-                    height: 80,
+                    height: 130,
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -137,10 +138,27 @@ class ProfileHeaderState extends State<ProfileHeader> {
                             ],
                           ),
                         ),
-                      if (profileDetailsController.member?.data?.accountType ==
-                          1)
-                        const SizedBox(
-                          height: 5,
+                      if (profileDetailsController
+                                  .member?.data?.hideOnlineStatus ==
+                              0 ||
+                          profileDetailsController
+                                  .member?.data?.hideLastActiveStatus ==
+                              0)
+                        Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: UserStatusWidget(
+                              color: AppColors.constColor,
+                              userId: profileDetailsController
+                                  .member?.data?.matriID,
+                              onlineStatus: profileDetailsController
+                                      .member?.data?.hideOnlineStatus ??
+                                  0,
+                              lastSeenStatus: profileDetailsController
+                                      .member?.data?.hideLastActiveStatus ??
+                                  0),
                         ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -310,7 +328,7 @@ class ProfileHeaderState extends State<ProfileHeader> {
                               context,
                               profileDetailsController.member?.data?.matriID,
                               btnOkOnPress: () => {
-                                dashboardController.dashboard(context),
+                                homeController.dashboard(context),
                                 print("value=====${widget.value}"),
                                 if (widget.value == "near_by_list" ||
                                     widget.value == "education_list" ||

@@ -36,7 +36,7 @@ class _SentAcceptedState extends State<SentAccepted> {
     });
     super.initState();
   }
-
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(

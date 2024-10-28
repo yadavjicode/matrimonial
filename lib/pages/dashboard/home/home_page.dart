@@ -5,7 +5,7 @@ import 'package:devotee/chat/widgets/notificationIcon_count.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/custom_drawer.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/notification_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
@@ -31,8 +31,8 @@ class _HomeState extends State<Home> {
 
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController =
+      Get.put(HomeController());
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
   final SentInvitationController sentInvitationController =
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       editProfileController.userDetails(context);
-      dashboardController.dashboard(context);
+      homeController.dashboard(context);
     });
   }
 
@@ -183,20 +183,20 @@ class _HomeState extends State<Home> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (dashboardController.isLoading.value ==
+                                if (homeController.isLoading.value ==
                                     false)
                                   Text(
-                                    dashboardController.member != null &&
-                                            dashboardController
+                                    homeController.member != null &&
+                                            homeController
                                                     .member!.responseData !=
                                                 null
-                                        ? "${dashboardController.member?.responseData?.receivedInvitation}"
+                                        ? "${homeController.member?.responseData?.receivedInvitation}"
                                         : "0",
                                     style: FontConstant.styleRegular(
                                         fontSize: 22,
                                         color: AppColors.primaryColor),
                                   ),
-                                if (dashboardController.isLoading.value)
+                                if (homeController.isLoading.value)
                                   Text(
                                     "",
                                     style: FontConstant.styleRegular(
@@ -252,13 +252,13 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ]),
-                    if (dashboardController.isLoading.value == false &&
+                    if (homeController.isLoading.value == false &&
                         editProfileController.isLoading.value == false)
                       Expanded(
                         child: RefreshIndicator(
                           color: AppColors.primaryColor,
                           onRefresh: () async {
-                            dashboardController.dashboard(context);
+                            homeController.dashboard(context);
                           },
                           child: Obx(() {
                             return Stack(children: [
@@ -278,7 +278,7 @@ class _HomeState extends State<Home> {
                           }),
                         ),
                       ),
-                    if (dashboardController.isLoading.value ||
+                    if (homeController.isLoading.value ||
                         editProfileController.isLoading.value)
                       const Expanded(
                         child: Center(

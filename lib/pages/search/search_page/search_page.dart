@@ -98,7 +98,8 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   bool valodation() {
-    if (selectAgeFrom != null && selectAgeFrom != 'Prefer Not To Say' ||  nameController.text.isNotEmpty||
+    if (selectAgeFrom != null && selectAgeFrom != 'Prefer Not To Say' ||
+        nameController.text.isNotEmpty ||
         selectAgeTo != null && selectAgeTo != 'Prefer Not To Say' ||
         selectHeightFromKey != null &&
             selectHeightFromKey != 'Prefer Not To Say' ||

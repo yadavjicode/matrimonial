@@ -5,7 +5,7 @@ import 'package:devotee/chat/widgets/last_online.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/sent_invitation_controller.dart';
@@ -35,8 +35,8 @@ class _AllMatchesState extends State<AllMatches> {
   final ProfileDetailsController profileDetailsController =
       Get.put(ProfileDetailsController());
   final ScrollController _scrollController = ScrollController();
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController =
+      Get.put(HomeController());
   final DirectChatController directChatController =
       Get.put(DirectChatController());
   final EditProfileController userProfileController =
@@ -361,7 +361,7 @@ class _AllMatchesState extends State<AllMatches> {
                                 context,
                                 id,
                                 btnOkOnPress: () =>
-                                    {dashboardController.dashboard(context)},
+                                    {homeController.dashboard(context)},
                               );
                             },
                             child: Row(

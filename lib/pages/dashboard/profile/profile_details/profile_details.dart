@@ -5,7 +5,7 @@ import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/block_controller.dart';
-import 'package:devotee/controller/dashboard_controller.dart';
+import 'package:devotee/controller/home_controller.dart';
 import 'package:devotee/controller/matches_controller.dart';
 import 'package:devotee/controller/profile_details_controller.dart';
 import 'package:devotee/controller/search_controller.dart';
@@ -50,8 +50,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
   final DirectChatController directChatController =
       Get.put(DirectChatController());
 
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -264,7 +263,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                           .member
                                                           ?.data
                                                           ?.matriID),
-                                                  dashboardController
+                                                  homeController
                                                       .dashboard(context),
                                                   if (keys == "near_by_list" ||
                                                       keys ==
@@ -337,7 +336,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                                                 profileDetailsController
                                                     .member?.data?.matriID,
                                                 btnOkOnPress: () => {
-                                                  dashboardController
+                                                  homeController
                                                       .dashboard(context),
                                                   if (keys == "near_by_list" ||
                                                       keys ==
@@ -432,7 +431,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                           "12",
                           "13",
                           "14",
-                           "15"
+                          "15"
                         ])
                       },
                       child: Container(
@@ -487,7 +486,7 @@ class _ProfileDetailsScreenState extends State<ProfileDetailsScreen> {
                         "11",
                         "12",
                         "13",
-                        "14"
+                        "14",
                         "15"
                       ])
                     },
