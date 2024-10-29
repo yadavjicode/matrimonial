@@ -31,8 +31,7 @@ class _HomeState extends State<Home> {
 
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
-  final HomeController homeController =
-      Get.put(HomeController());
+  final HomeController homeController = Get.put(HomeController());
   final ShortlistController shortlistController =
       Get.put(ShortlistController());
   final SentInvitationController sentInvitationController =
@@ -183,8 +182,7 @@ class _HomeState extends State<Home> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (homeController.isLoading.value ==
-                                    false)
+                                if (homeController.isLoading.value == false)
                                   Text(
                                     homeController.member != null &&
                                             homeController

@@ -29,7 +29,6 @@ class Flows with ChangeNotifier {
         return;
       }
     }
-
     print("Navigating to Dashboard");
     Get.off(() => const Dashboard());
   }

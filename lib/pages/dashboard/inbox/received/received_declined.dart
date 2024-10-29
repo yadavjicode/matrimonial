@@ -7,7 +7,6 @@ import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../../../constants/widget/dialog.dart';
 import '../../../../controller/edit_profile_controller.dart';
 import '../../../../controller/profile_details_controller.dart';
@@ -100,8 +99,9 @@ class _ReceivedDeclinedState extends State<ReceivedDeclined> {
               String scString = CommanClass.commaString(scList);
               List<String?> info = [haString, eoString, crString, scString];
               String infos = CommanClass.hyphenString(info);
-
               String gender = CommanClass.hisHer(data.gender);
+
+              
               return GestureDetector(
                 onTap: () {
                   // Get.toNamed('/profiledtls');

@@ -260,7 +260,12 @@ class CustomDrawer extends StatelessWidget {
                   GestureDetector(
                     onTap: () => {Get.toNamed("/shortlistProfileDrawer")},
                     child: buildoption("assets/images/icons/shortlist.svg",
-                        "My Shortlist Profiles", 22, 22),
+                        "My Shortlisted Profiles", 22, 22),
+                  ),
+                  GestureDetector(
+                    onTap: () => {Get.toNamed("/blockProfile")},
+                    child: buildoption("assets/images/profile_icon.svg",
+                        "Blocked Profile", 20, 20),
                   ),
                   Container(
                     padding:

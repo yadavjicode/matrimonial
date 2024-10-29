@@ -56,6 +56,7 @@ class ApiConstants {
   static const String musicUrl = "member/songs-list";
   static const String htmlContentUrl = "member/pages";
   static const String blockUrl = "member/block-user";
+  static const String blockProfileUrl = "member/block-user-list";
   static const String addTestimonialUrl = "member/save-testimonial";
 }
 

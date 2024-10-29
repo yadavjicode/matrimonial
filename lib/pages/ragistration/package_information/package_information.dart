@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../controller/buy_package_controller.dart';
 import '../../../controller/package_Controller.dart';
+import '../../../controller/skip_controller.dart';
 import '../../../model/coupons_model.dart';
 
 class PackageInformation extends StatefulWidget {
@@ -27,6 +28,7 @@ class _PackageInformationState extends State<PackageInformation> {
   final PackageController packageController = Get.put(PackageController());
   final BuyPackageController buyPackageController =
       Get.put(BuyPackageController());
+  final SkipController skipController = Get.put(SkipController());
 
   @override
   void initState() {
@@ -160,7 +162,8 @@ class _PackageInformationState extends State<PackageInformation> {
                 ),
               if (couponsController.isLoading.value ||
                   packageController.isLoading.value ||
-                  editProfileController.isLoading.value)
+                  editProfileController.isLoading.value ||
+                  skipController.isLoading.value)
                 const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -345,7 +348,8 @@ class _PackageInformationState extends State<PackageInformation> {
                               fontSize: 16, color: AppColors.constColor)),
                     ),
                     GestureDetector(
-                      onTap: () => {Get.toNamed("/dashboard")},
+                      onTap: () =>
+                          {skipController.skip(context, "step_12", 20)},
                       child: Container(
                         padding: const EdgeInsets.only(
                           left: 20,

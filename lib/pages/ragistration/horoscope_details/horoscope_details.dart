@@ -20,6 +20,8 @@ class HoroscopeDetails extends StatefulWidget {
 }
 
 class _HoroscopeDetailsState extends State<HoroscopeDetails> {
+  final CountryController countryController = Get.put(CountryController());
+
   final StateController stateController = Get.put(StateController());
   final CityController cityController = Get.put(CityController());
   final FlowController flowController = Get.put(FlowController());
@@ -31,6 +33,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
 
   final TextEditingController time = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? selectedCountry;
   String? selectedState;
   String? selectedCity;
 
@@ -46,7 +49,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
       });
     }
   }
-    
+
   @override
   void initState() {
     super.initState();
@@ -54,8 +57,11 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
       _editProfileController.userDetails(context).then((_) {
         setState(() {
           time.text = _editProfileController.member?.member?.timeOfBirth ?? "";
+          selectedCountry =
+              _editProfileController.member?.member?.countryOfBirth;
           selectedState = _editProfileController.member?.member?.stateOfBirth;
           selectedCity = _editProfileController.member?.member?.cityOfBirth;
+          countryController.selectItem(selectedCountry);
           stateController.selectItem(selectedState);
         });
       });
@@ -76,7 +82,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/family');
             },
@@ -127,13 +133,52 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
               ),
               CustomTextField(
                 labelText: "Time Of Birth *",
-                suffixIcon: Icon(
+                suffixIcon: const Icon(
                   Icons.av_timer,
                   color: AppColors.black,
                 ),
                 controller: time,
                 hintText: "Select Time",
                 onTap: () => _selectTime(context),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Obx(() {
+                  if (countryController.isLoading.value) {
+                    return buildDropdownWithSearch(
+                      'Country *',
+                      ['Loading...'],
+                      (value) {
+                        setState(() {
+                          selectedCountry = null;
+                          selectedState = null;
+                          selectedCity = null;
+                        });
+                      },
+                      selectedItem: 'Loading...',
+                      hintText: 'Select Nationality',
+                    );
+                  } else {
+                    return buildDropdownWithSearch(
+                      'Country *',
+                      [
+                        'Prefer Not To Say',
+                        ...countryController.getCountryList()
+                      ],
+                      (String? value) {
+                        setState(() {
+                          selectedCountry = value;
+                          selectedState = null;
+                          selectedCity = null;
+                          // Update the state
+                        });
+                        countryController.selectItem(value);
+                      },
+                      selectedItem: selectedCountry,
+                      hintText: 'Select Nationality',
+                    );
+                  }
+                }),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 15),
@@ -154,7 +199,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                   }
                   return buildDropdownWithSearch(
                     'State of Birth *',
-                    ['Prefer Not To Say', ...stateController.getStateList()],
+                    ['Prefer Not To Say', ...stateController.stateLists],
                     (value) {
                       setState(() {
                         selectedState = value;
@@ -194,9 +239,6 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                         });
                         cityController
                             .selectItem(value); // Call the controller method
-                        int selectedIndex =
-                            cityController.cityLists.indexOf(value);
-                        print("index================${selectedIndex}");
                       },
                       hintText: 'Select City',
                       selectedItem: selectedCity,
@@ -212,6 +254,7 @@ class _HoroscopeDetailsState extends State<HoroscopeDetails> {
                       horoscopeDetailsController.horoscopeDetails(
                           context,
                           time.text.toString().trim(),
+                          selectedCountry ?? "",
                           selectedState ?? "",
                           selectedCity ?? "",
                           false);

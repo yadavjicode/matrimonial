@@ -42,6 +42,7 @@ import 'package:http/http.dart' as http;
 
 import '../model/add_testimonial_model.dart';
 import '../model/block_model.dart';
+import '../model/block_profile_model.dart';
 import '../model/html_content_model.dart';
 import '../model/music_model.dart';
 import '../model/recommended_model.dart';
@@ -485,8 +486,8 @@ class ApiService {
 
 //==== Start Api Horoscope Details==========================================================================================
 
-  Future<HoroscopeDetailsModel> horoscopeDetails(
-      String timeHoroscope, String stateHoroscope, String cityHoroscope) async {
+  Future<HoroscopeDetailsModel> horoscopeDetails(String timeHoroscope,
+      String country, String stateHoroscope, String cityHoroscope) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
@@ -503,6 +504,7 @@ class ApiService {
       body: jsonEncode({
         "step_10": "1",
         "time_of_birth": timeHoroscope,
+        "country_of_birth": country,
         'state_of_birth': stateHoroscope,
         "city_of_birth": cityHoroscope
       }),
@@ -1620,4 +1622,33 @@ class ApiService {
     }
   }
 //==== End Api add testimonials==========================================================================================
+
+//==== Start Api block profile==========================================================================================
+
+  Future<BlockProfileModel> blockProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.blockProfileUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return BlockProfileModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api block profile==========================================================================================
 }

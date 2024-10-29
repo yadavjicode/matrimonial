@@ -21,15 +21,20 @@ class HoroscopeDetailsController with ChangeNotifier {
   final ConnectivityService connectivityService =
       Get.put(ConnectivityService());
 
-  Future<void> horoscopeDetails(BuildContext context, String timeHoroscope,
-      String stateHoroscope, String cityHoroscope, bool status) async {
+  Future<void> horoscopeDetails(
+      BuildContext context,
+      String timeHoroscope,
+      String country,
+      String stateHoroscope,
+      String cityHoroscope,
+      bool status) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
 
     try {
       _member = await apiService.horoscopeDetails(
-          timeHoroscope, stateHoroscope, cityHoroscope);
+          timeHoroscope, country, stateHoroscope, cityHoroscope);
       if (status) {
         _editProfileController.userDetails(context);
         Navigator.pop(context);
@@ -43,7 +48,7 @@ class HoroscopeDetailsController with ChangeNotifier {
       print(_error);
 
       // Show error message using ScaffoldMessenger
-     if (!connectivityService.isConnected.value) {
+      if (!connectivityService.isConnected.value) {
         Dialogs.showSnackbar(context, "No internet connection!");
       } else {
         Dialogs.showSnackbar(context,

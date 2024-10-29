@@ -41,10 +41,11 @@ class _OurWebsiteState extends State<OurWebsite> {
                       height: 10,
                     ),
                     DrawerCommanCode().buildTextBold("Hare Krishna!\n\n"),
+                   
                     DrawerCommanCode().buildText(
-                        "Our official website \"www.devoteematrimony.in\" will be available very soon.\n"),
+                        "You can also use our offcial website www.devoteematrimony.in.\n"),
                     DrawerCommanCode().buildText(
-                        "As and when, our official application will be in working mode, we will update the same here on this page.")
+                        "You will find same features and same profiles on that website, but yes as of now, chat feature is not there at the website. By mercy of the Lordship, that feature will also be there very soon.")
                   ],
                 ),
               )

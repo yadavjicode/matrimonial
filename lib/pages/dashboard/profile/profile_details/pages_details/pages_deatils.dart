@@ -171,18 +171,22 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
             List<Map<String, String>> contactDetails = [
               {
                 "title": "Phone Number",
-                "value":
-                    "${profileDetailsController.member?.data?.hidePhoneStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
+                "value": profileDetailsController.member?.data?.chatStatus == 1
+                    ? profileDetailsController.member?.data?.hidePhoneStatus ==
+                            1
+                        ? "Hidden"
+                        : "${profileDetailsController.member?.data?.mobile != null ? "+" : ""}${profileDetailsController.member?.data?.mobile ?? "Not Mentioned"}"
+                    : "+${profileDetailsController.member?.data?.mobile != null ? profileDetailsController.member?.data?.mobile.toString().substring(0, 4) : "****"}**********"
               },
               {
                 "title": "Email Address",
                 "value":
-                    "${profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.chatStatus == 1 ? profileDetailsController.member?.data?.hideEmailStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.confirmEmail ?? "Not Mentioned" : "***********@gmail.com"}"
               },
               {
                 "title": "Instagram ID",
                 "value":
-                    "${profileDetailsController.member?.data?.instagramId ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.chatStatus == 1 ? profileDetailsController.member?.data?.instagramId ?? "Not Mentioned" : "**************"}"
               }
             ];
 // End contactDetails ========================================================================================================================================================================
@@ -248,12 +252,12 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
               {
                 "title": "References 1 Email",
                 "value":
-                    "${profileDetailsController.member?.data?.reference1Email ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.chatStatus == 1 ? profileDetailsController.member?.data?.reference1Email ?? "Not Mentioned" : "***********@gmail.com"}"
               },
               {
                 "title": "References 1 Mobile no",
                 "value":
-                    "${profileDetailsController.member?.data?.reference1Mobile ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.chatStatus == 1 ? profileDetailsController.member?.data?.reference1Mobile ?? "Not Mentioned" : "${profileDetailsController.member?.data?.reference1Mobile != null ? profileDetailsController.member?.data?.reference1Mobile.toString().substring(0, 4) : "****"}**********"}"
               },
               {
                 "title": "References 2 Relation",
@@ -268,12 +272,12 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
               {
                 "title": "References 2 Email",
                 "value":
-                    "${profileDetailsController.member?.data?.reference2Email ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.chatStatus == 1 ? profileDetailsController.member?.data?.reference2Email ?? "Not Mentioned" : "***********@gmail.com"}"
               },
               {
                 "title": "References 2 Mobile no",
                 "value":
-                    "${profileDetailsController.member?.data?.reference2Mobile ?? "Not Mentioned"}"
+                    "${profileDetailsController.member?.data?.chatStatus == 1 ? profileDetailsController.member?.data?.reference2Mobile ?? "Not Mentioned" : "${profileDetailsController.member?.data?.reference2Mobile != null ? profileDetailsController.member?.data?.reference2Mobile.toString().substring(0, 4) : "****"}**********"}"
               },
             ];
             // End locationDetails ========================================================================================================================================================================
@@ -652,6 +656,11 @@ class _AboutState extends State<About> with SingleTickerProviderStateMixin {
                 "title": "Time Of Birth",
                 "value":
                     "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.timeOfBirth ?? "Not Mentioned"}"
+              },
+              {
+                "title": "Country Of Birth",
+                "value":
+                    "${profileDetailsController.member?.data?.hideAstroStatus == 1 ? "Hidden" : profileDetailsController.member?.data?.countryOfBirth ?? "Not Mentioned"}"
               },
               {
                 "title": "State of Birth",

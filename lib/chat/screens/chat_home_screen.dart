@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import '../../constants/widget/dialog.dart';
+import '../../controller/edit_profile_controller.dart';
 import '../api/apis.dart';
 import '../../constants/widget/Snackbar.dart';
 import '../models/chat_user.dart';
@@ -22,6 +25,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
 
   // for storing all users
   List<ChatUser> _list = [];
@@ -35,6 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     APIs.getSelfInfo();
+    userProfileController.userDetails(context).then((_) {
+      if (userProfileController.member?.member?.accountType != 1) {
+        DialogConstant.packageDialog(context, 'chat feature');
+      }
+    });
 
     //for updating user active status according to lifecycle events
     //resume -- active or online

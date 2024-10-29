@@ -413,7 +413,7 @@ class _SeeAllState extends State<SeeAll> {
                                           : AppColors.primaryColor,
                                       size: screenWidth * 0.054,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Expanded(
@@ -466,7 +466,7 @@ class _SeeAllState extends State<SeeAll> {
                                       height: screenWidth * 0.052,
                                       width: screenWidth * 0.052,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Expanded(

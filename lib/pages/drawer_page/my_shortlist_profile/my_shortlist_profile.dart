@@ -112,7 +112,7 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
     } else {
       return Padding(
         padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeVertical * 2,
+            // top: SizeConfig.blockSizeVertical * 2,
             left: SizeConfig.blockSizeHorizontal * 4,
             right: SizeConfig.blockSizeHorizontal * 4),
         child: Container(
@@ -189,8 +189,8 @@ class _MyShorlistProfileDState extends State<MyShorlistProfileD> {
                                         "11",
                                         "12",
                                         "13",
-                                        "14"
-                                        ,"15"
+                                        "14",
+                                        "15"
                                       ]);
                                     } else {
                                       DialogConstant.packageDialog(

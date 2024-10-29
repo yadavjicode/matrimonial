@@ -23,7 +23,7 @@ class _EditLocationDetailsState extends State<EditLocationDetails> {
   final EditProfileController _editProfileController =
       Get.put(EditProfileController());
   final LocationDetailsController _locationDetailsController =
-      Get.put(LocationDetailsController());
+      Get.put(LocationDetailsController());  
   final CountryController countryController = Get.put(CountryController());
   final StateControllerTemporary stateControllerTemporary =
       Get.put(StateControllerTemporary());

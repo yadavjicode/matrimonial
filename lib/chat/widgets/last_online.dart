@@ -125,9 +125,10 @@ class UserStatusWidget extends StatelessWidget {
                         height: 10,
                         width: 10,
                         decoration: BoxDecoration(
-                            color:color?? AppColors.grey, shape: BoxShape.circle),
+                            color: color ?? AppColors.grey,
+                            shape: BoxShape.circle),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 3,
                       ),
                       Expanded(

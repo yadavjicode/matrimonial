@@ -286,6 +286,7 @@ class Data {
   dynamic pEFamilyValue;
   dynamic pEFamilyType;
   dynamic timeOfBirth;
+  dynamic countryOfBirth;
   dynamic stateOfBirth;
   dynamic challenged;
   dynamic anyOperation;
@@ -605,6 +606,7 @@ class Data {
       this.pEFamilyValue,
       this.pEFamilyType,
       this.timeOfBirth,
+      this.countryOfBirth,
       this.stateOfBirth,
       this.challenged,
       this.anyOperation,
@@ -925,6 +927,7 @@ class Data {
     pEFamilyValue = json['PE_family_value'];
     pEFamilyType = json['PE_family_type'];
     timeOfBirth = json['time_of_birth'];
+    countryOfBirth = json['country_of_birth'];
     stateOfBirth = json['state_of_birth'];
     challenged = json['challenged'];
     anyOperation = json['any_operation'];
@@ -1255,6 +1258,7 @@ class Data {
     data['PE_family_value'] = this.pEFamilyValue;
     data['PE_family_type'] = this.pEFamilyType;
     data['time_of_birth'] = this.timeOfBirth;
+    data['country_of_birth'] = this.countryOfBirth;
     data['state_of_birth'] = this.stateOfBirth;
     data['challenged'] = this.challenged;
     data['any_operation'] = this.anyOperation;

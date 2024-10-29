@@ -9,6 +9,7 @@ import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlis
 import 'package:devotee/pages/dashboard/profile/profile_details/view_all_photos.dart';
 import 'package:devotee/pages/drawer_page/account_setting/account_setting.dart';
 import 'package:devotee/pages/drawer_page/add_testimonial/add_testimonial.dart';
+import 'package:devotee/pages/drawer_page/block_profile/block_profile.dart';
 import 'package:devotee/pages/drawer_page/chat/chat.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';
 import 'package:devotee/pages/drawer_page/complaint/complaint.dart';
@@ -111,6 +112,7 @@ class AppRoutes {
   static const String editProfile = '/editProfile';
   static const String inbox = '/inbox';
   static const String shortlistProfile = '/shortlistProfile';
+  static const String blockProfile = '/blockProfile';
   static const String chatHome = '/chatHome';
 
   static const String whoAreYou = '/whoAreYou';
@@ -654,6 +656,12 @@ class AppRoutes {
     GetPage(
       name: addPhoto,
       page: () => const AddPhoto(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(milliseconds: 400),
+    ),
+    GetPage(
+      name: blockProfile,
+      page: () => const BlockProfile(),
       transition: Transition.fadeIn,
       transitionDuration: const Duration(milliseconds: 400),
     ),

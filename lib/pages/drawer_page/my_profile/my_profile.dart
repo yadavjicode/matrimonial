@@ -714,6 +714,11 @@ class _MyProfileState extends State<MyProfile> {
                                       .member?.member?.timeOfBirth ??
                                   "Not Mentioned"),
                           _buildText(
+                              "Country of Birth",
+                              _editProfileController
+                                      .member?.member?.countryOfBirth ??
+                                  "Not Mentioned"),
+                          _buildText(
                               "State of Birth",
                               _editProfileController
                                       .member?.member?.stateOfBirth ??
