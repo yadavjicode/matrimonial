@@ -70,11 +70,11 @@ class _AddTestimonialState extends State<AddTestimonial> {
                                 minRating: 0,
                                 maxRating: 5,
                                 direction: Axis.horizontal,
-                                allowHalfRating: true,
+                                allowHalfRating: false,
                                 itemCount: 5,
                                 itemBuilder: (context, _) => const Icon(
                                   Icons.star,
-                                  color: Color(0xffEDB118),
+                                  color: AppColors.yellow,
                                 ),
                                 onRatingUpdate: (newRating) {
                                   setState(() {

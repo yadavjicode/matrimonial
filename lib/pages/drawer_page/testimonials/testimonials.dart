@@ -2,11 +2,10 @@ import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/testimonial_controller.dart';
-import 'package:devotee/model/testimonial_model.dart';
 import 'package:devotee/pages/drawer_page/drawer_comman_code.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import '../../../constants/widget/star_rating.dart';
 
 class Testimonial extends StatefulWidget {
   const Testimonial({super.key});
@@ -107,7 +106,7 @@ class _TestimonialState extends State<Testimonial> {
             children: testimonialController.member!.data!.map((data) {
               String name = data.name ?? "";
               String profile = data.designation ?? "";
-              double rating = data.rating * 1.0 ?? 0.0;
+              int rating = data.rating ?? 0;
               String feedback = data.description ?? "";
               String image = data.image != null
                   ? "http://devoteematrimony.aks.5g.in/${data.image}"
@@ -161,26 +160,9 @@ class _TestimonialState extends State<Testimonial> {
                                           fontSize: 12, color: AppColors.black),
                                     ),
                                   ),
-                                  RatingBar.builder(
-                                    itemSize: 20,
-                                    initialRating: rating, // Initial rating
-                                    minRating: 0, // Minimum rating
-                                    direction: Axis
-                                        .horizontal, // Direction of the rating bar
-                                    allowHalfRating: true, // Allow half rating
-                                    itemCount: 5, // Number of stars
-                                    // itemPadding: EdgeInsets.symmetric(
-                                    //     horizontal:
-                                    //         4.0), // Padding between stars
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.star,
-                                      color: Color(
-                                          0xffEDB118), // Color of the stars
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      print(
-                                          rating); // Callback to handle rating change
-                                    },
+                                  StarRating(
+                                    rating: rating,
+                                    maxRating: 5,
                                   ),
                                 ],
                               ),

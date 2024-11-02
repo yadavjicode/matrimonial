@@ -48,7 +48,7 @@ class _SuggestionState extends State<Suggestion> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        Container(
+                        SizedBox(
                           width: double.infinity,
                           child: Image.asset("assets/images/suggestion.png",
                               fit: BoxFit.cover),
@@ -57,13 +57,13 @@ class _SuggestionState extends State<Suggestion> {
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               DrawerCommanCode()
                                   .buildTextBold("Hare Krishna!\n"),
                               DrawerCommanCode().buildText(
-                                  "There is always a scope of Improvement, so the same is applicable with this application as well, you can share your suggestion here to have some improvement in our application\n"),
+                                  "There is always a scope of Improvement, so the same is applicable with this application as well, you can share your suggestion here to have some improvement in our application. We will definitely consider your valuable suggestion\n"),
                               CustomTextField(
                                 controller: email,
                                 labelText: "Your Email ID",
@@ -73,7 +73,7 @@ class _SuggestionState extends State<Suggestion> {
                                   return Validation.validateEmail(value);
                                 },
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               CustomTextField(

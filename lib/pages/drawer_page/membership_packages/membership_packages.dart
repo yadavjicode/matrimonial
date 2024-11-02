@@ -339,20 +339,22 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           textStyle: FontConstant.styleRegular(
                               fontSize: 16, color: AppColors.constColor)),
                     ),
-                    GestureDetector(
-                      onTap: () => {Get.toNamed("/dashboard")},
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                        ),
-                        child: Text(
-                          "Not Now",
-                          style: FontConstant.styleRegular(
-                              fontSize: 18, color: AppColors.black),
-                        ),
-                      ),
-                    )
+                    // GestureDetector(
+                    //   onTap: () => {
+                    //     Get.toNamed("/dashboard")
+                    //     },
+                    //   child: Container(
+                    //     padding: const EdgeInsets.only(
+                    //       left: 20,
+                    //       right: 20,
+                    //     ),
+                    //     child: Text(
+                    //       "Not Now",
+                    //       style: FontConstant.styleRegular(
+                    //           fontSize: 18, color: AppColors.black),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),

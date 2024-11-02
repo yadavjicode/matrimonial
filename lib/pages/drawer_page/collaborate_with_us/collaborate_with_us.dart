@@ -23,7 +23,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
   final TextEditingController name = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController email = TextEditingController();
-  // StateController countryController = Get.put(StateController());
+
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
   final StateController stateController = Get.put(StateController());
@@ -95,7 +95,7 @@ class _CollaborateWithUsState extends State<CollaborateWithUs> {
                               DrawerCommanCode()
                                   .buildTextBold("Hare Krishna!\n"),
                               DrawerCommanCode().buildText(
-                                  "If you liked our work and you also want to become a part of this glorious seva then you can give us your details, our team will contact you.\n"),
+                                  "If you liked our work and you also want to become a part of this glorious seva then you can give us your details, our team will contact you. We will also pay you for your Contribution\n"),
                               CustomTextField(
                                 controller: name,
                                 labelText: "Your Name",

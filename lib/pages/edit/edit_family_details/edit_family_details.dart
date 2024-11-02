@@ -373,9 +373,9 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       ],
                       (value) {
                         setState(() {
-                          selectedReligion = religionController.religionsLists
-                              .firstWhere((religion) =>
-                                  religion['name'] == value)['id'];
+                          // selectedReligion = religionController.religionsLists
+                          //     .firstWhere((religion) =>
+                          //         religion['name'] == value)['id'];
                           selectedReligionName = value;
                           selectedCastName = null;
                         });
@@ -408,8 +408,8 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                       ['Prefer Not To Say', ...castController.getCastNames()],
                       (value) {
                         setState(() {
-                          selectedCast = castController.castLists.firstWhere(
-                              (cast) => cast['name'] == value)['id'];
+                          // selectedCast = castController.castLists.firstWhere(
+                          //     (cast) => cast['name'] == value)['id'];
                           selectedCastName = value;
                           selectedSubCastName = null;
                         });
@@ -1312,7 +1312,7 @@ class _EditFamilyDetailsState extends State<EditFamilyDetails> {
                             selectedSubCastName ?? "",
                             gotra,
                             getLanguageKnown(selectedLanguage ?? []),
-                            selectedMothertongue!,
+                            selectedMothertongue ?? "",
                             getFatherAlive() ?? "",
                             getFatherAlive() == "Yes" ? fathername : "",
                             getFatherAlive() == "Yes"

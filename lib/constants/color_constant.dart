@@ -8,7 +8,7 @@ class AppColors {
   static const Color drawerbackground = Color(0xFF231438);
   static const Color background = Color(0xfffef1fa);
   static const Color primaryLight = Color(0xfffdeaf2);
-  static const Color yellow = Color(0xffFFF734);
+  static const Color yellow = Color(0xffEDB118);
   static const Color grey = Colors.grey;
   static const Color darkgrey = const Color.fromARGB(255, 109, 107, 107);
   static const Color purple = Color(0xff583689);

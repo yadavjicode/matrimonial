@@ -50,9 +50,8 @@ class _WhoAreYouState extends State<WhoAreYou> {
                     DrawerCommanCode().buildText(
                         "We are a Group of ISKCON Devotees who is trying to please the Supreme Lord and our ISKCON Founder Acharya His Divine Grace A. C. Bhaktivedanta Swami Prabhupada by having an official Platform which can help devotional mood People to enter into Grihastha Ashram with a devotional mood life partner and in such a way pratice Krishna Consciousness together with his/ her life partner.\n"),
                     DrawerCommanCode().buildText(
-                        "This Application is running under blessings and supervision of senior devotees in ISKCON.\n"),
-                    DrawerCommanCode().buildText(
-                        "May Krishna bestows his mercy upon you and by the mercy of Krishna you will find your devotional match at its right time. All the very Best.\n"),
+                        "This Application is running under blessings and supervision of senior devotees in ISKCON. May Krishna bestows his mercy upon you and by the mercy of Krishna you will find your devotional match at its right time. All the very Best.\n"),
+               
                     DrawerCommanCode()
                         .buildText("All Glories to Srila Prabhupada!"),
                   ],

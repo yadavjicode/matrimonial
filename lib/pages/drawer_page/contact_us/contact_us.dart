@@ -52,17 +52,19 @@ class _ContactUsState extends State<ContactUs> {
                         DrawerCommanCode().buildTextBold("Hare Krishna!\n"),
                         DrawerCommanCode().buildText(
                             "We’d love to hear from you! Whether you have questions, feedback, or need assistance, feel free to reach out to us.\n"),
-                        DrawerCommanCode().buildTextBold("Our Contact Numbers:\n"),
+                        DrawerCommanCode()
+                            .buildTextBold("Our Contact Numbers:\n"),
                         DrawerCommanCode().buildText(
                             "1. +91-999-998-88-88 (For Whatsapp Messages Only):"),
-                        DrawerCommanCode()
-                            .buildText("2. +91-999-998-88-89 (For Voice Calls)\n"),
-                        DrawerCommanCode()
-                            .buildText("Call Timings: 10:30 am to 6:30 pm (India Timings)\n"),
+                        DrawerCommanCode().buildText(
+                            "2. +91-999-998-88-89 (For Voice Calls)\n"),
+                        DrawerCommanCode().buildText(
+                            "Call Timings: 10:30 am to 6:30 pm (India Timings)\n"),
                         DrawerCommanCode().buildTextBold("Our Email:\n"),
                         DrawerCommanCode()
                             .buildText("support@devoteematrimony.in\n"),
-                         DrawerCommanCode().buildTextBold("Our Social Media handles:\n"),
+                        DrawerCommanCode()
+                            .buildTextBold("Our Social Media handles:\n"),
                         Row(
                           children: [
                             Expanded(
@@ -87,7 +89,8 @@ class _ContactUsState extends State<ContactUs> {
                                           horizontal: 5, vertical: 15),
                                       alignment: Alignment.center,
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
@@ -136,7 +139,8 @@ class _ContactUsState extends State<ContactUs> {
                                           horizontal: 5, vertical: 15),
                                       alignment: Alignment.center,
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
@@ -167,19 +171,19 @@ class _ContactUsState extends State<ContactUs> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: DrawerCommanCode().buildTextBold("Our Physical Presence:\n"),
+                          child: DrawerCommanCode()
+                              .buildTextBold("Our Physical Presence:\n"),
                         ),
+                        DrawerCommanCode().buildText(
+                            "You can also contact us via offline mode at the following ISKCON Temples:\n"),
+                        DrawerCommanCode().buildTextBold(
+                            "1. ISKCON Ghaziabad (Sri Sri Radha Madan Mohan Temple)"),
+                        DrawerCommanCode().buildText(
+                            "Address:- R-11/35, Sector 11, Raj Nagar Ghaziabad, Uttar Pradesh - 201002\n"),
                         DrawerCommanCode()
-                            .buildText("You can also contact us via offline mode at the following ISKCON Temples:\n"),
-                        DrawerCommanCode()
-                            .buildTextBold("1. ISKCON Ghaziabad (Sri Sri Radha Madan Mohan Temple)"),
-                        DrawerCommanCode()
-                            .buildText("Address:- R-11/35, Sector 11, Raj Nagar Ghaziabad, Uttar Pradesh - 201002\n"),
-                         DrawerCommanCode()
                             .buildTextBold("2. ISKCON Bhopal Main Temple"),
-                        DrawerCommanCode()
-                            .buildText("Hare Krishna Land, Raisen Road, Patel Nagar, Bhopal, Madhya Pradesh - 462022"),
-                        
+                        DrawerCommanCode().buildText(
+                            "Hare Krishna Land, Raisen Road, Patel Nagar, Bhopal, Madhya Pradesh - 462022"),
                       ],
                     ),
                   ),

@@ -382,9 +382,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                       ],
                       (value) {
                         setState(() {
-                          selectedReligion = religionController.religionsLists
-                              .firstWhere((religion) =>
-                                  religion['name'] == value)['id'];
                           selectedReligionName = value;
                           selectedCastName = null;
                         });
@@ -417,8 +414,6 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                       ['Prefer Not To Say', ...castController.getCastNames()],
                       (value) {
                         setState(() {
-                          selectedCast = castController.castLists.firstWhere(
-                              (cast) => cast['name'] == value)['id'];
                           selectedCastName = value;
                           selectedSubCastName = null;
                         });
@@ -793,7 +788,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                             );
                           }
                         }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Obx(() {
@@ -894,7 +889,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                 if (getSister() == "Yes")
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       buildDropdownWithSearch(
@@ -912,7 +907,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                       ),
                     ],
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -920,7 +915,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                   height: 1,
                   decoration: const BoxDecoration(color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
@@ -945,7 +940,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                       style: FontConstant.styleRegular(
                           fontSize: 16, color: AppColors.black),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Radio(
@@ -977,7 +972,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                 if (getBrother() == "Yes")
                   Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       buildDropdownWithSearch(
@@ -995,7 +990,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                       ),
                     ],
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Container(
@@ -1003,7 +998,7 @@ class _FamilyDetailsState extends State<FamilyDetails> {
                   height: 1,
                   decoration: const BoxDecoration(color: Colors.grey),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Text(
