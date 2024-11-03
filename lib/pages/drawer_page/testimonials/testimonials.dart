@@ -50,14 +50,15 @@ class _TestimonialState extends State<Testimonial> {
               child: Image.asset("assets/images/bg3.png")),
           Column(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: Image.asset("assets/images/testimonial.png",
                     fit: BoxFit.cover),
               ),
               Container(
                   alignment: Alignment.centerRight,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: CustomDrawerButton(
                     color: AppColors.primaryColor,
                     text: "Add Testimonial",
@@ -97,6 +98,7 @@ class _TestimonialState extends State<Testimonial> {
                 fontSize: 15, color: AppColors.darkgrey)),
       );
     }
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: SingleChildScrollView(
@@ -117,7 +119,7 @@ class _TestimonialState extends State<Testimonial> {
                   // Get.toNamed('/profiledtls');
                 },
                 child: Container(
-                  decoration: BoxDecoration(),
+                  decoration: const BoxDecoration(),
                   child: Column(
                     children: [
                       Row(
