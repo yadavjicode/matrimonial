@@ -340,7 +340,7 @@ class _PackageInformationState extends State<PackageInformation> {
                       child: CustomButton(
                           text: "Buy Premium Pack Now",
                           onPressed: () => {
-                                buyPackageController.buyPackage(context)
+                                buyPackageController.buyPackage(context,false)
                                 //  Get.toNamed("/package")
                               },
                           color: AppColors.primaryColor,

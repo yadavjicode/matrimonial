@@ -65,7 +65,8 @@ class _TestimonialState extends State<Testimonial> {
                     onPressed: () => {Get.toNamed("/addTestimonials")},
                     textStyle: FontConstant.styleRegular(
                         fontSize: 14, color: AppColors.constColor),
-                  )),
+                  )
+                  ),
               Obx(() {
                 return Expanded(
                   child: Stack(

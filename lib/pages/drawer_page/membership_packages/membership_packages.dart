@@ -1,17 +1,14 @@
-import 'package:devotee/constants/widget/Snackbar.dart';
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/font_constant.dart';
 import 'package:devotee/controller/coupons_controller.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
-import 'package:flutter/services.dart';
+import 'package:devotee/pages/drawer_page/membership_packages/package_comman.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../../controller/buy_package_controller.dart';
 import '../../../controller/flow_controller.dart';
 import '../../../controller/package_Controller.dart';
-import '../../../model/coupons_model.dart';
 
 class MembershipPackages extends StatefulWidget {
   const MembershipPackages({super.key});
@@ -27,6 +24,8 @@ class _MembershipPackagesState extends State<MembershipPackages> {
   final PackageController packageController = Get.put(PackageController());
   final BuyPackageController buyPackageController =
       Get.put(BuyPackageController());
+
+  get pageController => null;
 
   @override
   void initState() {
@@ -137,7 +136,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           ),
                         ),
                         if (editProfileController.isLoading.value == false)
-                          _buildPack(editProfileController
+                          PackageComman.buildPack(editProfileController
                                   .member?.member?.accountType ??
                               0),
                         Text(
@@ -154,7 +153,8 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                 ),
               if (couponsController.isLoading.value ||
                   packageController.isLoading.value ||
-                  editProfileController.isLoading.value)
+                  editProfileController.isLoading.value ||
+                  flowController.isLoading.value)
                 const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.primaryColor,
@@ -228,7 +228,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
         const SizedBox(
           height: 10,
         ),
-        _packageSelect(
+        PackageComman.packageSelect(
             context,
             "Able to see photos uploaded on others Profile",
             packageController
@@ -237,36 +237,37 @@ class _MembershipPackagesState extends State<MembershipPackages> {
             packageController
                     .member?.data?.premium?.ableToSeePhotosOnOthersProfile ??
                 0),
-        _packageSelect(context, "Using Shortlist Feature", 1, 1),
-        _packageSelect(
+        PackageComman.packageSelect(context, "Using Shortlist Feature", 1, 1),
+        PackageComman.packageSelect(
             context,
             "Use Filter/ Sorting Feature",
             packageController.member?.data?.free?.useFilterSortingFeature ?? 0,
             packageController.member?.data?.premium?.useFilterSortingFeature ??
                 0),
-        _packageSelect(
+        PackageComman.packageSelect(
             context,
             "View Full Profile of Others",
             packageController.member?.data?.free?.viewFullProfileOfOthers ?? 0,
             packageController.member?.data?.premium?.viewFullProfileOfOthers ??
                 0),
-        _packageSelect(
+        PackageComman.packageSelect(
             context,
             "Using Search Feature",
             packageController.member?.data?.free?.usingSearchFeature ?? 0,
             packageController.member?.data?.premium?.usingSearchFeature ?? 0),
-        _packageSelect(
+        PackageComman.packageSelect(
             context,
             "Chat Box",
             packageController.member?.data?.free?.chat ?? 0,
             packageController.member?.data?.premium?.chat! ?? 0),
-        _packageSelect(
+        PackageComman.packageSelect(
             context,
             "See Contact No.s",
             packageController.member?.data?.free?.seeContactNumbers ?? 0,
             packageController.member?.data?.premium?.seeContactNumbers ?? 0),
-        _packageSelect(context, "Using Privacy Features", 0, 1),
-        _packageSelect(context, "Respond to received Interest", 0, 1),
+        PackageComman.packageSelect(context, "Using Privacy Features", 0, 1),
+        PackageComman.packageSelect(
+            context, "Respond to received Interest", 0, 1),
         Row(
           children: [
             Expanded(
@@ -298,7 +299,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                 ))
           ],
         ),
-        editProfileController.member?.member?.accountType == 1
+        editProfileController.member?.member?.accountType == 0
             ? const SizedBox.shrink()
             // ? Padding(
             //     padding: const EdgeInsets.only(top: 20, bottom: 25),
@@ -313,16 +314,9 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Column(
                   children: [
-                    // Container(
-                    //     alignment: Alignment.centerLeft,
-                    //     child: Text(
-                    //       "Discount Coupons",
-                    //       style: FontConstant.styleMedium(
-                    //           fontSize: 17, color: AppColors.black),
-                    //     )),
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: _buildDiscount(
+                      child: PackageComman.buildDiscount(
                         context,
                         couponsController.member?.data ?? [],
                       ),
@@ -332,425 +326,18 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                       child: CustomButton(
                           text: "Buy Premium Pack Now",
                           onPressed: () => {
-                                buyPackageController.buyPackage(context)
-                                //  Get.toNamed("/package")
+                                // buyPackageController.buyPackage(context)
+                                PackageComman.appThemeBottomSheet(
+                                    context) //  Get.toNamed("/package")
                               },
                           color: AppColors.primaryColor,
                           textStyle: FontConstant.styleRegular(
                               fontSize: 16, color: AppColors.constColor)),
                     ),
-                    // GestureDetector(
-                    //   onTap: () => {
-                    //     Get.toNamed("/dashboard")
-                    //     },
-                    //   child: Container(
-                    //     padding: const EdgeInsets.only(
-                    //       left: 20,
-                    //       right: 20,
-                    //     ),
-                    //     child: Text(
-                    //       "Not Now",
-                    //       style: FontConstant.styleRegular(
-                    //           fontSize: 18, color: AppColors.black),
-                    //     ),
-                    //   ),
-                    // )
                   ],
                 ),
               ),
       ],
     );
   }
-}
-
-Widget _buildPack(int package) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 15),
-    child: Row(
-      children: [
-        Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-                color: package != 1
-                    ? AppColors.constColor
-                    : AppColors.primaryColor,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: AppColors.primaryColor)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Text(
-                    "Free Pack",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    style: FontConstant.styleSemiBold(
-                      fontSize: 16,
-                      color:
-                          package != 1 ? AppColors.black : AppColors.constColor,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color:
-                          package != 1 ? AppColors.grey : AppColors.constColor,
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                    ),
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 5),
-                            height: 20,
-                            width: 20,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: package == 1
-                                  ? AppColors.grey
-                                  : AppColors.primaryColor,
-                            ),
-                            child: package != 1
-                                ? SvgPicture.asset(
-                                    "assets/images/icons/correct.svg")
-                                : Container(),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              package != 1 ? "Current Pack" : "Select Pack",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 12,
-                                  color: package != 1
-                                      ? AppColors.constColor
-                                      : AppColors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          width: 15,
-        ),
-        Expanded(
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            decoration: BoxDecoration(
-                color: package == 1
-                    ? AppColors.constColor
-                    : AppColors.primaryColor,
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: AppColors.primaryColor)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/Crown.png",
-                        height: 20,
-                        width: 20,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: Text(
-                          "Premium Pack",
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.start,
-                          style: FontConstant.styleSemiBold(
-                              fontSize: 16,
-                              color: package == 1
-                                  ? AppColors.black
-                                  : AppColors.constColor),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color:
-                          package == 1 ? AppColors.grey : AppColors.constColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    ),
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 5),
-                              height: 20,
-                              width: 20,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: package != 1
-                                    ? AppColors.grey
-                                    : AppColors.primaryColor,
-                              ),
-                              child: package == 1
-                                  ? SvgPicture.asset(
-                                      "assets/images/icons/correct.svg")
-                                  : Container()),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              package == 1 ? "Current Pack" : "Select Pack",
-                              style: FontConstant.styleRegular(
-                                  fontSize: 12,
-                                  color: package == 1
-                                      ? AppColors.constColor
-                                      : AppColors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-Widget _buildDiscount(BuildContext context, List<Data> list) {
-  return Column(
-    children: list.map((data) {
-      return Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          color: AppColors.constColor,
-          border: Border.all(color: Colors.grey.shade300),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Row(
-          //  mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                backgroundColor: AppColors.primaryColor,
-                radius: 35.0, // Adjust the radius as needed
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "${data.discount}%",
-                      style: FontConstant.styleMedium(
-                        fontSize: 18,
-                        color: AppColors.constColor,
-                      ),
-                      maxLines: 1, // Limits to one line
-                      overflow:
-                          TextOverflow.ellipsis, // Adds ellipsis for overflow
-                      textAlign: TextAlign.center,
-                    ),
-                    // Adds space between the two texts
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        "Discount",
-                        style: FontConstant.styleMedium(
-                          fontSize: 10,
-                          color: AppColors.constColor,
-                        ),
-                        maxLines: 1, // Limits to one line
-                        overflow:
-                            TextOverflow.ellipsis, // Adds ellipsis for overflow
-                        textAlign: TextAlign
-                            .center, // Center the text inside the circle
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "New Users ${data.gender == "Male" ? "Boy" : "Girl"}",
-                      style: FontConstant.styleSemiBold(
-                          fontSize: 15, color: AppColors.black),
-                      maxLines: 1, // Limits to one line
-                      overflow:
-                          TextOverflow.ellipsis, // Adds ellipsis for overflow
-                    ),
-                    Text(
-                      "Get ${data.discount}% Discount upto ₹${data.discount} for the first ${data.noOfUser} boys",
-                      style: FontConstant.styleRegular(
-                          fontSize: 10, color: AppColors.black),
-                      maxLines: 2, // Limits to one line
-                      overflow:
-                          TextOverflow.ellipsis, // Adds ellipsis for overflow
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height,
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: const BoxDecoration(
-                  color: AppColors.darkblue,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10))),
-              child: GestureDetector(
-                onTap: () => {
-                  Clipboard.setData(ClipboardData(text: data.couponName))
-                      .then((_) {
-                    Dialogs.showSnackbar(context, 'Copied ${data.couponName}');
-                  })
-                },
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        data.couponName,
-                        style: FontConstant.styleBold(
-                            fontSize: 13, color: AppColors.constColor),
-                      ),
-                      SvgPicture.asset("assets/images/icons/copy.svg"),
-                      Text(
-                        "COPY",
-                        style: FontConstant.styleMedium(
-                            fontSize: 12, color: AppColors.constColor),
-                      )
-                    ]),
-              ),
-            ),
-          ],
-        ),
-      );
-    }).toList(),
-  );
-}
-
-Widget _packageSelect(
-    BuildContext context, String tittle, int free, int premium) {
-  return Column(
-    children: [
-      Row(
-        children: [
-          Expanded(
-              child: Text(
-            tittle,
-            style:
-                FontConstant.styleRegular(fontSize: 12, color: AppColors.black),
-          )),
-          Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              alignment: Alignment.center,
-              child: free == 1
-                  ? Container(
-                      height: 19,
-                      width: 19,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.green,
-                      ),
-                      child:
-                          SvgPicture.asset("assets/images/icons/correct.svg"))
-                  : Container(
-                      height: 19,
-                      width: 19,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: AppColors.red),
-                      child: const Icon(
-                        Icons.close,
-                        size: 17,
-                        color: AppColors.constColor,
-                      ),
-                    )),
-          Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              color: AppColors.constColor,
-              alignment: Alignment.center,
-              child: premium == 1
-                  ? Container(
-                      height: 19,
-                      width: 19,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.green,
-                      ),
-                      child:
-                          SvgPicture.asset("assets/images/icons/correct.svg"))
-                  : Container(
-                      height: 19,
-                      width: 19,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: AppColors.red),
-                      child: const Icon(
-                        Icons.close,
-                        size: 17,
-                        color: AppColors.constColor,
-                      ),
-                    ))
-        ],
-      ),
-      Container(
-        height: 1,
-        color: AppColors.grey,
-      )
-    ],
-  );
 }

@@ -201,7 +201,7 @@ class _PackageDetailsState extends State<PackageDetails> {
                           child: CustomButton(
                               text: "Buy Premium Pack Now",
                               onPressed: () => {
-                                    buyPackageController.buyPackage(context)
+                                    buyPackageController.buyPackage(context,true)
                                     //  Get.toNamed("/package")
                                   },
                               color: AppColors.primaryColor,

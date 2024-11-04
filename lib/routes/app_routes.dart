@@ -8,7 +8,7 @@ import 'package:devotee/pages/dashboard/inbox/inbox.dart';
 import 'package:devotee/pages/dashboard/profile/my_shortlist_profile/my_shortlist_profile.dart';
 import 'package:devotee/pages/dashboard/profile/profile_details/view_all_photos.dart';
 import 'package:devotee/pages/drawer_page/account_setting/account_setting.dart';
-import 'package:devotee/pages/drawer_page/add_testimonial/add_testimonial.dart';
+import 'package:devotee/pages/drawer_page/testimonials/add_testimonial.dart';
 import 'package:devotee/pages/drawer_page/block_profile/block_profile.dart';
 import 'package:devotee/pages/drawer_page/chat/chat.dart';
 import 'package:devotee/pages/drawer_page/collaborate_with_us/collaborate_with_us.dart';

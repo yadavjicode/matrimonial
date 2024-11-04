@@ -1,6 +1,7 @@
 import 'package:devotee/constants/widget/dialog.dart';
 import 'package:devotee/constants/widget/profile_image.dart';
 import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/pages/dashboard/dashboard_page/dashboard.dart';
 import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:devotee/constants/color_constant.dart';
@@ -215,7 +216,7 @@ class CustomDrawer extends StatelessWidget {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      dashboardController.navigateToPage(4);
+                      // dashboardController.navigateToPage(4);
                       scaffoldKey.currentState?.closeDrawer();
                     },
                     child: buildoption("assets/images/icons/dashboard.svg",

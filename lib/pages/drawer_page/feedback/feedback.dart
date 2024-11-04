@@ -98,8 +98,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                       textStyle: FontConstant.styleRegular(
                                           fontSize: 14,
                                           color: AppColors.constColor),
-                                    )
-                                    )
+                                    ))
                               ],
                             ),
                           )

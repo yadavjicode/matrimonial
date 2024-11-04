@@ -5,7 +5,6 @@ import 'package:devotee/model/buy_package_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:devotee/api_service/api_service.dart';
-
 import '../constants/widget/Snackbar.dart';
 import '../utils/connection_check/connectivity_service.dart';
 import 'flow_controller.dart';
@@ -23,7 +22,7 @@ class BuyPackageController with ChangeNotifier {
       Get.put(ConnectivityService());
   final FlowController flowController = Get.put(FlowController());
 
-  Future<void> buyPackage(BuildContext context) async {
+  Future<void> buyPackage(BuildContext context, bool check) async {
     isLoading.value = true;
     _error = null;
     notifyListeners();
@@ -38,8 +37,11 @@ class BuyPackageController with ChangeNotifier {
         '${member!.message}',
         dialogType: DialogType.success,
         btnOkOnPress: () => {
-          // editProfileController.userDetails(context),
-          flowController.Flow(context, 12)
+          editProfileController.userDetails(context),
+          if (check)
+            {flowController.Flow(context, 12)}
+          else
+            {flowController.Flow(context, 12)}
         },
       );
     } catch (e) {
