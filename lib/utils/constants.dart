@@ -58,6 +58,7 @@ class ApiConstants {
   static const String blockUrl = "member/block-user";
   static const String blockProfileUrl = "member/block-user-list";
   static const String addTestimonialUrl = "member/save-testimonial";
+  static const String applyCouponUrl = "member/apply-coupon";
 }
 
 late Size mq;

@@ -1,3 +1,5 @@
+import 'package:devotee/controller/edit_profile_controller.dart';
+import 'package:devotee/utils/comman_class_method.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,18 +10,31 @@ import '../../../constants/button_constant.dart';
 import '../../../constants/color_constant.dart';
 import '../../../constants/font_constant.dart';
 import '../../../constants/widget/Snackbar.dart';
+import '../../../controller/apply_coupon_controller.dart';
 import '../../../controller/buy_package_controller.dart';
+import '../../../controller/package_Controller.dart';
 import '../../../model/coupons_model.dart';
 
 class PackageComman {
-  static final BuyPackageController buyPackageController =
+  final BuyPackageController buyPackageController =
       Get.put(BuyPackageController());
-  static appThemeBottomSheet(
+  final PackageController packageController = Get.put(PackageController());
+  final ApplyCouponController applyCouponController =
+      Get.put(ApplyCouponController());
+  final EditProfileController userProfileController =
+      Get.put(EditProfileController());
+
+  appThemeBottomSheet(
     BuildContext context,
   ) async {
+    applyCouponController.member?.data?.discount = 0;
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
     int? amounttype = 1;
+
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+    final TextEditingController couponController = TextEditingController();
     showModalBottomSheet<int>(
       context: context,
       isScrollControlled: true, // Allows the sheet to resize with the keyboard
@@ -37,6 +52,24 @@ class PackageComman {
                     .bottom, // Adjust padding for keyboard
               ),
               child: SingleChildScrollView(child: Obx(() {
+                num amount =
+                    packageController.member?.data?.premium?.amount ?? 0;
+                num discount =
+                    applyCouponController.member?.data?.discount ?? 0;
+
+                num getActualDiscount(String type) {
+                  if (type == "Amount") {
+                    return discount;
+                  } else if (type == "Percentage") {
+                    return (amount * discount ~/ 100);
+                  } else {
+                    return 0;
+                  }
+                }
+
+                num actualDiscount = getActualDiscount(
+                    applyCouponController.member?.data?.discountType ?? "");
+                num totalAmount = amount - actualDiscount;
                 return Stack(children: [
                   Container(
                     padding: EdgeInsets.symmetric(
@@ -47,177 +80,207 @@ class PackageComman {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "MRP Total",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 15,
-                                          color: AppColors.darkgrey),
+                          Form(
+                            key: formKey,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "MRP Total",
+                                        style: FontConstant.styleRegular(
+                                            fontSize: 15,
+                                            color: AppColors.darkgrey),
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
+                                    Expanded(
+                                      child: Text(
+                                        "₹ ${amount.toStringAsFixed(2)}",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 15,
+                                            color: AppColors.black),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Discount Price",
+                                        style: FontConstant.styleRegular(
+                                            fontSize: 15,
+                                            color: AppColors.darkgrey),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "-₹ ${actualDiscount.toStringAsFixed(2)}",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 15,
+                                            color: AppColors.black),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 3),
+                                    height: 1,
+                                    color: Colors.grey.shade300),
+                                Container(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 3),
+                                    alignment: Alignment.centerLeft,
                                     child: Text(
-                                      "₹ 3999",
-                                      style: FontConstant.styleMedium(
+                                      "Coupon Code:",
+                                      style: FontConstant.styleSemiBold(
                                           fontSize: 15, color: AppColors.black),
-                                      textAlign: TextAlign.right,
+                                    )),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: CustomTextField(
+                                        controller: couponController,
+                                        borderRadius: 5,
+                                        hintText: "Enter coupon code",
+                                        validator: (value) {
+                                          if (value == null ||
+                                              value.isEmpty ||
+                                              applyCouponController
+                                                      .member?.status ==
+                                                  "false") {
+                                            return 'Enter Valid coupon code';
+                                          }
+                                          return null;
+                                        },
+                                      ),
                                     ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Discount Price",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 15,
-                                          color: AppColors.darkgrey),
+                                    const SizedBox(
+                                      width: 10,
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "-₹ 100",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 15, color: AppColors.black),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 3),
-                                  height: 1,
-                                  color: Colors.grey.shade300),
-                              Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 3),
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Coupon Code:",
-                                    style: FontConstant.styleSemiBold(
-                                        fontSize: 15, color: AppColors.black),
-                                  )),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Expanded(
-                                    child: CustomTextField(
-                                      borderRadius: 5,
-                                      hintText: "Enter coupon code",
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  CustomDrawerButton(
-                                    color: AppColors.primaryColor,
-                                    text: "Apply",
-                                    onPressed: () => {},
-                                    textStyle: FontConstant.styleRegular(
-                                        fontSize: 14,
-                                        color: AppColors.constColor),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  height: 1,
-                                  color: Colors.grey.shade300),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      "Total Amount",
-                                      style: FontConstant.styleRegular(
-                                          fontSize: 15, color: AppColors.black),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      "₹ 2899",
-                                      style: FontConstant.styleMedium(
-                                          fontSize: 15, color: AppColors.black),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  height: 1,
-                                  color: Colors.grey.shade300),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text('Payment Mode',
-                                    style: FontConstant.styleSemiBold(
-                                        fontSize: 15, color: AppColors.black)),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                    child: RadioListTile<int>(
-                                      contentPadding: EdgeInsets.zero,
-                                      title: const Text('Online'),
-                                      activeColor: AppColors.primaryColor,
-                                      value: 1,
-                                      groupValue: amounttype,
-                                      onChanged: (int? value) {
-                                        setState(
-                                          () {
-                                            amounttype = value;
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  Flexible(
-                                    flex: 1,
-                                    child: RadioListTile<int>(
-                                      contentPadding: EdgeInsets.zero,
-                                      title: const Text('Wallet'),
-                                      activeColor: AppColors.primaryColor,
-                                      value: 2,
-                                      groupValue: amounttype,
-                                      onChanged: (int? value) {
-                                        setState(() {
-                                          amounttype = value;
+                                    CustomDrawerButton(
+                                      color: AppColors.primaryColor,
+                                      text: "Apply",
+                                      onPressed: () {
+                                        applyCouponController
+                                            .applyCoupon(
+                                                context,
+                                                couponController.text
+                                                    .toString()
+                                                    .trim())
+                                            .then((_) {
+                                          formKey.currentState!.validate();
                                         });
                                       },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              CustomButton(
-                                text: 'Pay Now',
-                                onPressed: () {
-                                  buyPackageController.buyPackage(
-                                      context, true);
-                                },
-                                color: AppColors.primaryColor,
-                                textStyle: FontConstant.styleRegular(
-                                  fontSize: 16,
-                                  color: Colors.white,
+                                      textStyle: FontConstant.styleRegular(
+                                          fontSize: 14,
+                                          color: AppColors.constColor),
+                                    )
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    height: 1,
+                                    color: Colors.grey.shade300),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "Total Amount",
+                                        style: FontConstant.styleRegular(
+                                            fontSize: 15,
+                                            color: AppColors.black),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        "₹ ${totalAmount.toStringAsFixed(2)}",
+                                        style: FontConstant.styleMedium(
+                                            fontSize: 15,
+                                            color: AppColors.black),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    height: 1,
+                                    color: Colors.grey.shade300),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('Payment Mode',
+                                      style: FontConstant.styleSemiBold(
+                                          fontSize: 15,
+                                          color: AppColors.black)),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Flexible(
+                                      child: RadioListTile<int>(
+                                        contentPadding: EdgeInsets.zero,
+                                        title: const Text('Online'),
+                                        activeColor: AppColors.primaryColor,
+                                        value: 1,
+                                        groupValue: amounttype,
+                                        onChanged: (int? value) {
+                                          setState(
+                                            () {
+                                              amounttype = value;
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 1,
+                                      child: RadioListTile<int>(
+                                        contentPadding: EdgeInsets.zero,
+                                        title: const Text('Wallet'),
+                                        activeColor: AppColors.primaryColor,
+                                        value: 2,
+                                        groupValue: amounttype,
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            amounttype = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                CustomButton(
+                                  text: 'Pay Now',
+                                  onPressed: () {
+                                    buyPackageController.buyPackage(context);
+                                  },
+                                  color: AppColors.primaryColor,
+                                  textStyle: FontConstant.styleRegular(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ]),
                   ),
-                  if (buyPackageController.isLoading.value)
+                  if (buyPackageController.isLoading.value ||
+                      applyCouponController.isLoading.value)
                     const Center(
                       child: CircularProgressIndicator(
                         color: AppColors.primaryColor,
@@ -232,7 +295,7 @@ class PackageComman {
     );
   }
 
-  static Widget buildPack(int package) {
+  Widget buildPack(int package) {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Row(
@@ -427,7 +490,7 @@ class PackageComman {
     );
   }
 
-  static Widget packageSelect(
+  Widget packageSelect(
       BuildContext context, String tittle, int free, int premium) {
     return Column(
       children: [
@@ -504,7 +567,7 @@ class PackageComman {
     );
   }
 
-  static Widget buildDiscount(BuildContext context, List<Data> list) {
+  Widget buildDiscount(BuildContext context, List<Data> list) {
     return Column(
       children: list.map((data) {
         return Container(
@@ -534,7 +597,11 @@ class PackageComman {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${data.discount}%",
+                        data.discountType != null
+                            ? data.discountType == "Amount"
+                                ? "₹${data.discount}"
+                                : "${data.discount}%"
+                            : "",
                         style: FontConstant.styleMedium(
                           fontSize: 18,
                           color: AppColors.constColor,
@@ -572,7 +639,7 @@ class PackageComman {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "New Users ${data.gender == "Male" ? "Boy" : "Girl"}",
+                        "New Users ${CommanClass.boyGirl(userProfileController.member?.member?.gender)}",
                         style: FontConstant.styleSemiBold(
                             fontSize: 15, color: AppColors.black),
                         maxLines: 1, // Limits to one line
@@ -580,7 +647,9 @@ class PackageComman {
                             TextOverflow.ellipsis, // Adds ellipsis for overflow
                       ),
                       Text(
-                        "Get ${data.discount}% Discount upto ₹${data.discount} for the first ${data.noOfUser} boys",
+                        data.discountType != null
+                            ? "Get ${data.discountType == "Amount" ? "₹${data.discount}" : "${data.discount}%"} Discount for the first ${data.noOfUser} boys"
+                            : "",
                         style: FontConstant.styleRegular(
                             fontSize: 10, color: AppColors.black),
                         maxLines: 2, // Limits to one line

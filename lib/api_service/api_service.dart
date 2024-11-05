@@ -41,6 +41,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/add_testimonial_model.dart';
+import '../model/apply_coupon_model.dart';
 import '../model/block_model.dart';
 import '../model/block_profile_model.dart';
 import '../model/html_content_model.dart';
@@ -1651,4 +1652,34 @@ class ApiService {
     }
   }
 //==== End Api block profile==========================================================================================
+
+//==== Start Api apply coupon==========================================================================================
+
+  Future<ApplyCouponModel> applyCoupon(String coupon) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token == null) {
+      throw Exception('Token is not available');
+    }
+
+    final response = await http.post(
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.applyCouponUrl}'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({"couponCode": coupon}),
+    );
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+      print(responseJson);
+      return ApplyCouponModel.fromJson(responseJson);
+    } else {
+      final responseJson = json.decode(response.body);
+      throw Exception('Failed: ${responseJson['message']}');
+    }
+  }
+//==== End Api apply coupon===========================================================================================
 }

@@ -200,15 +200,12 @@ class _PackageDetailsState extends State<PackageDetails> {
                           padding: const EdgeInsets.only(top: 40, bottom: 100),
                           child: CustomButton(
                               text: "Buy Premium Pack Now",
-                              onPressed: () => {
-                                    buyPackageController.buyPackage(context,true)
-                                    //  Get.toNamed("/package")
-                                  },
+                              onPressed: () =>
+                                  {buyPackageController.buyPackage(context)},
                               color: AppColors.primaryColor,
                               textStyle: FontConstant.styleRegular(
                                   fontSize: 16, color: AppColors.constColor)),
                         ),
-                        
                       ],
                     ),
                   ),

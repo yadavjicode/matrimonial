@@ -76,6 +76,20 @@ class CommanClass {
     }
   }
 
+  static String boyGirl(String? gender) {
+    if (gender != null) {
+      if (gender == "Male") {
+        return "Boys";
+      } else if (gender == "Female") {
+        return "Girls";
+      } else {
+        return "";
+      }
+    } else {
+      return "";
+    }
+  }
+
   // Method to convert a comma-separated string to a list and add to target list
   static List<String> addCommaSeparatedValuesToList(String? data) {
     List<String> localList = data != null ? data.split(',') : [];
@@ -96,8 +110,8 @@ class CommanClass {
     }
   }
 
-   String removePlusSign(String value) {
-  // Check if the input starts with a '+' and remove it
-  return value.replaceFirst(RegExp(r'^\+'), '');
-}
+  String removePlusSign(String value) {
+    // Check if the input starts with a '+' and remove it
+    return value.replaceFirst(RegExp(r'^\+'), '');
+  }
 }

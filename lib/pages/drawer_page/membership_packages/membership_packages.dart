@@ -24,7 +24,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
   final PackageController packageController = Get.put(PackageController());
   final BuyPackageController buyPackageController =
       Get.put(BuyPackageController());
-
+  final PackageComman packageComman = Get.put(PackageComman());
   get pageController => null;
 
   @override
@@ -136,7 +136,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           ),
                         ),
                         if (editProfileController.isLoading.value == false)
-                          PackageComman.buildPack(editProfileController
+                          packageComman.buildPack(editProfileController
                                   .member?.member?.accountType ??
                               0),
                         Text(
@@ -228,7 +228,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
         const SizedBox(
           height: 10,
         ),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(
             context,
             "Able to see photos uploaded on others Profile",
             packageController
@@ -237,36 +237,36 @@ class _MembershipPackagesState extends State<MembershipPackages> {
             packageController
                     .member?.data?.premium?.ableToSeePhotosOnOthersProfile ??
                 0),
-        PackageComman.packageSelect(context, "Using Shortlist Feature", 1, 1),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(context, "Using Shortlist Feature", 1, 1),
+        packageComman.packageSelect(
             context,
             "Use Filter/ Sorting Feature",
             packageController.member?.data?.free?.useFilterSortingFeature ?? 0,
             packageController.member?.data?.premium?.useFilterSortingFeature ??
                 0),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(
             context,
             "View Full Profile of Others",
             packageController.member?.data?.free?.viewFullProfileOfOthers ?? 0,
             packageController.member?.data?.premium?.viewFullProfileOfOthers ??
                 0),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(
             context,
             "Using Search Feature",
             packageController.member?.data?.free?.usingSearchFeature ?? 0,
             packageController.member?.data?.premium?.usingSearchFeature ?? 0),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(
             context,
             "Chat Box",
             packageController.member?.data?.free?.chat ?? 0,
             packageController.member?.data?.premium?.chat! ?? 0),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(
             context,
             "See Contact No.s",
             packageController.member?.data?.free?.seeContactNumbers ?? 0,
             packageController.member?.data?.premium?.seeContactNumbers ?? 0),
-        PackageComman.packageSelect(context, "Using Privacy Features", 0, 1),
-        PackageComman.packageSelect(
+        packageComman.packageSelect(context, "Using Privacy Features", 0, 1),
+        packageComman.packageSelect(
             context, "Respond to received Interest", 0, 1),
         Row(
           children: [
@@ -299,7 +299,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                 ))
           ],
         ),
-        editProfileController.member?.member?.accountType == 0
+        editProfileController.member?.member?.accountType == 1
             ? const SizedBox.shrink()
             // ? Padding(
             //     padding: const EdgeInsets.only(top: 20, bottom: 25),
@@ -316,7 +316,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: PackageComman.buildDiscount(
+                      child: packageComman.buildDiscount(
                         context,
                         couponsController.member?.data ?? [],
                       ),
@@ -327,7 +327,7 @@ class _MembershipPackagesState extends State<MembershipPackages> {
                           text: "Buy Premium Pack Now",
                           onPressed: () => {
                                 // buyPackageController.buyPackage(context)
-                                PackageComman.appThemeBottomSheet(
+                                packageComman.appThemeBottomSheet(
                                     context) //  Get.toNamed("/package")
                               },
                           color: AppColors.primaryColor,

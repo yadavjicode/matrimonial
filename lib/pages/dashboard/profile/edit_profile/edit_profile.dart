@@ -85,7 +85,7 @@ class _ProfileEditState extends State<ProfileEdit> {
             if (_editProfileController.isLoading.value == false)
               _buildProfileContent(imgList),
             if (_editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -205,7 +205,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 color: Colors.grey,
               ),
               Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 alignment: Alignment.center,
                 child: Text(
                   "Your profile is ${_editProfileController.member?.profilePercentage ?? ""}% Complete",
@@ -216,8 +216,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                margin: EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
                 height: 8,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
@@ -226,7 +226,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             0) /
                         100,
                     backgroundColor: Colors.grey.shade100,
-                    color: Color(0xff583689),
+                    color: const Color(0xff583689),
                   ),
                 ),
               ),

@@ -10,7 +10,6 @@ import 'package:devotee/constants/widget/logout.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../controller/dashboard_controller.dart';
 
 // ignore: must_be_immutable
 class CustomDrawer extends StatelessWidget {
@@ -18,8 +17,6 @@ class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key, required this.scaffoldKey});
   final EditProfileController editProfileController =
       Get.put(EditProfileController());
-  final DashboardController dashboardController =
-      Get.put(DashboardController());
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +213,12 @@ class CustomDrawer extends StatelessWidget {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      // dashboardController.navigateToPage(4);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Dashboard()),
+                      );
+
                       scaffoldKey.currentState?.closeDrawer();
                     },
                     child: buildoption("assets/images/icons/dashboard.svg",
@@ -225,7 +227,7 @@ class CustomDrawer extends StatelessWidget {
                   GestureDetector(
                     onTap: () => {Get.toNamed("/myProfile")},
                     child: buildoption(
-                        "assets/images/profile_icon.svg", "My Profile", 22, 22),
+                        "assets/images/profile_icon.svg", "My Profile", 20, 20),
                   ),
                   // buildoption("assets/images/icons/mypackage.svg",
                   //     "My Packages", 22, 22),

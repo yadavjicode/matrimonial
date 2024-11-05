@@ -75,7 +75,7 @@ class _MyProfileState extends State<MyProfile> {
             if (_editProfileController.isLoading.value == false)
               _buildProfileContent(imgList),
             if (_editProfileController.isLoading.value)
-              Center(
+              const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primaryColor,
                 ),
@@ -194,7 +194,7 @@ class _MyProfileState extends State<MyProfile> {
                 color: Colors.grey,
               ),
               Container(
-                padding: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10),
                 alignment: Alignment.center,
                 child: Text(
                   "Your profile is ${_editProfileController.member?.profilePercentage ?? ""}% Complete",
@@ -205,8 +205,8 @@ class _MyProfileState extends State<MyProfile> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                margin: EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                margin: const EdgeInsets.only(top: 10, bottom: 10),
                 height: 8,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
@@ -215,7 +215,7 @@ class _MyProfileState extends State<MyProfile> {
                             0) /
                         100,
                     backgroundColor: Colors.grey.shade100,
-                    color: Color(0xff583689),
+                    color: const Color(0xff583689),
                   ),
                 ),
               ),
@@ -756,44 +756,12 @@ class _MyProfileState extends State<MyProfile> {
                         "/editPartnerPreference",
                         Column(
                           children: [
-                            _buildText(
-                                "Age Range From",
-                                _editProfileController
-                                            .member?.member?.pEFromAge !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEFromAge} Yrs"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Age Range To",
-                                _editProfileController
-                                            .member?.member?.pEToAge !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEToAge} Yrs"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Body Weight From",
-                                _editProfileController
-                                            .member?.member?.pEFromWeight !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEFromWeight} KG"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Body Weight To",
-                                _editProfileController
-                                            .member?.member?.pEToWeight !=
-                                        null
-                                    ? "${_editProfileController.member?.member?.pEToWeight} KG"
-                                    : "Not Mentioned"),
-                            _buildText(
-                                "Height Range From",
-                                _editProfileController
-                                        .member?.member?.pEHeight ??
-                                    "Not Mentioned"),
-                            _buildText(
-                                "Height Range To",
-                                _editProfileController
-                                        .member?.member?.pEHeight2 ??
-                                    "Not Mentioned"),
+                            _buildText("Age Range",
+                                "${_editProfileController.member?.member?.pEFromAge != null ? "${_editProfileController.member?.member?.pEFromAge}" : "_"} To ${_editProfileController.member?.member?.pEToAge != null ? "${_editProfileController.member?.member?.pEToAge}" : "_"} Yrs"),
+                            _buildText("Body Weight Range",
+                                "${_editProfileController.member?.member?.pEFromWeight != null ? "${_editProfileController.member?.member?.pEFromWeight}" : "_"} To ${_editProfileController.member?.member?.pEToWeight != null ? "${_editProfileController.member?.member?.pEToWeight}" : "_"} KG"),
+                            _buildText("Height Range",
+                                "${_editProfileController.member?.member?.pEHeight ?? "_"} To ${_editProfileController.member?.member?.pEHeight2 ?? "_"}"),
                             _buildText(
                                 "Languages Known",
                                 _editProfileController
@@ -940,7 +908,7 @@ class _MyProfileState extends State<MyProfile> {
                   color: AppColors.primaryColor,
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               GestureDetector(
                 onTap: () {
                   Get.toNamed(move);
@@ -951,8 +919,10 @@ class _MyProfileState extends State<MyProfile> {
           ),
         ),
         Container(
-          color: AppColors.constColor,
-          padding: EdgeInsets.only(
+          decoration: const BoxDecoration(
+              color: AppColors.constColor,
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          padding: const EdgeInsets.only(
             left: 15,
             right: 25,
             bottom: 15,

@@ -39,8 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initializeData();
+    });
+  }
+
+  void initializeData() async {
     APIs.getSelfInfo();
-    userProfileController.userDetails(context).then((_) {
+    await userProfileController.userDetails(context).then((_) {
       if (userProfileController.member?.member?.accountType != 1) {
         DialogConstant.packageDialog(context, 'chat feature');
       }
