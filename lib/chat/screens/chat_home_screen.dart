@@ -57,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //pause  -- inactive or offline
     SystemChannels.lifecycle.setMessageHandler((message) {
       log('Message: $message');
-
       if (APIs.myid != null) {
         if (message.toString().contains('resume')) {
           APIs.updateActiveStatus(true);
@@ -66,7 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
           APIs.updateActiveStatus(false);
         }
       }
-
       return Future.value(message);
     });
   }
@@ -242,10 +240,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: _isSearching
                                     ? _searchList.length
                                     : _list.length,
-                                padding: EdgeInsets.only(top: 10),
+                                padding: const EdgeInsets.only(top: 10),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  print("hii");
                                   return ChatUserCard(
                                       user: _isSearching
                                           ? _searchList[index]

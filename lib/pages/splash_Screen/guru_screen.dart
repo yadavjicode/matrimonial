@@ -35,9 +35,9 @@ class _GuruScreenState extends State<GuruScreen> {
       },
     );
   }
-  @override
-   void initState() {
 
+  @override
+  void initState() {
     super.initState();
     Timer(
       const Duration(seconds: 1),

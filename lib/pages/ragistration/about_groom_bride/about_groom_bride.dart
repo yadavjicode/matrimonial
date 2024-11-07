@@ -2,12 +2,10 @@ import 'package:devotee/controller/about_groombride_controller.dart';
 import 'package:devotee/controller/flow_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:devotee/constants/button_constant.dart';
 import 'package:devotee/constants/color_constant.dart';
 import 'package:devotee/constants/custom_checkbox.dart';
 import 'package:devotee/constants/font_constant.dart';
-
 import '../../../controller/edit_profile_controller.dart';
 import '../../../controller/skip_controller.dart';
 
@@ -123,7 +121,7 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                 fontSize: 18, color: AppColors.constColor),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Get.offAndToNamed('/packageInfo');
             },
@@ -289,8 +287,6 @@ class _AboutGroomBrideState extends State<AboutGroomBride> {
                   aboutGroomBrideController.aboutGroomBride(
                       context, selectedCharacteristics, selectedHobbies, false);
                   //   Get.toNamed('/horoscope');
-                  print("Selected Characteristics: $selectedCharacteristics");
-                  print("Selected Hobbies: $selectedHobbies");
                 },
                 color: AppColors.primaryColor,
                 textStyle: FontConstant.styleRegular(

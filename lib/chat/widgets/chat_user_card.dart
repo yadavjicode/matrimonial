@@ -39,9 +39,12 @@ class _ChatUserCardState extends State<ChatUserCard> {
 
   Future<void> _checkBlockStatus() async {
     bool blocked = await APIs.isBlocked(widget.user.id);
-    setState(() {
-      isBlocked = blocked;
-    });
+
+    if (mounted) {
+      setState(() {
+        isBlocked = blocked;
+      });
+    }
   }
 
   @override

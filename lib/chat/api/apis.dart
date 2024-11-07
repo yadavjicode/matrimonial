@@ -696,35 +696,25 @@ class APIs with ChangeNotifier {
     return false; // Not blocked or an error occurred
   }
 
-  // static Stream<bool> isBlock(String otherUserId) {
-  //   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static Future<String?> getLastMessageTimestamp(String userId) async {
+    // Reference to the messages subcollection within the specific chat document
+    String chatId = getConversationID(userId);
 
-  //   // Get the chat ID based on the conversation between two users
-  //   String chatId = getConversationID(otherUserId);
+    final messagesRef = FirebaseFirestore.instance
+        .collection('chats')
+        .doc(chatId)
+        .collection('messages');
 
-  //   // Listen to real-time changes in the document
-  //   return firestore
-  //       .collection('chats')
-  //       .doc(chatId)
-  //       .snapshots()
-  //       .map((snapshot) {
-  //     if (snapshot.exists) {
-  //       // Safely access the data in the document
-  //       var data = snapshot.data() as Map<String, dynamic>?;
+    // Query for the latest message by ordering by timestamp in descending order
+    final querySnapshot =
+        await messagesRef.orderBy('sent', descending: true).limit(1).get();
 
-  //       // Access the 'blocked' field in the document
-  //       var blockedData = data?['blocked'] as Map<String, dynamic>?;
-
-  //       if (blockedData != null) {
-  //         String? blockedBy = blockedData['blockedBy']; // Nullable
-  //         String? blockedUserId = blockedData['blockedUserId']; // Nullable
-
-  //         // Return true if the current user is involved in blocking or being blocked
-  //         return (blockedBy == myid || blockedUserId == myid);
-  //       }
-  //     }
-
-  //     return false; // Default to false if no blocking is found
-  //   });
-  // }
+    // If there is at least one message, return the timestamp of the latest message
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.first['msg'];
+    } else {
+      // If there are no messages in the chat, return null or handle as needed
+      return null;
+    }
+  }
 }
